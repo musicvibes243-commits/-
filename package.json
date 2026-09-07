@@ -1,0 +1,15 @@
+{
+  "name": "design-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design workspace: UI/UX Pro Max skills + 21st.dev CLI",
+  "scripts": {
+    "21st": "21st",
+    "21st:whoami": "21st whoami",
+    "21st:review": "21st review .",
+    "21st:context": "21st init --design-context --check"
+  },
+  "devDependencies": {
+    "@21st-dev/cli": "^1.17.0"
+  }
+}
