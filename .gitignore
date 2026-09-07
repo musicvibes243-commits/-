@@ -1,0 +1,7 @@
+# Python bytecode from the skill scripts
+__pycache__/
+*.py[cod]
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
