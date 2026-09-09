@@ -1456,8 +1456,14 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
+    var root = document.documentElement;
+    /* Отключаем плавность средствами CSS: иначе каждый наш маленький шаг
+       браузер начинал бы анимировать сам, и страница почти не двигалась.
+       Переходы по меню ниже отрабатываем той же анимацией. */
+    root.style.scrollBehavior = 'auto';
+
     var target = window.scrollY, running = false;
-    function limit(){ return document.documentElement.scrollHeight - window.innerHeight; }
+    function limit(){ return root.scrollHeight - window.innerHeight; }
     function clamp(v){ return Math.max(0, Math.min(limit(), v)); }
 
     function step(){
@@ -1487,7 +1493,21 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       if (!running){ running = true; requestAnimationFrame(step); }
     }, { passive: false });
 
-    /* клавиши, полоса прокрутки и переходы по якорям остаются как были */
+    /* переходы по меню ведём той же анимацией, с поправкой на липкую шапку */
+    document.addEventListener('click', function(e){
+      if (!e.target.closest) return;
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var el = document.getElementById(id.slice(1));
+      if (!el) return;
+      e.preventDefault();
+      target = clamp(el.getBoundingClientRect().top + window.scrollY - 84);
+      if (!running){ running = true; requestAnimationFrame(step); }
+    });
+
+    /* клавиши и полоса прокрутки работают как обычно */
     window.addEventListener('scroll', function(){ if (!running) target = window.scrollY; }, { passive: true });
     window.addEventListener('resize', function(){ target = clamp(target); });
   })();
