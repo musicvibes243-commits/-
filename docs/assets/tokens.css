@@ -1,59 +1,63 @@
-/* Цвета всего сайта. Меняете здесь — меняется на всех страницах. */
+/* Цвета всего сайта. Меняете здесь — меняется на всех страницах.
 
-/* ============================================================
-   ТОКЕНЫ (все цвета — здесь. Меняете тут — меняется везде)
-   ============================================================ */
+   Палитра одна, тёплая тёмная: сайт выглядит одинаково при любой
+   системной теме. Все цвета заданы явно, ничего не наследуется. */
+
 :root{
-  --ground:#F4F6F4;      /* фон страницы */
-  --surface:#FFFFFF;     /* карточки */
-  --surface-2:#E9EDEA;   /* мягкая подложка */
-  --ink:#0C1F24;         /* основной текст */
-  --ink-2:#33474B;       /* вторичный текст */
-  --muted:#5C6C6E;       /* подписи */
-  --line:#D6DEDA;        /* границы */
-  --band:#0E343D;        /* тёмные полосы (шапка фактов, футер) */
-  --band-2:#12444F;
-  --on-band:#EAF2F0;     /* текст на тёмном */
-  --on-band-muted:#9FB6B8;
-  --brand-text:#0E343D;  /* фирменный цвет текста на светлом */
-  --accent:#E09405;      /* акцент — только для CTA и важных деталей */
-  --accent-strong:#C77F00;
-  --on-accent:#1B1200;
-  --ok:#1B6E52;
-  --danger:#A32017;
-  --focus:#15616D;
-  --hero-accent:#12626F;
-  --bird-body:#0E343D;
-  --bird-wing:#E09405;
-  /* цвета схемы-разреза */
-  --soil-1:#CBBFA1;      /* плодородный слой */
-  --soil-2:#B7A583;      /* суглинок */
-  --soil-3:#DCD2B2;      /* песок */
+  color-scheme:dark;
+
+  /* Основания */
+  --ground:#39302C;        /* фон страницы */
+  --surface:#453A35;       /* карточки */
+  --surface-2:#2F2724;     /* секции потемнее */
+  --band:#241E1B;          /* тёмные полосы: шапка, факты, заявка */
+  --band-2:#1D1816;        /* подвал */
+  --hero-bg:#221C19;       /* подложка первого экрана под фотографией */
+
+  /* Текст */
+  --ink:#F6F1EC;           /* основной */
+  --ink-2:#DBCFC7;         /* вторичный */
+  --muted:#B4A69E;         /* подписи */
+  --on-band:#F6F1EC;
+  --on-band-muted:#B4A69E;
+
+  /* Линии и акценты */
+  --line:rgba(255,255,255,.14);
+  --brand-text:#E3B872;    /* надзаголовки, акцентный текст */
+  --hero-accent:#E3B872;
+  --accent:#D9992B;        /* кнопки */
+  --accent-strong:#EFAE44;
+  --on-accent:#241906;
+  --glow-warm:#C9873A;     /* свечение за фотографией */
+  --focus:#E3B872;
+
+  /* Состояния */
+  --ok:#63C79C;
+  --danger:#F08A7E;
+  --destructive:#F08A7E;
+
+  /* Подложки под иконками карточек */
+  --chip-bg:rgba(227,184,114,.12);
+  --chip-bg-hot:rgba(217,153,43,.24);
+
+  /* Птица, летящая со скроллом */
+  --bird-body:#EDE3D9;
+  --bird-wing:#D9992B;
+
+  /* Схема-разрез: это «чертёж на белом листе», цвета намеренно светлые
+     и не меняются вместе с остальным сайтом */
+  --sch-bg:#F3F0EA;
+  --sch-line:#CFC7BA;
+  --sch-ink:#23303A;
+  --sch-muted:#5D6B70;
+  --sch-surface:#FFFFFF;
+  --sch-surface-2:#E7E3DA;
+  --soil-1:#C9BDA0;
+  --soil-2:#B5A484;
+  --soil-3:#DBD1B2;
   --water:#2C7EA4;
-  --shadow:0 1px 2px rgba(12,31,36,.06);
-  --r:4px;               /* радиус — небольшой, «инженерный» */
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ground:#0A1417; --surface:#101E22; --surface-2:#16272C;
-    --ink:#E9EFED; --ink-2:#C2CFCE; --muted:#93A5A5; --line:#22383D;
-    --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
-    --brand-text:#7CC2D2;
-    --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-    --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2; --bird-body:#7CC2D2; --bird-wing:#F0AC2B;
-    --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
-    --water:#3E93BC;
-    --shadow:0 1px 2px rgba(0,0,0,.4);
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#0A1417; --surface:#101E22; --surface-2:#16272C;
-  --ink:#E9EFED; --ink-2:#C2CFCE; --muted:#93A5A5; --line:#22383D;
-  --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
-  --brand-text:#7CC2D2;
-  --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-  --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2; --bird-body:#7CC2D2; --bird-wing:#F0AC2B;
-  --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
-  --water:#3E93BC;
-  --shadow:0 1px 2px rgba(0,0,0,.4);
+  --sch-accent:#D9992B;
+
+  --shadow:0 1px 2px rgba(0,0,0,.35);
+  --r:4px;
 }
