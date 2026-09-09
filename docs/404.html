@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Страница не найдена — АкваГрунт</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E343D">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:32px;
+  background:var(--band);color:var(--on-band);
+  font-family:"Golos Text","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.6;text-align:center}
+.code{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{font-family:Oswald,sans-serif;font-size:clamp(30px,6vw,46px);font-weight:600;line-height:1.15;margin:0 0 14px;text-wrap:balance}
+p{margin:0 auto 28px;max-width:46ch;color:var(--on-band-muted)}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;
+  border-radius:4px;border:2px solid transparent;font-family:Oswald,sans-serif;font-size:16px;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;text-decoration:none;transition:background-color .16s,color .16s,border-color .16s}
+.acc{background:var(--accent);color:var(--on-accent)}
+.acc:hover{background:var(--accent-strong)}
+.gh{border-color:rgba(255,255,255,.35);color:var(--on-band)}
+.gh:hover{border-color:var(--accent);color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+  <div>
+    <p class="code">Ошибка 404</p>
+    <h1>Такой страницы нет</h1>
+    <p>Ссылка устарела или в адресе опечатка. Вернитесь на главную — там услуги, цены и калькулятор. Или просто позвоните, подскажем голосом.</p>
+    <div class="row">
+      <a class="btn acc" href="index.html">На главную</a>
+      <a class="btn gh" href="tel:+74951234567">Позвонить</a>
+    </div>
+  </div>
+</body>
+</html>

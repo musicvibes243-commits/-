@@ -3,68 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>АкваГрунт</title>
-<meta name="description" content="Монтаж кессонов, септиков и дренажа под ключ в Московской области. Договор, гарантия 5 лет, выезд и расчёт бесплатно.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap">
-<style>
-/* ============================================================
-   ТОКЕНЫ (все цвета — здесь. Меняете тут — меняется везде)
-   ============================================================ */
-:root{
-  --ground:#F4F6F4;      /* фон страницы */
-  --surface:#FFFFFF;     /* карточки */
-  --surface-2:#E9EDEA;   /* мягкая подложка */
-  --ink:#0C1F24;         /* основной текст */
-  --ink-2:#33474B;       /* вторичный текст */
-  --muted:#5C6C6E;       /* подписи */
-  --line:#D6DEDA;        /* границы */
-  --band:#0E343D;        /* тёмные полосы (шапка фактов, футер) */
-  --band-2:#12444F;
-  --on-band:#EAF2F0;     /* текст на тёмном */
-  --on-band-muted:#9FB6B8;
-  --brand-text:#0E343D;  /* фирменный цвет текста на светлом */
-  --accent:#E09405;      /* акцент — только для CTA и важных деталей */
-  --accent-strong:#C77F00;
-  --on-accent:#1B1200;
-  --ok:#1B6E52;
-  --danger:#A32017;
-  --focus:#15616D;
-  --hero-accent:#12626F;
-  /* цвета схемы-разреза */
-  --soil-1:#CBBFA1;      /* плодородный слой */
-  --soil-2:#B7A583;      /* суглинок */
-  --soil-3:#DCD2B2;      /* песок */
-  --water:#2C7EA4;
-  --shadow:0 1px 2px rgba(12,31,36,.06);
-  --r:4px;               /* радиус — небольшой, «инженерный» */
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ground:#0A1417; --surface:#101E22; --surface-2:#16272C;
-    --ink:#E9EFED; --ink-2:#C2CFCE; --muted:#93A5A5; --line:#22383D;
-    --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
-    --brand-text:#7CC2D2;
-    --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-    --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2;
-    --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
-    --water:#3E93BC;
-    --shadow:0 1px 2px rgba(0,0,0,.4);
-  }
-}
-:root[data-theme="dark"]{
-  --ground:#0A1417; --surface:#101E22; --surface-2:#16272C;
-  --ink:#E9EFED; --ink-2:#C2CFCE; --muted:#93A5A5; --line:#22383D;
-  --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
-  --brand-text:#7CC2D2;
-  --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-  --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2;
-  --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
-  --water:#3E93BC;
-  --shadow:0 1px 2px rgba(0,0,0,.4);
-}
+<title>АкваГрунт — кессоны, септики и дренаж под ключ в Московской области</title>
+<meta name="description" content="Монтаж кессонов для скважин, септиков и дренажа под ключ за один день. Работаем по Московской области, договор с фиксированной сметой, гарантия 5 лет. Выезд и расчёт бесплатно.">
+<link rel="canonical" href="https://musicvibes243-commits.github.io/-/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E343D">
+<meta name="format-detection" content="telephone=no">
 
+<!-- Как выглядит ссылка на сайт в мессенджерах и соцсетях -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="АкваГрунт">
+<meta property="og:title" content="Кессоны, септики и дренаж под ключ за один день">
+<meta property="og:description" content="Своя бригада и техника по Московской области. Договор с фиксированной сметой, гарантия 5 лет, выезд и расчёт бесплатно.">
+<meta property="og:url" content="https://musicvibes243-commits.github.io/-/">
+<meta property="og:image" content="https://musicvibes243-commits.github.io/-/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Шрифты лежат рядом с сайтом: грузятся быстрее и не зависят от Google -->
+<link rel="preload" href="assets/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/oswald-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
 /* ============================================================
    БАЗА
    ============================================================ */
@@ -322,6 +288,9 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 .summary a{color:var(--danger)}
 .done{border:2px solid var(--ok);border-radius:var(--r);padding:22px;display:flex;gap:14px;align-items:flex-start}
 .done .ico{stroke:var(--ok);width:26px;height:26px;flex:none}
+.done.fail{border-color:var(--danger)}
+.done.fail .ico{stroke:var(--danger)}
+.done.fail h3{color:var(--danger)}
 .done h3{color:var(--ok);margin-bottom:6px}
 .done p{font-size:15px;color:var(--ink-2)}
 
@@ -356,6 +325,16 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 </style>
 </head>
 <body>
+
+<!-- ================= ЧЕРНОВИК =================
+     Удалите этот блок целиком, когда замените демо-данные на свои.
+     Пока он висит, посетитель видит честное предупреждение. -->
+<div class="draft" role="status">
+  <div class="wrap">
+    <strong>Черновик.</strong> Телефон, цены, отзывы и объекты на этой странице — примеры.
+    Замените их своими данными и удалите эту полосу.
+  </div>
+</div>
 
 <!-- ================= ШАПКА ================= -->
 <header class="top">
@@ -833,15 +812,19 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
         <textarea id="fText" name="text" placeholder="Глубина скважины, число жильцов, что уже стоит на участке, куда можно отвести воду"></textarea>
       </div>
 
-      <label class="opt" for="fAgree">
+      <!-- Ловушка для спам-ботов: человек это поле не видит и не заполняет -->
+      <div class="hp" aria-hidden="true"><label for="fSite">Не заполняйте это поле</label>
+        <input type="text" id="fSite" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+
+      <label class="opt">
         <input type="checkbox" id="fAgree" name="agree" required aria-describedby="eAgree">
-        <span>Согласен на обработку персональных данных в соответствии с политикой конфиденциальности <span class="req" aria-hidden="true">*</span>
+        <span>Согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> <span class="req" aria-hidden="true">*</span>
           <span class="err" id="eAgree"></span>
         </span>
       </label>
 
       <button type="submit" class="btn btn--accent" id="fSubmit">Отправить заявку</button>
-      <p class="hint" style="margin:0">Это демонстрационная форма — данные никуда не отправляются.</p>
+      <p class="hint" style="margin:0">Перезваниваем в течение 15 минут в рабочее время. Данные используем только для ответа на заявку.</p>
     </form>
   </div>
 </section>
@@ -884,9 +867,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       </div>
     </div>
     <div class="foot__bottom">
-      <span class="demo-badge">Демо-версия сайта</span>
-      <span>Все названия, цены, отзывы и реквизиты вымышлены и приведены для показа макета.</span>
-      <span>ИП Демонстрационный И. И. · ИНН 000000000000</span>
+      <!-- РЕКВИЗИТЫ: подставьте свои, когда зарегистрируете ИП или самозанятость -->
+      <span>__ФИО ИЛИ НАЗВАНИЕ__ · ИНН __ИНН__</span>
+      <span><a href="privacy.html">Политика конфиденциальности</a></span>
+      <span>© <span id="year">2026</span> АкваГрунт. Цены на сайте не являются публичной офертой.</span>
     </div>
   </div>
 </footer>
@@ -902,6 +886,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   section[id]{scroll-margin-top:84px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .draft{background:var(--accent);color:var(--on-accent);font-size:14px;padding:9px 0;line-height:1.45}
+  .draft strong{font-weight:700}
+  .form-sec a{color:var(--accent)}
+  .foot__bottom a{color:var(--on-band-muted);text-decoration:underline}
+  .foot__bottom a:hover{color:var(--accent)}
 </style>
 
 <script>
@@ -976,7 +966,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     svc.opts.forEach(function(o, i){
       var id = 'opt-' + current + '-' + i;
       var lab = document.createElement('label');
-      lab.className = 'opt'; lab.htmlFor = id;
+      lab.className = 'opt';
       var inp = document.createElement('input');
       inp.type = 'checkbox'; inp.id = id;
       inp.checked = !!checked[current + i];
@@ -1071,6 +1061,87 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     box.hidden = false;
   }
 
+  var submitBtn = document.getElementById('fSubmit');
+
+  /* ---------- КУДА УХОДЯТ ЗАЯВКИ ----------
+     Заполните строки ниже — и форма заработает по-настоящему.
+     Пошаговая инструкция: README.md рядом с этим файлом.
+     Заявка уходит одновременно во все настроенные каналы. */
+  var DELIVERY = {
+    formspree: '',            // на почту:  'https://formspree.io/f/xxxxxxxx'
+    telegram:  '',            // в Telegram: 'https://имя-воркера.workers.dev'
+    whatsapp:  '79001234567'  // запасной путь, если ничего сверху не заполнено
+  };
+
+  function payload(){
+    return {
+      name:    document.getElementById('fName').value.trim(),
+      phone:   document.getElementById('fPhone').value.trim(),
+      place:   document.getElementById('fPlace').value.trim(),
+      service: document.getElementById('fSvc').value,
+      text:    document.getElementById('fText').value.trim(),
+      _gotcha: document.getElementById('fSite').value,
+      _subject:'Заявка с сайта: ' + document.getElementById('fSvc').value,
+      page:    location.href,
+      sentAt:  new Date().toLocaleString('ru-RU')
+    };
+  }
+
+  function sendTo(url, data){
+    return fetch(url, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+      body: JSON.stringify(data)
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return true;
+    });
+  }
+
+  function replaceForm(html){
+    form.innerHTML = html;
+    var h = form.querySelector('h3');
+    if (h) { h.setAttribute('tabindex','-1'); h.focus(); }
+  }
+
+  function showDone(name){
+    replaceForm(
+      '<div class="done">' +
+        '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>' +
+        '<div>' +
+          '<h3>Заявка принята</h3>' +
+          '<p>' + name + ', спасибо! Инженер перезвонит в течение 15 минут в рабочее время и согласует день выезда.</p>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  /* Заявка не должна теряться: если отправка не прошла — даём прямые способы связи */
+  function showFail(data){
+    replaceForm(
+      '<div class="done fail">' +
+        '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' +
+        '<div>' +
+          '<h3>Заявка не ушла</h3>' +
+          '<p>Связь с сервером прервалась — скорее всего, пропал интернет. Позвоните или напишите, мы примем заявку сразу:</p>' +
+          '<p style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">' +
+            '<a class="btn btn--accent" href="tel:+74951234567">Позвонить</a>' +
+            '<a class="btn btn--outline" href="' + waLink(data) + '" target="_blank" rel="noopener">Написать в WhatsApp</a>' +
+          '</p>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function waLink(d){
+    var t = 'Здравствуйте! Заявка с сайта.\n' +
+            'Имя: ' + d.name + '\nТелефон: ' + d.phone +
+            (d.place ? '\nНаселённый пункт: ' + d.place : '') +
+            '\nЗадача: ' + d.service +
+            (d.text ? '\nПодробности: ' + d.text : '');
+    return 'https://wa.me/' + DELIVERY.whatsapp + '?text=' + encodeURIComponent(t);
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     tried = true;
@@ -1078,21 +1149,74 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     renderSummary(bad);
     if (bad.length) { box.focus(); return; }
 
-    var num = 'ДЕМО-' + String(Math.floor(Math.random() * 9000) + 1000);
-    var name = document.getElementById('fName').value.trim();
-    form.innerHTML =
-      '<div class="done">' +
-        '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>' +
-        '<div>' +
-          '<h3>Заявка ' + num + ' принята</h3>' +
-          '<p>' + name + ', спасибо! В рабочем режиме инженер перезвонил бы в течение 15 минут и согласовал день выезда.</p>' +
-          '<p style="margin-top:10px;color:var(--muted);font-size:14px">Это демонстрация: данные никуда не отправлены и нигде не сохранены.</p>' +
-        '</div>' +
-      '</div>';
-    form.querySelector('h3').setAttribute('tabindex', '-1');
-    form.querySelector('h3').focus();
+    var data = payload();
+    var jobs = [];
+    if (DELIVERY.formspree) jobs.push(sendTo(DELIVERY.formspree, data));
+    if (DELIVERY.telegram)  jobs.push(sendTo(DELIVERY.telegram, data));
+
+    /* Каналы ещё не настроены — не теряем клиента, уводим в WhatsApp */
+    if (!jobs.length) {
+      window.open(waLink(data), '_blank', 'noopener');
+      showDone(data.name);
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем…';
+    Promise.allSettled(jobs).then(function(res){
+      var ok = res.some(function(r){ return r.status === 'fulfilled'; });
+      if (ok) showDone(data.name); else showFail(data);
+    });
   });
+
+  /* Год в подвале обновляется сам */
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
 })();
 </script>
+<!-- ================= СТАТИСТИКА =================
+     Чтобы видеть, сколько людей заходит и откуда:
+     1. metrika.yandex.ru → «Добавить счётчик» → впишите адрес сайта.
+     2. Скопируйте номер счётчика (например 12345678).
+     3. Раскомментируйте блок ниже (уберите строки со стрелками) и вставьте номер вместо НОМЕР.
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+   ym(НОМЕР, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/НОМЕР" style="position:absolute;left:-9999px" alt=""></div></noscript>
+     ================================================= -->
+
+<!-- Данные о компании для Яндекса и Google: подставьте свои значения -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "АкваГрунт",
+  "description": "Монтаж кессонов для скважин, септиков и дренажа под ключ в Московской области.",
+  "url": "https://musicvibes243-commits.github.io/-/",
+  "image": "https://musicvibes243-commits.github.io/-/og.png",
+  "telephone": "+7 (495) 123-45-67",
+  "email": "zakaz@akvagrunt.demo",
+  "priceRange": "от 3600 ₽",
+  "areaServed": { "@type": "State", "name": "Московская область" },
+  "address": { "@type": "PostalAddress", "addressRegion": "Московская область", "addressCountry": "RU" },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "08:00", "closes": "21:00"
+  }],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж кессона для скважины" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж септика и автономной канализации" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Дренаж и ливневая канализация" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Водоснабжение дома от скважины" } }
+  ]
+}
+</script>
+
 </body>
 </html>
