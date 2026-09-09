@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>АкваГрунт — кессоны, септики и дренаж под ключ в Московской области</title>
-<meta name="description" content="Монтаж кессонов для скважин, септиков и дренажа под ключ за один день. Работаем по Московской области, договор с фиксированной сметой, гарантия 5 лет. Выезд и расчёт бесплатно.">
+<title>Aqvatonia — септики, кессоны и дренаж под ключ в Москве и области</title>
+<meta name="description" content="Подбираем и монтируем септики, кессоны и дренаж под ключ по всей Москве и Московской области. Опыт больше 10 лет, септики со сроком службы от 50 лет, бесплатная доставка при заказе установки.">
 <link rel="canonical" href="https://musicvibes243-commits.github.io/-/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0E343D">
@@ -13,9 +13,9 @@
 <!-- Как выглядит ссылка на сайт в мессенджерах и соцсетях -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:site_name" content="АкваГрунт">
-<meta property="og:title" content="Кессоны, септики и дренаж под ключ за один день">
-<meta property="og:description" content="Своя бригада и техника по Московской области. Договор с фиксированной сметой, гарантия 5 лет, выезд и расчёт бесплатно.">
+<meta property="og:site_name" content="Aqvatonia">
+<meta property="og:title" content="Септики, кессоны и дренаж под ключ">
+<meta property="og:description" content="Подберём септик под ваш бюджет и смонтируем под ключ. Вся Москва и область, опыт больше 10 лет, бесплатная доставка при заказе установки.">
 <meta property="og:url" content="https://musicvibes243-commits.github.io/-/">
 <meta property="og:image" content="https://musicvibes243-commits.github.io/-/og.png">
 <meta property="og:image:width" content="1200">
@@ -141,6 +141,7 @@ section{padding-block:clamp(52px,7vw,96px)}
 @media (max-width:760px){.facts ul{grid-template-columns:repeat(2,1fr);gap:26px 20px}}
 .facts b{display:block;font-family:Oswald,sans-serif;font-size:clamp(30px,4vw,42px);font-weight:600;line-height:1}
 .facts b em{font-style:normal;color:var(--accent);font-size:.62em}
+.facts b.txt{font-size:clamp(23px,2.7vw,31px)}
 .facts span{display:block;margin-top:7px;font-size:14px;color:var(--on-band-muted);max-width:24ch}
 </style>
 <style>
@@ -326,45 +327,39 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 </head>
 <body>
 
-<!-- ================= ЧЕРНОВИК =================
-     Удалите этот блок целиком, когда замените демо-данные на свои.
-     Пока он висит, посетитель видит честное предупреждение. -->
-<div class="draft" role="status">
-  <div class="wrap">
-    <strong>Черновик.</strong> Телефон, цены, отзывы и объекты на этой странице — примеры.
-    Замените их своими данными и удалите эту полосу.
-  </div>
-</div>
+<!-- ОСТАЛОСЬ ОДНО ДЕЛО: в privacy.html есть пропуски вида __ТАК__ (ИНН, адрес,
+     срок хранения). Заполните их до того, как начнёте собирать заявки:
+     форма получает персональные данные, политика должна быть настоящей. -->
 
 <!-- ================= ШАПКА ================= -->
 <header class="top">
   <div class="wrap top__in">
-    <a class="logo" href="#top" aria-label="АкваГрунт — на главную">
+    <a class="logo" href="#top" aria-label="Aqvatonia — на главную">
       <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none">
         <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="3" stroke="currentColor" stroke-width="2"/>
         <path d="M16 6c0 0 6 7.2 6 11a6 6 0 1 1-12 0c0-3.8 6-11 6-11z" fill="#E09405"/>
         <path d="M2 23h28M2 27h28" stroke="currentColor" stroke-width="1.6" opacity=".55"/>
       </svg>
       <span>
-        <span class="logo__name">АкваГрунт</span>
-        <span class="logo__sub">кессоны · септики · дренаж</span>
+        <span class="logo__name">Aqvatonia</span>
+        <span class="logo__sub">септики · кессоны · дренаж</span>
       </span>
     </a>
 
     <nav class="nav" aria-label="Основное меню">
       <a href="#uslugi">Услуги</a>
-      <a href="#raschet">Расчёт</a>
+      <a href="#podbor">Подбор</a>
+      <a href="#raboty">Работы</a>
+      <a href="#srok">Срок службы</a>
       <a href="#etapy">Как работаем</a>
-      <a href="#obekty">Объекты</a>
       <a href="#voprosy">Вопросы</a>
-      <a href="#zayavka">Контакты</a>
     </nav>
 
-    <a class="top__phone" href="tel:+74951234567">
-      <b>+7 (495) 123-45-67</b>
+    <a class="top__phone" href="tel:+79153469728">
+      <b>+7 (915) 346-97-28</b>
       <span>Пн–Вс, 8:00–21:00</span>
     </a>
-    <a class="btn btn--accent" href="#zayavka">Заказать замер</a>
+    <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
   </div>
 </header>
 
@@ -374,28 +369,29 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 <section class="hero">
   <div class="wrap hero__grid">
     <div>
-      <p class="eyebrow">Московская область · выезд 60 км от МКАД</p>
-      <h1>Кессоны, септики и дренаж <span>под ключ за один день</span></h1>
+      <p class="eyebrow">Москва и Московская область</p>
+      <h1>Септики, кессоны и дренаж <span>под ключ</span></h1>
       <p class="lead hero__lead">
-        Своя бригада и техника: копаем, монтируем, запускаем и сдаём объект в тот же день.
-        Работаем по договору с фиксированной ценой — смета не растёт после начала работ.
+        Подберём септик под ваш бюджет, привезём бесплатно при заказе установки
+        и смонтируем под ключ. Наша команда работает с инженерными системами
+        участка больше 10 лет.
       </p>
 
       <ul class="chips">
-        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Гарантия 5 лет</li>
-        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5M9 14h6M9 17h4"/></svg>Договор и смета</li>
-        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Монтаж 1 день</li>
-        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Зимой тоже работаем</li>
+        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Опыт 10+ лет</li>
+        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Служит 50+ лет</li>
+        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg>Доставка бесплатно</li>
+        <li class="chip"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Вся Москва и область</li>
       </ul>
 
       <div class="hero__cta">
-        <a class="btn btn--accent" href="#zayavka">Бесплатный выезд и замер</a>
-        <a class="btn btn--outline" href="#raschet">Посчитать стоимость</a>
+        <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
+        <a class="btn btn--outline" href="#podbor">Подобрать систему</a>
       </div>
 
       <p class="hero__note">
         <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke:var(--muted)"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-        Замер, расчёт и подбор оборудования — бесплатно, даже если откажетесь от работ.
+        Выезд, замер и подбор оборудования — бесплатно. Финальную стоимость называем после осмотра участка.
       </p>
     </div>
 
@@ -484,10 +480,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 <!-- ================= ФАКТЫ ================= -->
 <section class="facts" style="padding-block:clamp(28px,3.5vw,44px)">
   <ul class="wrap">
-    <li><b>412</b><span>объектов сдано с 2013 года</span></li>
-    <li><b>12<em> лет</em></b><span>на рынке Подмосковья</span></li>
-    <li><b>5<em> лет</em></b><span>гарантия на монтаж по договору</span></li>
-    <li><b>1<em> день</em></b><span>от котлована до запуска системы</span></li>
+    <li><b>10<em>+ лет</em></b><span>команда работает с септиками и скважинами</span></li>
+    <li><b>50<em>+ лет</em></b><span>расчётный срок службы септиков, которые мы ставим</span></li>
+    <li><b>0 ₽</b><span>доставка оборудования при заказе установки</span></li>
+    <li><b class="txt">Москва<em> и область</em></b><span>выезжаем по всему региону</span></li>
   </ul>
 </section>
 
@@ -497,44 +493,44 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     <div class="head">
       <p class="eyebrow">Что монтируем</p>
       <h2>Четыре системы, которые делают участок пригодным для жизни</h2>
-      <p class="lead">Цены указаны за монтаж «под ключ»: земляные работы, обвязка, утепление, пусконаладка и вывоз грунта. Оборудование — по вашему выбору или из нашего подбора.</p>
+      <p class="lead">Работаем под ключ: земляные работы, монтаж, обвязка, утепление, пусконаладка и уборка после себя. Оборудование подбираем под задачу и бюджет — и привозим бесплатно, если заказываете установку.</p>
     </div>
 
     <ul class="cards">
       <li class="card">
-        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="13" width="22" height="20"/><path d="M15 13V8h10v5M20 33v5M11 20h18"/></svg>
-        <h3>Кессон для скважины</h3>
-        <p>Пластиковый или утеплённый металлический кессон: скважина не замерзает, оголовок и автоматика всегда доступны.</p>
-        <dl class="spec">
-          <div><dt>Глубина</dt><dd>1,8–3,0 м</dd></div>
-          <div><dt>Материал</dt><dd>пластик / сталь 4 мм</dd></div>
-          <div><dt>Срок</dt><dd>1 день</dd></div>
-        </dl>
-        <p class="card__price">от 68 000 ₽<small>монтаж под ключ, без стоимости кессона</small></p>
-      </li>
-
-      <li class="card">
         <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="12" width="26" height="21" rx="2"/><path d="M13 12V9h5v3M22 12V9h5v3M20 12v21M7 22h26"/></svg>
-        <h3>Септик и автономная канализация</h3>
-        <p>Станции глубокой биологической очистки и энергонезависимые ёмкости. Подбираем по числу жильцов и залповому сбросу.</p>
+        <h3>Септики и автономная канализация</h3>
+        <p>Станции биологической очистки и энергонезависимые ёмкости. Подбираем по числу жильцов, залповому сбросу и грунту на участке.</p>
         <dl class="spec">
           <div><dt>Производительность</dt><dd>0,6–2,0 м³/сут</dd></div>
           <div><dt>Отвод стоков</dt><dd>самотёк / насос</dd></div>
-          <div><dt>Срок</dt><dd>1–2 дня</dd></div>
+          <div><dt>Срок монтажа</dt><dd>1–2 дня</dd></div>
         </dl>
-        <p class="card__price">от 49 000 ₽<small>монтаж и запуск, без стоимости станции</small></p>
+        <p class="card__cta">Подберём под бюджет<small>доставка бесплатно при заказе установки</small></p>
+      </li>
+
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="9" y="13" width="22" height="20"/><path d="M15 13V8h10v5M20 33v5M11 20h18"/></svg>
+        <h3>Кессоны для скважин</h3>
+        <p>Пластиковый или утеплённый металлический кессон: скважина не замерзает, оголовок и автоматика всегда под рукой.</p>
+        <dl class="spec">
+          <div><dt>Глубина</dt><dd>1,8–3,0 м</dd></div>
+          <div><dt>Материал</dt><dd>пластик / сталь 4 мм</dd></div>
+          <div><dt>Срок монтажа</dt><dd>1 день</dd></div>
+        </dl>
+        <p class="card__cta">Подберём под скважину<small>с обвязкой, насосом и автоматикой</small></p>
       </li>
 
       <li class="card">
         <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 27h30M5 27l6-14h18l6 14"/><circle cx="20" cy="27" r="5"/><path d="M20 33v4"/></svg>
         <h3>Дренаж и ливнёвка</h3>
-        <p>Пристенный и кольцевой дренаж, ливневая канализация, ревизионные колодцы. Вода уходит с участка, а не стоит в подвале.</p>
+        <p>Пристенный и кольцевой дренаж, ливневая канализация, смотровые колодцы. Вода уходит с участка, а не стоит в подвале.</p>
         <dl class="spec">
           <div><dt>Труба</dt><dd>110–160 мм</dd></div>
           <div><dt>Обсыпка</dt><dd>щебень + геотекстиль</dd></div>
           <div><dt>Уклон</dt><dd>2 мм/м</dd></div>
         </dl>
-        <p class="card__price">от 3 600 ₽<small>за погонный метр с материалами</small></p>
+        <p class="card__cta">Посчитаем по контуру<small>с ревизионными колодцами для промывки</small></p>
       </li>
 
       <li class="card">
@@ -543,22 +539,22 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
         <p>Ввод от скважины в дом ниже глубины промерзания, гидроаккумулятор, фильтры, автоматика и разводка по точкам.</p>
         <dl class="spec">
           <div><dt>Глубина траншеи</dt><dd>1,6–2,0 м</dd></div>
-          <div><dt>Труба</dt><dd>ПНД 32 мм + греющий кабель</dd></div>
-          <div><dt>Срок</dt><dd>1–3 дня</dd></div>
+          <div><dt>Труба</dt><dd>ПНД 32 мм</dd></div>
+          <div><dt>Срок монтажа</dt><dd>1–3 дня</dd></div>
         </dl>
-        <p class="card__price">от 58 000 ₽<small>ввод в дом и обвязка</small></p>
+        <p class="card__cta">Разведём по дому<small>с греющим кабелем, если нужно</small></p>
       </li>
     </ul>
   </div>
 </section>
 
-<!-- ================= КАЛЬКУЛЯТОР ================= -->
-<section id="raschet" class="calc">
+<!-- ================= ПОДБОР ================= -->
+<section id="podbor" class="calc">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow">Предварительный расчёт</p>
-      <h2>Посчитайте стоимость за 20 секунд</h2>
-      <p class="lead">Выберите систему и параметры — покажем рабочую вилку цены. Точная смета фиксируется в договоре после бесплатного выезда на участок.</p>
+      <p class="eyebrow">Подбор системы</p>
+      <h2>Посмотрите, что нужно именно вашему участку</h2>
+      <p class="lead">Выберите систему и параметры — покажем, какая конфигурация подойдёт. Это ориентир, а не смета: точный подбор и финальную стоимость называем после бесплатного выезда.</p>
     </div>
 
     <div class="calc__box">
@@ -566,146 +562,160 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
         <div class="field">
           <p class="lbl" id="calcTabsLbl">Что нужно смонтировать</p>
           <div class="tabs" role="group" aria-labelledby="calcTabsLbl">
-            <button type="button" class="tab" data-svc="kesson" aria-pressed="true">Кессон</button>
-            <button type="button" class="tab" data-svc="septik" aria-pressed="false">Септик</button>
+            <button type="button" class="tab" data-svc="septik" aria-pressed="true">Септик</button>
+            <button type="button" class="tab" data-svc="kesson" aria-pressed="false">Кессон</button>
             <button type="button" class="tab" data-svc="drenazh" aria-pressed="false">Дренаж</button>
             <button type="button" class="tab" data-svc="voda" aria-pressed="false">Водоснабжение</button>
           </div>
         </div>
 
         <div class="field">
-          <label for="calcRange" id="calcRangeLbl">Глубина кессона</label>
+          <label for="calcRange" id="calcRangeLbl">Количество жильцов</label>
           <div class="range">
-            <input type="range" id="calcRange" min="18" max="30" step="1" value="20">
-            <output id="calcVal" for="calcRange">2,0 м</output>
+            <input type="range" id="calcRange" min="3" max="10" step="1" value="5">
+            <output id="calcVal" for="calcRange">5 чел.</output>
           </div>
         </div>
 
         <div class="field">
-          <p class="lbl">Дополнительно</p>
+          <p class="lbl">Условия на участке</p>
           <div class="opts" id="calcOpts"></div>
         </div>
       </div>
 
       <div class="calc__out">
-        <p class="calc__sum"><small>Ориентировочно</small><span id="calcSum">от 68 000 ₽</span></p>
-        <p id="calcBase" class="mono" style="font-size:13.5px;color:var(--on-band-muted)">Монтаж под ключ · 1 день работ</p>
-        <a class="btn btn--accent" href="#zayavka">Уточнить цену по участку</a>
-        <p class="calc__hint">Расчёт демонстрационный: итог зависит от типа грунта, уровня грунтовых вод и подъезда техники. Выезд инженера — бесплатно.</p>
+        <p class="calc__title">Что получится</p>
+        <dl class="calc__spec" id="calcSpec"></dl>
+        <a class="btn btn--accent" href="#zayavka">Подобрать точно и рассчитать</a>
+        <p class="calc__hint">Финальную конфигурацию и стоимость называем после осмотра участка — выезд бесплатный.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================= РАБОТЫ =================
+     Фотографии лежат в docs/assets/photos/. Пока файла нет, снимок сам прячется,
+     а если не загружено ни одного — скрывается весь раздел. Как добавить свои —
+     смотрите docs/assets/photos/README.md -->
+<section id="raboty" class="works" hidden>
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Наши работы</p>
+      <h2>Фотографии с объектов, а не из каталога</h2>
+      <p class="lead">Снимаем на монтаже: основание, обсыпка, геотекстиль, колодцы. По этим кадрам видно, как делается работа, которую потом закопают.</p>
+    </div>
+
+    <ul class="gallery">
+      <li class="shot">
+        <a href="assets/photos/septik-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-01.jpg" alt="Станция биологической очистки на участке перед установкой" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Станция перед монтажом</b>Привезли на участок в день установки</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/septik-02.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-02.jpg" alt="Смонтированная станция очистки с зелёной крышкой в песчаной обратной засыпке" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Засыпка песком</b>Корпус обсыпан послойно, крышка выведена в уровень</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/septik-03.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-03.jpg" alt="Бетонный колодец с чугунным люком на участке" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Колодец с чугунным люком</b>Горловина выведена выше грунта, чтобы не топило</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/septik-04.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-04.jpg" alt="Котлован с деревянным креплением стенок, работа в обводнённом грунте" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Котлован с креплением стенок</b>Работаем и в обводнённом грунте — стенки не осыпаются</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/septik-05.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-05.jpg" alt="Выровненная песчаная подушка на дне котлована под корпус септика" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Песчаная подушка</b>Основание выровнено — от него зависит, не перекосит ли корпус</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/drenazh-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/drenazh-01.jpg" alt="Дренажная труба в геотекстиле вдоль дома, отдельной линией проложена ливнёвка" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Дренаж вдоль дома</b>Труба в геотекстиле, ливнёвка идёт отдельной линией</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/drenazh-02.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/drenazh-02.jpg" alt="Траншея с геотекстилем вдоль дома на свайном фундаменте" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Пристенный дренаж</b>Контур по периметру свайного фундамента</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/drenazh-03.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/drenazh-03.jpg" alt="Смотровой дренажный колодец с зелёным люком в щебёночной обсыпке" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Смотровой колодец</b>Через него контур промывают, не вскрывая грунт</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= СРОК СЛУЖБЫ ================= -->
+<section id="srok">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Почему 50 лет и больше</p>
+      <h2>Септик изнашивается не от времени, а от плохого монтажа</h2>
+      <p class="lead">Корпус в земле не гниёт и не ржавеет — при целом корпусе станции служат десятилетиями. Из строя они выходят по трём причинам, и все три закрываются на этапе установки.</p>
+    </div>
+
+    <ul class="cards">
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="10" width="24" height="22" rx="3"/><path d="M8 18h24M14 10V6M26 10V6"/></svg>
+        <h3>Корпус</h3>
+        <p>Полипропилен и стеклопластик не корродируют и не разрушаются в грунте: им безразличны влага, соли и перепады температуры. Главное — не повредить корпус при монтаже и не дать грунту его сдавить.</p>
+      </li>
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 30h28M10 30V20l10-8 10 8v10"/><path d="M16 30v-7h8v7"/></svg>
+        <h3>Основание и засыпка</h3>
+        <p>Выровненная песчаная подушка, послойная обсыпка песком и крепление от всплытия при высоком уровне грунтовых вод. Перекос корпуса и весеннее выдавливание — это всегда следствие спешки в котловане.</p>
+      </li>
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="12"/><path d="M20 13v7l5 3"/></svg>
+        <h3>Обслуживание</h3>
+        <p>Откачка ила по регламенту и промывка эрлифтов. Компрессор и насос — расходники, их меняют раз в несколько лет; это дешевле новой станции и продлевает жизнь всей системы.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
 <!-- ================= ЭТАПЫ ================= -->
-<section id="etapy">
+<section id="etapy" class="cases">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Как проходит работа</p>
-      <h2>От звонка до подписанного акта — четыре шага</h2>
+      <h2>От звонка до запуска — четыре шага</h2>
     </div>
     <ol class="steps">
       <li class="step">
         <h3>Заявка и вопросы по телефону</h3>
-        <p>Спрашиваем про участок: есть ли скважина, сколько жильцов, какой грунт и куда отводить воду. Часто цену называем сразу.</p>
+        <p>Спрашиваем про участок: сколько жильцов, какой грунт, есть ли скважина, куда можно отвести воду. Часто уже на этом этапе понятно, что подойдёт.</p>
         <span class="step__time">15 минут</span>
       </li>
       <li class="step">
-        <h3>Выезд инженера и замер</h3>
-        <p>Смотрим подъезд для техники, УГВ и точки подключения. На месте согласуем схему и подписываем договор с фиксированной сметой.</p>
-        <span class="step__time">1–2 дня после заявки</span>
+        <h3>Выезд, замер и подбор</h3>
+        <p>Смотрим подъезд для техники, уровень грунтовых вод и точки подключения. Подбираем оборудование под задачу и бюджет и называем финальную стоимость.</p>
+        <span class="step__time">бесплатно</span>
       </li>
       <li class="step">
-        <h3>Монтаж и пусконаладка</h3>
-        <p>Копаем, ставим оборудование, утепляем, подключаем электрику и запускаем систему. Убираем за собой и вывозим грунт.</p>
-        <span class="step__time">1 день на объекте</span>
+        <h3>Доставка и монтаж</h3>
+        <p>Привозим оборудование бесплатно, копаем, готовим основание, ставим, подключаем и запускаем. Убираем за собой участок.</p>
+        <span class="step__time">1–2 дня на объекте</span>
       </li>
       <li class="step">
-        <h3>Сдача, акт и гарантия</h3>
-        <p>Показываем работу системы, передаём паспорта оборудования и инструкцию по обслуживанию. Гарантия на монтаж — 5 лет.</p>
+        <h3>Сдача и документы</h3>
+        <p>Показываем систему в работе, передаём паспорта на оборудование и объясняем, как обслуживать, чтобы станция отработала свой срок.</p>
         <span class="step__time">в день монтажа</span>
       </li>
     </ol>
-  </div>
-</section>
-
-<!-- ================= ОБЪЕКТЫ ================= -->
-<section id="obekty" class="cases">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">Наши объекты</p>
-      <h2>Паспорта последних работ</h2>
-      <p class="lead">Показываем параметры так, как они записаны в актах: что стояло на участке, что смонтировали и сколько это стоило заказчику.</p>
-    </div>
-
-    <ul class="cards">
-      <li class="case">
-        <div class="case__top">
-          <span class="case__tag">Кессон</span>
-          <h3>Пластиковый кессон 1,5 × 2,0 м</h3>
-          <p>д. Юдино, Одинцовский г. о.</p>
-        </div>
-        <dl>
-          <div><dt>Грунт</dt><dd>суглинок</dd></div>
-          <div><dt>Глубина</dt><dd>2,2 м</dd></div>
-          <div><dt>Оборудование</dt><dd>насос 0,75 кВт</dd></div>
-          <div><dt>Срок работ</dt><dd>1 день</dd></div>
-          <div><dt>Стоимость</dt><dd>96 400 ₽</dd></div>
-        </dl>
-      </li>
-      <li class="case">
-        <div class="case__top">
-          <span class="case__tag">Септик</span>
-          <h3>Станция на 5 жильцов, отвод насосом</h3>
-          <p>СНТ «Берёзка», Пушкинский г. о.</p>
-        </div>
-        <dl>
-          <div><dt>Грунт</dt><dd>глина, УГВ 1,2 м</dd></div>
-          <div><dt>Производительность</dt><dd>1,0 м³/сут</dd></div>
-          <div><dt>Залповый сброс</dt><dd>250 л</dd></div>
-          <div><dt>Срок работ</dt><dd>2 дня</dd></div>
-          <div><dt>Стоимость</dt><dd>78 900 ₽</dd></div>
-        </dl>
-      </li>
-      <li class="case">
-        <div class="case__top">
-          <span class="case__tag">Дренаж</span>
-          <h3>Пристенный дренаж + ливнёвка</h3>
-          <p>КП «Сосны», Дмитровский г. о.</p>
-        </div>
-        <dl>
-          <div><dt>Периметр</dt><dd>68 пог. м</dd></div>
-          <div><dt>Труба</dt><dd>110 мм в геотекстиле</dd></div>
-          <div><dt>Колодцы</dt><dd>4 ревизионных</dd></div>
-          <div><dt>Срок работ</dt><dd>3 дня</dd></div>
-          <div><dt>Стоимость</dt><dd>264 300 ₽</dd></div>
-        </dl>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= ОТЗЫВЫ ================= -->
-<section>
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">Отзывы заказчиков</p>
-      <h2>Что говорят после сдачи объекта</h2>
-    </div>
-    <ul class="quotes">
-      <li class="quote">
-        <p>«Приехали в четверг на замер, в субботу уже стоял кессон. Что понравилось — цена в договоре совпала с той, что назвали по телефону, доплат не появилось.»</p>
-        <footer><b>Сергей М.</b>Одинцовский г. о., кессон под скважину</footer>
-      </li>
-      <li class="quote">
-        <p>«У нас глина и вода близко, два подрядчика отказались. Здесь предложили якорение и отвод насосом, всё объяснили на схеме. Второй сезон — никаких всплытий.»</p>
-        <footer><b>Ирина В.</b>Пушкинский г. о., септик на 5 человек</footer>
-      </li>
-      <li class="quote">
-        <p>«После дождей вода стояла у крыльца. Сделали дренаж по периметру и ливнёвку, вывели в кювет. Осенью впервые сухо, подвал не сырой.»</p>
-        <footer><b>Алексей и Наталья Д.</b>Дмитровский г. о., дренаж 68 пог. м</footer>
-      </li>
-    </ul>
   </div>
 </section>
 
@@ -718,28 +728,32 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     </div>
     <div class="faq">
       <details open>
-        <summary>Можно ли ставить септик, если грунтовые вода высоко?</summary>
-        <p>Да. При высоком УГВ станцию бетонируем или крепим на якорную плиту, чтобы её не выдавило весной, а очищенную воду отводим принудительно — дренажным насосом в колодец или кювет. Решение принимаем на замере, после проверки уровня воды в шурфе.</p>
+        <summary>Можно ли ставить септик, если грунтовые воды высоко?</summary>
+        <p>Да, это наша обычная работа. При высоком уровне грунтовых вод корпус крепим на якорную плиту или бетонируем, чтобы весной его не выдавило, а очищенную воду отводим принудительно — насосом в колодец или кювет. Стенки котлована при этом крепим, чтобы не осыпались. Решение принимаем на замере, после проверки воды в шурфе.</p>
       </details>
       <details>
-        <summary>Вы работаете зимой?</summary>
-        <p>Работаем круглый год. Мёрзлый слой проходим техникой, котлован сразу закрываем и утепляем. Зимой обычно свободнее график и меньше очередь, а цена монтажа не меняется.</p>
+        <summary>Сколько на самом деле служит септик?</summary>
+        <p>Корпус — от 50 лет: пластик в грунте не ржавеет и не гниёт. Срок съедают не годы, а ошибки монтажа: неровное основание, засыпка глиной вместо песка, отсутствие крепления при высокой воде. Компрессор и насос — расходники, их меняют раз в несколько лет, это штатная история.</p>
       </details>
       <details>
-        <summary>Зачем кессон, если есть адаптер?</summary>
-        <p>Скважинный адаптер дешевле, но доступ к оголовку и автоматике остаётся под землёй: при любом ремонте придётся раскапывать. Кессон — это сухой утеплённый колодец, куда можно спуститься за пять минут. Если планируете круглогодичное проживание, кессон окупается на первом же обслуживании.</p>
+        <summary>Доставка правда бесплатная?</summary>
+        <p>Да, при заказе установки доставка оборудования по Москве и Московской области входит в работу и отдельно не считается.</p>
       </details>
       <details>
-        <summary>Что входит в цену «под ключ»?</summary>
-        <p>Земляные работы, подготовка основания, установка и обвязка оборудования, утепление, электрика в пределах системы, пусконаладка, обратная засыпка и вывоз лишнего грунта. Не входит стоимость самого оборудования и работы, о которых мы предупреждаем отдельно: снос построек, проезд через соседний участок, привозной песок.</p>
+        <summary>Как узнать стоимость?</summary>
+        <p>Назовите задачу по телефону — сориентируем по вилке сразу. Точную сумму называем после бесплатного выезда: она зависит от грунта, уровня воды, длины трасс и подъезда для техники. Подбираем оборудование под ваш бюджет и делаем финальный расчёт до начала работ.</p>
       </details>
       <details>
-        <summary>На что распространяется гарантия 5 лет?</summary>
-        <p>На монтажные работы: герметичность соединений, обвязку, утепление, уклоны и электрику, выполненную нами. На само оборудование действует гарантия завода-изготовителя — обычно от 1 до 3 лет, паспорта передаём вместе с актом.</p>
+        <summary>Работаете зимой?</summary>
+        <p>Работаем круглый год. Мёрзлый слой проходим техникой, котлован не оставляем открытым. Зимой обычно свободнее график и меньше очередь.</p>
       </details>
       <details>
-        <summary>Как далеко вы выезжаете?</summary>
-        <p>По Московской области до 60 км от МКАД — выезд бесплатный. Дальше 60 км считаем дорогу отдельно и всегда называем сумму до выезда, сюрпризов в смете не будет.</p>
+        <summary>Что входит в работу под ключ?</summary>
+        <p>Земляные работы, подготовка основания, монтаж и обвязка оборудования, утепление, электрика в пределах системы, пусконаладка и обратная засыпка. Отдельно предупреждаем, если на участке нужно что-то ещё: снос построек, привозной песок, проезд через соседний участок.</p>
+      </details>
+      <details>
+        <summary>Куда выезжаете?</summary>
+        <p>По всей Москве и Московской области. Скажите населённый пункт — согласуем день выезда.</p>
       </details>
     </div>
   </div>
@@ -750,21 +764,21 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   <div class="wrap form-grid">
     <div>
       <p class="eyebrow">Заявка на выезд</p>
-      <h2>Приедем, замерим и назовём точную цену</h2>
-      <p class="lead" style="margin-top:14px">Перезваниваем в течение 15 минут в рабочее время. Если удобнее — напишите в мессенджер, ответим там же.</p>
+      <h2>Приедем, посмотрим участок и назовём точную цену</h2>
+      <p class="lead" style="margin-top:14px">Перезваниваем в течение 15 минут в рабочее время. Если удобнее написать — пишите в WhatsApp, ответим там же.</p>
 
       <div class="contacts">
         <div class="contact">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg>
-          <div><b>+7 (495) 123-45-67</b><span>ежедневно 8:00–21:00</span></div>
+          <div><b><a href="tel:+79153469728" style="text-decoration:none">+7 (915) 346-97-28</a></b><span>ежедневно 8:00–21:00</span></div>
         </div>
         <div class="contact">
-          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          <div><b>zakaz@akvagrunt.demo</b><span>сметы, договоры, документы</span></div>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+          <div><b><a href="https://wa.me/79153469728" target="_blank" rel="noopener" style="text-decoration:none">Написать в WhatsApp</a></b><span>пришлите фото участка — сориентируем быстрее</span></div>
         </div>
         <div class="contact">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-          <div><b>Московская область</b><span>выезд до 60 км от МКАД — бесплатно</span></div>
+          <div><b>Москва и область</b><span>выезд, замер и подбор — бесплатно</span></div>
         </div>
       </div>
     </div>
@@ -792,13 +806,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       <div class="f-row">
         <div class="field">
           <label for="fPlace">Населённый пункт</label>
-          <input type="text" id="fPlace" name="place" autocomplete="address-level2" placeholder="например, д. Юдино">
+          <input type="text" id="fPlace" name="place" autocomplete="address-level2" placeholder="например, Дмитров">
         </div>
         <div class="field">
           <label for="fSvc">Что нужно сделать</label>
           <select id="fSvc" name="service">
-            <option>Кессон для скважины</option>
             <option>Септик, автономная канализация</option>
+            <option>Кессон для скважины</option>
             <option>Дренаж и ливнёвка</option>
             <option>Водоснабжение дома</option>
             <option>Обслуживание или ремонт</option>
@@ -809,7 +823,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 
       <div class="field">
         <label for="fText">Коротко о задаче</label>
-        <textarea id="fText" name="text" placeholder="Глубина скважины, число жильцов, что уже стоит на участке, куда можно отвести воду"></textarea>
+        <textarea id="fText" name="text" placeholder="Сколько жильцов, что уже стоит на участке, какой грунт, куда можно отвести воду"></textarea>
       </div>
 
       <!-- Ловушка для спам-ботов: человек это поле не видит и не заполняет -->
@@ -842,43 +856,42 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
             <path d="M16 6c0 0 6 7.2 6 11a6 6 0 1 1-12 0c0-3.8 6-11 6-11z" fill="#E09405"/>
             <path d="M2 23h28M2 27h28" stroke="currentColor" stroke-width="1.6" opacity=".55"/>
           </svg>
-          <span><span class="logo__name">АкваГрунт</span><span class="logo__sub">кессоны · септики · дренаж</span></span>
+          <span><span class="logo__name">Aqvatonia</span><span class="logo__sub">септики · кессоны · дренаж</span></span>
         </a>
-        <p style="color:var(--on-band-muted);max-width:38ch;font-size:14px">Монтаж инженерных систем участка в Московской области с 2013 года. Своя техника, свои бригады, договор с фиксированной сметой.</p>
+        <p style="color:var(--on-band-muted);max-width:38ch;font-size:14px">Монтаж септиков, кессонов и дренажа по Москве и Московской области. Команда работает больше 10 лет.</p>
       </div>
       <div>
         <h4>Услуги</h4>
         <ul>
-          <li><a href="#uslugi">Кессоны для скважин</a></li>
           <li><a href="#uslugi">Септики и канализация</a></li>
+          <li><a href="#uslugi">Кессоны для скважин</a></li>
           <li><a href="#uslugi">Дренаж и ливнёвка</a></li>
           <li><a href="#uslugi">Водоснабжение дома</a></li>
-          <li><a href="#raschet">Калькулятор стоимости</a></li>
+          <li><a href="#podbor">Подбор системы</a></li>
         </ul>
       </div>
       <div>
         <h4>Контакты</h4>
         <ul>
-          <li><a href="tel:+74951234567">+7 (495) 123-45-67</a></li>
-          <li><a href="mailto:zakaz@akvagrunt.demo">zakaz@akvagrunt.demo</a></li>
+          <li><a href="tel:+79153469728">+7 (915) 346-97-28</a></li>
+          <li><a href="https://wa.me/79153469728" target="_blank" rel="noopener">WhatsApp</a></li>
           <li>Ежедневно 8:00–21:00</li>
-          <li>Московская область, до 60 км от МКАД</li>
+          <li>Москва и Московская область</li>
         </ul>
       </div>
     </div>
     <div class="foot__bottom">
-      <!-- РЕКВИЗИТЫ: подставьте свои, когда зарегистрируете ИП или самозанятость -->
-      <span>__ФИО ИЛИ НАЗВАНИЕ__ · ИНН __ИНН__</span>
+      <span>Кузовкин Руслан Алексеевич</span>
       <span><a href="privacy.html">Политика конфиденциальности</a></span>
-      <span>© <span id="year">2026</span> АкваГрунт. Цены на сайте не являются публичной офертой.</span>
+      <span>© <span id="year">2026</span> Aqvatonia. Информация на сайте не является публичной офертой.</span>
     </div>
   </div>
 </footer>
 
 <!-- ================= МОБИЛЬНАЯ ПАНЕЛЬ ================= -->
 <nav class="callbar" aria-label="Быстрая связь">
-  <a href="tel:+74951234567"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg>Позвонить</a>
-  <a href="#raschet"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h3M8 16h3M15 12v5"/></svg>Расчёт</a>
+  <a href="tel:+79153469728"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg>Позвонить</a>
+  <a href="https://wa.me/79153469728" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>WhatsApp</a>
   <a class="pr" href="#zayavka"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>Заявка</a>
 </nav>
 
@@ -886,66 +899,106 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   section[id]{scroll-margin-top:84px}
+  [hidden]{display:none !important}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-  .draft{background:var(--accent);color:var(--on-accent);font-size:14px;padding:9px 0;line-height:1.45}
-  .draft strong{font-weight:700}
   .form-sec a{color:var(--accent)}
   .foot__bottom a{color:var(--on-band-muted);text-decoration:underline}
   .foot__bottom a:hover{color:var(--accent)}
+  .contact a{color:inherit}
+  .contact a:hover{color:var(--accent)}
+
+  /* карточка услуги: вместо цены — обещание подбора */
+  .card__cta{font-family:Oswald,sans-serif;font-size:19px;font-weight:600;color:var(--brand-text)}
+  .card__cta small{display:block;font-family:"Golos Text",sans-serif;font-size:13px;font-weight:400;
+    color:var(--muted);letter-spacing:0;margin-top:4px}
+
+  /* результат подбора */
+  .calc__title{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--on-band-muted);margin:0}
+  .calc__spec{margin:0;display:flex;flex-direction:column}
+  .calc__spec div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;
+    border-bottom:1px dotted rgba(255,255,255,.2);font-size:15px}
+  .calc__spec div:last-child{border-bottom:0}
+  .calc__spec dt{color:var(--on-band-muted)}
+  .calc__spec dd{margin:0;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+
+  /* галерея работ */
+  .works{background:var(--surface-2)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:16px}
+  .shot{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;display:flex;flex-direction:column}
+  .shot a{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--surface-2)}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+  .shot a:hover img{transform:scale(1.03)}
+  .shot__cap{padding:14px 16px 16px;margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
+  .shot__cap b{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:3px}
 </style>
 
 <script>
 (function(){
   "use strict";
-  var rub = new Intl.NumberFormat('ru-RU');
-  var money = function(n){ return rub.format(Math.round(n/500)*500) + ' ₽'; };
 
-  /* ---------- Калькулятор ----------
-     Чтобы поменять цены — правьте числа в этом объекте. */
+  /* ---------- ПОДБОР СИСТЕМЫ ----------
+     Здесь нет денег: показываем конфигурацию, а стоимость считаем на выезде. */
   var SERVICES = {
-    kesson: {
-      label:'Глубина кессона',
-      min:18, max:30, step:1, val:20,
-      fmt:function(v){ return (v/10).toFixed(1).replace('.', ',') + ' м'; },
-      note:'Монтаж под ключ · 1 день работ',
-      base:function(v){ return 68000 + Math.max(0, v-20) * 6500; },
-      opts:[
-        {t:'Утеплённый металлический кессон, сталь 4 мм', add:function(){ return 24000; }},
-        {t:'Оголовок, насос и автоматика', add:function(){ return 19000; }},
-        {t:'Обратная засыпка песком с трамбовкой', add:function(){ return 8500; }}
-      ]
-    },
     septik: {
       label:'Количество жильцов', min:3, max:10, step:1, val:5,
       fmt:function(v){ return v + ' чел.'; },
-      note:'Монтаж и запуск станции · 1–2 дня',
-      base:function(v){ return 49000 + (v-3) * 7200; },
+      spec:function(v){ return [
+        ['Производительность', (v*0.2).toFixed(1).replace('.', ',') + ' м³/сут'],
+        ['Залповый сброс',     'от ' + v*50 + ' л'],
+        ['Класс станции',      v <= 5 ? 'компактная' : 'усиленная'],
+        ['Срок монтажа',       v <= 5 ? '1 день' : '1–2 дня']
+      ]; },
       opts:[
-        {t:'Принудительный отвод стоков: насос и колодец', add:function(){ return 21000; }},
-        {t:'Якорение или бетонирование при высоком УГВ', add:function(){ return 17500; }},
-        {t:'Утеплённая крышка и удлинение горловины', add:function(){ return 6800; }}
+        { t:'Грунтовые воды высоко', s:['Крепление корпуса', 'якорная плита'] },
+        { t:'Нет уклона для самотёка', s:['Отвод стоков', 'насосом'] },
+        { t:'Живём сезонно', s:['Режим', 'консервация на зиму'] }
+      ]
+    },
+    kesson: {
+      label:'Глубина кессона', min:18, max:30, step:1, val:20,
+      fmt:function(v){ return (v/10).toFixed(1).replace('.', ',') + ' м'; },
+      spec:function(v){ return [
+        ['Высота кессона', (v/10).toFixed(1).replace('.', ',') + ' м'],
+        ['Горловина',      'выше грунта на 0,2 м'],
+        ['Утепление',      v < 22 ? 'обязательно' : 'по грунту'],
+        ['Срок монтажа',   '1 день']
+      ]; },
+      opts:[
+        { t:'Живём круглый год', s:['Ввод в дом', 'с греющим кабелем'] },
+        { t:'Нужны насос и автоматика', s:['Комплект', 'оголовок, насос, автоматика'] },
+        { t:'Техника на участок не заедет', s:['Земляные работы', 'вручную'] }
       ]
     },
     drenazh: {
       label:'Длина контура', min:20, max:140, step:5, val:60,
       fmt:function(v){ return v + ' пог. м'; },
-      note:'Труба 110 мм, щебень, геотекстиль',
-      base:function(v){ return v * 3600; },
+      spec:function(v){ return [
+        ['Контур',            v + ' пог. м'],
+        ['Смотровые колодцы', Math.ceil(v/20) + ' шт.'],
+        ['Перепад по уклону', (v*2/1000).toFixed(2).replace('.', ',') + ' м'],
+        ['Срок работ',        v <= 60 ? '2–3 дня' : '3–5 дней']
+      ]; },
       opts:[
-        {t:'Ливневая канализация вдоль контура', add:function(v){ return v * 1100; }},
-        {t:'Ревизионные колодцы, один на 20 м', add:function(v){ return Math.ceil(v/20) * 7400; }},
-        {t:'Дренажный колодец с откачивающим насосом', add:function(){ return 34000; }}
+        { t:'Подтапливает подвал', s:['Схема', 'пристенный + кольцевой'] },
+        { t:'Нужен отвод с крыши', s:['Ливнёвка', 'отдельной линией'] },
+        { t:'Отводить воду некуда', s:['Приёмник', 'колодец с насосом'] }
       ]
     },
     voda: {
       label:'Расстояние от скважины до дома', min:5, max:60, step:5, val:15,
       fmt:function(v){ return v + ' м'; },
-      note:'Траншея ниже промерзания · ПНД 32 мм',
-      base:function(v){ return 58000 + Math.max(0, v-10) * 1450; },
+      spec:function(v){ return [
+        ['Траншея',        v + ' м, глубина 1,6–2,0 м'],
+        ['Труба',          'ПНД 32 мм, ' + (v + 4) + ' м'],
+        ['Греющий кабель', v > 25 ? 'рекомендуем' : 'по желанию'],
+        ['Срок монтажа',   v <= 25 ? '1–2 дня' : '2–3 дня']
+      ]; },
       opts:[
-        {t:'Греющий кабель в трубе', add:function(v){ return v * 820; }},
-        {t:'Гидроаккумулятор и группа безопасности', add:function(){ return 16500; }},
-        {t:'Фильтры водоподготовки', add:function(){ return 28000; }}
+        { t:'Живём круглый год', s:['Утепление', 'кабель и скорлупа ППУ'] },
+        { t:'Вода из скважины жёсткая', s:['Фильтры', 'по анализу воды'] },
+        { t:'Много точек разбора', s:['Разводка', 'коллектор по точкам'] }
       ]
     }
   };
@@ -955,43 +1008,42 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   var out    = document.getElementById('calcVal');
   var rlabel = document.getElementById('calcRangeLbl');
   var optBox = document.getElementById('calcOpts');
-  var sumEl  = document.getElementById('calcSum');
-  var baseEl = document.getElementById('calcBase');
-  var current = 'kesson';
+  var specEl = document.getElementById('calcSpec');
+  var current = 'septik';
   var checked = {};
 
+  function row(dt, dd){
+    var d = document.createElement('div');
+    var a = document.createElement('dt'); a.textContent = dt;
+    var b = document.createElement('dd'); b.textContent = dd;
+    d.appendChild(a); d.appendChild(b);
+    return d;
+  }
+
   function buildOpts(){
-    var svc = SERVICES[current], v = +range.value;
     optBox.textContent = '';
-    svc.opts.forEach(function(o, i){
+    SERVICES[current].opts.forEach(function(o, i){
       var id = 'opt-' + current + '-' + i;
       var lab = document.createElement('label');
       lab.className = 'opt';
       var inp = document.createElement('input');
       inp.type = 'checkbox'; inp.id = id;
       inp.checked = !!checked[current + i];
-      inp.addEventListener('change', function(){ checked[current + i] = inp.checked; recalc(); });
+      inp.addEventListener('change', function(){ checked[current + i] = inp.checked; render(); });
       var span = document.createElement('span');
-      span.textContent = o.t + ' ';
-      var b = document.createElement('b');
-      b.className = 'mono';
-      b.style.whiteSpace = 'nowrap';
-      b.textContent = '+ ' + money(o.add(v));
-      span.appendChild(b);
+      span.textContent = o.t;
       lab.appendChild(inp); lab.appendChild(span);
       optBox.appendChild(lab);
     });
   }
 
-  function recalc(){
+  function render(){
     var svc = SERVICES[current], v = +range.value;
-    var total = svc.base(v);
-    svc.opts.forEach(function(o, i){ if (checked[current + i]) total += o.add(v); });
     out.value = svc.fmt(v);
-    sumEl.textContent = money(total) + ' – ' + money(total * 1.22);
-    baseEl.textContent = svc.note;
-    Array.prototype.forEach.call(optBox.querySelectorAll('b'), function(b, i){
-      b.textContent = '+ ' + money(svc.opts[i].add(v));
+    specEl.textContent = '';
+    svc.spec(v).forEach(function(r){ specEl.appendChild(row(r[0], r[1])); });
+    svc.opts.forEach(function(o, i){
+      if (checked[current + i]) specEl.appendChild(row(o.s[0], o.s[1]));
     });
   }
 
@@ -1002,23 +1054,41 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     range.min = svc.min; range.max = svc.max; range.step = svc.step; range.value = svc.val;
     rlabel.textContent = svc.label;
     buildOpts();
-    recalc();
+    render();
   }
 
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){ selectService(t.dataset.svc); });
-  });
-  range.addEventListener('input', function(){
-    SERVICES[current].val = +range.value;
-    recalc();
-  });
-  selectService('kesson');
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ selectService(t.dataset.svc); }); });
+  range.addEventListener('input', function(){ SERVICES[current].val = +range.value; render(); });
+  selectService('septik');
 
-  /* ---------- Форма заявки ---------- */
+  /* ---------- ГАЛЕРЕЯ ----------
+     Раздел скрыт, пока не загрузилось ни одной фотографии: так на сайте
+     никогда не появятся «битые» картинки, а после загрузки файлов
+     в assets/photos/ галерея покажется сама. */
+  var works = document.getElementById('raboty');
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot img'));
+  shots.forEach(function(img){
+    function fail(){ img.parentNode.parentNode.hidden = true; }
+    function ok(){ works.hidden = false; }
+    if (img.complete) { (img.naturalWidth ? ok : fail)(); }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', fail);
+  });
+
+  /* ---------- ФОРМА ЗАЯВКИ ---------- */
   var form = document.getElementById('leadForm');
   var box  = document.getElementById('formSummary');
   var list = document.getElementById('formSummaryList');
+  var submitBtn = document.getElementById('fSubmit');
   var tried = false;
+
+  /* КУДА УХОДЯТ ЗАЯВКИ. Заполните две строки — и форма заработает.
+     Инструкция по шагам: README.md рядом с этим файлом. */
+  var DELIVERY = {
+    formspree: '',            // на почту:   'https://formspree.io/f/xxxxxxxx'
+    telegram:  '',            // в Telegram: 'https://имя-воркера.workers.dev'
+    whatsapp:  '79153469728'  // пока верхние две пустые — заявка уходит сюда
+  };
 
   var RULES = [
     { id:'fName',  err:'eName',  msg:'Напишите, как к вам обращаться',
@@ -1033,20 +1103,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     var bad = [];
     RULES.forEach(function(r){
       var el = document.getElementById(r.id);
-      var errEl = document.getElementById(r.err);
       var good = r.ok(el);
-      errEl.textContent = good ? '' : r.msg;
+      document.getElementById(r.err).textContent = good ? '' : r.msg;
       if (el.type !== 'checkbox') el.setAttribute('aria-invalid', good ? 'false' : 'true');
       if (!good) bad.push(r);
     });
     return bad;
   }
-
-  RULES.forEach(function(r){
-    var el = document.getElementById(r.id);
-    var ev = el.type === 'checkbox' ? 'change' : 'blur';
-    el.addEventListener(ev, function(){ if (tried) { validate(); renderSummary(validate()); } });
-  });
 
   function renderSummary(bad){
     if (!bad.length) { box.hidden = true; return; }
@@ -1061,17 +1124,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     box.hidden = false;
   }
 
-  var submitBtn = document.getElementById('fSubmit');
-
-  /* ---------- КУДА УХОДЯТ ЗАЯВКИ ----------
-     Заполните строки ниже — и форма заработает по-настоящему.
-     Пошаговая инструкция: README.md рядом с этим файлом.
-     Заявка уходит одновременно во все настроенные каналы. */
-  var DELIVERY = {
-    formspree: '',            // на почту:  'https://formspree.io/f/xxxxxxxx'
-    telegram:  '',            // в Telegram: 'https://имя-воркера.workers.dev'
-    whatsapp:  '79001234567'  // запасной путь, если ничего сверху не заполнено
-  };
+  RULES.forEach(function(r){
+    var el = document.getElementById(r.id);
+    el.addEventListener(el.type === 'checkbox' ? 'change' : 'blur', function(){
+      if (tried) renderSummary(validate());
+    });
+  });
 
   function payload(){
     return {
@@ -1098,20 +1156,27 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     });
   }
 
+  function waLink(d){
+    var t = 'Здравствуйте! Заявка с сайта.\n' +
+            'Имя: ' + d.name + '\nТелефон: ' + d.phone +
+            (d.place ? '\nНаселённый пункт: ' + d.place : '') +
+            '\nЗадача: ' + d.service +
+            (d.text ? '\nПодробности: ' + d.text : '');
+    return 'https://wa.me/' + DELIVERY.whatsapp + '?text=' + encodeURIComponent(t);
+  }
+
   function replaceForm(html){
     form.innerHTML = html;
     var h = form.querySelector('h3');
-    if (h) { h.setAttribute('tabindex','-1'); h.focus(); }
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
   }
 
   function showDone(name){
     replaceForm(
       '<div class="done">' +
         '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>' +
-        '<div>' +
-          '<h3>Заявка принята</h3>' +
-          '<p>' + name + ', спасибо! Инженер перезвонит в течение 15 минут в рабочее время и согласует день выезда.</p>' +
-        '</div>' +
+        '<div><h3>Заявка принята</h3>' +
+        '<p>' + name + ', спасибо! Перезвоним в течение 15 минут в рабочее время и согласуем день выезда.</p></div>' +
       '</div>'
     );
   }
@@ -1121,25 +1186,15 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     replaceForm(
       '<div class="done fail">' +
         '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' +
-        '<div>' +
-          '<h3>Заявка не ушла</h3>' +
-          '<p>Связь с сервером прервалась — скорее всего, пропал интернет. Позвоните или напишите, мы примем заявку сразу:</p>' +
+        '<div><h3>Заявка не ушла</h3>' +
+          '<p>Связь с сервером прервалась — скорее всего, пропал интернет. Позвоните или напишите, примем заявку сразу:</p>' +
           '<p style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">' +
-            '<a class="btn btn--accent" href="tel:+74951234567">Позвонить</a>' +
+            '<a class="btn btn--accent" href="tel:+79153469728">Позвонить</a>' +
             '<a class="btn btn--outline" href="' + waLink(data) + '" target="_blank" rel="noopener">Написать в WhatsApp</a>' +
           '</p>' +
         '</div>' +
       '</div>'
     );
-  }
-
-  function waLink(d){
-    var t = 'Здравствуйте! Заявка с сайта.\n' +
-            'Имя: ' + d.name + '\nТелефон: ' + d.phone +
-            (d.place ? '\nНаселённый пункт: ' + d.place : '') +
-            '\nЗадача: ' + d.service +
-            (d.text ? '\nПодробности: ' + d.text : '');
-    return 'https://wa.me/' + DELIVERY.whatsapp + '?text=' + encodeURIComponent(t);
   }
 
   form.addEventListener('submit', function(e){
@@ -1154,8 +1209,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     if (DELIVERY.formspree) jobs.push(sendTo(DELIVERY.formspree, data));
     if (DELIVERY.telegram)  jobs.push(sendTo(DELIVERY.telegram, data));
 
-    /* Каналы ещё не настроены — не теряем клиента, уводим в WhatsApp */
-    if (!jobs.length) {
+    if (!jobs.length) {                       // каналы ещё не настроены
       window.open(waLink(data), '_blank', 'noopener');
       showDone(data.name);
       return;
@@ -1169,40 +1223,25 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     });
   });
 
-  /* Год в подвале обновляется сам */
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
-
 })();
 </script>
-<!-- ================= СТАТИСТИКА =================
-     Чтобы видеть, сколько людей заходит и откуда:
-     1. metrika.yandex.ru → «Добавить счётчик» → впишите адрес сайта.
-     2. Скопируйте номер счётчика (например 12345678).
-     3. Раскомментируйте блок ниже (уберите строки со стрелками) и вставьте номер вместо НОМЕР.
-<script type="text/javascript">
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-   ym(НОМЕР, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/НОМЕР" style="position:absolute;left:-9999px" alt=""></div></noscript>
-     ================================================= -->
 
-<!-- Данные о компании для Яндекса и Google: подставьте свои значения -->
+<!-- Данные о компании для Яндекса и Google -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "АкваГрунт",
-  "description": "Монтаж кессонов для скважин, септиков и дренажа под ключ в Московской области.",
+  "name": "Aqvatonia",
+  "description": "Монтаж септиков, кессонов для скважин и дренажа под ключ по Москве и Московской области.",
   "url": "https://musicvibes243-commits.github.io/-/",
   "image": "https://musicvibes243-commits.github.io/-/og.png",
-  "telephone": "+7 (495) 123-45-67",
-  "email": "zakaz@akvagrunt.demo",
-  "priceRange": "от 3600 ₽",
-  "areaServed": { "@type": "State", "name": "Московская область" },
+  "telephone": "+7 (915) 346-97-28",
+  "areaServed": [
+    { "@type": "City", "name": "Москва" },
+    { "@type": "State", "name": "Московская область" }
+  ],
   "address": { "@type": "PostalAddress", "addressRegion": "Московская область", "addressCountry": "RU" },
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
@@ -1210,8 +1249,8 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     "opens": "08:00", "closes": "21:00"
   }],
   "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж кессона для скважины" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж септика и автономной канализации" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж кессона для скважины" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Дренаж и ливневая канализация" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Водоснабжение дома от скважины" } }
   ]
