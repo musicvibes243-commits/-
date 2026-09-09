@@ -895,6 +895,27 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   <a class="pr" href="#zayavka"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>Заявка</a>
 </nav>
 
+<!-- ================= ПТИЦА =================
+     Летит вместе со скроллом. Векторная, поэтому весит килобайты, а не мегабайты.
+     Прячется на телефонах и при системной настройке «уменьшить движение».
+     Чтобы убрать совсем — удалите этот блок и функцию «ПТИЦА» в скрипте ниже. -->
+<div class="bird" id="bird" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <g class="bird__wing bird__wing--up">
+      <path d="M52 48 Q 44 24 26 12 Q 34 30 42 48 Z"/>
+    </g>
+    <g class="bird__body">
+      <path d="M74 44 L96 39 L74 48 Z"/>
+      <circle cx="68" cy="46" r="8"/>
+      <ellipse cx="48" cy="53" rx="20" ry="9.5" transform="rotate(-12 48 53)"/>
+      <path d="M32 60 L10 55 L18 63 L8 71 L30 66 Z"/>
+    </g>
+    <g class="bird__wing bird__wing--down">
+      <path d="M50 52 Q 44 74 28 88 Q 38 70 42 52 Z"/>
+    </g>
+  </svg>
+</div>
+
 <style>
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -932,6 +953,20 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .shot a:hover img{transform:scale(1.03)}
   .shot__cap{padding:14px 16px 16px;margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
   .shot__cap b{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:3px}
+
+  /* птица, летящая со скроллом */
+  .bird{position:fixed;left:0;top:0;width:58px;height:58px;z-index:40;pointer-events:none;
+    will-change:transform;transform:translate3d(-200px,-200px,0)}
+  .bird svg{width:100%;height:100%;display:block;overflow:visible;
+    filter:drop-shadow(0 7px 12px rgba(8,26,31,.22))}
+  .bird__body{fill:var(--bird-body)}
+  .bird__wing{fill:var(--bird-wing);transform-box:view-box}
+  .bird__wing--up{transform-origin:52px 48px;animation:flapUp .17s infinite alternate ease-in-out}
+  .bird__wing--down{transform-origin:50px 52px;animation:flapDown .17s infinite alternate ease-in-out}
+  @keyframes flapUp{from{transform:rotate(-16deg) scaleY(.88)}to{transform:rotate(28deg) scaleY(1.06)}}
+  @keyframes flapDown{from{transform:rotate(16deg) scaleY(1.06)}to{transform:rotate(-26deg) scaleY(.88)}}
+  @media (max-width:900px){.bird{display:none}}
+  @media (prefers-reduced-motion:reduce){.bird{display:none}}
 </style>
 
 <script>
@@ -1222,6 +1257,57 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       if (ok) showDone(data.name); else showFail(data);
     });
   });
+
+  /* ---------- ПТИЦА ----------
+     Летит по странице вслед за прокруткой: горизонталь и вертикаль считаются
+     от того, сколько процентов страницы пролистано. Когда прокрутка стоит,
+     птица зависает и покачивается на месте. */
+  (function(){
+    var el = document.getElementById('bird');
+    if (!el) return;
+    var still  = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var narrow = window.matchMedia('(max-width: 900px)');
+    if (still.matches || narrow.matches) return;
+
+    var HALF = 29;               // половина размера птицы, чтобы центрировать
+    var x = innerWidth * 0.5, y = innerHeight * 0.32, angle = 0, flip = 1;
+
+    function target(){
+      var max = document.documentElement.scrollHeight - innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      var tx = (50 + 33 * Math.sin(p * Math.PI * 4.2)) / 100 * innerWidth;
+      var ty = (44 + 26 * Math.sin(p * Math.PI * 2.6 + 1.2)) / 100 * innerHeight;
+      var pad = HALF + 26;       // крылья выходят за рамку — держим запас у краёв
+      return {
+        x: Math.min(innerWidth - pad, Math.max(pad, tx)),
+        y: Math.min(innerHeight - pad, Math.max(88, ty))
+      };
+    }
+
+    function frame(now){
+      if (!document.hidden) {
+        var t = target();
+        t.x += Math.sin(now / 760) * 6;      // покачивание на месте
+        t.y += Math.sin(now / 430) * 8;
+
+        var nx = x + (t.x - x) * 0.06;       // плавное догоняние цели
+        var ny = y + (t.y - y) * 0.06;
+        var dx = nx - x, dy = ny - y;
+
+        if (Math.abs(dx) + Math.abs(dy) > 0.3) {
+          flip = dx < 0 ? -1 : 1;
+          var a = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
+          angle += (Math.max(-24, Math.min(24, a)) - angle) * 0.12;
+        }
+        x = nx; y = ny;
+        el.style.transform =
+          'translate3d(' + (x - HALF).toFixed(1) + 'px,' + (y - HALF).toFixed(1) + 'px,0)' +
+          ' rotate(' + (angle * flip).toFixed(2) + 'deg) scaleX(' + flip + ')';
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
 
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();

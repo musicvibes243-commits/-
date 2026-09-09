@@ -23,6 +23,8 @@
   --danger:#A32017;
   --focus:#15616D;
   --hero-accent:#12626F;
+  --bird-body:#0E343D;
+  --bird-wing:#E09405;
   /* цвета схемы-разреза */
   --soil-1:#CBBFA1;      /* плодородный слой */
   --soil-2:#B7A583;      /* суглинок */
@@ -38,7 +40,7 @@
     --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
     --brand-text:#7CC2D2;
     --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-    --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2;
+    --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2; --bird-body:#7CC2D2; --bird-wing:#F0AC2B;
     --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
     --water:#3E93BC;
     --shadow:0 1px 2px rgba(0,0,0,.4);
@@ -50,7 +52,7 @@
   --band:#0B1B20; --band-2:#123039; --on-band:#E9EFED; --on-band-muted:#93A5A5;
   --brand-text:#7CC2D2;
   --accent:#F0AC2B; --accent-strong:#FFC14D; --on-accent:#1B1200;
-  --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2;
+  --ok:#4FBF95; --danger:#F0857B; --focus:#7CC2D2; --hero-accent:#7CC2D2; --bird-body:#7CC2D2; --bird-wing:#F0AC2B;
   --soil-1:#3A3423; --soil-2:#2E2A1C; --soil-3:#463F28;
   --water:#3E93BC;
   --shadow:0 1px 2px rgba(0,0,0,.4);
