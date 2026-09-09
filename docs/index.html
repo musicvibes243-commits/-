@@ -319,7 +319,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 }
 .callbar a{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  min-height:60px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:12.5px;
+  min-height:60px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:11.5px;
   padding-bottom:env(safe-area-inset-bottom)
 }
 .callbar a.pr{background:var(--accent);color:var(--on-accent)}
@@ -360,7 +360,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 
     <a class="top__phone" href="tel:+79153469728">
       <b>+7 (915) 346-97-28</b>
-      <span>Пн–Вс, 8:00–21:00</span>
+      <span>Круглосуточно</span>
     </a>
     <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
   </div>
@@ -808,16 +808,20 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     <div>
       <p class="eyebrow">Заявка на выезд</p>
       <h2>Приедем, посмотрим участок и назовём точную цену</h2>
-      <p class="lead" style="margin-top:14px">Перезваниваем в течение 15 минут в рабочее время. Если удобнее написать — пишите в WhatsApp, ответим там же.</p>
+      <p class="lead" style="margin-top:14px">Отвечаем круглосуточно: звоните в любое время или пишите в мессенджер — ответим там же.</p>
 
       <div class="contacts">
         <div class="contact">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg>
-          <div><b><a href="tel:+79153469728" style="text-decoration:none">+7 (915) 346-97-28</a></b><span>ежедневно 8:00–21:00</span></div>
+          <div><b><a href="tel:+79153469728" style="text-decoration:none">+7 (915) 346-97-28</a></b><span>круглосуточно, без выходных</span></div>
         </div>
         <div class="contact">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
           <div><b><a href="https://wa.me/79153469728" target="_blank" rel="noopener" style="text-decoration:none">Написать в WhatsApp</a></b><span>пришлите фото участка — сориентируем быстрее</span></div>
+        </div>
+        <div class="contact">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 4.4 3 11.6c-.6.2-.6 1 0 1.2l4.7 1.5 1.8 5.4c.2.5.8.6 1.2.2l2.5-2.7 4.5 3.3c.4.3 1 .1 1.1-.4l3.4-14.8c.2-.6-.4-1.1-1-.9z"/><path d="M8 14.4 18.4 7.2 10.5 16.1"/></svg>
+          <div><b><a href="https://t.me/+79153469728" target="_blank" rel="noopener" style="text-decoration:none">Написать в Telegram</a></b><span>удобно скинуть фото и схему участка</span></div>
         </div>
         <div class="contact">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
@@ -881,7 +885,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       </label>
 
       <button type="submit" class="btn btn--accent" id="fSubmit">Отправить заявку</button>
-      <p class="hint" style="margin:0">Перезваниваем в течение 15 минут в рабочее время. Данные используем только для ответа на заявку.</p>
+      <p class="hint" style="margin:0">Перезваниваем в течение 15 минут в любое время суток. Данные используем только для ответа на заявку.</p>
     </form>
   </div>
 </section>
@@ -918,7 +922,8 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
         <ul>
           <li><a href="tel:+79153469728">+7 (915) 346-97-28</a></li>
           <li><a href="https://wa.me/79153469728" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li>Ежедневно 8:00–21:00</li>
+          <li><a href="https://t.me/+79153469728" target="_blank" rel="noopener">Telegram</a></li>
+          <li>Круглосуточно, без выходных</li>
           <li>Москва и Московская область</li>
         </ul>
       </div>
@@ -935,6 +940,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 <nav class="callbar" aria-label="Быстрая связь">
   <a href="tel:+79153469728"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg>Позвонить</a>
   <a href="https://wa.me/79153469728" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>WhatsApp</a>
+  <a href="https://t.me/+79153469728" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 4.4 3 11.6c-.6.2-.6 1 0 1.2l4.7 1.5 1.8 5.4c.2.5.8.6 1.2.2l2.5-2.7 4.5 3.3c.4.3 1 .1 1.1-.4l3.4-14.8c.2-.6-.4-1.1-1-.9z"/><path d="M8 14.4 18.4 7.2 10.5 16.1"/></svg>Telegram</a>
   <a class="pr" href="#zayavka"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>Заявка</a>
 </nav>
 
@@ -1376,7 +1382,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       '<div class="done">' +
         '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>' +
         '<div><h3>Заявка принята</h3>' +
-        '<p>' + name + ', спасибо! Перезвоним в течение 15 минут в рабочее время и согласуем день выезда.</p></div>' +
+        '<p>' + name + ', спасибо! Перезвоним в течение 15 минут и согласуем день выезда.</p></div>' +
       '</div>'
     );
   }
@@ -1646,7 +1652,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "08:00", "closes": "21:00"
+    "opens": "00:00", "closes": "23:59"
   }],
   "makesOffer": [
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж септика и автономной канализации" } },
