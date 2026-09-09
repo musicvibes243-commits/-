@@ -597,7 +597,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
      Фотографии лежат в docs/assets/photos/. Пока файла нет, снимок сам прячется,
      а если не загружено ни одного — скрывается весь раздел. Как добавить свои —
      смотрите docs/assets/photos/README.md -->
-<section id="raboty" class="works" hidden>
+<section id="raboty" class="works">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Наши работы</p>
@@ -607,52 +607,76 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 
     <ul class="gallery">
       <li class="shot">
-        <a href="assets/photos/septik-01.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/septik-01.jpg" alt="Станция биологической очистки на участке перед установкой" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-montazh-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-montazh-01.jpg" alt="Монтажник опускает станцию биологической очистки в подготовленный котлован" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Станция перед монтажом</b>Привезли на участок в день установки</p>
+        <p class="shot__cap"><b>Станция идёт в котлован</b>Опускаем на стропах, корпус не задевает стенки</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/septik-02.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/septik-02.jpg" alt="Смонтированная станция очистки с зелёной крышкой в песчаной обратной засыпке" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-topol-eko-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-topol-eko-01.jpg" alt="Станция автономной канализации Топол-Эко на участке перед установкой" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Засыпка песком</b>Корпус обсыпан послойно, крышка выведена в уровень</p>
+        <p class="shot__cap"><b>Привезли на объект</b>Доставка входит в работу, когда заказан монтаж</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/septik-03.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/septik-03.jpg" alt="Бетонный колодец с чугунным люком на участке" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-optima-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-optima-01.jpg" alt="Вертикальная станция очистки Optima установлена на участке" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Колодец с чугунным люком</b>Горловина выведена выше грунта, чтобы не топило</p>
+        <p class="shot__cap"><b>Вертикальный корпус</b>Берём, когда на участке мало места под котлован</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/septik-04.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/septik-04.jpg" alt="Котлован с деревянным креплением стенок, работа в обводнённом грунте" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-akva-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-akva-01.jpg" alt="Несколько станций автономной канализации с заводскими номерами на площадке" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Котлован с креплением стенок</b>Работаем и в обводнённом грунте — стенки не осыпаются</p>
+        <p class="shot__cap"><b>Подбор под бюджет</b>Работаем с разными сериями — подбираем по числу жильцов</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/septik-05.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/septik-05.jpg" alt="Выровненная песчаная подушка на дне котлована под корпус септика" loading="lazy" decoding="async">
+        <a href="assets/photos/kotlovan-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/kotlovan-01.jpg" alt="Выровненная песчаная подушка на дне котлована под корпус септика" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Песчаная подушка</b>Основание выровнено — от него зависит, не перекосит ли корпус</p>
+        <p class="shot__cap"><b>Песчаная подушка</b>Основание выровнено — от этого зависит, не перекосит ли корпус</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/drenazh-01.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/drenazh-01.jpg" alt="Дренажная труба в геотекстиле вдоль дома, отдельной линией проложена ливнёвка" loading="lazy" decoding="async">
+        <a href="assets/photos/opalubka-yama-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/opalubka-yama-01.jpg" alt="Котлован с деревянным креплением стенок, монтажник работает в обводнённом грунте" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Дренаж вдоль дома</b>Труба в геотекстиле, ливнёвка идёт отдельной линией</p>
+        <p class="shot__cap"><b>Крепление стенок</b>Обводнённый грунт — не повод отказываться от объекта</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/drenazh-02.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/drenazh-02.jpg" alt="Траншея с геотекстилем вдоль дома на свайном фундаменте" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-ustanovka-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-ustanovka-01.jpg" alt="Смонтированная станция с зелёной крышкой в песчаной обратной засыпке" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Пристенный дренаж</b>Контур по периметру свайного фундамента</p>
+        <p class="shot__cap"><b>Засыпка песком</b>Послойно, песком — глина сдавила бы корпус</p>
       </li>
       <li class="shot">
-        <a href="assets/photos/drenazh-03.jpg" target="_blank" rel="noopener">
-          <img src="assets/photos/drenazh-03.jpg" alt="Смотровой дренажный колодец с зелёным люком в щебёночной обсыпке" loading="lazy" decoding="async">
+        <a href="assets/photos/septik-lyuk-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-lyuk-01.jpg" alt="Горловина септика с зелёным люком, обёрнутая геотекстилем" loading="lazy" decoding="async">
         </a>
-        <p class="shot__cap"><b>Смотровой колодец</b>Через него контур промывают, не вскрывая грунт</p>
+        <p class="shot__cap"><b>Горловина с люком</b>Выведена в уровень грунта: доступ для обслуживания</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/septik-lyuk-02.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/septik-lyuk-02.jpg" alt="Бетонный колодец с чугунным люком на участке после засыпки" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Чугунный люк</b>Горловина выше грунта, чтобы весной не топило</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/drenazh-truba-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/drenazh-truba-01.jpg" alt="Дренажная труба в геотекстиле уложена на щебень вдоль фундамента" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Труба в геотекстиле</b>Полотно не даёт щебню и трубе заилиться</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/transhea-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/transhea-01.jpg" alt="Дренажная траншея с геотекстилем и смотровым колодцем, рядом нивелир на треноге" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Уклон бьём нивелиром</b>Не на глаз: перепад проверяем по всей длине контура</p>
+      </li>
+      <li class="shot">
+        <a href="assets/photos/uchastok-rabota-01.jpg" target="_blank" rel="noopener">
+          <img src="assets/photos/uchastok-rabota-01.jpg" alt="Бригада работает на участке возле дома, отсыпана щебёночная дорожка" loading="lazy" decoding="async">
+        </a>
+        <p class="shot__cap"><b>Своя бригада</b>Копаем, монтируем и убираем за собой в один заезд</p>
       </li>
     </ul>
   </div>
@@ -945,7 +969,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 
   /* галерея работ */
   .works{background:var(--surface-2)}
-  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:16px}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(246px,1fr));gap:16px}
   .shot{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
     overflow:hidden;display:flex;flex-direction:column}
   .shot a{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--surface-2)}
@@ -1097,16 +1121,19 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   selectService('septik');
 
   /* ---------- ГАЛЕРЕЯ ----------
-     Раздел скрыт, пока не загрузилось ни одной фотографии: так на сайте
-     никогда не появятся «битые» картинки, а после загрузки файлов
-     в assets/photos/ галерея покажется сама. */
+     Раздел показан сразу — так он работает и без скриптов, и не мешает
+     браузеру подгружать фотографии. Если какого-то файла нет, снимок
+     убирается молча; если не открылся ни один — прячется весь раздел,
+     чтобы на сайте никогда не висели «битые» картинки. */
   var works = document.getElementById('raboty');
   var shots = Array.prototype.slice.call(document.querySelectorAll('.shot img'));
+  var broken = 0;
   shots.forEach(function(img){
-    function fail(){ img.parentNode.parentNode.hidden = true; }
-    function ok(){ works.hidden = false; }
-    if (img.complete) { (img.naturalWidth ? ok : fail)(); }
-    img.addEventListener('load', ok);
+    function fail(){
+      img.parentNode.parentNode.hidden = true;
+      if (++broken === shots.length) works.hidden = true;
+    }
+    if (img.complete && !img.naturalWidth) fail();
     img.addEventListener('error', fail);
   });
 
