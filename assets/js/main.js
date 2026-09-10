@@ -79,7 +79,7 @@
       }
     });
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 960) open(false);
+      if (window.innerWidth > 1080) open(false);
     });
   })();
 

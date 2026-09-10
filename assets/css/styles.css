@@ -214,7 +214,7 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 @media (max-width: 700px) {
   .header__phone, .icon-btn--wa, .icon-btn--tg { display: none; }
 }
-@media (max-width: 960px) {
+@media (max-width: 1080px) {
   .nav-toggle { display: inline-flex; }
   .logo, .header__tools { position: relative; z-index: 80; }
   body.is-locked .site-header { color: var(--fg); }
@@ -385,6 +385,7 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 /* ---------- Секции ---------- */
 .section { padding-block: clamp(3.5rem, 7vw, var(--space-7)); }
 .section--about, .section--pricing, .section--faq { background: var(--bg-alt); }
+.section--events { background: var(--bg); }
 .section__head { max-width: 62ch; margin-bottom: var(--space-5); }
 .section__lead { color: var(--muted-fg); font-size: 1.075rem; }
 .eyebrow {
@@ -453,6 +454,31 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
   background: var(--primary-soft); color: var(--fg); border: 1px solid var(--border-soft);
 }
 .level--mid { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 25%, transparent); }
+
+/* ---------- Мероприятия ---------- */
+.events { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+@media (min-width: 940px) { .events { grid-template-columns: 1fr 1fr; } }
+
+.events__photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); align-items: start; }
+.events__photo { position: relative; margin: 0; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-md); }
+.events__photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 4; transition: transform 600ms var(--ease); }
+.events__photo:hover img { transform: scale(1.04); }
+.events__photo--a { margin-top: clamp(1rem, 4vw, 2.5rem); }
+.events__photo figcaption {
+  position: absolute; inset: auto 0 0; padding: 1.8rem .9rem .8rem;
+  background: linear-gradient(transparent, rgba(9, 16, 11, .82));
+  color: #F6F1E6; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) { .events__photo img { transition: none; } }
+
+.events__list { display: grid; gap: .6rem; margin: var(--space-3) 0; }
+.events__list li { display: flex; align-items: flex-start; gap: .55rem; font-weight: 500; }
+.events__list svg { color: var(--primary); margin-top: .25rem; }
+.events__note { color: var(--muted-fg); font-size: .975rem; }
+.events__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--border); }
+.events__price { display: grid; margin: 0; }
+.events__price b { font-family: var(--font-head); font-size: 1.7rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.events__price span { font-size: .85rem; color: var(--muted-fg); }
 
 /* ---------- Прайс ---------- */
 .pricetable { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, var(--space-4)); box-shadow: var(--shadow-sm); }
