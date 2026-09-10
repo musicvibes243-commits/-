@@ -1,0 +1,2048 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Симба — ветклиника в Королёве</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --page:#E4E7F4;
+    --sheet:#FFFFFF;
+    --soft:#F4F5FA;
+    --ink:#15171D;
+    --muted:#6C7183;
+    --line:#E7E9F1;
+    --line-2:#D6DAE8;
+    --blue:#A9D5F7;
+    --blue-soft:#E3F0FD;
+    --lime:#D9F361;
+    --lilac:#EFEAFC;
+    --peach:#FDE9E4;
+    --coral:#F9564F;
+    --coral-dark:#DE4139;
+    --coral-wash:#FFECEA;
+    --ok:#2F9E68;
+    --shell:1180px;
+    --gutter:clamp(16px,3.5vw,44px);
+    --r-lg:24px; --r-md:16px; --r-sm:10px;
+    --s-2:.75rem; --s-1:.8125rem; --s0:.9375rem; --s1:1.0625rem; --s2:1.375rem; --s3:1.75rem;
+    --head:"Nunito","Onest","Segoe UI",system-ui,sans-serif;
+    --body:"Onest","Segoe UI",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; overflow-x:clip; background:var(--page); color:var(--ink); font-family:var(--body); font-size:var(--s0); line-height:1.55; -webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{margin:0; font-family:var(--head); font-weight:700; line-height:1.05; text-wrap:balance; letter-spacing:-.015em}
+  p{margin:0}
+  a{color:inherit}
+  img,svg{max-width:100%}
+  #prices{content-visibility:auto; contain-intrinsic-size:1px 2400px}
+  button{font-family:inherit}
+  :focus-visible{outline:2px solid var(--coral); outline-offset:2px; border-radius:6px}
+
+  .wrap{max-width:var(--shell); margin-inline:auto; padding:10px clamp(8px,2vw,18px) 18px}
+  .sheet{background:var(--sheet); border-radius:var(--r-lg); overflow:clip}
+  .pad{padding-inline:var(--gutter)}
+  .block{padding-block:clamp(38px,5vw,64px)}
+  .label{font-family:var(--head); font-weight:600; font-size:var(--s-2); letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .h-sec{font-size:clamp(1.5rem,3.2vw,2.25rem); text-transform:uppercase; margin-top:.75rem}
+  .sec-top{display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem}
+  .lede{color:var(--muted); max-width:56ch}
+  .note{font-size:var(--s-1); color:var(--muted)}
+  .chip-demo{font-family:var(--mono); font-size:.625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border:1px dashed var(--line-2); border-radius:99px; padding:.35rem .7rem; white-space:nowrap}
+
+  /* демо-плашка */
+  .demo{background:var(--ink); color:#fff; font-family:var(--mono); font-size:.6875rem; letter-spacing:.05em; text-align:center; padding:.55rem 1rem; border-radius:99px; margin-bottom:10px}
+  .demo b{color:var(--coral); font-weight:500; text-transform:uppercase; letter-spacing:.14em}
+
+  /* шапка */
+  .top{position:sticky; top:0; z-index:50; background:var(--sheet); border-bottom:1px solid var(--line)}
+  .top-in{display:flex; align-items:center; gap:1.25rem; padding-block:.85rem}
+  .logo{display:flex; align-items:center; gap:.55rem; text-decoration:none; margin-right:auto; font-family:var(--head); font-weight:700; font-size:1.15rem}
+  .logo small{display:block; font-family:var(--mono); font-size:.5625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:400; margin-top:1px}
+  .menu{display:flex; gap:1.4rem; font-size:var(--s-1)}
+  .menu a{text-decoration:none; color:var(--muted)}
+  .menu a:hover{color:var(--ink)}
+  .lang{display:flex; gap:2px; background:var(--soft); border-radius:99px; padding:3px}
+  .lang button{border:0; background:transparent; cursor:pointer; border-radius:99px; padding:.35rem .6rem;
+               font:700 .6875rem/1 var(--head); letter-spacing:.06em; color:var(--muted)}
+  .lang button[aria-pressed="true"]{background:var(--ink); color:#fff}
+  .tel{font-family:var(--mono); font-size:var(--s-1); text-decoration:none; white-space:nowrap}
+  @media (max-width:1000px){ .menu{display:none} }
+  @media (max-width:520px){ .tel{display:none} }
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem; cursor:pointer; text-decoration:none;
+       font:600 var(--s-1)/1 var(--head); padding:.8rem 1.2rem; border-radius:99px; border:1px solid transparent; transition:background .16s, color .16s, border-color .16s}
+  .btn-coral{background:var(--coral); color:#fff}
+  .btn-coral:hover{background:var(--coral-dark)}
+  .btn-line{border-color:var(--line-2); color:var(--ink)}
+  .btn-line:hover{border-color:var(--ink)}
+  .btn-dark{background:var(--ink); color:#fff}
+  .btn-dark:hover{background:#000}
+  .btn-wide{width:100%; padding-block:1.05rem; font-size:var(--s1)}
+
+  /* герой */
+  .hero{padding:clamp(10px,1.4vw,16px)}
+  .hero-card{
+    position:relative; overflow:hidden; border-radius:28px; background:var(--blue);
+    display:grid; grid-template-columns:1.06fr .94fr; align-items:end; min-height:clamp(360px,40vw,470px);
+  }
+  .hero-copy{position:relative; z-index:2; padding:clamp(26px,3.6vw,52px); align-self:center}
+  .hero-card h1{font-size:clamp(1.9rem,4.3vw,3.3rem); line-height:1.06; color:var(--ink); font-weight:800}
+  .hero-card h1 em{
+    font-style:normal; background:var(--lime); border-radius:10px;
+    padding:.02em .22em; box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  }
+  .hero-card p{margin-top:1rem; max-width:40ch; color:#2C3A4B; font-size:var(--s1)}
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; margin-top:1.75rem}
+  .ic-btn{
+    width:46px; height:46px; border-radius:50%; background:#fff; color:var(--ink);
+    display:grid; place-items:center; text-decoration:none; transition:background .16s, color .16s;
+  }
+  .ic-btn:hover{background:var(--ink); color:#fff}
+  .ic-btn.wa{color:#1FA855}
+  .ic-btn.vk{color:#0077FF}
+  .ic-btn.wa:hover,.ic-btn.vk:hover{color:#fff}
+  .hero-lion{
+    position:relative; z-index:2; align-self:end; justify-self:center; display:block;
+    max-height:clamp(290px,36vw,430px); width:auto; margin-bottom:-1px;
+    filter:drop-shadow(0 20px 30px rgba(18,46,80,.2));
+  }
+  .paws{position:absolute; inset:0; width:100%; height:100%; z-index:1; color:#fff}
+  @media (max-width:820px){
+    .hero-card{grid-template-columns:1fr; align-items:start}
+    .hero-lion{max-height:260px; margin-top:-.5rem}
+  }
+
+  .stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(8px,1vw,12px);
+         padding:0 clamp(10px,1.4vw,16px) clamp(10px,1.4vw,16px)}
+  .stat{border-radius:20px; padding:clamp(16px,2.1vw,24px)}
+  .stat:nth-child(1){background:var(--blue-soft)}
+  .stat:nth-child(2){background:var(--lilac)}
+  .stat:nth-child(3){background:#F1F8DC}
+  .stat:nth-child(4){background:var(--peach)}
+  .stat b{display:block; font-family:var(--head); font-weight:800; font-size:clamp(.95rem,1.7vw,1.2rem); letter-spacing:-.01em; text-wrap:balance}
+  .stat span{display:block; margin-top:.4rem; font-size:var(--s-1); color:#4A5568; line-height:1.4}
+  @media (max-width:760px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+  /* аккордеон услуг */
+  .acc{display:flex; flex-direction:column; gap:.5rem}
+  .acc-item{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--sheet); transition:background .2s, border-color .2s}
+  .acc-head{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:1rem; width:100%; background:none; border:0; cursor:pointer;
+            padding:clamp(.85rem,1.6vw,1.15rem) clamp(1rem,2vw,1.4rem); text-align:left; color:inherit}
+  .acc-num{font-family:var(--mono); font-size:var(--s-2); color:var(--muted)}
+  .acc-title{font-family:var(--head); font-weight:700; font-size:clamp(1.05rem,2.3vw,1.6rem); text-transform:uppercase; letter-spacing:-.015em}
+  .acc-ic{width:30px; height:30px; border-radius:50%; border:1px solid var(--line-2); display:grid; place-items:center; color:var(--muted); flex:none; transition:transform .2s}
+  .acc-body{display:none; padding:0 clamp(1rem,2vw,1.4rem) clamp(1rem,2vw,1.3rem); max-width:76ch}
+  .acc-body p{font-size:var(--s0)}
+  .acc-body .acc-meta{margin-top:.6rem; font-family:var(--mono); font-size:var(--s-2); letter-spacing:.04em; opacity:.85}
+  .acc-item[data-open="true"]{background:var(--coral); border-color:var(--coral); color:#fff}
+  .acc-item[data-open="true"] .acc-num{color:rgba(255,255,255,.75)}
+  .acc-item[data-open="true"] .acc-ic{border-color:rgba(255,255,255,.5); color:#fff; transform:rotate(45deg)}
+  .acc-item[data-open="true"] .acc-body{display:block}
+
+  /* врачи */
+  .docs{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(12px,1.6vw,20px)}
+  @media (max-width:860px){ .docs{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .doc-photo{position:relative; aspect-ratio:4/5; border-radius:var(--r-md); background:var(--soft); display:grid; place-items:center; overflow:hidden; color:#B9BFD4}
+  .doc-photo img{width:100%; height:100%; object-fit:cover}
+  .doc-photo svg{width:62%; height:62%}
+  .slot-tag{position:absolute; left:8px; bottom:8px; font-family:var(--mono); font-size:.5625rem; letter-spacing:.1em; text-transform:uppercase;
+            background:rgba(21,23,29,.72); color:#fff; border-radius:99px; padding:.3rem .55rem}
+  .docs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .doc-lead{display:grid; grid-template-columns:minmax(210px,290px) 1fr; gap:clamp(16px,2.4vw,34px);
+            background:#fff; border-radius:22px; padding:clamp(14px,1.8vw,22px); align-items:center; margin-bottom:1.75rem}
+  @media (max-width:720px){ .doc-lead{grid-template-columns:1fr} }
+  .doc-lead img{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:var(--r-md); display:block}
+  .doc-lead h3{font-size:var(--s2); text-transform:uppercase; margin-top:.35rem}
+  .doc-role{color:var(--coral); font-weight:600; font-size:var(--s-1); margin-bottom:.9rem}
+  .doc-lead ul{list-style:none; margin:0 0 1.25rem; padding:0; display:flex; flex-direction:column; gap:.5rem; font-size:var(--s-1)}
+  .doc-lead li{display:flex; gap:.6rem}
+  .doc-lead li::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); margin-top:.45rem; flex:none}
+  .doc-cta{display:flex; align-items:center; gap:1rem; flex-wrap:wrap}
+  .certs-head{display:flex; flex-wrap:wrap; gap:.4rem 1rem; align-items:baseline; margin:2.25rem 0 1rem;
+              font-family:var(--head); font-weight:800; text-transform:uppercase; font-size:var(--s1)}
+  .certs-head span{font-family:var(--body); font-weight:400; text-transform:none; font-size:var(--s-1); color:var(--muted)}
+  .certs{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:clamp(8px,1.2vw,14px)}
+  @media (max-width:900px){ .certs{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  @media (max-width:560px){ .certs{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .cert{background:#fff; border:1px solid var(--line); border-radius:14px; padding:8px; cursor:zoom-in;
+        display:flex; flex-direction:column; gap:.5rem; text-align:left; font:inherit; color:inherit; transition:border-color .16s}
+  .cert:hover{border-color:var(--ink)}
+  .cert img{width:100%; aspect-ratio:3/4; object-fit:contain; background:#fff; border-radius:9px; display:block}
+  .cert span{font-size:.6875rem; line-height:1.35; color:var(--muted)}
+  .lb{position:fixed; inset:0; background:rgba(10,14,22,.9); display:none; place-items:center; z-index:100; padding:24px; cursor:zoom-out}
+  .lb[data-open="true"]{display:grid}
+  .lb img{max-width:min(660px,92vw); max-height:86vh; border-radius:10px; background:#fff}
+  .lb-close{position:absolute; top:14px; right:16px; width:42px; height:42px; border-radius:50%;
+            background:rgba(255,255,255,.16); color:#fff; border:0; font-size:22px; line-height:1; cursor:pointer}
+  .doc h4{margin-top:.7rem; font-size:var(--s1)}
+  .doc p{font-size:var(--s-1); color:var(--muted)}
+
+  /* прайс */
+  .switch{display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1rem}
+  .switch button{background:var(--soft); border:1px solid transparent; border-radius:99px; padding:.6rem 1.05rem; cursor:pointer;
+                 font:600 var(--s-1)/1 var(--head); color:var(--muted)}
+  .switch button[aria-pressed="true"], .switch button[aria-selected="true"]{background:var(--ink); color:#fff}
+  .filters{display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; margin-bottom:1.5rem}
+  .filters .f-label{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-right:.4rem}
+  .filters button{background:#fff; border:1px solid var(--line-2); border-radius:99px; padding:.5rem .95rem; cursor:pointer; font:500 var(--s-1)/1 var(--body); color:var(--muted); display:inline-flex; align-items:center; gap:.45rem}
+  .filters button svg{width:16px; height:16px}
+  .filters button[aria-pressed="true"]{background:var(--coral-wash); border-color:var(--coral); color:var(--coral-dark)}
+  .psearch{display:flex; align-items:center; gap:.65rem; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:.75rem 1rem; margin-bottom:1.25rem}
+  .psearch:focus-within{border-color:var(--ink)}
+  .psearch svg{color:var(--muted); flex:none}
+  .psearch input{border:0; background:transparent; outline:none; width:100%; font:400 var(--s0)/1.4 var(--body); color:var(--ink)}
+  .psearch input::-webkit-search-cancel-button{cursor:pointer}
+  .pcount{margin-left:auto; font-family:var(--mono); font-size:.6875rem; color:var(--muted); white-space:nowrap}
+  @media (max-width:640px){ .pcount{margin-left:0; width:100%} }
+  .plist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 clamp(24px,4vw,64px)}
+  @media (max-width:820px){ .plist{grid-template-columns:1fr} }
+  .pgroup{break-inside:avoid; margin-bottom:1.75rem}
+  .pgroup h4{font-family:var(--mono); font-weight:500; font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase; color:var(--coral);
+             padding-bottom:.55rem; border-bottom:1px solid var(--line)}
+  .prow{display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:.2rem .9rem; padding:.7rem 0; border-bottom:1px solid var(--line)}
+  .prow:last-child{border-bottom:0}
+  .prow .pn{font-size:var(--s0)}
+  .prow .pv{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .prow .pd{grid-column:1/-1; font-size:var(--s-1); color:var(--muted)}
+  .prow[hidden]{display:none}
+  .species{display:inline-flex; gap:.25rem; margin-left:.45rem; vertical-align:1px; color:var(--muted)}
+  .species svg{width:14px; height:14px}
+  .gal{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(12px,1.8vw,22px)}
+  @media (max-width:820px){ .gal{grid-template-columns:1fr} }
+  .gal figure{margin:0}
+  .gal figure.wide{grid-column:1/-1}
+  .gal figure.wide img{aspect-ratio:21/8}
+  .slides{position:relative; aspect-ratio:21/8; border-radius:var(--r-md); overflow:hidden; background:var(--soft)}
+  .slides img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; animation:slidefade 16.5s linear infinite}
+  .slides img:nth-child(1){animation-delay:-.6s}
+  .slides img:nth-child(2){animation-delay:4.9s}
+  .slides img:nth-child(3){animation-delay:10.4s}
+  @keyframes slidefade{0%{opacity:0} 3%{opacity:1} 30%{opacity:1} 34%{opacity:0} 100%{opacity:0}}
+  .slides-dots{position:absolute; left:14px; bottom:12px; display:flex; gap:5px; z-index:2}
+  .slides-dots i{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.55); animation:dotpulse 16.5s linear infinite}
+  .slides-dots i:nth-child(1){animation-delay:-.6s}
+  .slides-dots i:nth-child(2){animation-delay:4.9s}
+  .slides-dots i:nth-child(3){animation-delay:10.4s}
+  @keyframes dotpulse{0%{background:rgba(255,255,255,.5)} 3%,30%{background:#fff} 34%,100%{background:rgba(255,255,255,.5)}}
+  @media (max-width:820px){ .slides{aspect-ratio:3/2} }
+  @keyframes drift{0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)}}
+  @keyframes lion-in{from{transform:translateY(30px)} to{transform:translateY(0)}}
+  @keyframes lion-hop{
+    0%,58%,100%{transform:translateY(0) scaleY(1) scaleX(1)}
+    62%{transform:translateY(0) scaleY(.93) scaleX(1.05)}
+    72%{transform:translateY(-26px) scaleY(1.06) scaleX(.96)}
+    82%{transform:translateY(0) scaleY(.95) scaleX(1.04)}
+    90%{transform:translateY(-6px) scaleY(1.02) scaleX(.99)}
+  }
+  @keyframes lion-jump{
+    0%{transform:translateY(0) scaleY(1) scaleX(1)}
+    12%{transform:translateY(0) scaleY(.88) scaleX(1.1)}
+    38%{transform:translateY(-64px) scaleY(1.1) scaleX(.93)}
+    62%{transform:translateY(-70px) scaleY(1.06) scaleX(.96)}
+    84%{transform:translateY(0) scaleY(.9) scaleX(1.08)}
+    100%{transform:translateY(0) scaleY(1) scaleX(1)}
+  }
+  .paws{animation:drift 9s ease-in-out infinite}
+  .hero-lion{transform-origin:50% 100%; animation:lion-in 1s cubic-bezier(.2,.8,.25,1) both, lion-hop 4.6s ease-in-out 1s infinite; cursor:pointer}
+  .hero-lion.jump{animation:lion-jump .85s cubic-bezier(.28,.72,.3,1) both}
+  @media (max-width:820px){ .gal figure.wide img{aspect-ratio:3/2} }
+  .gal img{width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:var(--r-md); display:block}
+  .gal figcaption{margin-top:.65rem; font-size:var(--s-1); color:var(--muted)}
+  .shop{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(16px,2.5vw,32px); align-items:center}
+  @media (max-width:820px){ .shop{grid-template-columns:1fr} }
+  .shop img{width:100%; border-radius:var(--r-md); display:block}
+  .shop h4{font-size:var(--s2); text-transform:uppercase}
+  .shop ul{list-style:none; margin:1rem 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:.45rem 1rem; font-size:var(--s-1)}
+  @media (max-width:520px){ .shop ul{grid-template-columns:1fr} }
+  .shop li{display:flex; gap:.5rem; align-items:baseline}
+  .shop li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--coral); flex:none; transform:translateY(-2px)}
+
+  .pnote-box{margin-top:1.5rem; border:1px solid var(--line-2); border-radius:14px; padding:1.1rem 1.25rem; font-size:var(--s-1)}
+  .pnote-box strong{font-family:var(--head)}
+
+  /* отзывы */
+  .revs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(12px,1.6vw,18px)}
+  @media (max-width:860px){ .revs{grid-template-columns:1fr} }
+  .rev{border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; display:flex; flex-direction:column; gap:.8rem; background:var(--sheet)}
+  .rev-top{display:flex; align-items:center; gap:.7rem}
+  .rev-ava{width:44px; height:44px; border-radius:50%; background:var(--coral-wash); color:var(--coral); display:grid; place-items:center; flex:none; overflow:hidden; font:700 1.05rem/1 var(--head)}
+  .rev-ava svg{width:100%; height:100%}
+  .rev-top strong{font-family:var(--head); font-size:var(--s0)}
+  .rev-top span{display:block; font-size:var(--s-2); color:var(--muted)}
+  .rev p{font-size:var(--s-1); line-height:1.6}
+  .rev footer{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-top:.7rem; border-top:1px solid var(--line)}
+  .rating{display:inline-flex; align-items:center; gap:.35rem; font-family:var(--mono); font-size:var(--s-2)}
+  .stars{display:inline-flex; gap:1px; color:#F5B921}
+  .stars svg{width:13px; height:13px}
+  .stars .off{color:var(--line-2)}
+  .rev footer time{font-family:var(--mono); font-size:.625rem; color:var(--muted)}
+  .rev-summary{display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.75rem; background:var(--soft); border-radius:var(--r-md); padding:1.1rem 1.35rem; margin-bottom:1.25rem}
+  .rev-summary .big{font-family:var(--head); font-size:2rem; line-height:1}
+  .rev-summary .note{max-width:44ch}
+
+  /* запись */
+  .book{background:var(--soft); border-radius:20px; padding:clamp(18px,3vw,34px)}
+  .fgrid{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+  @media (max-width:720px){ .fgrid{grid-template-columns:1fr} }
+  .fld{display:flex; flex-direction:column; gap:.4rem}
+  .fld label,.flabel{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+  .fld input,.fld textarea,.fld select{background:#fff; border:1px solid var(--line); border-radius:12px; padding:.85rem 1rem; font:400 var(--s0)/1.4 var(--body); color:var(--ink); width:100%}
+  .fld textarea{min-height:82px; resize:vertical}
+  .pets{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.5rem}
+  @media (max-width:720px){ .pets{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  .pet-tile{background:#fff; border:1px solid var(--line); border-radius:14px; padding:.8rem .5rem .7rem; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:.35rem; color:var(--muted); transition:border-color .16s, color .16s}
+  .pet-tile svg{width:34px; height:34px}
+  .pet-tile span{font-size:var(--s-2); font-family:var(--head); font-weight:600}
+  .pet-tile em{width:14px; height:14px; border-radius:50%; border:1px solid var(--line-2); display:block}
+  .pet-tile[aria-pressed="true"]{border-color:var(--ink); color:var(--ink)}
+  .pet-tile[aria-pressed="true"] em{border-color:var(--ink); background:var(--ink); box-shadow:inset 0 0 0 3px #fff}
+  .chips{display:flex; gap:.4rem; flex-wrap:wrap}
+  .chip{background:#fff; border:1px solid var(--line); border-radius:10px; padding:.55rem .8rem; cursor:pointer; font:500 var(--s-1)/1 var(--mono); color:var(--ink); min-width:64px; text-align:center}
+  .chip small{display:block; font-family:var(--body); font-size:.625rem; color:var(--muted); margin-top:.2rem; text-transform:lowercase}
+  .chip[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .chip[aria-pressed="true"] small{color:rgba(255,255,255,.7)}
+  .chip:disabled{color:var(--line-2); border-style:dashed; cursor:not-allowed; text-decoration:line-through}
+  .form-ok{display:none; background:#fff; border:1px solid var(--ok); border-radius:14px; padding:1.1rem 1.25rem; margin-top:1rem}
+  .form-ok[data-shown="true"]{display:block}
+  .form-ok h4{font-size:var(--s1); color:var(--ok); margin-bottom:.5rem}
+  .form-ok pre{font-family:var(--mono); font-size:var(--s-1); white-space:pre-wrap; margin:.6rem 0 0; background:var(--soft); border-radius:10px; padding:.8rem; overflow-x:auto}
+  .form-ok .ok-actions{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.9rem}
+
+  /* карта и контакты */
+  .map-grid{display:grid; grid-template-columns:1.25fr .75fr; gap:clamp(14px,2vw,24px); align-items:stretch}
+  @media (max-width:860px){ .map-grid{grid-template-columns:1fr} }
+  .map-box{position:relative; border-radius:var(--r-md); overflow:hidden; background:var(--soft); min-height:340px}
+  .map-box iframe{width:100%; height:100%; min-height:340px; border:0; display:block}
+  .map-fallback{position:absolute; inset:0; display:grid; place-items:center}
+  .map-fallback svg{width:100%; height:100%}
+  .social{display:flex; flex-wrap:wrap; gap:.5rem}
+  .social a{display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; background:#fff;
+            border:1px solid var(--line); border-radius:99px; padding:.55rem .95rem;
+            font:600 var(--s-1)/1 var(--head); color:var(--ink); transition:border-color .16s, color .16s}
+  .social a:hover{border-color:var(--ink)}
+  .social svg{width:18px; height:18px}
+  .social .wa{color:#1FA855}
+  .social .tg{color:#2AA3E0}
+  .social .vk{color:#0077FF}
+  .cbox{background:var(--soft); border-radius:var(--r-md); padding:1.4rem; display:flex; flex-direction:column; gap:1rem}
+  .crow{border-top:1px solid var(--line-2); padding-top:.8rem}
+  .crow:first-of-type{border-top:0; padding-top:0}
+  .crow dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem}
+  .crow dd{margin:0}
+
+  /* подвал */
+  .foot{background:var(--soft); border-radius:20px; margin-top:12px; padding:clamp(20px,3vw,34px)}
+  .foot-grid{display:grid; grid-template-columns:1.4fr repeat(3,minmax(0,1fr)); gap:1.5rem}
+  @media (max-width:820px){ .foot-grid{grid-template-columns:1fr 1fr} }
+  .foot h5{font-family:var(--mono); font-weight:500; font-size:.625rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 .7rem}
+  .foot ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.4rem; font-size:var(--s-1)}
+  .foot a{text-decoration:none; color:var(--ink)}
+  .foot a:hover{color:var(--coral)}
+  .foot-bottom{display:flex; flex-wrap:wrap; gap:.75rem 1.5rem; justify-content:space-between; margin-top:1.75rem; padding-top:1.1rem; border-top:1px solid var(--line-2); font-size:var(--s-2); color:var(--muted)}
+  .foot-disclaimer{max-width:70ch}
+
+  @media (max-width:560px){
+    .top-in{gap:.55rem}
+    .logo{font-size:1rem; gap:.45rem}
+    .logo small{display:none}
+    .btn{padding:.7rem .9rem}
+    .lang button{padding:.35rem .5rem}
+    .demo{font-size:.625rem; letter-spacing:0; border-radius:16px; text-align:center}
+    .hero-actions{gap:.5rem}
+    .hero-actions .btn{width:100%}
+    .ic-btn{width:42px; height:42px}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:.01ms !important; animation-duration:.01ms !important; scroll-behavior:auto !important}
+    .slides img{animation:none !important; opacity:0}
+    .slides img:first-child{opacity:1}
+    .slides-dots{display:none}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="p-cat" viewBox="0 0 120 120"><g fill="currentColor"><path d="M32 52 36 20l24 17z" fill-opacity=".45"></path><path d="M88 52 84 20 60 37z" fill-opacity=".45"></path><ellipse cx="60" cy="64" rx="32" ry="28" fill-opacity=".28"></ellipse><ellipse cx="48" cy="60" rx="4.5" ry="6"></ellipse><ellipse cx="72" cy="60" rx="4.5" ry="6"></ellipse><path d="M55 72h10l-5 6z" fill-opacity=".8"></path></g><g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" fill="none"><path d="M52 78c3 3 5 3 8 0M68 78c-3 3-5 3-8 0M50 74 30 70M50 79 32 82M70 74l20-4M70 79l18 3"></path></g></symbol>
+  <symbol id="p-dog" viewBox="0 0 120 120"><g fill="currentColor"><path d="M32 40c-13 2-16 18-12 30 3 9 12 10 16 5z" fill-opacity=".45"></path><path d="M88 40c13 2 16 18 12 30-3 9-12 10-16 5z" fill-opacity=".45"></path><ellipse cx="60" cy="62" rx="29" ry="28" fill-opacity=".28"></ellipse><ellipse cx="60" cy="78" rx="16" ry="11" fill-opacity=".36"></ellipse><circle cx="48" cy="56" r="4.5"></circle><circle cx="72" cy="56" r="4.5"></circle><ellipse cx="60" cy="72" rx="6" ry="4.5"></ellipse></g><path d="M60 77v4M56 84c2 2 6 2 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" fill="none"></path></symbol>
+  <symbol id="p-rabbit" viewBox="0 0 120 120"><g fill="currentColor"><ellipse cx="47" cy="34" rx="8" ry="24" transform="rotate(-11 47 34)" fill-opacity=".45"></ellipse><ellipse cx="73" cy="34" rx="8" ry="24" transform="rotate(11 73 34)" fill-opacity=".45"></ellipse><ellipse cx="60" cy="72" rx="27" ry="24" fill-opacity=".28"></ellipse><circle cx="50" cy="70" r="4"></circle><circle cx="70" cy="70" r="4"></circle><path d="M56 80h8l-4 5z" fill-opacity=".8"></path></g></symbol>
+  <symbol id="p-bird" viewBox="0 0 120 120"><g fill="currentColor"><path d="M50 36c-3-12 5-20 14-22-5 7-3 13 2 18z" fill-opacity=".45"></path><circle cx="56" cy="64" r="27" fill-opacity=".28"></circle><path d="M80 56c12 2 15 12 6 17-7 4-14 1-16-4z" fill-opacity=".6"></path><circle cx="66" cy="58" r="4.5"></circle></g></symbol>
+  <symbol id="p-rodent" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="38" cy="46" r="10" fill-opacity=".45"></circle><circle cx="82" cy="46" r="10" fill-opacity=".45"></circle><ellipse cx="60" cy="68" rx="29" ry="24" fill-opacity=".28"></ellipse><circle cx="50" cy="65" r="4"></circle><circle cx="70" cy="65" r="4"></circle><ellipse cx="60" cy="75" rx="4.5" ry="3.5" fill-opacity=".8"></ellipse></g></symbol>
+  <symbol id="p-paw" viewBox="0 0 120 120"><g fill="currentColor" fill-opacity=".55"><ellipse cx="42" cy="44" rx="9" ry="12"></ellipse><ellipse cx="60" cy="38" rx="9" ry="12"></ellipse><ellipse cx="78" cy="44" rx="9" ry="12"></ellipse><ellipse cx="90" cy="62" rx="8" ry="10"></ellipse></g><path d="M60 58c14 0 24 10 24 20s-11 12-24 12-24-2-24-12 10-20 24-20Z" fill="currentColor" fill-opacity=".35"></path></symbol>
+  <symbol id="p-doc" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="60" cy="44" r="18" fill-opacity=".45"></circle><path d="M26 104c0-18 15-30 34-30s34 12 34 30z" fill-opacity=".3"></path></g></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 0 16 8 8 0 0 1-4.2-1.2l-.3-.2-2.5.7.7-2.4-.2-.3A8 8 0 0 1 12 4Zm-2.7 4c-.2 0-.5 0-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.2.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.6-.4-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.5-.6.3-.5v-.5l-.7-1.7c-.2-.4-.4-.4-.6-.4h-.7Z"></path></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.7 4.4 2.9 11.6c-.9.3-.9 1.6 0 1.9l4.6 1.5 1.8 5.5c.3.8 1.3 1 1.9.4l2.5-2.4 4.6 3.4c.7.5 1.7.1 1.9-.7l3-15c.2-.9-.7-1.7-1.5-1.4ZM8.9 14.1l9-5.6-7.3 6.8-.3 3.4-1.4-4.6Z"></path></symbol>
+  <symbol id="i-vk" viewBox="0 0 24 24"><path fill="currentColor" d="M12.9 16.5c-5 0-8.2-3.5-8.3-9.3h2.6c.1 4.3 2 6.1 3.4 6.5V7.2h2.4v3.8c1.4-.2 2.9-1.8 3.4-3.8h2.4c-.4 2.4-1.9 4-3 4.7 1.1.5 2.8 2 3.5 4.6h-2.6c-.5-1.7-1.9-3-3.7-3.2v3.2h-.1Z"></path></symbol>
+  <symbol id="i-search" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"></circle><path d="m13.5 13.5 3.5 3.5"></path></g></symbol>
+  <symbol id="i-star" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.7 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.5l-3.8 2 .7-4.3-3.1-3 4.3-.6z"></path></symbol>
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"></path><path d="M6 8 8 4h8l2 4M10.5 13.5h3"></path></g></symbol>
+  <symbol id="i-wet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M4 10h16M9 7V5h6v2"></path></g></symbol>
+  <symbol id="i-drops" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 3h4v5l3 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2l3-11z"></path><path d="M10 8h4"></path></g></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-30 12 12)"></rect><path d="M9 7.5 15 16"></path></g></symbol>
+  <symbol id="i-collar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="11" r="7"></circle><path d="M12 18v3"></path><circle cx="12" cy="21.5" r="1.2"></circle></g></symbol>
+  <symbol id="i-vit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 9h10l-1 11H8z"></path><path d="M9 9V6h6v3M10 14h4"></path></g></symbol>
+  <symbol id="i-shampoo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 9h8v11H8z"></path><path d="M10 9V6h4v3M9 13h6M16 5h2v2"></path></g></symbol>
+  <symbol id="i-litter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 8h16l-2 12H6z"></path><path d="M8 12h.01M12 14h.01M16 12h.01M10 17h.01M14 17h.01"></path></g></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <p class="demo"><b>Демо-концепт</b> &nbsp;макет для ветклиники «Симба», Королёв · не официальный сайт · часть карточек врачей — заглушки</p>
+
+  <div class="sheet">
+    <header class="top">
+      <div class="pad top-in">
+        <a class="logo" href="#top">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#F9564F" opacity=".12"></circle><path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="#F9564F" stroke-width="1.6"></path><circle cx="17" cy="21" r="1.4" fill="#F9564F"></circle><circle cx="23" cy="21" r="1.4" fill="#F9564F"></circle><path d="M20 24.5v1.8M17.6 27.4c1.4 1 3.4 1 4.8 0" stroke="#F9564F" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <span>Симба<small>ветклиника · Королёв</small></span>
+        </a>
+        <nav class="menu" aria-label="Разделы">
+          <a href="#services">Услуги</a>
+          <a href="#inside">Клиника</a>
+          <a href="#doctors">Врачи</a>
+          <a href="#prices">Цены</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang-btn="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="tel" href="tel:+79258711713">+7 925 871-17-13</a>
+        <a class="btn btn-coral" href="#book">Записаться</a>
+      </div>
+    </header>
+
+    <div id="top" class="hero">
+      <div class="hero-card">
+        <svg class="paws" viewBox="0 0 1000 460" preserveAspectRatio="none" aria-hidden="true">
+          <g fill="currentColor" opacity=".38">
+            <g transform="translate(70,58) scale(.32)"><use href="#p-paw"></use></g>
+            <g transform="translate(430,26) scale(.26) rotate(18)"><use href="#p-paw"></use></g>
+            <g transform="translate(880,120) scale(.3) rotate(-12)"><use href="#p-paw"></use></g>
+            <g transform="translate(120,330) scale(.22) rotate(24)"><use href="#p-paw"></use></g>
+            <g transform="translate(600,380) scale(.28) rotate(-8)"><use href="#p-paw"></use></g>
+          </g>
+        </svg>
+        <div class="hero-copy">
+          <h1><em>Ветеринарная</em> клиника в Королёве</h1>
+          <p>Лечим кошек, собак, грызунов и птиц на улице Дзержинского, 8Б. Приём по записи с 10:00, срочные случаи — вне очереди.</p>
+          <div class="hero-actions">
+            <a class="btn btn-coral btn-lg" href="#book">Записаться на приём</a>
+            <a class="ic-btn" href="tel:+79258711713" aria-label="Позвонить в клинику">
+              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M6.5 3.5 8 7 6.2 8.6c.9 2 2.3 3.4 4.2 4.2L12 11l3.5 1.5v3a1 1 0 0 1-1.1 1C8.6 16 4 11.4 3.5 5.6a1 1 0 0 1 1-1.1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+            </a>
+            <a class="ic-btn wa" href="https://wa.me/79258711713" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">
+              <svg width="20" height="20" aria-hidden="true"><use href="#i-wa"></use></svg>
+            </a>
+            <a class="ic-btn vk" href="https://vk.com/club221700415" target="_blank" rel="noopener" aria-label="Группа ВКонтакте">
+              <svg width="20" height="20" aria-hidden="true"><use href="#i-vk"></use></svg>
+            </a>
+            <a class="ic-btn" href="https://yandex.ru/maps/-/CThG6Y9-" target="_blank" rel="noopener" aria-label="Проложить маршрут">
+              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5a5.5 5.5 0 0 1 5.5 5.5c0 4-5.5 9.5-5.5 9.5S4.5 12 4.5 8A5.5 5.5 0 0 1 10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"></circle></svg>
+            </a>
+          </div>
+        </div>
+        <img class="hero-lion" src="photos/lion.webp" alt="Львёнок Симба — талисман клиники">
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>Пн–Пт 10:00–20:00</b><span>Сб и Вс — 10:00–19:00, без перерыва на обед</span></div>
+      <div class="stat"><b>7 дней в неделю</b><span>Срочные случаи принимаем вне очереди</span></div>
+      <div class="stat"><b>УЗИ от 700 ₽</b><span>Брюшная полость, мочеполовая система, отдельный орган</span></div>
+      <div class="stat"><b>Принимаем птиц</b><span>Приём врача-орнитолога — 1&nbsp;200&nbsp;₽</span></div>
+    </div>
+
+    <section class="pad block" id="services">
+      <div class="sec-top">
+        <div>
+          <p class="label">Наши услуги</p>
+          <h2 class="h-sec">Что мы делаем</h2>
+        </div>
+        <p class="lede">Нажмите на услугу — расскажем, как проходит и сколько занимает.</p>
+      </div>
+      <div class="acc" id="acc"></div>
+    </section>
+
+    <section class="pad block" id="inside">
+      <div class="sec-top">
+        <div>
+          <p class="label">Клиника изнутри</p>
+          <h2 class="h-sec">Чем мы лечим</h2>
+        </div>
+        <p class="lede">Диагностика и лаборатория — в кабинете, а не в другом городе: анализы и УЗИ делаем на том же приёме.</p>
+      </div>
+      <div class="gal">
+        <figure class="wide">
+          <div class="slides">
+            <img src="photos/i01.webp" loading="lazy" alt="Стойка администратора клиники «Симба»" decoding="async">
+            <img src="photos/i02.webp" loading="lazy" alt="Рабочее место врача: отоскоп, стетоскоп, препараты" loading="lazy" decoding="async">
+            <img src="photos/i03.webp" loading="lazy" alt="Полки ветаптеки: корма и лечебные диеты" loading="lazy" decoding="async">
+            <span class="slides-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <figcaption>Ресепшн, рабочее место врача и ветаптека — с этого начинается визит. Приём по записи, ждать в коридоре не придётся.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/i04.webp" loading="lazy" alt="Смотровой кабинет клиники «Симба»" loading="lazy" decoding="async">
+          <figcaption>Смотровой кабинет: осмотр, термометрия и назначения — 950 ₽, повторный приём 500 ₽.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/i05.webp" loading="lazy" alt="Аппарат УЗИ в кабинете клиники «Симба»" loading="lazy" decoding="async">
+          <figcaption>УЗИ-аппарат в кабинете: брюшная полость, мочеполовая система, отдельный орган — от 700 ₽.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/i06.webp" loading="lazy" alt="Микроскоп и пробирки для анализов" loading="lazy" decoding="async">
+          <figcaption>Микроскопия, цитология и пробы крови — берём и смотрим на месте, результат в тот же день.</figcaption>
+        </figure>
+        <figure>
+          <img src="photos/i07.webp" loading="lazy" alt="Ванна для мытья и обработки животных" loading="lazy" decoding="async">
+          <figcaption>Ванна для мытья и обработки — от санации до противопаразитарных процедур.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="pad block" id="doctors" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Команда</p>
+          <h2 class="h-sec">Наши врачи</h2>
+        </div>
+      </div>
+      <article class="doc-lead">
+        <img src="photos/i08.webp" loading="lazy" alt="Тамара Юрьевна Лозовская, врач-офтальмолог клиники «Симба»" decoding="async">
+        <div>
+          <p class="label">Офтальмология</p>
+          <h3>Тамара Юрьевна Лозовская</h3>
+          <p class="doc-role">Врач-офтальмолог</p>
+          <ul>
+            <li>Проводит операции на веках и глазном яблоке, включая микрохирургические.</li>
+            <li>Назначает современные высокоэффективные препараты.</li>
+            <li>Работает по методике офтальмологического обследования с тест-полосками — оценка слёзопродукции и проходимости слёзных путей.</li>
+          </ul>
+          <div class="doc-cta">
+            <a class="btn btn-coral" href="#book">Записаться к офтальмологу</a>
+            <span class="note">Приём — 1 500 ₽ · операции на веках от 3 000 ₽</span>
+          </div>
+        </div>
+      </article>
+
+      <p class="certs-head">Обучение и сертификаты <span>10 документов · нажмите, чтобы увеличить</span></p>
+      <div class="certs" id="certs">
+          <button type="button" class="cert" aria-label="Открыть сертификат: «Офтальмоскопия в диагностике заболеваний глазного дна» · Международная ветеринарная академия, 2023">
+            <img src="photos/i09.webp" loading="lazy" alt="Сертификат: «Офтальмоскопия в диагностике заболеваний глазного дна» · Международная ветеринарная академия, 2023" loading="lazy" decoding="async">
+            <span>«Офтальмоскопия в диагностике заболеваний глазного дна» · Международная ветеринарная академия, 2023</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: «Хирургия век и лакримальной системы» · ИВЦ МВА, 2022">
+            <img src="photos/i10.webp" loading="lazy" alt="Сертификат: «Хирургия век и лакримальной системы» · ИВЦ МВА, 2022" loading="lazy" decoding="async">
+            <span>«Хирургия век и лакримальной системы» · ИВЦ МВА, 2022</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: «Швы в офтальмохирургии» · MicroLab, Москва, 2022">
+            <img src="photos/i11.webp" loading="lazy" alt="Сертификат: «Швы в офтальмохирургии» · MicroLab, Москва, 2022" loading="lazy" decoding="async">
+            <span>«Швы в офтальмохирургии» · MicroLab, Москва, 2022</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: Школа офтальмологии доктора Олейник: передний отрезок глаза, 32 ч, и микрохирургия роговицы, 20 ч">
+            <img src="photos/i12.webp" loading="lazy" alt="Сертификат: Школа офтальмологии доктора Олейник: передний отрезок глаза, 32 ч, и микрохирургия роговицы, 20 ч" loading="lazy" decoding="async">
+            <span>Школа офтальмологии доктора Олейник: передний отрезок глаза, 32 ч, и микрохирургия роговицы, 20 ч</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: «Офтальмология. Дерматология. Лабораторная диагностика» · Подольск, 2022">
+            <img src="photos/i13.webp" loading="lazy" alt="Сертификат: «Офтальмология. Дерматология. Лабораторная диагностика» · Подольск, 2022" loading="lazy" decoding="async">
+            <span>«Офтальмология. Дерматология. Лабораторная диагностика» · Подольск, 2022</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: IV Международный съезд ветеринарных офтальмологов">
+            <img src="photos/i14.webp" loading="lazy" alt="Сертификат: IV Международный съезд ветеринарных офтальмологов" loading="lazy" decoding="async">
+            <span>IV Международный съезд ветеринарных офтальмологов</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: III Международный съезд ветеринарных офтальмологов">
+            <img src="photos/i15.webp" loading="lazy" alt="Сертификат: III Международный съезд ветеринарных офтальмологов" loading="lazy" decoding="async">
+            <span>III Международный съезд ветеринарных офтальмологов</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: II Международный съезд ветеринарных офтальмологов, май 2022">
+            <img src="photos/i16.webp" loading="lazy" alt="Сертификат: II Международный съезд ветеринарных офтальмологов, май 2022" loading="lazy" decoding="async">
+            <span>II Международный съезд ветеринарных офтальмологов, май 2022</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: Санкт-Петербургская ветеринарная офтальмологическая конференция, 2023">
+            <img src="photos/i17.webp" loading="lazy" alt="Сертификат: Санкт-Петербургская ветеринарная офтальмологическая конференция, 2023" loading="lazy" decoding="async">
+            <span>Санкт-Петербургская ветеринарная офтальмологическая конференция, 2023</span>
+          </button>
+          <button type="button" class="cert" aria-label="Открыть сертификат: Санкт-Петербургская ветеринарная офтальмологическая конференция, 2022">
+            <img src="photos/i18.webp" loading="lazy" alt="Сертификат: Санкт-Петербургская ветеринарная офтальмологическая конференция, 2022" loading="lazy" decoding="async">
+            <span>Санкт-Петербургская ветеринарная офтальмологическая конференция, 2022</span>
+          </button>
+      </div>
+
+      <p class="certs-head">Остальные врачи <span>фото и имена — заглушки, пришлите свои</span></p>
+      <div class="docs" id="docs"></div>
+    </section>
+
+    <section class="pad block" id="prices">
+      <div class="sec-top">
+        <div>
+          <p class="label">Цены</p>
+          <h2 class="h-sec">Услуги и товары</h2>
+        </div>
+        <span class="chip-demo">164 позиции с карточки на Яндекс Картах</span>
+      </div>
+
+      <div class="switch" role="tablist" aria-label="Прайс">
+        <button type="button" role="tab" id="t-serv" aria-controls="p-serv" aria-selected="true">Услуги</button>
+        <button type="button" role="tab" id="t-goods" aria-controls="p-goods" aria-selected="false">Ветаптека и зоотовары</button>
+      </div>
+
+      <div id="p-serv" role="tabpanel" aria-labelledby="t-serv">
+        <div class="filters" id="species" role="group" aria-label="Фильтр по питомцу">
+          <span class="f-label">Показать для</span>
+          <button type="button" data-sp="all" aria-pressed="true">Все</button>
+          <button type="button" data-sp="cat" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-cat"></use></svg> Кошки</button>
+          <button type="button" data-sp="dog" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-dog"></use></svg> Собаки</button>
+          <button type="button" data-sp="exotic" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-bird"></use></svg> Птицы и экзоты</button>
+          <span class="pcount" id="price-count"></span>
+        </div>
+        <label class="psearch" for="price-q">
+          <svg width="18" height="18" aria-hidden="true"><use href="#i-search"></use></svg>
+          <input type="search" id="price-q" placeholder="Поиск по прайсу: вакцинация, УЗИ, стерилизация…" autocomplete="off">
+        </label>
+        <div class="plist" id="plist"></div>
+        <p class="note" id="price-empty" hidden>В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.</p>
+        <div class="pnote-box">
+          <p><strong>Это полный прайс клиники «Симба».</strong> 164 позиции в 18 разделах перенесены с карточки на Яндекс Картах без изменений: цены, диапазоны «от и до» и пометки о препаратах — как у вас.</p>
+          <p class="note" style="margin-top:.6rem">Лекарства и расходники в стоимость не входят, если не указано отдельно. Итоговую сумму называем до начала лечения.</p>
+        </div>
+      </div>
+
+      <div id="p-goods" role="tabpanel" aria-labelledby="t-goods" hidden>
+        <div class="shop">
+          <img src="photos/i19.webp" loading="lazy" alt="Торговый зал и стойка администратора клиники «Симба»" loading="lazy" decoding="async">
+          <div>
+            <h4>Ветаптека и зоомагазин в клинике</h4>
+            <p class="note" style="margin-top:.6rem">Препараты по назначению врача, корма и всё для содержания — можно забрать сразу после приёма, не разыскивая по городу. Дозировку рассчитываем по весу питомца.</p>
+            <ul>
+              <li>Корма Dailycat и Dailydog</li>
+              <li>Лечебные диеты Hill's Prescription Diet</li>
+              <li>Наполнители</li>
+              <li>Поводки, ошейники, шлейки</li>
+              <li>Лежанки и когтеточки</li>
+              <li>Сушёные лакомства</li>
+              <li>Антипаразитарные средства</li>
+              <li>Витамины и добавки</li>
+            </ul>
+            <p class="note" style="margin-top:1rem">Цен на товары в прайсе на Яндекс Картах нет — пришлите список с ценами, выведем их здесь так же, как услуги. Наличие уточняйте по телефону.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pad block" id="reviews" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Отзывы</p>
+          <h2 class="h-sec">Что пишут владельцы</h2>
+        </div>
+        <span class="chip-demo">отзывы с Яндекс Карт</span>
+      </div>
+      <div class="rev-summary">
+        <span class="big">79</span>
+        <span class="note" style="max-width:16ch">отзывов и 60 фото на Яндекс Картах</span>
+        <p class="note">Отзывы и оценка подтягиваются с карточки клиники и обновляются сами — сайт править не нужно. Ниже — три отзыва с карточки; на боевом сайте они будут обновляться автоматически.</p>
+        <a class="btn btn-line" href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Читать отзывы</a>
+      </div>
+      <div class="revs" id="revs"></div>
+    </section>
+
+    <section class="pad block" id="book">
+      <div class="sec-top">
+        <div>
+          <p class="label">Запись</p>
+          <h2 class="h-sec">Записаться на приём</h2>
+        </div>
+        <p class="lede">Заявка уходит администратору в Telegram — перезвоним и подтвердим время.</p>
+      </div>
+
+      <form class="book" id="form" novalidate>
+        <div class="fgrid">
+          <div class="fld">
+            <label for="f-name">Ваше имя</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+          </div>
+          <div class="fld">
+            <label for="f-phone">Телефон</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__">
+          </div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="pets-label">Ваш питомец</span>
+          <div class="pets" id="pets" role="group" aria-labelledby="pets-label"></div>
+        </div>
+
+        <div class="fgrid" style="margin-top:1rem">
+          <div class="fld">
+            <label for="f-service">Услуга</label>
+            <select id="f-service" name="service">
+              <option>Приём терапевта</option>
+              <option>Вакцинация</option>
+              <option>УЗИ или анализы</option>
+              <option>Хирургия — консультация</option>
+              <option>Стоматология</option>
+              <option>Офтальмолог</option>
+              <option>Вызов врача на дом</option>
+            </select>
+          </div>
+          <div class="fld">
+            <label for="f-comment">Что беспокоит</label>
+            <textarea id="f-comment" name="comment" placeholder="Вялый второй день, не ест, три года, привит"></textarea>
+          </div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="date-label">Дата</span>
+          <div class="chips" id="dates" role="group" aria-labelledby="date-label"></div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="time-label">Время</span>
+          <div class="chips" id="times" role="group" aria-labelledby="time-label"></div>
+        </div>
+
+        <button type="submit" class="btn btn-coral btn-wide" style="margin-top:1.5rem">Отправить заявку</button>
+        <div class="form-ok" id="ok" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="pad block" id="contacts" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Контакты</p>
+          <h2 class="h-sec">Как нас найти</h2>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div class="map-box" id="map-box">
+          <div class="map-fallback" id="map-fallback">
+            <svg viewBox="0 0 420 300" role="img" aria-label="Схема расположения: улица Дзержинского, 8Б">
+              <rect width="420" height="300" fill="#EDEFF7"></rect>
+              <g stroke="#DCE0EE" stroke-width="16"><path d="M-10 108h440"></path><path d="M-10 236h440"></path><path d="M120 -10v320"></path><path d="M320 -10v320"></path></g>
+              <g stroke="#E6E9F3" stroke-width="8"><path d="M-10 172h440"></path><path d="M220 -10v320"></path></g>
+              <g fill="#E1E5F0"><rect x="140" y="126" width="56" height="30" rx="3"></rect><rect x="244" y="122" width="60" height="34" rx="3"></rect><rect x="140" y="192" width="72" height="28" rx="3"></rect><rect x="336" y="126" width="62" height="32" rx="3"></rect><rect x="24" y="126" width="70" height="32" rx="3"></rect></g>
+              <text x="14" y="100" fill="#8D93A8" font-family="JetBrains Mono, monospace" font-size="11">ул. Дзержинского</text>
+              <g transform="translate(220 172)"><circle r="28" fill="#F9564F" opacity=".14"></circle><path d="M0-20a12 12 0 0 1 12 12c0 9-12 21-12 21S-12 1-12-8A12 12 0 0 1 0-20Z" fill="#F9564F"></path><circle cy="-8" r="4.5" fill="#fff"></circle></g>
+              <text x="220" y="222" fill="#15171D" font-family="Golos Text, sans-serif" font-weight="700" font-size="14" text-anchor="middle">Симба · 8Б</text>
+              <text x="14" y="286" fill="#9AA0B4" font-family="JetBrains Mono, monospace" font-size="10">интерактивная карта откроется на вашем домене</text>
+            </svg>
+          </div>
+        </div>
+        <div class="cbox">
+          <dl class="crow"><dt>Адрес</dt><dd>Московская обл., Королёв,<br>ул. Дзержинского, 8Б</dd></dl>
+          <dl class="crow"><dt>Телефон</dt><dd><a href="tel:+79258711713" style="text-decoration:none">+7 925 871-17-13</a></dd></dl>
+          <dl class="crow"><dt>Написать</dt><dd><div class="social" id="social"></div></dd></dl>
+          <dl class="crow"><dt>Часы работы</dt><dd>Пн–Пт 10:00–20:00<br>Сб–Вс 10:00–19:00</dd></dl>
+          <a class="btn btn-dark" href="https://yandex.ru/maps/-/CThG6Y9-" target="_blank" rel="noopener">Проложить маршрут</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top" style="margin-bottom:.75rem">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#F9564F" opacity=".12"></circle><path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="#F9564F" stroke-width="1.6"></path><circle cx="17" cy="21" r="1.4" fill="#F9564F"></circle><circle cx="23" cy="21" r="1.4" fill="#F9564F"></circle></svg>
+          <span>Симба<small>ветклиника · Королёв</small></span>
+        </a>
+        <p class="note">Ветеринарный кабинет, аптека и зоотовары в одном месте.</p>
+      </div>
+      <div>
+        <h5>Клиника</h5>
+        <ul>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#doctors">Врачи</a></li>
+          <li><a href="#prices">Цены</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Приём</h5>
+        <ul>
+          <li><a href="#book">Записаться</a></li>
+          <li><a href="tel:+79258711713">Вызов на дом</a></li>
+          <li><a href="#prices">Ветаптека</a></li>
+          <li><a href="#contacts">Как добраться</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакты</h5>
+        <ul>
+          <li><a href="tel:+79258711713">+7 925 871-17-13</a></li>
+          <li><a href="https://wa.me/79258711713" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://t.me/+79258711713" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="https://vk.com/club221700415" target="_blank" rel="noopener">ВКонтакте</a></li>
+          <li><a href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Яндекс Карты</a></li>
+          <li>ул. Дзержинского, 8Б</li>
+          <li>Пн–Вс с 10:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> «Симба» · Королёв</span>
+      <span class="foot-disclaimer">Демонстрационный макет для показа клинике. Не является официальным сайтом. Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — образцы.</span>
+    </div>
+  </footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр сертификата">
+  <button type="button" class="lb-close" id="lb-close" aria-label="Закрыть">&times;</button>
+  <img id="lb-img" src="" alt="">
+</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+
+  /* ==========================================================================
+     ЯЗЫК: русский по умолчанию, английский по кнопке в шапке.
+     Словарь ниже переводит текст прямо в готовой странице, поэтому вёрстку
+     дублировать не нужно. Динамические строки — в DYN.
+     ========================================================================== */
+  var DICT = {
+"Написать": "Message us",
+"ВКонтакте": "VK",
+"Приём терапевта": "General consultation",
+"Клинический осмотр, термометрия, сбор анамнеза. Составляем план обследования и лечения, объясняем, что делать дома. Есть отдельная консультация по уходу и содержанию, а также разбор результатов анализов без питомца.": "Clinical examination, temperature check and history taking. We draw up a plan for tests and treatment and explain what to do at home. There is also a separate consultation on care and housing, and a review of test results without the pet.",
+"Осмотр 950 ₽ · повторный 500 ₽": "Examination 950 ₽ · follow-up 500 ₽",
+"Общая хирургия": "General surgery",
+"Грыжесечение, удаление новообразований на теле и молочных пакетах, ампутации, удаление инородных предметов из ЖКТ, инвагинация кишечника, заворот желудка, диагностическая лапаротомия.": "Hernia repair, removal of skin and mammary tumours, amputations, foreign bodies in the gut, intussusception, gastric torsion and exploratory laparotomy.",
+"22 позиции в прайсе · наркоз под контролем": "22 items in the price list · monitored anaesthesia",
+"Урология и мочекаменная болезнь": "Urology and urinary stones",
+"Катетеризация мочевого пузыря, промывание и снятие катетера, уретростомия, цистотомия. Кот, который не может сходить в туалет, — это неотложный случай: звоните и везите сразу.": "Bladder catheterisation, flushing and removing catheters, urethrostomy, cystotomy. A cat that cannot pass urine is an emergency: call and bring him straight in.",
+"Приём вне очереди при задержке мочи": "Blocked cats are seen immediately",
+"УЗИ и диагностические пункции": "Ultrasound and diagnostic taps",
+"УЗИ брюшной полости, мочеполовой системы и отдельного органа. Цистоцентез, лапароцентез, пункция грудной полости и гематом с эвакуацией жидкости.": "Ultrasound of the abdomen, the urinary tract or a single organ. Cystocentesis, laparocentesis, chest taps and drainage of haematomas.",
+"УЗИ одного органа — 700 ₽": "Single-organ ultrasound — 700 ₽",
+"Стоматология": "Dentistry",
+"Ультразвуковая чистка зубного камня под седацией, механическая чистка, удаление молочных зубов и подвижных постоянных. Запах из пасти и отказ от твёрдого корма — почти всегда про зубы.": "Ultrasonic scaling under sedation, manual tartar removal, extraction of milk teeth and loose permanent teeth. Bad breath and refusing hard food almost always come down to teeth.",
+"Кошкам и собакам": "Cats and dogs",
+"Офтальмология": "Ophthalmology",
+"Приём ведёт Тамара Юрьевна Лозовская: осмотр, удаление аденомы третьего века, коррекция заворота века, удаление новообразований на веке, микрохирургические операции. При травме глаза не ждите — записывайтесь в тот же день.": "Seen by Tamara Lozovskaya: examination, cherry eye removal, entropion correction, eyelid tumour removal and microsurgery. With an eye injury, do not wait — book the same day.",
+"Приём — 1 500 ₽": "Consultation — 1,500 ₽",
+"Приём орнитолога": "Avian vet",
+"Клинический осмотр специалистом по птицам, помощь при задержке яйца — физическим и хирургическим способом. Птицы скрывают болезнь до последнего: вялость и взъерошенность уже повод приехать.": "Clinical examination by a bird specialist and help with egg binding, manually or surgically. Birds hide illness to the last: listlessness and ruffled feathers are already a reason to come in.",
+"Приём — 1 200 ₽": "Consultation — 1,200 ₽",
+"Анестезиология и блокады": "Anaesthesia and nerve blocks",
+"Седация для исследований и манипуляций, местная и аппликационная анестезия, блокада параанальных желёз при воспалении. Протокол подбираем по возрасту, весу и состоянию.": "Sedation for tests and procedures, local and topical anaesthesia, anal gland blocks for inflammation. The protocol is chosen by age, weight and condition.",
+"Кошки и собаки": "Cats and dogs",
+"Акушерство и репродукция": "Obstetrics and reproduction",
+"Кастрация и стерилизация кошек, собак, кроликов и хорьков — по весу и с учётом патологий. Кесарево сечение, родовспоможение, реанимация плода. Косметический шов по желанию.": "Neutering and spaying of cats, dogs, rabbits and ferrets — priced by weight and any pathology. Caesareans, assisted whelping, neonate resuscitation. Cosmetic sutures on request.",
+"Кастрация кота от 2 600 ₽ · стерилизация кошки от 5 000 ₽": "Cat neutering from 2,600 ₽ · cat spaying from 5,000 ₽",
+"Вакцинация и документы": "Vaccination and documents",
+"Комплексные вакцины для кошек и собак — импортные и отечественные, с бешенством и без. Вакцинируем кроликов. Оформляем ветпаспорт, чипируем с внесением в базу, готовим документы для поездок.": "Combined vaccines for cats and dogs — imported and domestic, with or without rabies. We vaccinate rabbits, issue pet passports, microchip with database registration and prepare travel paperwork.",
+"Комплексная — от 1 700 ₽ · чипирование 1 000 ₽": "Combined from 1,700 ₽ · microchipping 1,000 ₽",
+"Стационар": "Inpatient care",
+"Отдельный бокс с круглосуточным наблюдением: обычный стационар, инфекционный для заразных пациентов и отдельный — для животных в тяжёлом и критическом состоянии.": "A separate box with round-the-clock monitoring: the general ward, an isolation ward for infectious patients and a separate one for animals in a serious or critical condition.",
+"От 800 ₽ в сутки": "From 800 ₽ per day",
+"Вызов врача на дом": "Home visits",
+"Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому. Королёв и ближайшие города.": "For elderly, seriously ill and very anxious patients: examination, sample taking, fluids or vaccination at home. Korolyov and nearby towns.",
+"Королёв и Подмосковье": "Korolyov and the Moscow Region",
+"Ветаптека и зоотовары": "Pharmacy and pet supplies",
+"Назначенные препараты, лечебные корма, антипаразитарные средства и наполнители — на месте. Дозировку рассчитываем по весу питомца.": "Prescribed medication, therapeutic diets, antiparasitics and litter — all on site. We calculate dosage by your pet's weight.",
+"Забрать сразу после приёма": "Collect straight after the appointment",
+"Приём и консультации": "Appointments and advice",
+"Вакцинация и профилактика": "Vaccination and prevention",
+"Осмотр и измерения": "Examination and measurements",
+"Взятие проб и материалов": "Sample collection",
+"Инъекции, капельницы и катетеры": "Injections, drips and catheters",
+"Раны, швы и дренажи": "Wounds, sutures and drains",
+"Уход и гигиена": "Care and grooming",
+"Визуальная диагностика": "Imaging",
+"Диагностические пункции": "Diagnostic taps",
+"Урология и МКБ": "Urology and urinary stones",
+"Орнитолог": "Avian vet",
+"Гуманное усыпление": "Humane euthanasia",
+"Клинический осмотр животного": "Clinical examination",
+"Повторный клинический осмотр": "Follow-up examination",
+"Клинический осмотр агрессивного животного": "Examination of an aggressive animal",
+"Фиксация животного": "Restraining an animal",
+"Консультация по уходу и содержанию": "Advice on care and housing",
+"Консультация владельца без животного или по результатам анализов": "Owner consultation without the pet or on test results",
+"Страхование животных, оформление полиса": "Pet insurance policy",
+"Комплексная вакцинация с бешенством, импортная вакцина": "Combined vaccination with rabies, imported vaccine",
+"Комплексная вакцинация с бешенством, отечественная вакцина": "Combined vaccination with rabies, domestic vaccine",
+"Комплексная вакцинация без бешенства, импортная вакцина": "Combined vaccination without rabies, imported vaccine",
+"Комплексная вакцинация без бешенства, отечественная вакцина": "Combined vaccination without rabies, domestic vaccine",
+"Вакцинация только от бешенства": "Rabies vaccination only",
+"Вакцинация кролика": "Rabbit vaccination",
+"Чипирование с внесением в базу данных": "Microchipping with database registration",
+"Считывание номера микрочипа": "Microchip scanning",
+"Оформление ветеринарного паспорта": "Issuing a pet passport",
+"Обработка акарицидными препаратами": "Acaricide treatment against ticks",
+"Термометрия": "Temperature measurement",
+"Взвешивание": "Weighing",
+"Отоскопия": "Otoscopy",
+"Микроскопическое исследование": "Microscopic examination",
+"Люминесцентная диагностика на дерматофиты (лампа Вуда)": "Wood's lamp test for dermatophytes",
+"Взятие соскобов и мазков на паразитарные и кожные заболевания": "Skin scrapings and smears for parasitic and skin disease",
+"Взятие проб венозной крови": "Venous blood sampling",
+"Взятие мазка-отпечатка на цитологический анализ": "Impression smear for cytology",
+"Взятие смывов для микробиологического исследования": "Swabs for microbiological testing",
+"Взятие мочи, механическое опорожнение": "Urine collection by manual expression",
+"Внутримышечное и подкожное введение препаратов": "Intramuscular and subcutaneous injection",
+"Внутримышечное и подкожное введение по направлению из другой клиники": "Injection on referral from another clinic",
+"Пероральное введение препаратов, кошки": "Oral medication, cats",
+"Пероральное введение препаратов, собаки": "Oral medication, dogs",
+"Ректальное введение препаратов": "Rectal medication",
+"Интраназальное введение препаратов": "Intranasal medication",
+"Внутривенное введение препаратов": "Intravenous injection",
+"Внутривенное введение через катетер": "Intravenous injection through a catheter",
+"Установка и фиксация внутривенного катетера": "Placing and securing an IV catheter",
+"Снятие внутривенного катетера": "Removing an IV catheter",
+"Подкожное капельное введение, 30 минут": "Subcutaneous fluids, 30 minutes",
+"Внутривенное аппаратное капельное введение": "Intravenous infusion by pump",
+"Внутривенное введение через инфузомат, первый час": "Infusion pump, first hour",
+"Внутривенное введение через инфузомат, следующий час": "Infusion pump, each further hour",
+"Введение контрацептива": "Contraceptive injection",
+"Первичная хирургическая обработка раны": "Primary wound debridement",
+"Наложение швов": "Suturing",
+"Наложение косметического шва, до 3 см": "Cosmetic suture, up to 3 cm",
+"Наложение косметического шва, более 3 см": "Cosmetic suture, over 3 cm",
+"Обработка шва": "Wound dressing",
+"Снятие швов": "Suture removal",
+"Наложение бинтовой повязки после взятия крови или катетера": "Bandage after a blood draw or catheter",
+"Вскрытие абсцессов, гематом и сером без дренажа": "Lancing abscesses, haematomas and seromas without a drain",
+"Установка дренажа": "Placing a drain",
+"Промывание дренажа": "Flushing a drain",
+"Снятие дренажа": "Removing a drain",
+"Санация ушных раковин": "Ear cleaning",
+"Глубокая санация ушных раковин": "Deep ear cleaning",
+"Обрезка когтей, до 10 кг": "Nail trim, up to 10 kg",
+"Обрезка когтей, 10–20 кг": "Nail trim, 10–20 kg",
+"Обрезка когтей, 20–35 кг": "Nail trim, 20–35 kg",
+"Обрезка когтей, свыше 35 кг": "Nail trim, over 35 kg",
+"Промывание толстого отдела кишечника": "Colon lavage",
+"Санация параанальных желёз": "Anal gland expression",
+"Удаление иксодовых клещей": "Tick removal",
+"Удаление сломанного когтя": "Removal of a broken claw",
+"Стационар, кошки — сутки": "Inpatient stay, cats — per day",
+"Стационар, собаки до 10 кг — сутки": "Inpatient stay, dogs up to 10 kg — per day",
+"Стационар, собаки 10–25 кг — сутки": "Inpatient stay, dogs 10–25 kg — per day",
+"Стационар, собаки от 25 кг — сутки": "Inpatient stay, dogs over 25 kg — per day",
+"Инфекционный стационар, кошки — сутки": "Isolation ward, cats — per day",
+"Инфекционный стационар, собаки до 10 кг — сутки": "Isolation ward, dogs up to 10 kg — per day",
+"Инфекционный стационар, собаки 10–25 кг — сутки": "Isolation ward, dogs 10–25 kg — per day",
+"Инфекционный стационар, собаки от 25 кг — сутки": "Isolation ward, dogs over 25 kg — per day",
+"Стационар для тяжёлых пациентов, кошки — сутки": "Critical care, cats — per day",
+"Стационар для тяжёлых пациентов, собаки до 10 кг — сутки": "Critical care, dogs up to 10 kg — per day",
+"Стационар для тяжёлых пациентов, собаки 10–25 кг — сутки": "Critical care, dogs 10–25 kg — per day",
+"Стационар для тяжёлых пациентов, собаки от 25 кг — сутки": "Critical care, dogs over 25 kg — per day",
+"УЗИ органов брюшной полости": "Abdominal ultrasound",
+"УЗИ мочеполовой системы": "Urogenital ultrasound",
+"УЗИ одного органа": "Single-organ ultrasound",
+"Пункция мочевого пузыря (цистоцентез)": "Bladder puncture (cystocentesis)",
+"Пункция брюшной полости с эвакуацией жидкости (лапароцентез)": "Abdominal tap with fluid drainage (laparocentesis)",
+"Пункция грудной полости с эвакуацией жидкости или воздуха": "Chest tap with fluid or air drainage",
+"Пункция брюшной или грудной полости, диагностическая": "Diagnostic abdominal or chest tap",
+"Пункция гематомы или серомы с эвакуацией жидкости": "Haematoma or seroma drainage",
+"Грыжесечение пупочное, кошки": "Umbilical hernia repair, cats",
+"Грыжесечение пупочное, собаки": "Umbilical hernia repair, dogs",
+"Оперативное лечение ушной гематомы": "Aural haematoma surgery",
+"Купирование ушей": "Ear cropping",
+"Ампутация конечности, кошки": "Limb amputation, cats",
+"Ампутация конечности, собаки": "Limb amputation, dogs",
+"Ампутация хвоста, собаки": "Tail amputation, dogs",
+"Купирование хвоста до 10 дней": "Tail docking, under 10 days old",
+"Купирование хвоста старше 10 дней": "Tail docking, over 10 days old",
+"Удаление рудиментарных фаланг до 10 дней": "Dewclaw removal, under 10 days old",
+"Удаление рудиментарных фаланг старше 2 месяцев": "Dewclaw removal, over 2 months old",
+"Удаление новообразований молочных пакетов, кошки": "Mammary tumour removal, cats",
+"Удаление новообразований молочных пакетов, собаки": "Mammary tumour removal, dogs",
+"Удаление новообразований на теле, кошки": "Body tumour removal, cats",
+"Удаление новообразований на теле, собаки": "Body tumour removal, dogs",
+"Удаление инородного предмета из ЖКТ": "Removal of a foreign body from the gut",
+"Хирургическое лечение инвагинации кишечника": "Surgery for intestinal intussusception",
+"Хирургическое лечение выпадения прямой кишки": "Surgery for rectal prolapse",
+"Заворот желудка с удалением селезёнки": "Gastric torsion with splenectomy",
+"Диагностическая лапаротомия, кошки": "Exploratory laparotomy, cats",
+"Диагностическая лапаротомия, собаки": "Exploratory laparotomy, dogs",
+"Катетеризация мочевого пузыря, коты": "Bladder catheterisation, male cats",
+"Катетеризация мочевого пузыря, кошки": "Bladder catheterisation, female cats",
+"Катетеризация мочевого пузыря, кобели": "Bladder catheterisation, male dogs",
+"Катетеризация мочевого пузыря, суки": "Bladder catheterisation, female dogs",
+"Промывание уретрального катетера": "Flushing a urinary catheter",
+"Подшивание уретрального катетера": "Securing a urinary catheter",
+"Снятие уретрального катетера": "Removing a urinary catheter",
+"Уретростомия, коты": "Urethrostomy, male cats",
+"Уретростомия, кобели": "Urethrostomy, male dogs",
+"Цистотомия, кошки": "Cystotomy, cats",
+"Цистотомия, собаки": "Cystotomy, dogs",
+"Кастрация кота без патологии, вес до 5 кг": "Cat neutering, no complications, up to 5 kg",
+"Кастрация кота без патологии, вес от 5 кг": "Cat neutering, no complications, over 5 kg",
+"Кастрация кота-крипторха": "Cryptorchid cat neutering",
+"Кастрация кобеля без патологии, вес до 10 кг": "Dog neutering, no complications, up to 10 kg",
+"Кастрация кобеля без патологии, вес 10–25 кг": "Dog neutering, no complications, 10–25 kg",
+"Кастрация кобеля без патологии, вес от 25 кг": "Dog neutering, no complications, over 25 kg",
+"Кастрация кобеля-крипторха": "Cryptorchid dog neutering",
+"Кастрация кролика или хорька": "Rabbit or ferret neutering",
+"Стерилизация кошки без патологий, вес до 5 кг": "Cat spaying, no pathology, up to 5 kg",
+"Стерилизация кошки до 5 кг, косметический шов": "Cat spaying up to 5 kg, cosmetic suture",
+"Стерилизация кошки без патологий, вес от 5 кг": "Cat spaying, no pathology, over 5 kg",
+"Стерилизация кошки с патологией репродуктивной системы": "Cat spaying with reproductive pathology",
+"Стерилизация суки до 10 кг без патологий": "Dog spaying up to 10 kg, no pathology",
+"Стерилизация суки 10–25 кг без патологий": "Dog spaying 10–25 kg, no pathology",
+"Стерилизация суки от 25 кг без патологий": "Dog spaying over 25 kg, no pathology",
+"Стерилизация суки с патологией репродуктивной системы": "Dog spaying with reproductive pathology",
+"Стерилизация крольчихи или хорька": "Rabbit or ferret spaying",
+"Кесарево сечение кошки со стерилизацией": "Caesarean in cats with spaying",
+"Кесарево сечение кошки с сохранением репродуктивных органов": "Caesarean in cats preserving the reproductive organs",
+"Кесарево сечение суки со стерилизацией": "Caesarean in dogs with spaying",
+"Кесарево сечение суки с сохранением репродуктивных органов": "Caesarean in dogs preserving the reproductive organs",
+"Родовспоможение, 1 час": "Assisted whelping, 1 hour",
+"Реанимация плода, 1 час": "Neonate resuscitation, 1 hour",
+"Механическая чистка зубного камня": "Manual tartar removal",
+"УЗ чистка зубного камня, кошки": "Ultrasonic scaling, cats",
+"УЗ чистка зубного камня, собаки": "Ultrasonic scaling, dogs",
+"Удаление молочных зубов, резцы": "Milk tooth extraction, incisors",
+"Удаление молочных зубов, клыки и премоляры": "Milk tooth extraction, canines and premolars",
+"Удаление постоянных зубов (подвижных)": "Extraction of loose permanent teeth",
+"Удаление постоянных зубов": "Permanent tooth extraction",
+"Приём офтальмолога": "Ophthalmologist consultation",
+"Удаление аденомы третьего века": "Cherry eye (third eyelid gland) removal",
+"Удаление новообразования на веке": "Eyelid tumour removal",
+"Заворот века": "Entropion correction",
+"Удаление глазного яблока": "Eye enucleation",
+"Приём врачом-орнитологом": "Avian vet consultation",
+"Изъятие яйца через клоаку, физическим способом": "Egg removal through the cloaca, manual",
+"Изъятие яйца через клоаку, хирургическим способом": "Egg removal through the cloaca, surgical",
+"Седация кошки для исследований и манипуляций": "Sedation for cats, tests and procedures",
+"Седация собаки для исследований и манипуляций": "Sedation for dogs, tests and procedures",
+"Местная анестезия (новокаин, лидокаин, ультракаин)": "Local anaesthesia (procaine, lidocaine, articaine)",
+"Аппликационная анестезия": "Topical anaesthesia",
+"Блокада параанальных желёз": "Anal gland block",
+"Медикаментозная эвтаназия, кошки": "Euthanasia, cats",
+"Медикаментозная эвтаназия, собаки до 5 кг": "Euthanasia, dogs up to 5 kg",
+"Медикаментозная эвтаназия, собаки 5–10 кг": "Euthanasia, dogs 5–10 kg",
+"Медикаментозная эвтаназия, собаки 11–25 кг": "Euthanasia, dogs 11–25 kg",
+"Медикаментозная эвтаназия, собаки до 40 кг": "Euthanasia, dogs up to 40 kg",
+"Медикаментозная эвтаназия, собаки 40–60 кг": "Euthanasia, dogs 40–60 kg",
+"Без стоимости препарата.": "Medication not included.",
+"Без стоимости препарата. От покусов клещей.": "Medication not included. Protects against tick bites.",
+"Без стоимости расходных материалов.": "Consumables not included.",
+"В просвет мочеиспускательного канала вводят уретральный катетер, чтобы восстановить отток мочи.": "A urinary catheter is passed into the urethra to restore the flow of urine.",
+"В стоимость заложена фиксация.": "Restraint is included in the price.",
+"В том числе для контроля веса на лечении.": "Including weight checks during treatment.",
+"В том числе после травмы конечности.": "Including after limb trauma.",
+"Визуализация состояния внутренних органов.": "Imaging of the internal organs.",
+"Врач методом нажатия опорожняет параанальные железы.": "The vet empties the anal glands by manual pressure.",
+"Врач оценивает состояние, ставит предварительный диагноз и составляет план обследования.": "The vet assesses the animal, makes a working diagnosis and plans further tests.",
+"Временно снижает уровень сознания, чтобы спокойно провести осмотр или процедуру.": "Briefly lowers consciousness so the examination or procedure can be done calmly.",
+"Вскрытие мочевого пузыря, в том числе для удаления камней.": "Opening the bladder, including to remove stones.",
+"Глубинный соскоб со слизистых оболочек и кожи.": "Deep scraping from mucous membranes and skin.",
+"Давящая повязка, чтобы не образовалась гематома.": "A pressure bandage to prevent a haematoma.",
+"Дешевле первичного осмотра.": "Cheaper than the first examination.",
+"Доступ к органам брюшной полости, чтобы поставить или уточнить диагноз.": "Access to the abdominal organs to make or confirm a diagnosis.",
+"Ищем изменения в клетках и тканях, в том числе признаки перерождения.": "Looks for changes in cells and tissue, including signs of malignancy.",
+"Клинический осмотр специалистом по лечению птиц.": "Clinical examination by a bird specialist.",
+"Когда молочные зубы не выпали сами.": "When the milk teeth have not fallen out on their own.",
+"Манипуляции для сохранения жизни рождённых плодов. Без препаратов и расходных материалов.": "Procedures to keep the newborns alive. Medication and consumables not included.",
+"Методом выкручивания из кожи.": "Removed from the skin by twisting.",
+"Наркоз входит в стоимость.": "Anaesthesia is included.",
+"Наркоз, препараты и расходные материалы не включены.": "Anaesthesia, medication and consumables not included.",
+"Обезболивание параанальных желёз при воспалении.": "Pain relief for inflamed anal glands.",
+"Образец из периферической вены для лабораторных исследований.": "A sample from a peripheral vein for laboratory testing.",
+"Овариогистерэктомия.": "Ovariohysterectomy.",
+"Операция, при которой создаётся новое отверстие в уретре в обход проблемного участка.": "Surgery creating a new urethral opening that bypasses the blocked section.",
+"От 1 200 до 2 000 ₽. Для животных в тяжёлом и критическом состоянии.": "From 1,200 to 2,000 ₽. For animals in a serious or critical condition.",
+"От 1 200 до 2 000 ₽. Отдельный бокс, круглосуточное наблюдение.": "From 1,200 to 2,000 ₽. A separate box with round-the-clock monitoring.",
+"От 13 000 до 30 000 ₽. Неотложная операция — везите сразу.": "From 13,000 to 30,000 ₽. Emergency surgery — bring your pet in at once.",
+"От 15 000 ₽. Наркоз и препараты не включены.": "From 15,000 ₽. Anaesthesia and medication not included.",
+"От 2 000 до 4 000 ₽. Препараты и расходные материалы не включены.": "From 2,000 to 4,000 ₽. Medication and consumables not included.",
+"От 200 ₽, без стоимости расходных материалов.": "From 200 ₽, consumables not included.",
+"От 3 000 до 5 000 ₽. Препараты и расходные материалы не включены.": "From 3,000 to 5,000 ₽. Medication and consumables not included.",
+"От 3 000 до 6 000 ₽. Препараты и расходные материалы не включены.": "From 3,000 to 6,000 ₽. Medication and consumables not included.",
+"От 3 000 ₽ — зависит от сложности процедуры.": "From 3,000 ₽ — depends on how complex the procedure is.",
+"От 4 000 до 10 000 ₽. Препараты и расходные материалы не включены.": "From 4,000 to 10,000 ₽. Medication and consumables not included.",
+"От 4 000 до 5 000 ₽. Наркоз, препараты и расходные материалы не включены.": "From 4,000 to 5,000 ₽. Anaesthesia, medication and consumables not included.",
+"От 5 000 до 8 000 ₽ — зависит от массы питомца.": "From 5,000 to 8,000 ₽ — depends on the pet's weight.",
+"От 500 до 2 500 ₽. Расходные материалы и препараты не включены.": "From 500 to 2,500 ₽. Consumables and medication not included.",
+"От 7 000 ₽ — зависит от сложности процедуры.": "From 7,000 ₽ — depends on how complex the procedure is.",
+"Отобранное содержимое под микроскопом при сильном увеличении.": "The collected sample under a microscope at high magnification.",
+"Полис «Ренессанс.Страхование» — компенсация за лечение в клинике.": "A Renaissance Insurance policy — reimbursement for treatment at the clinic.",
+"Посредством шприца.": "Collected with a syringe.",
+"При формировании второго ряда зубов вместе с постоянными.": "When a second row forms alongside the permanent teeth.",
+"Приборное исследование в глубине уха.": "Instrument examination deep inside the ear.",
+"Проводится под седацией.": "Performed under sedation.",
+"Разбор профилактики: кормление, содержание, что делать дома.": "Preventive advice: feeding, housing and what to do at home.",
+"Ректальное измерение температуры.": "Rectal temperature measurement.",
+"Собаки и кошки.": "Dogs and cats.",
+"Спреи, пипетка — через носовые ходы.": "Sprays or drops through the nasal passages.",
+"Удаление серы и обработка слухового канала антимикробными средствами.": "Removing wax and treating the ear canal with antimicrobials.",
+"Хирургическая операция для извлечения плодов.": "Surgery to deliver the young.",
+"Холодный ультрафиолет — проверка кожи на грибковые заболевания.": "Cold ultraviolet light — checking the skin for fungal disease.",
+"Через ЖКТ, без стоимости препаратов.": "Given by mouth; medication not included.",
+"Через вену с применением инфузомата.": "Into a vein using an infusion pump.",
+"Чтобы конечности правильно ставились при ходьбе.": "So the limbs sit correctly when the puppy walks.",
+"Шов, который не нужно снимать и который не отторгается.": "A suture that does not need removing and is not rejected.",
+"Электронная метка под кожу — по ней питомца найдут, если он потеряется.": "An electronic tag under the skin so a lost pet can be identified.",
+"950 ₽": "950 ₽",
+"500 ₽": "500 ₽",
+"3 500 ₽": "3,500 ₽",
+"От 800 до 2 000 ₽.": "From 800 to 2,000 ₽.",
+"2 000 ₽": "2,000 ₽",
+"350 ₽": "350 ₽",
+"2 500 ₽": "2,500 ₽",
+"1 700 ₽": "1,700 ₽",
+"1 200 ₽": "1,200 ₽",
+"1 000 ₽": "1,000 ₽",
+"100 ₽": "100 ₽",
+"200 ₽": "200 ₽",
+"150 ₽": "150 ₽",
+"50 ₽": "50 ₽",
+"400 ₽": "400 ₽",
+"250 ₽": "250 ₽",
+"От 200 до 400 ₽.": "From 200 to 400 ₽.",
+"600 ₽": "600 ₽",
+"От 1 000 до 2 500 ₽.": "From 1,000 to 2,500 ₽.",
+"От 300 до 1 000 ₽.": "From 300 to 1,000 ₽.",
+"300 ₽": "300 ₽",
+"От 100 ₽.": "From 100 ₽.",
+"От 500 до 1 000 ₽.": "From 500 to 1,000 ₽.",
+"От 800 ₽.": "From 800 ₽.",
+"800 ₽": "800 ₽",
+"От 300 до 500 ₽.": "From 300 to 500 ₽.",
+"От 600 до 1 000 ₽.": "From 600 to 1,000 ₽.",
+"От 1 000 до 1 500 ₽.": "From 1,000 to 1,500 ₽.",
+"От 1 500 до 2 000 ₽.": "From 1,500 to 2,000 ₽.",
+"1 500 ₽": "1,500 ₽",
+"От 2 000 ₽.": "From 2,000 ₽.",
+"От 2 000 до 2 500 ₽.": "From 2,000 to 2,500 ₽.",
+"От 2 500 до 4 000 ₽.": "From 2,500 to 4,000 ₽.",
+"1 550 ₽": "1,550 ₽",
+"1 250 ₽": "1,250 ₽",
+"700 ₽": "700 ₽",
+"От 500 до 2 000 ₽.": "From 500 to 2,000 ₽.",
+"От 1 000 до 2 000 ₽.": "From 1,000 to 2,000 ₽.",
+"От 500 до 1 500 ₽.": "From 500 to 1,500 ₽.",
+"3 000 ₽": "3,000 ₽",
+"4 000 ₽": "4,000 ₽",
+"От 3 000 до 6 000 ₽.": "From 3,000 to 6,000 ₽.",
+"От 7 000 до 10 000 ₽.": "From 7,000 to 10,000 ₽.",
+"7 000 ₽": "7,000 ₽",
+"5 500 ₽": "5,500 ₽",
+"От 4 500 до 8 000 ₽.": "From 4,500 to 8,000 ₽.",
+"8 000 ₽": "8,000 ₽",
+"От 2 000 до 4 500 ₽.": "From 2,000 to 4,500 ₽.",
+"От 3 000 до 5 000 ₽.": "From 3,000 to 5,000 ₽.",
+"5 000 ₽": "5,000 ₽",
+"6 000 ₽": "6,000 ₽",
+"От 3 500 до 8 000 ₽.": "From 3,500 to 8,000 ₽.",
+"От 8 000 до 15 000 ₽.": "From 8,000 to 15,000 ₽.",
+"15 000 ₽": "15,000 ₽",
+"От 10 000 до 15 000 ₽.": "From 10,000 to 15,000 ₽.",
+"10 000 ₽": "10,000 ₽",
+"13 000 ₽": "13,000 ₽",
+"От 5 000 до 8 000 ₽.": "From 5,000 to 8,000 ₽.",
+"900 ₽": "900 ₽",
+"От 3 000 до 4 000 ₽.": "From 3,000 to 4,000 ₽.",
+"От 400 до 500 ₽.": "From 400 to 500 ₽.",
+"8 500 ₽": "8,500 ₽",
+"От 10 000 до 12 000 ₽.": "From 10,000 to 12,000 ₽.",
+"12 000 ₽": "12,000 ₽",
+"От 7 500 до 12 000 ₽.": "From 7,500 to 12,000 ₽.",
+"7 500 ₽": "7,500 ₽",
+"2 600 ₽": "2,600 ₽",
+"От 3 500 ₽.": "From 3,500 ₽.",
+"От 10 000 ₽.": "From 10,000 ₽.",
+"От 6 500 ₽.": "From 6,500 ₽.",
+"6 500 ₽": "6,500 ₽",
+"От 6 000 до 8 000 ₽.": "From 6,000 to 8,000 ₽.",
+"От 10 500 ₽.": "From 10,500 ₽.",
+"10 500 ₽": "10,500 ₽",
+"От 5 500 до 7 000 ₽.": "From 5,500 to 7,000 ₽.",
+"От 9 000 до 11 000 ₽.": "From 9,000 to 11,000 ₽.",
+"9 000 ₽": "9,000 ₽",
+"От 8 000 до 25 000 ₽.": "From 8,000 to 25,000 ₽.",
+"От 9 000 до 25 000 ₽.": "From 9,000 to 25,000 ₽.",
+"650 ₽": "650 ₽",
+"От 1 500 до 3 000 ₽.": "From 1,500 to 3,000 ₽.",
+"От 200 до 300 ₽.": "From 200 to 300 ₽.",
+"Плюс 500 ₽ медикаменты.": "Plus 500 ₽ for medication.",
+"Плюс 600 ₽ медикаменты.": "Plus 600 ₽ for medication.",
+"Плюс 1 000 ₽ медикаменты.": "Plus 1,000 ₽ for medication.",
+"Плюс 1 300 ₽ медикаменты.": "Plus 1,300 ₽ for medication.",
+"5 200 ₽": "5,200 ₽",
+"Плюс 1 500 ₽ медикаменты.": "Plus 1,500 ₽ for medication.",
+"Демо-концепт": "Demo concept",
+"макет для ветклиники «Симба», Королёв · не официальный сайт · часть карточек врачей — заглушки": "a concept site for Simba veterinary clinic, Korolyov · not the official site · some doctor cards are placeholders",
+"ветклиника · Королёв": "vet clinic · Korolyov",
+"Услуги": "Services",
+"Клиника": "Clinic",
+"Врачи": "Doctors",
+"Цены": "Prices",
+"Отзывы": "Reviews",
+"Контакты": "Contacts",
+"Записаться": "Book a visit",
+"Разделы": "Sections",
+"Ветеринарная": "Veterinary",
+"клиника в Королёве": "clinic in Korolyov",
+"Лечим кошек, собак, грызунов и птиц на улице Дзержинского, 8Б. Приём по записи с 10:00, срочные случаи — вне очереди.": "We treat cats, dogs, rodents and birds at 8B Dzerzhinskogo Street. Appointments from 10:00; urgent cases are seen straight away.",
+"Записаться на приём": "Book an appointment",
+"Позвонить в клинику": "Call the clinic",
+"Проложить маршрут": "Get directions",
+"Львёнок Симба — талисман клиники": "Simba the lion cub, the clinic's mascot",
+"Пн–Пт 10:00–20:00": "Mon–Fri 10:00–20:00",
+"Сб и Вс — 10:00–19:00, без перерыва на обед": "Sat and Sun 10:00–19:00, no lunch break",
+"7 дней в неделю": "Open 7 days a week",
+"Срочные случаи принимаем вне очереди": "Urgent cases are seen without waiting",
+"УЗИ от 700 ₽": "Ultrasound from 700 ₽",
+"Брюшная полость, мочеполовая система, отдельный орган": "Abdomen, urinary tract, single organ",
+"Принимаем птиц": "We see birds",
+"Приём врача-орнитолога — 1 200 ₽": "Avian vet consultation — 1,200 ₽",
+"Наши услуги": "Our services",
+"Что мы делаем": "What we do",
+"Нажмите на услугу — расскажем, как проходит и сколько занимает.": "Tap a service to see how it works and how long it takes.",
+"Клиника изнутри": "Inside the clinic",
+"Чем мы лечим": "How we work",
+"Диагностика и лаборатория — в кабинете, а не в другом городе: анализы и УЗИ делаем на том же приёме.": "Diagnostics and the lab are in the room, not in another town: bloodwork and ultrasound happen during the same visit.",
+"Ресепшн, рабочее место врача и ветаптека — с этого начинается визит. Приём по записи, ждать в коридоре не придётся.": "Reception, the vet's desk and the pharmacy — where every visit starts. By appointment, so there is no waiting in the corridor.",
+"Смотровой кабинет: осмотр, термометрия и назначения — 950 ₽, повторный приём 500 ₽.": "Consulting room: examination, temperature check and treatment plan — 950 ₽, follow-up 500 ₽.",
+"УЗИ-аппарат в кабинете: брюшная полость, мочеполовая система, отдельный орган — от 700 ₽.": "Ultrasound unit on site: abdomen, urinary tract or a single organ — from 700 ₽.",
+"Микроскопия, цитология и пробы крови — берём и смотрим на месте, результат в тот же день.": "Microscopy, cytology and blood samples — taken and read here, results the same day.",
+"Ванна для мытья и обработки — от санации до противопаразитарных процедур.": "Bathing and treatment tub — from cleaning to antiparasitic care.",
+"Стойка администратора клиники «Симба»": "Reception desk at Simba clinic",
+"Рабочее место врача: отоскоп, стетоскоп, препараты": "The vet's desk: otoscope, stethoscope, medicines",
+"Полки ветаптеки: корма и лечебные диеты": "Pharmacy shelves: food and prescription diets",
+"Смотровой кабинет клиники «Симба»": "Consulting room at Simba clinic",
+"Аппарат УЗИ в кабинете клиники «Симба»": "Ultrasound unit at Simba clinic",
+"Микроскоп и пробирки для анализов": "Microscope and sample tubes",
+"Ванна для мытья и обработки животных": "Tub for bathing and treating animals",
+"Команда": "Our team",
+"Наши врачи": "Our doctors",
+"Офтальмология": "Ophthalmology",
+"Тамара Юрьевна Лозовская": "Tamara Yurievna Lozovskaya",
+"Врач-офтальмолог": "Veterinary ophthalmologist",
+"Проводит операции на веках и глазном яблоке, включая микрохирургические.": "Performs eyelid and eyeball surgery, including microsurgery.",
+"Назначает современные высокоэффективные препараты.": "Prescribes modern, high-efficacy medication.",
+"Работает по методике офтальмологического обследования с тест-полосками — оценка слёзопродукции и проходимости слёзных путей.": "Uses a test-strip eye examination protocol — measuring tear production and tear duct patency.",
+"Записаться к офтальмологу": "Book the ophthalmologist",
+"Приём — 1 500 ₽ · операции на веках от 3 000 ₽": "Consultation 1,500 ₽ · eyelid surgery from 3,000 ₽",
+"Обучение и сертификаты": "Training and certificates",
+"10 документов · нажмите, чтобы увеличить": "10 documents · tap to enlarge",
+"Остальные врачи": "Other doctors",
+"фото и имена — заглушки, пришлите свои": "photos and names are placeholders — send us yours",
+"Тамара Юрьевна Лозовская, врач-офтальмолог клиники «Симба»": "Tamara Lozovskaya, veterinary ophthalmologist at Simba clinic",
+"Имя Фамилия": "Name Surname",
+"Главный врач · терапевт": "Head vet · general practice",
+"Хирург · анестезиолог": "Surgeon · anaesthetist",
+"Врач УЗ-диагностики": "Ultrasound specialist",
+"фото врача": "doctor photo",
+"«Офтальмоскопия в диагностике заболеваний глазного дна» · Международная ветеринарная академия, 2023": "“Ophthalmoscopy in fundus disease diagnostics” · International Veterinary Academy, 2023",
+"«Хирургия век и лакримальной системы» · ИВЦ МВА, 2022": "“Eyelid and lacrimal system surgery” · IVC MVA, 2022",
+"«Швы в офтальмохирургии» · MicroLab, Москва, 2022": "“Sutures in eye surgery” · MicroLab, Moscow, 2022",
+"Школа офтальмологии доктора Олейник: передний отрезок глаза, 32 ч, и микрохирургия роговицы, 20 ч": "Dr Oleynik School of Ophthalmology: anterior segment disease, 32 h, and corneal microsurgery, 20 h",
+"«Офтальмология. Дерматология. Лабораторная диагностика» · Подольск, 2022": "“Ophthalmology. Dermatology. Laboratory diagnostics” · Podolsk, 2022",
+"IV Международный съезд ветеринарных офтальмологов": "4th International Congress of Veterinary Ophthalmologists",
+"III Международный съезд ветеринарных офтальмологов": "3rd International Congress of Veterinary Ophthalmologists",
+"II Международный съезд ветеринарных офтальмологов, май 2022": "2nd International Congress of Veterinary Ophthalmologists, May 2022",
+"Санкт-Петербургская ветеринарная офтальмологическая конференция, 2023": "St Petersburg Veterinary Ophthalmology Conference, 2023",
+"Санкт-Петербургская ветеринарная офтальмологическая конференция, 2022": "St Petersburg Veterinary Ophthalmology Conference, 2022",
+"Просмотр сертификата": "Certificate viewer",
+"Закрыть": "Close",
+"Услуги и товары": "Services and products",
+"164 позиции с карточки на Яндекс Картах": "164 items from the Yandex Maps listing",
+"Ветаптека и зоотовары": "Pharmacy and pet supplies",
+"Прайс": "Price list",
+"Показать для": "Show for",
+"Все": "All",
+"Кошки": "Cats",
+"Собаки": "Dogs",
+"Птицы и экзоты": "Birds and exotics",
+"Фильтр по питомцу": "Filter by pet",
+"Поиск по прайсу: вакцинация, УЗИ, стерилизация…": "Search the price list: vaccination, ultrasound, spaying…",
+"В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.": "There are no items for this pet in the price list yet — call us and we'll quote you.",
+"Это полный прайс клиники «Симба».": "This is Simba's complete price list.",
+"164 позиции в 18 разделах перенесены с карточки на Яндекс Картах без изменений: цены, диапазоны «от и до» и пометки о препаратах — как у вас.": "164 items across 18 sections, copied from the Yandex Maps listing unchanged: prices, “from–to” ranges and notes about medication, exactly as you have them.",
+"Лекарства и расходники в стоимость не входят, если не указано отдельно. Итоговую сумму называем до начала лечения.": "Medication and consumables are not included unless stated. We quote the final amount before treatment begins.",
+"Ветаптека и зоомагазин в клинике": "Pharmacy and pet shop on site",
+"Препараты по назначению врача, корма и всё для содержания — можно забрать сразу после приёма, не разыскивая по городу. Дозировку рассчитываем по весу питомца.": "Prescribed medication, food and everyday supplies — pick them up right after the appointment instead of hunting around town. We calculate dosage by your pet's weight.",
+"Корма Dailycat и Dailydog": "Dailycat and Dailydog food",
+"Лечебные диеты Hill's Prescription Diet": "Hill's Prescription Diet",
+"Наполнители": "Cat litter",
+"Поводки, ошейники, шлейки": "Leads, collars, harnesses",
+"Лежанки и когтеточки": "Beds and scratching posts",
+"Сушёные лакомства": "Dried treats",
+"Антипаразитарные средства": "Antiparasitic products",
+"Витамины и добавки": "Vitamins and supplements",
+"Цен на товары в прайсе на Яндекс Картах нет — пришлите список с ценами, выведем их здесь так же, как услуги. Наличие уточняйте по телефону.": "Product prices are not in the Yandex listing — send us the list and we'll show them here just like the services. Call to check stock.",
+"Торговый зал и стойка администратора клиники «Симба»": "Shop floor and reception at Simba clinic",
+"Что пишут владельцы": "What owners say",
+"отзывы с Яндекс Карт": "reviews from Yandex Maps",
+"отзывов и 60 фото на Яндекс Картах": "reviews and 60 photos on Yandex Maps",
+"Отзывы и оценка подтягиваются с карточки клиники и обновляются сами — сайт править не нужно. Ниже — три отзыва с карточки; на боевом сайте они будут обновляться автоматически.": "Reviews and the rating are pulled from the clinic's listing and refresh on their own — no need to edit the site. Three of them are shown below.",
+"Читать отзывы": "Read the reviews",
+"Знаток города 3 уровня": "Local expert, level 3",
+"Знаток города 6 уровня": "Local expert, level 6",
+"Выражаю огромную благодарность коллективу клиники! Делали стерилизацию кошечки. Подробно проинструктировали о всех предстоящих манипуляциях и о постоперационном уходе. Особенно важно для меня, что разрешили находиться рядом с кошкой и успокаивать её во время седации.": "Huge thanks to the whole team! They spayed our cat. They talked us through every step and the aftercare in detail. What mattered most to me is that they let me stay beside her and calm her during sedation.",
+"Спасибо огромное врачу Анне Михайловне! Очень заботливый и внимательный врач. Приём прошёл в спокойной обстановке, сделали всё прекрасно. Осмотр, анализы, прививки. Организация на высоком уровне: запись, отсутствие очереди, уделяют максимум времени и не торопят. Рекомендуем эту клинику!": "Thank you so much to Dr Anna Mikhailovna! A very caring and attentive vet. The appointment was calm and everything went perfectly: examination, tests, vaccinations. Excellent organisation — booking, no queue, they give you plenty of time and never rush. We recommend this clinic!",
+"Специалисты ветклиники «Симба» — постоянные партнёры фестиваля «Уютный дом»: осмотр животных на мероприятии, сертификаты здоровья, лекции, приём в самой клинике наших волонтёров с их подопечными — спокойно, толково, по делу и с искренней любовью к животным!": "The Simba team are long-standing partners of the Cosy Home festival: they examine animals at the event, issue health certificates, give talks and see our volunteers and their rescues at the clinic — calmly, competently, to the point and with genuine love for animals!",
+"Запись": "Booking",
+"Записаться на приём ": "Book an appointment ",
+"Заявка уходит администратору в Telegram — перезвоним и подтвердим время.": "The request goes to the front desk on Telegram — we'll call back to confirm the time.",
+"Ваше имя": "Your name",
+"Как к вам обращаться": "What should we call you",
+"Телефон": "Phone",
+"Ваш питомец": "Your pet",
+"Услуга": "Service",
+"Что беспокоит": "What's wrong",
+"Вялый второй день, не ест, три года, привит": "Lethargic for two days, not eating, three years old, vaccinated",
+"Дата": "Date",
+"Время": "Time",
+"Отправить заявку": "Send the request",
+"Приём терапевта": "General consultation",
+"Вакцинация": "Vaccination",
+"УЗИ или анализы": "Ultrasound or lab tests",
+"Хирургия — консультация": "Surgery — consultation",
+"Стоматология": "Dentistry",
+"Офтальмолог": "Ophthalmologist",
+"Вызов врача на дом": "Home visit",
+"Собака": "Dog",
+"Кошка": "Cat",
+"Грызун": "Rodent",
+"Кролик": "Rabbit",
+"Птица": "Bird",
+"Другой": "Other",
+"Как нас найти": "Finding us",
+"ул. Дзержинского": "Dzerzhinskogo St",
+"Симба · 8Б": "Simba · 8B",
+"интерактивная карта откроется на вашем домене": "the interactive map loads on your own domain",
+"Схема расположения: улица Дзержинского, 8Б": "Location plan: 8B Dzerzhinskogo Street",
+"Ветклиника «Симба» на карте": "Simba vet clinic on the map",
+"Адрес": "Address",
+"Московская обл., Королёв,": "Moscow Region, Korolyov,",
+"ул. Дзержинского, 8Б": "8B Dzerzhinskogo Street",
+"звонок, WhatsApp, Telegram": "call, WhatsApp, Telegram",
+"Часы работы": "Opening hours",
+"Сб–Вс 10:00–19:00": "Sat–Sun 10:00–19:00",
+"Ветеринарный кабинет, аптека и зоотовары в одном месте.": "A vet practice, pharmacy and pet shop in one place.",
+"Приём": "Appointments",
+"Вызов на дом": "Home visits",
+"Ветаптека": "Pharmacy",
+"Как добраться": "Directions",
+"Яндекс Карты": "Yandex Maps",
+"Пн–Вс с 10:00": "Mon–Sun from 10:00",
+"«Симба» · Королёв": "Simba · Korolyov",
+"Демонстрационный макет для показа клинике. Не является официальным сайтом. Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — образцы.": "A demonstration mock-up made to show the clinic. Not the official site. Address, phone and opening hours come from public listings and need confirming; some doctor cards and product prices are placeholders."
+};
+
+  var DYN = {
+    count_all: { ru: function (n) { return n + " позиций"; }, en: function (n) { return n + " items"; } },
+    count_some: { ru: function (a, b) { return "показано " + a + " из " + b; }, en: function (a, b) { return "showing " + a + " of " + b; } },
+    empty_q: { ru: function (q) { return "По запросу «" + q + "» в прайсе ничего не нашлось. Позвоните — назовём стоимость."; },
+               en: function (q) { return "Nothing in the price list matches \u201C" + q + "\u201D. Call us and we'll quote you."; } },
+    today: { ru: "сегодня", en: "today" },
+    closed: { ru: "На сегодня запись закрыта — выберите другой день или позвоните нам.",
+              en: "Booking for today is closed — pick another day or give us a call." },
+    lead_title: { ru: "🐾 Заявка с сайта «Симба»", en: "🐾 Booking request from the Simba website" },
+    lead_name: { ru: "Имя: ", en: "Name: " }, lead_phone: { ru: "Телефон: ", en: "Phone: " },
+    lead_pet: { ru: "Питомец: ", en: "Pet: " }, lead_service: { ru: "Услуга: ", en: "Service: " },
+    lead_when: { ru: "Когда: ", en: "When: " }, lead_comment: { ru: "Комментарий: ", en: "Comment: " },
+    lead_noname: { ru: "не указано", en: "not given" }, lead_nophone: { ru: "не указан", en: "not given" },
+    lead_notime: { ru: "время не выбрано", en: "no time selected" }, dash: { ru: "—", en: "—" },
+    ok_sent: { ru: "Заявка отправлена", en: "Request sent" },
+    ok_sent_note: { ru: "Администратор получил её в Telegram и перезвонит, чтобы подтвердить время.",
+                    en: "The front desk has it on Telegram and will call back to confirm the time." },
+    ok_demo: { ru: "Заявка сформирована", en: "Request prepared" },
+    ok_demo_note: { ru: "Это демо-версия: автоматическая отправка в Telegram включается вместе с ботом клиники. Пока можно отправить заявку вручную или позвонить.",
+                    en: "This is a demo: automatic Telegram delivery switches on with the clinic's bot. For now you can send it by hand or call." },
+    ok_tg: { ru: "Отправить в Telegram", en: "Send via Telegram" },
+    ok_wa: { ru: "Написать в WhatsApp", en: "Send via WhatsApp" },
+    ok_call: { ru: "Позвонить ", en: "Call " },
+    months: { ru: ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"],
+              en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] },
+    wdays: { ru: ["вс","пн","вт","ср","чт","пт","сб"], en: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"] }
+  };
+
+  var LANG = "ru";
+  try { LANG = localStorage.getItem("simba-lang") === "en" ? "en" : "ru"; } catch (e) {}
+  function dyn(key) { var v = DYN[key]; return v ? v[LANG] : ""; }
+
+  var origText = new WeakMap(), origAttr = new WeakMap();
+  var ATTRS = ["alt", "placeholder", "aria-label", "title"];
+
+  function translateTree(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
+      acceptNode: function (n) {
+        if (n.nodeType === 1 && (n.tagName === "SCRIPT" || n.tagName === "STYLE")) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeType === 3) {
+        if (!origText.has(node)) origText.set(node, node.nodeValue);
+        var src = origText.get(node);
+        if (LANG === "ru") { if (node.nodeValue !== src) node.nodeValue = src; continue; }
+        var key = src.replace(/\u00A0/g, " ").trim();
+        if (key && DICT[key]) node.nodeValue = src.match(/^\s*/)[0] + DICT[key] + src.match(/\s*$/)[0];
+      } else {
+        for (var i = 0; i < ATTRS.length; i++) {
+          var a = ATTRS[i];
+          if (!node.hasAttribute(a)) continue;
+          var store = origAttr.get(node) || {};
+          if (!(a in store)) { store[a] = node.getAttribute(a); origAttr.set(node, store); }
+          var val = store[a];
+          node.setAttribute(a, LANG === "en" && DICT[val] ? DICT[val] : val);
+        }
+      }
+    }
+  }
+
+  function applyLang(lang) {
+    LANG = lang === "en" ? "en" : "ru";
+    try { localStorage.setItem("simba-lang", LANG); } catch (e) {}
+    document.documentElement.lang = LANG;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-lang-btn]"), function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.langBtn === LANG));
+    });
+    renderDates();
+    renderTimes();
+    applyPriceFilters();
+    translateTree(document.body);
+  }
+
+  /* ==========================================================================
+     ДАННЫЕ КЛИНИКИ — всё, что нужно заменить на настоящее, лежит здесь.
+     ========================================================================== */
+  var CONFIG = {
+    phone: "+7 925 871-17-13",
+    phoneHref: "tel:+79258711713",
+    siteUrl: "https://simbavet.ru",
+
+    /* Куда уходит заявка.
+       1) endpoint — предпочтительный путь: ваш обработчик на сервере, который
+          сам дергает Telegram Bot API. Токен бота при этом не виден в браузере.
+       2) telegram — быстрый путь без сервера: токен бота лежит в коде страницы,
+          то есть доступен любому посетителю. Годится для теста, не для боевого сайта.
+       3) если оба поля пустые — страница покажет заявку и предложит открыть
+          Telegram вручную (так работает эта демо-версия). */
+    endpoint: "",
+    telegram: { botToken: "", chatId: "" },
+    adminTelegram: "",           /* @username администратора для ручной отправки */
+
+    /* Карта: oid — идентификатор организации в Яндекс Картах */
+    /* Мессенджеры и соцсети. WhatsApp и Telegram выводятся из номера телефона,
+       ссылку на группу ВКонтакте подставьте сюда — кнопка появится сама. */
+    whatsapp: "https://wa.me/79258711713",
+    telegramChat: "https://t.me/+79258711713",
+    vk: "https://vk.com/club221700415",
+
+    mapOid: "1116151732",
+    mapLink: "https://yandex.ru/maps/-/CThG6YLT",
+
+    hours: { weekday: [10, 20], weekend: [10, 19] }
+  };
+
+  var SERVICES = [
+    { t: "Приём терапевта", d: "Клинический осмотр, термометрия, сбор анамнеза. Составляем план обследования и лечения, объясняем, что делать дома. Есть отдельная консультация по уходу и содержанию, а также разбор результатов анализов без питомца.", m: "Осмотр 950 ₽ · повторный 500 ₽" },
+    { t: "Общая хирургия", d: "Грыжесечение, удаление новообразований на теле и молочных пакетах, ампутации, удаление инородных предметов из ЖКТ, инвагинация кишечника, заворот желудка, диагностическая лапаротомия.", m: "22 позиции в прайсе · наркоз под контролем" },
+    { t: "Урология и мочекаменная болезнь", d: "Катетеризация мочевого пузыря, промывание и снятие катетера, уретростомия, цистотомия. Кот, который не может сходить в туалет, — это неотложный случай: звоните и везите сразу.", m: "Приём вне очереди при задержке мочи" },
+    { t: "УЗИ и диагностические пункции", d: "УЗИ брюшной полости, мочеполовой системы и отдельного органа. Цистоцентез, лапароцентез, пункция грудной полости и гематом с эвакуацией жидкости.", m: "УЗИ одного органа — 700 ₽" },
+    { t: "Стоматология", d: "Ультразвуковая чистка зубного камня под седацией, механическая чистка, удаление молочных зубов и подвижных постоянных. Запах из пасти и отказ от твёрдого корма — почти всегда про зубы.", m: "Кошкам и собакам" },
+    { t: "Офтальмология", d: "Приём ведёт Тамара Юрьевна Лозовская: осмотр, удаление аденомы третьего века, коррекция заворота века, удаление новообразований на веке, микрохирургические операции. При травме глаза не ждите — записывайтесь в тот же день.", m: "Приём — 1 500 ₽" },
+    { t: "Приём орнитолога", d: "Клинический осмотр специалистом по птицам, помощь при задержке яйца — физическим и хирургическим способом. Птицы скрывают болезнь до последнего: вялость и взъерошенность уже повод приехать.", m: "Приём — 1 200 ₽" },
+    { t: "Анестезиология и блокады", d: "Седация для исследований и манипуляций, местная и аппликационная анестезия, блокада параанальных желёз при воспалении. Протокол подбираем по возрасту, весу и состоянию.", m: "Кошки и собаки" },
+    { t: "Акушерство и репродукция", d: "Кастрация и стерилизация кошек, собак, кроликов и хорьков — по весу и с учётом патологий. Кесарево сечение, родовспоможение, реанимация плода. Косметический шов по желанию.", m: "Кастрация кота от 2 600 ₽ · стерилизация кошки от 5 000 ₽" },
+    { t: "Вакцинация и документы", d: "Комплексные вакцины для кошек и собак — импортные и отечественные, с бешенством и без. Вакцинируем кроликов. Оформляем ветпаспорт, чипируем с внесением в базу, готовим документы для поездок.", m: "Комплексная — от 1 700 ₽ · чипирование 1 000 ₽" },
+    { t: "Стационар", d: "Отдельный бокс с круглосуточным наблюдением: обычный стационар, инфекционный для заразных пациентов и отдельный — для животных в тяжёлом и критическом состоянии.", m: "От 800 ₽ в сутки" },
+    { t: "Вызов врача на дом", d: "Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому. Королёв и ближайшие города.", m: "Королёв и Подмосковье" },
+    { t: "Ветаптека и зоотовары", d: "Назначенные препараты, лечебные корма, антипаразитарные средства и наполнители — на месте. Дозировку рассчитываем по весу питомца.", m: "Забрать сразу после приёма" }
+  ];
+
+  var DOCTORS = [
+    { name: "Имя Фамилия", role: "Главный врач · терапевт", photo: "" },
+    { name: "Имя Фамилия", role: "Хирург · анестезиолог", photo: "" },
+    { name: "Имя Фамилия", role: "Врач УЗ-диагностики", photo: "" }
+  ];
+
+  /* sp: для кого услуга — cat, dog, exotic. Пустой массив = для всех. */
+  var PRICES = [
+    { g: "Приём и консультации", items: [
+      { n: "Клинический осмотр животного", v: "950 ₽", d: "Врач оценивает состояние, ставит предварительный диагноз и составляет план обследования.", sp: [] },
+      { n: "Повторный клинический осмотр", v: "500 ₽", d: "Дешевле первичного осмотра.", sp: [] },
+      { n: "Клинический осмотр агрессивного животного", v: "3 500 ₽", d: "В стоимость заложена фиксация.", sp: [] },
+      { n: "Фиксация животного", v: "2 000 ₽", d: "От 800 до 2 000 ₽.", sp: [] },
+      { n: "Консультация по уходу и содержанию", v: "950 ₽", d: "Разбор профилактики: кормление, содержание, что делать дома.", sp: [] },
+      { n: "Консультация владельца без животного или по результатам анализов", v: "350 ₽", sp: [] },
+      { n: "Страхование животных, оформление полиса", v: "2 000 ₽", d: "Полис «Ренессанс.Страхование» — компенсация за лечение в клинике.", sp: [] }
+    ]},
+    { g: "Вакцинация и профилактика", items: [
+      { n: "Комплексная вакцинация с бешенством, импортная вакцина", v: "3 500 ₽", d: "Собаки и кошки.", sp: ["cat", "dog"] },
+      { n: "Комплексная вакцинация с бешенством, отечественная вакцина", v: "2 500 ₽", sp: ["cat", "dog"] },
+      { n: "Комплексная вакцинация без бешенства, импортная вакцина", v: "2 500 ₽", sp: ["cat", "dog"] },
+      { n: "Комплексная вакцинация без бешенства, отечественная вакцина", v: "1 700 ₽", sp: ["cat", "dog"] },
+      { n: "Вакцинация только от бешенства", v: "1 200 ₽", sp: ["cat", "dog"] },
+      { n: "Вакцинация кролика", v: "1 200 ₽", sp: ["exotic"] },
+      { n: "Чипирование с внесением в базу данных", v: "1 000 ₽", d: "Электронная метка под кожу — по ней питомца найдут, если он потеряется.", sp: [] },
+      { n: "Считывание номера микрочипа", v: "100 ₽", sp: [] },
+      { n: "Оформление ветеринарного паспорта", v: "200 ₽", sp: [] },
+      { n: "Обработка акарицидными препаратами", v: "150 ₽", d: "Без стоимости препарата. От покусов клещей.", sp: [] }
+    ]},
+    { g: "Осмотр и измерения", items: [
+      { n: "Термометрия", v: "50 ₽", d: "Ректальное измерение температуры.", sp: [] },
+      { n: "Взвешивание", v: "50 ₽", d: "В том числе для контроля веса на лечении.", sp: [] },
+      { n: "Отоскопия", v: "400 ₽", d: "Приборное исследование в глубине уха.", sp: [] },
+      { n: "Микроскопическое исследование", v: "400 ₽", d: "Отобранное содержимое под микроскопом при сильном увеличении.", sp: [] },
+      { n: "Люминесцентная диагностика на дерматофиты (лампа Вуда)", v: "400 ₽", d: "Холодный ультрафиолет — проверка кожи на грибковые заболевания.", sp: [] }
+    ]},
+    { g: "Взятие проб и материалов", items: [
+      { n: "Взятие соскобов и мазков на паразитарные и кожные заболевания", v: "250 ₽", d: "Глубинный соскоб со слизистых оболочек и кожи.", sp: [] },
+      { n: "Взятие проб венозной крови", v: "350 ₽", d: "Образец из периферической вены для лабораторных исследований.", sp: [] },
+      { n: "Взятие мазка-отпечатка на цитологический анализ", v: "200 ₽", d: "Ищем изменения в клетках и тканях, в том числе признаки перерождения.", sp: [] },
+      { n: "Взятие смывов для микробиологического исследования", v: "250 ₽", sp: [] },
+      { n: "Взятие мочи, механическое опорожнение", v: "400 ₽", d: "Посредством шприца.", sp: [] }
+    ]},
+    { g: "Инъекции, капельницы и катетеры", items: [
+      { n: "Внутримышечное и подкожное введение препаратов", v: "100 ₽", d: "Без стоимости препарата.", sp: [] },
+      { n: "Внутримышечное и подкожное введение по направлению из другой клиники", v: "100 ₽", sp: [] },
+      { n: "Пероральное введение препаратов, кошки", v: "200 ₽", d: "Через ЖКТ, без стоимости препаратов.", sp: ["cat"] },
+      { n: "Пероральное введение препаратов, собаки", v: "200 ₽", sp: ["dog"] },
+      { n: "Ректальное введение препаратов", v: "200 ₽", sp: [] },
+      { n: "Интраназальное введение препаратов", v: "100 ₽", d: "Спреи, пипетка — через носовые ходы.", sp: [] },
+      { n: "Внутривенное введение препаратов", v: "200 ₽", d: "От 200 до 400 ₽.", sp: [] },
+      { n: "Внутривенное введение через катетер", v: "100 ₽", sp: [] },
+      { n: "Установка и фиксация внутривенного катетера", v: "500 ₽", d: "Без стоимости расходных материалов.", sp: [] },
+      { n: "Снятие внутривенного катетера", v: "200 ₽", sp: [] },
+      { n: "Подкожное капельное введение, 30 минут", v: "350 ₽", sp: [] },
+      { n: "Внутривенное аппаратное капельное введение", v: "1 000 ₽", d: "Через вену с применением инфузомата.", sp: [] },
+      { n: "Внутривенное введение через инфузомат, первый час", v: "1 000 ₽", sp: [] },
+      { n: "Внутривенное введение через инфузомат, следующий час", v: "600 ₽", sp: [] },
+      { n: "Введение контрацептива", v: "1 000 ₽", d: "Без стоимости препарата.", sp: [] }
+    ]},
+    { g: "Раны, швы и дренажи", items: [
+      { n: "Первичная хирургическая обработка раны", v: "500 ₽", d: "От 500 до 2 500 ₽. Расходные материалы и препараты не включены.", sp: [] },
+      { n: "Наложение швов", v: "200 ₽", d: "От 200 ₽, без стоимости расходных материалов.", sp: [] },
+      { n: "Наложение косметического шва, до 3 см", v: "500 ₽", d: "Шов, который не нужно снимать и который не отторгается.", sp: [] },
+      { n: "Наложение косметического шва, более 3 см", v: "1 000 ₽", d: "От 1 000 до 2 500 ₽.", sp: [] },
+      { n: "Обработка шва", v: "300 ₽", d: "От 300 до 1 000 ₽.", sp: [] },
+      { n: "Снятие швов", v: "100 ₽", d: "От 100 ₽.", sp: [] },
+      { n: "Наложение бинтовой повязки после взятия крови или катетера", v: "150 ₽", d: "Давящая повязка, чтобы не образовалась гематома.", sp: [] },
+      { n: "Вскрытие абсцессов, гематом и сером без дренажа", v: "500 ₽", d: "От 500 до 1 000 ₽.", sp: [] },
+      { n: "Установка дренажа", v: "800 ₽", d: "От 800 ₽.", sp: [] },
+      { n: "Промывание дренажа", v: "300 ₽", d: "От 300 до 500 ₽.", sp: [] },
+      { n: "Снятие дренажа", v: "200 ₽", sp: [] }
+    ]},
+    { g: "Уход и гигиена", items: [
+      { n: "Санация ушных раковин", v: "200 ₽", d: "Удаление серы и обработка слухового канала антимикробными средствами.", sp: [] },
+      { n: "Глубокая санация ушных раковин", v: "400 ₽", sp: [] },
+      { n: "Обрезка когтей, до 10 кг", v: "400 ₽", sp: [] },
+      { n: "Обрезка когтей, 10–20 кг", v: "500 ₽", sp: [] },
+      { n: "Обрезка когтей, 20–35 кг", v: "600 ₽", sp: [] },
+      { n: "Обрезка когтей, свыше 35 кг", v: "800 ₽", sp: [] },
+      { n: "Промывание толстого отдела кишечника", v: "800 ₽", d: "От 800 до 2 000 ₽.", sp: [] },
+      { n: "Санация параанальных желёз", v: "500 ₽", d: "Врач методом нажатия опорожняет параанальные железы.", sp: [] },
+      { n: "Удаление иксодовых клещей", v: "200 ₽", d: "Методом выкручивания из кожи.", sp: [] },
+      { n: "Удаление сломанного когтя", v: "800 ₽", sp: [] }
+    ]},
+    { g: "Стационар", items: [
+      { n: "Стационар, кошки — сутки", v: "800 ₽", d: "От 600 до 1 000 ₽.", sp: ["cat"] },
+      { n: "Стационар, собаки до 10 кг — сутки", v: "1 200 ₽", d: "От 1 000 до 1 500 ₽.", sp: ["dog"] },
+      { n: "Стационар, собаки 10–25 кг — сутки", v: "1 500 ₽", d: "От 1 500 до 2 000 ₽.", sp: ["dog"] },
+      { n: "Стационар, собаки от 25 кг — сутки", v: "2 000 ₽", d: "От 2 000 ₽.", sp: ["dog"] },
+      { n: "Инфекционный стационар, кошки — сутки", v: "1 200 ₽", d: "От 1 200 до 2 000 ₽. Отдельный бокс, круглосуточное наблюдение.", sp: ["cat"] },
+      { n: "Инфекционный стационар, собаки до 10 кг — сутки", v: "2 000 ₽", d: "От 2 000 до 2 500 ₽.", sp: ["dog"] },
+      { n: "Инфекционный стационар, собаки 10–25 кг — сутки", v: "2 500 ₽", sp: ["dog"] },
+      { n: "Инфекционный стационар, собаки от 25 кг — сутки", v: "2 500 ₽", d: "От 2 500 до 4 000 ₽.", sp: ["dog"] },
+      { n: "Стационар для тяжёлых пациентов, кошки — сутки", v: "1 500 ₽", d: "От 1 200 до 2 000 ₽. Для животных в тяжёлом и критическом состоянии.", sp: ["cat"] },
+      { n: "Стационар для тяжёлых пациентов, собаки до 10 кг — сутки", v: "2 000 ₽", sp: ["dog"] },
+      { n: "Стационар для тяжёлых пациентов, собаки 10–25 кг — сутки", v: "2 500 ₽", sp: ["dog"] },
+      { n: "Стационар для тяжёлых пациентов, собаки от 25 кг — сутки", v: "2 500 ₽", d: "От 2 500 до 4 000 ₽.", sp: ["dog"] }
+    ]},
+    { g: "Визуальная диагностика", items: [
+      { n: "УЗИ органов брюшной полости", v: "1 550 ₽", d: "Визуализация состояния внутренних органов.", sp: [] },
+      { n: "УЗИ мочеполовой системы", v: "1 250 ₽", sp: [] },
+      { n: "УЗИ одного органа", v: "700 ₽", sp: [] }
+    ]},
+    { g: "Диагностические пункции", items: [
+      { n: "Пункция мочевого пузыря (цистоцентез)", v: "500 ₽", d: "От 500 до 1 000 ₽.", sp: [] },
+      { n: "Пункция брюшной полости с эвакуацией жидкости (лапароцентез)", v: "500 ₽", d: "От 500 до 2 000 ₽.", sp: [] },
+      { n: "Пункция грудной полости с эвакуацией жидкости или воздуха", v: "1 000 ₽", d: "От 1 000 до 2 000 ₽.", sp: [] },
+      { n: "Пункция брюшной или грудной полости, диагностическая", v: "500 ₽", d: "От 500 до 1 000 ₽.", sp: [] },
+      { n: "Пункция гематомы или серомы с эвакуацией жидкости", v: "500 ₽", d: "От 500 до 1 500 ₽.", sp: [] }
+    ]},
+    { g: "Общая хирургия", items: [
+      { n: "Грыжесечение пупочное, кошки", v: "3 000 ₽", d: "От 3 000 до 5 000 ₽. Препараты и расходные материалы не включены.", sp: ["cat"] },
+      { n: "Грыжесечение пупочное, собаки", v: "4 000 ₽", d: "От 4 000 до 10 000 ₽. Препараты и расходные материалы не включены.", sp: ["dog"] },
+      { n: "Оперативное лечение ушной гематомы", v: "3 000 ₽", d: "От 3 000 до 6 000 ₽.", sp: [] },
+      { n: "Купирование ушей", v: "7 000 ₽", d: "От 7 000 до 10 000 ₽.", sp: ["dog"] },
+      { n: "Ампутация конечности, кошки", v: "5 500 ₽", d: "В том числе после травмы конечности.", sp: ["cat"] },
+      { n: "Ампутация конечности, собаки", v: "7 000 ₽", sp: ["dog"] },
+      { n: "Ампутация хвоста, собаки", v: "8 000 ₽", d: "От 4 500 до 8 000 ₽.", sp: ["dog"] },
+      { n: "Купирование хвоста до 10 дней", v: "800 ₽", sp: ["dog"] },
+      { n: "Купирование хвоста старше 10 дней", v: "2 000 ₽", d: "От 2 000 до 4 500 ₽.", sp: ["dog"] },
+      { n: "Удаление рудиментарных фаланг до 10 дней", v: "800 ₽", d: "Чтобы конечности правильно ставились при ходьбе.", sp: ["dog"] },
+      { n: "Удаление рудиментарных фаланг старше 2 месяцев", v: "5 000 ₽", d: "От 3 000 до 5 000 ₽.", sp: ["dog"] },
+      { n: "Удаление новообразований молочных пакетов, кошки", v: "4 000 ₽", d: "От 2 000 до 4 000 ₽. Препараты и расходные материалы не включены.", sp: ["cat"] },
+      { n: "Удаление новообразований молочных пакетов, собаки", v: "6 000 ₽", d: "От 3 000 до 6 000 ₽. Препараты и расходные материалы не включены.", sp: ["dog"] },
+      { n: "Удаление новообразований на теле, кошки", v: "3 000 ₽", d: "От 3 000 до 6 000 ₽.", sp: ["cat"] },
+      { n: "Удаление новообразований на теле, собаки", v: "3 500 ₽", d: "От 3 500 до 8 000 ₽.", sp: ["dog"] },
+      { n: "Удаление инородного предмета из ЖКТ", v: "15 000 ₽", d: "От 8 000 до 15 000 ₽.", sp: [] },
+      { n: "Хирургическое лечение инвагинации кишечника", v: "10 000 ₽", d: "От 10 000 до 15 000 ₽.", sp: [] },
+      { n: "Хирургическое лечение выпадения прямой кишки", v: "7 000 ₽", d: "От 7 000 до 10 000 ₽.", sp: [] },
+      { n: "Заворот желудка с удалением селезёнки", v: "13 000 ₽", d: "От 13 000 до 30 000 ₽. Неотложная операция — везите сразу.", sp: ["dog"] },
+      { n: "Диагностическая лапаротомия, кошки", v: "4 000 ₽", d: "Доступ к органам брюшной полости, чтобы поставить или уточнить диагноз.", sp: ["cat"] },
+      { n: "Диагностическая лапаротомия, собаки", v: "8 000 ₽", d: "От 5 000 до 8 000 ₽.", sp: ["dog"] }
+    ]},
+    { g: "Урология и МКБ", items: [
+      { n: "Катетеризация мочевого пузыря, коты", v: "900 ₽", d: "В просвет мочеиспускательного канала вводят уретральный катетер, чтобы восстановить отток мочи.", sp: ["cat"] },
+      { n: "Катетеризация мочевого пузыря, кошки", v: "3 000 ₽", sp: ["cat"] },
+      { n: "Катетеризация мочевого пузыря, кобели", v: "3 000 ₽", d: "От 3 000 до 4 000 ₽.", sp: ["dog"] },
+      { n: "Катетеризация мочевого пузыря, суки", v: "3 000 ₽", d: "От 3 000 до 5 000 ₽.", sp: ["dog"] },
+      { n: "Промывание уретрального катетера", v: "400 ₽", d: "От 400 до 500 ₽.", sp: [] },
+      { n: "Подшивание уретрального катетера", v: "200 ₽", sp: [] },
+      { n: "Снятие уретрального катетера", v: "200 ₽", sp: [] },
+      { n: "Уретростомия, коты", v: "8 500 ₽", d: "Операция, при которой создаётся новое отверстие в уретре в обход проблемного участка.", sp: ["cat"] },
+      { n: "Уретростомия, кобели", v: "12 000 ₽", d: "От 10 000 до 12 000 ₽.", sp: ["dog"] },
+      { n: "Цистотомия, кошки", v: "5 500 ₽", d: "Вскрытие мочевого пузыря, в том числе для удаления камней.", sp: ["cat"] },
+      { n: "Цистотомия, собаки", v: "7 500 ₽", d: "От 7 500 до 12 000 ₽.", sp: ["dog"] }
+    ]},
+    { g: "Акушерство и репродукция", items: [
+      { n: "Кастрация кота без патологии, вес до 5 кг", v: "2 600 ₽", d: "Наркоз входит в стоимость.", sp: ["cat"] },
+      { n: "Кастрация кота без патологии, вес от 5 кг", v: "3 500 ₽", d: "От 3 500 ₽.", sp: ["cat"] },
+      { n: "Кастрация кота-крипторха", v: "4 000 ₽", d: "От 4 000 до 5 000 ₽. Наркоз, препараты и расходные материалы не включены.", sp: ["cat"] },
+      { n: "Кастрация кобеля без патологии, вес до 10 кг", v: "5 000 ₽", d: "Наркоз, препараты и расходные материалы не включены.", sp: ["dog"] },
+      { n: "Кастрация кобеля без патологии, вес 10–25 кг", v: "8 000 ₽", sp: ["dog"] },
+      { n: "Кастрация кобеля без патологии, вес от 25 кг", v: "10 000 ₽", d: "От 10 000 ₽.", sp: ["dog"] },
+      { n: "Кастрация кобеля-крипторха", v: "8 000 ₽", sp: ["dog"] },
+      { n: "Кастрация кролика или хорька", v: "3 000 ₽", sp: ["exotic"] },
+      { n: "Стерилизация кошки без патологий, вес до 5 кг", v: "5 000 ₽", d: "Овариогистерэктомия.", sp: ["cat"] },
+      { n: "Стерилизация кошки до 5 кг, косметический шов", v: "5 500 ₽", sp: ["cat"] },
+      { n: "Стерилизация кошки без патологий, вес от 5 кг", v: "6 500 ₽", d: "От 6 500 ₽.", sp: ["cat"] },
+      { n: "Стерилизация кошки с патологией репродуктивной системы", v: "6 000 ₽", d: "От 6 000 до 8 000 ₽.", sp: ["cat"] },
+      { n: "Стерилизация суки до 10 кг без патологий", v: "5 500 ₽", sp: ["dog"] },
+      { n: "Стерилизация суки 10–25 кг без патологий", v: "8 500 ₽", sp: ["dog"] },
+      { n: "Стерилизация суки от 25 кг без патологий", v: "10 500 ₽", d: "От 10 500 ₽.", sp: ["dog"] },
+      { n: "Стерилизация суки с патологией репродуктивной системы", v: "15 000 ₽", d: "От 15 000 ₽. Наркоз и препараты не включены.", sp: ["dog"] },
+      { n: "Стерилизация крольчихи или хорька", v: "5 500 ₽", d: "От 5 500 до 7 000 ₽.", sp: ["exotic"] },
+      { n: "Кесарево сечение кошки со стерилизацией", v: "6 500 ₽", d: "Хирургическая операция для извлечения плодов.", sp: ["cat"] },
+      { n: "Кесарево сечение кошки с сохранением репродуктивных органов", v: "9 000 ₽", d: "От 9 000 до 11 000 ₽.", sp: ["cat"] },
+      { n: "Кесарево сечение суки со стерилизацией", v: "8 000 ₽", d: "От 8 000 до 25 000 ₽.", sp: ["dog"] },
+      { n: "Кесарево сечение суки с сохранением репродуктивных органов", v: "9 000 ₽", d: "От 9 000 до 25 000 ₽.", sp: ["dog"] },
+      { n: "Родовспоможение, 1 час", v: "800 ₽", d: "Манипуляции для сохранения жизни рождённых плодов. Без препаратов и расходных материалов.", sp: [] },
+      { n: "Реанимация плода, 1 час", v: "1 000 ₽", sp: [] }
+    ]},
+    { g: "Стоматология", items: [
+      { n: "Механическая чистка зубного камня", v: "300 ₽", sp: [] },
+      { n: "УЗ чистка зубного камня, кошки", v: "3 500 ₽", d: "Проводится под седацией.", sp: ["cat"] },
+      { n: "УЗ чистка зубного камня, собаки", v: "5 000 ₽", d: "От 5 000 до 8 000 ₽ — зависит от массы питомца.", sp: ["dog"] },
+      { n: "Удаление молочных зубов, резцы", v: "600 ₽", d: "Когда молочные зубы не выпали сами.", sp: [] },
+      { n: "Удаление молочных зубов, клыки и премоляры", v: "650 ₽", d: "При формировании второго ряда зубов вместе с постоянными.", sp: [] },
+      { n: "Удаление постоянных зубов (подвижных)", v: "1 000 ₽", sp: [] },
+      { n: "Удаление постоянных зубов", v: "1 500 ₽", d: "От 1 500 до 3 000 ₽.", sp: [] }
+    ]},
+    { g: "Офтальмология", items: [
+      { n: "Приём офтальмолога", v: "1 500 ₽", sp: [] },
+      { n: "Удаление аденомы третьего века", v: "5 000 ₽", d: "От 3 000 до 5 000 ₽.", sp: [] },
+      { n: "Удаление новообразования на веке", v: "6 000 ₽", d: "От 3 000 до 6 000 ₽.", sp: [] },
+      { n: "Заворот века", v: "6 000 ₽", d: "От 3 000 до 6 000 ₽.", sp: [] },
+      { n: "Удаление глазного яблока", v: "8 000 ₽", d: "От 5 000 до 8 000 ₽.", sp: [] }
+    ]},
+    { g: "Орнитолог", items: [
+      { n: "Приём врачом-орнитологом", v: "1 200 ₽", d: "Клинический осмотр специалистом по лечению птиц.", sp: ["exotic"] },
+      { n: "Изъятие яйца через клоаку, физическим способом", v: "3 000 ₽", d: "От 3 000 ₽ — зависит от сложности процедуры.", sp: ["exotic"] },
+      { n: "Изъятие яйца через клоаку, хирургическим способом", v: "7 000 ₽", d: "От 7 000 ₽ — зависит от сложности процедуры.", sp: ["exotic"] }
+    ]},
+    { g: "Анестезиология и блокады", items: [
+      { n: "Седация кошки для исследований и манипуляций", v: "1 200 ₽", d: "Временно снижает уровень сознания, чтобы спокойно провести осмотр или процедуру.", sp: ["cat"] },
+      { n: "Седация собаки для исследований и манипуляций", v: "1 500 ₽", sp: ["dog"] },
+      { n: "Местная анестезия (новокаин, лидокаин, ультракаин)", v: "500 ₽", d: "От 500 до 1 000 ₽.", sp: [] },
+      { n: "Аппликационная анестезия", v: "200 ₽", d: "От 200 до 300 ₽.", sp: [] },
+      { n: "Блокада параанальных желёз", v: "500 ₽", d: "Обезболивание параанальных желёз при воспалении.", sp: [] }
+    ]},
+    { g: "Гуманное усыпление", items: [
+      { n: "Медикаментозная эвтаназия, кошки", v: "2 500 ₽", d: "Плюс 500 ₽ медикаменты.", sp: ["cat"] },
+      { n: "Медикаментозная эвтаназия, собаки до 5 кг", v: "2 500 ₽", d: "Плюс 500 ₽ медикаменты.", sp: ["dog"] },
+      { n: "Медикаментозная эвтаназия, собаки 5–10 кг", v: "3 500 ₽", d: "Плюс 600 ₽ медикаменты.", sp: ["dog"] },
+      { n: "Медикаментозная эвтаназия, собаки 11–25 кг", v: "4 000 ₽", d: "Плюс 1 000 ₽ медикаменты.", sp: ["dog"] },
+      { n: "Медикаментозная эвтаназия, собаки до 40 кг", v: "5 200 ₽", d: "Плюс 1 300 ₽ медикаменты.", sp: ["dog"] },
+      { n: "Медикаментозная эвтаназия, собаки 40–60 кг", v: "6 500 ₽", d: "Плюс 1 500 ₽ медикаменты.", sp: ["dog"] }
+    ]}
+  ];
+
+  var REVIEWS = [
+    { who: "Sofia Svobodnaya", sub: "Знаток города 3 уровня", r: 5, date: "18 апреля 2025",
+      text: "Выражаю огромную благодарность коллективу клиники! Делали стерилизацию кошечки. Подробно проинструктировали о всех предстоящих манипуляциях и о постоперационном уходе. Особенно важно для меня, что разрешили находиться рядом с кошкой и успокаивать её во время седации." },
+    { who: "Александра Рослякова", sub: "Знаток города 6 уровня", r: 5, date: "27 апреля",
+      text: "Спасибо огромное врачу Анне Михайловне! Очень заботливый и внимательный врач. Приём прошёл в спокойной обстановке, сделали всё прекрасно. Осмотр, анализы, прививки. Организация на высоком уровне: запись, отсутствие очереди, уделяют максимум времени и не торопят. Рекомендуем эту клинику!" },
+    { who: "Просто Я", sub: "Знаток города 3 уровня", r: 5, date: "11 января",
+      text: "Специалисты ветклиники «Симба» — постоянные партнёры фестиваля «Уютный дом»: осмотр животных на мероприятии, сертификаты здоровья, лекции, приём в самой клинике наших волонтёров с их подопечными — спокойно, толково, по делу и с искренней любовью к животным!" }
+  ];
+
+  var PET_TYPES = [
+    { id: "dog", ic: "p-dog", label: "Собака" },
+    { id: "cat", ic: "p-cat", label: "Кошка" },
+    { id: "rodent", ic: "p-rodent", label: "Грызун" },
+    { id: "rabbit", ic: "p-rabbit", label: "Кролик" },
+    { id: "bird", ic: "p-bird", label: "Птица" },
+    { id: "other", ic: "p-paw", label: "Другой" }
+  ];
+
+  /* ========================================================================== */
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var starsHtml = function (n) {
+    var out = '';
+    for (var i = 0; i < 5; i++) out += '<svg' + (i < n ? '' : ' class="off"') + '><use href="#i-star"></use></svg>';
+    return out;
+  };
+
+  /* ---------- услуги: аккордеон ---------- */
+  $("acc").innerHTML = SERVICES.map(function (s, i) {
+    var n = String(i + 1).padStart(2, "0");
+    return '<div class="acc-item" data-open="' + (i === 0) + '">' +
+      '<button type="button" class="acc-head" aria-expanded="' + (i === 0) + '">' +
+        '<span class="acc-num">' + n + '</span>' +
+        '<span class="acc-title">' + esc(s.t) + '</span>' +
+        '<span class="acc-ic" aria-hidden="true"><svg width="14" height="14"><use href="#i-plus"></use></svg></span>' +
+      '</button>' +
+      '<div class="acc-body"><p>' + esc(s.d) + '</p><p class="acc-meta">' + esc(s.m) + '</p></div>' +
+    '</div>';
+  }).join("");
+
+  $("acc").addEventListener("click", function (e) {
+    var head = e.target.closest(".acc-head");
+    if (!head) return;
+    var item = head.parentNode;
+    var open = item.dataset.open !== "true";
+    Array.prototype.forEach.call(this.children, function (el) {
+      el.dataset.open = "false";
+      el.querySelector(".acc-head").setAttribute("aria-expanded", "false");
+    });
+    item.dataset.open = String(open);
+    head.setAttribute("aria-expanded", String(open));
+  });
+
+  /* ---------- врачи ---------- */
+  $("docs").innerHTML = DOCTORS.map(function (d) {
+    var art = d.photo
+      ? '<img src="' + esc(d.photo) + '" alt="' + esc(d.name) + ', ' + esc(d.role) + '">'
+      : '<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-doc"></use></svg><span class="slot-tag">фото врача</span>';
+    return '<article class="doc"><div class="doc-photo">' + art + '</div>' +
+      '<h4>' + esc(d.name) + '</h4><p>' + esc(d.role) + '</p></article>';
+  }).join("");
+
+  /* ---------- прайс + фильтр по питомцу ---------- */
+  $("plist").innerHTML = PRICES.map(function (g) {
+    var rows = g.items.map(function (it) {
+      var sp = (it.sp && it.sp.length) ? it.sp : ["all"];
+      var marks = sp[0] === "all" ? "" : '<span class="species" aria-hidden="true">' + sp.map(function (s) {
+        var ic = s === "cat" ? "p-cat" : s === "dog" ? "p-dog" : "p-bird";
+        return '<svg viewBox="0 0 120 120"><use href="#' + ic + '"></use></svg>';
+      }).join("") + '</span>';
+      var text = (it.n + " " + (it.d || "")).toLowerCase();
+      return '<div class="prow" data-sp="' + sp.join(" ") + '" data-text="' + esc(text) + '">' +
+        '<span class="pn">' + esc(it.n) + marks + '</span>' +
+        '<span class="pv">' + esc(it.v) + '</span>' +
+        (it.d ? '<span class="pd">' + esc(it.d) + '</span>' : '') +
+      '</div>';
+    }).join("");
+    return '<section class="pgroup"><h4>' + esc(g.g) + '</h4>' + rows + '</section>';
+  }).join("");
+
+  var curSp = "all", curQ = "";
+  var allRows = document.querySelectorAll(".prow");
+
+  function applyPriceFilters() {
+    var shown = 0;
+    Array.prototype.forEach.call(allRows, function (row) {
+      var list = row.dataset.sp.split(" ");
+      var okSp = curSp === "all" || list.indexOf("all") > -1 || list.indexOf(curSp) > -1;
+      var okQ = !curQ || row.dataset.text.indexOf(curQ) > -1;
+      row.hidden = !(okSp && okQ);
+      if (!row.hidden) shown++;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".pgroup"), function (g) {
+      g.hidden = !g.querySelector(".prow:not([hidden])");
+    });
+    var empty = $("price-empty");
+    empty.hidden = shown > 0;
+    if (!empty.hidden) {
+      empty.textContent = curQ ? dyn("empty_q")(curQ)
+        : (LANG === "en" ? DICT["В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость."]
+                         : "В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.");
+    }
+    $("price-count").textContent = shown === allRows.length
+      ? dyn("count_all")(allRows.length)
+      : dyn("count_some")(shown, allRows.length);
+  }
+
+  $("species").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-sp]");
+    if (!btn) return;
+    curSp = btn.dataset.sp;
+    Array.prototype.forEach.call(this.querySelectorAll("button[data-sp]"), function (b) {
+      b.setAttribute("aria-pressed", String(b === btn));
+    });
+    applyPriceFilters();
+  });
+
+  $("price-q").addEventListener("input", function () {
+    curQ = this.value.trim().toLowerCase();
+    applyPriceFilters();
+  });
+
+  applyPriceFilters();
+
+  /* ---------- вкладки прайса ---------- */
+  var tabs = [$("t-serv"), $("t-goods")];
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", String(on));
+        $(t.getAttribute("aria-controls")).hidden = !on;
+      });
+    });
+  });
+
+  /* ---------- отзывы ---------- */
+  $("revs").innerHTML = REVIEWS.map(function (r) {
+    return '<article class="rev">' +
+      '<div class="rev-top"><span class="rev-ava">' + esc(r.who.trim().charAt(0)) + '</span>' +
+      '<span><strong>' + esc(r.who) + '</strong><span>' + esc(r.sub) + '</span></span></div>' +
+      '<p>' + esc(r.text) + '</p>' +
+      '<footer><span class="rating">' + r.r.toFixed(1).replace(".", ",") + ' <span class="stars">' + starsHtml(r.r) + '</span></span>' +
+      '<time>' + esc(r.date) + '</time></footer></article>';
+  }).join("");
+
+  /* ---------- форма: питомец ---------- */
+  var pet = PET_TYPES[1].id;
+  $("pets").innerHTML = PET_TYPES.map(function (p) {
+    return '<button type="button" class="pet-tile" data-pet="' + p.id + '" aria-pressed="' + (p.id === pet) + '">' +
+      '<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#' + p.ic + '"></use></svg>' +
+      '<span>' + p.label + '</span><em aria-hidden="true"></em></button>';
+  }).join("");
+  $("pets").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-pet]");
+    if (!btn) return;
+    pet = btn.dataset.pet;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+  });
+
+  /* ---------- форма: дата и время ---------- */
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var days = [];
+  for (var i = 0; i < 7; i++) { var d = new Date(today); d.setDate(today.getDate() + i); days.push(d); }
+  var chosenDay = 0, chosenTime = "";
+
+  var key = function (d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); };
+  /* занятость слотов — детерминированная, чтобы страница выглядела одинаково при перезагрузке */
+  var busy = function (d, t) {
+    var s = key(d) + t, h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
+    return h % 100 < 38;
+  };
+
+  function renderDates() {
+    var months = dyn("months"), wdays = dyn("wdays");
+    $("dates").innerHTML = days.map(function (d, i) {
+      return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="' + (i === chosenDay) + '">' +
+        d.getDate() + ' ' + months[d.getMonth()] + '<small>' + (i === 0 ? dyn("today") : wdays[d.getDay()]) + '</small></button>';
+    }).join("");
+  }
+  renderDates();
+
+  function renderTimes() {
+    var d = days[chosenDay];
+    var weekend = d.getDay() === 0 || d.getDay() === 6;
+    var range = weekend ? CONFIG.hours.weekend : CONFIG.hours.weekday;
+    var now = new Date();
+    var html = "", first = "";
+    for (var h = range[0]; h < range[1]; h++) {
+      for (var m = 0; m < 60; m += 30) {
+        var t = h + ":" + (m ? "30" : "00");
+        var past = chosenDay === 0 && (h < now.getHours() || (h === now.getHours() && m <= now.getMinutes()));
+        if (past) continue;                    /* прошедшее время не показываем совсем */
+        var off = busy(d, t);                  /* занятые слоты остаются видимыми, но недоступными */
+        if (!off && !first) first = t;
+        html += '<button type="button" class="chip" data-time="' + t + '"' + (off ? " disabled" : "") +
+                ' aria-pressed="false">' + t + '</button>';
+      }
+    }
+    $("times").innerHTML = html || '<p class="note">' + dyn("closed") + '</p>';
+    chosenTime = first;
+    var btn = $("times").querySelector('[data-time="' + first + '"]');
+    if (btn) btn.setAttribute("aria-pressed", "true");
+  }
+  renderTimes();
+
+  $("dates").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-day]");
+    if (!btn) return;
+    chosenDay = +btn.dataset.day;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+    renderTimes();
+  });
+  $("times").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-time]");
+    if (!btn || btn.disabled) return;
+    chosenTime = btn.dataset.time;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+  });
+
+  /* ---------- форма: отправка ---------- */
+  function leadText() {
+    var d = days[chosenDay];
+    var tile = $("pets").querySelector('[data-pet="' + pet + '"] span');
+    var petLabel = tile ? tile.textContent : "—";
+    return [
+      dyn("lead_title"),
+      dyn("lead_name") + ($("f-name").value.trim() || dyn("lead_noname")),
+      dyn("lead_phone") + ($("f-phone").value.trim() || dyn("lead_nophone")),
+      dyn("lead_pet") + petLabel,
+      dyn("lead_service") + $("f-service").selectedOptions[0].textContent,
+      dyn("lead_when") + d.getDate() + " " + dyn("months")[d.getMonth()] + ", " + (chosenTime || dyn("lead_notime")),
+      dyn("lead_comment") + ($("f-comment").value.trim() || "—")
+    ].join("\n");
+  }
+
+  function sendLead(text) {
+    if (CONFIG.endpoint) {
+      return fetch(CONFIG.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text })
+      }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return true; });
+    }
+    if (CONFIG.telegram.botToken && CONFIG.telegram.chatId) {
+      return fetch("https://api.telegram.org/bot" + CONFIG.telegram.botToken + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CONFIG.telegram.chatId, text: text })
+      }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return true; });
+    }
+    return Promise.reject(new Error("not-configured"));
+  }
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var phone = $("f-phone");
+    if (!phone.value.trim()) {
+      phone.style.borderColor = "var(--coral)";
+      phone.focus();
+      return;
+    }
+    phone.style.borderColor = "";
+
+    var text = leadText();
+    var ok = $("ok");
+    var show = function (title, note, actions) {
+      ok.innerHTML = '<h4>' + title + '</h4><p class="note">' + note + '</p>' +
+        '<pre>' + esc(text) + '</pre>' + (actions || "");
+      ok.dataset.shown = "true";
+      ok.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+
+    sendLead(text).then(function () {
+      show(dyn("ok_sent"), dyn("ok_sent_note"));
+    }).catch(function () {
+      var tg = CONFIG.adminTelegram
+        ? "https://t.me/" + CONFIG.adminTelegram.replace("@", "")
+        : "https://t.me/share/url?url=" + encodeURIComponent(CONFIG.siteUrl) + "&text=" + encodeURIComponent(text);
+      show(
+        dyn("ok_demo"), dyn("ok_demo_note"),
+        '<div class="ok-actions">' +
+          '<a class="btn btn-coral" href="' + tg + '" target="_blank" rel="noopener">' + dyn("ok_tg") + '</a>' +
+          '<a class="btn btn-line" href="' + CONFIG.whatsapp + '?text=' + encodeURIComponent(text) + '" target="_blank" rel="noopener">' + dyn("ok_wa") + '</a>' +
+          '<a class="btn btn-line" href="' + CONFIG.phoneHref + '">' + dyn("ok_call") + CONFIG.phone + '</a>' +
+        '</div>'
+      );
+    });
+  });
+
+  /* ---------- мессенджеры и соцсети ---------- */
+  (function renderSocial() {
+    var box = $("social");
+    if (!box) return;
+    var links = [];
+    if (CONFIG.whatsapp) links.push(['<a class="wa" href="' + CONFIG.whatsapp + '" target="_blank" rel="noopener">', "i-wa", "WhatsApp"]);
+    if (CONFIG.telegramChat) links.push(['<a class="tg" href="' + CONFIG.telegramChat + '" target="_blank" rel="noopener">', "i-tg", "Telegram"]);
+    links.push(['<a class="vk" href="' + (CONFIG.vk || "https://vk.com/search?c[section]=communities&c[q]=" + encodeURIComponent("Симба ветклиника Королёв")) + '" target="_blank" rel="noopener">', "i-vk", "ВКонтакте"]);
+    box.innerHTML = links.map(function (l) {
+      return l[0] + '<svg aria-hidden="true"><use href="#' + l[1] + '"></use></svg>' + l[2] + '</a>';
+    }).join("");
+  })();
+
+  /* ---------- карта ---------- */
+  (function initMap() {
+    if (!CONFIG.mapOid) return;
+    var box = $("map-box"), fallback = $("map-fallback");
+    var frame = document.createElement("iframe");
+    frame.title = "Ветклиника «Симба» на карте";
+    frame.loading = "lazy";
+    frame.style.opacity = "0";
+    frame.src = "https://yandex.ru/map-widget/v1/?oid=" + CONFIG.mapOid + "&z=17";
+    var done = false;
+    frame.addEventListener("load", function () {
+      done = true;
+      frame.style.opacity = "1";
+      fallback.hidden = true;
+    });
+    box.appendChild(frame);
+    setTimeout(function () { if (!done) frame.remove(); }, 4000);
+  })();
+
+  /* ---------- сертификаты: увеличение ---------- */
+  var lb = $("lb"), lbImg = $("lb-img"), certs = $("certs");
+  if (lb && certs) {
+    certs.addEventListener("click", function (e) {
+      var card = e.target.closest(".cert");
+      if (!card) return;
+      var img = card.querySelector("img");
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.dataset.open = "true";
+    });
+    var close = function () { lb.dataset.open = "false"; lbImg.src = ""; };
+    lb.addEventListener("click", close);
+    $("lb-close").addEventListener("click", close);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  }
+
+  /* ---------- львёнок подпрыгивает по клику ---------- */
+  var lion = document.querySelector(".hero-lion");
+  if (lion) {
+    lion.addEventListener("click", function () {
+      lion.classList.remove("jump");
+      void lion.offsetWidth;
+      lion.classList.add("jump");
+    });
+    lion.addEventListener("animationend", function (e) {
+      if (e.animationName === "lion-jump") lion.classList.remove("jump");
+    });
+  }
+
+  /* ---------- переключение языка ---------- */
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-lang-btn]");
+    if (btn) applyLang(btn.dataset.langBtn);
+  });
+
+  /* ---------- мелочи ---------- */
+  $("year").textContent = String(new Date().getFullYear());
+  applyLang(LANG);
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var target = document.querySelector(a.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
