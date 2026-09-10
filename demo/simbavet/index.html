@@ -130,6 +130,13 @@
   .filters button{background:#fff; border:1px solid var(--line-2); border-radius:99px; padding:.5rem .95rem; cursor:pointer; font:500 var(--s-1)/1 var(--body); color:var(--muted); display:inline-flex; align-items:center; gap:.45rem}
   .filters button svg{width:16px; height:16px}
   .filters button[aria-pressed="true"]{background:var(--coral-wash); border-color:var(--coral); color:var(--coral-dark)}
+  .psearch{display:flex; align-items:center; gap:.65rem; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:.75rem 1rem; margin-bottom:1.25rem}
+  .psearch:focus-within{border-color:var(--ink)}
+  .psearch svg{color:var(--muted); flex:none}
+  .psearch input{border:0; background:transparent; outline:none; width:100%; font:400 var(--s0)/1.4 var(--body); color:var(--ink)}
+  .psearch input::-webkit-search-cancel-button{cursor:pointer}
+  .pcount{margin-left:auto; font-family:var(--mono); font-size:.6875rem; color:var(--muted); white-space:nowrap}
+  @media (max-width:640px){ .pcount{margin-left:0; width:100%} }
   .plist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 clamp(24px,4vw,64px)}
   @media (max-width:820px){ .plist{grid-template-columns:1fr} }
   .pgroup{break-inside:avoid; margin-bottom:1.75rem}
@@ -237,6 +244,7 @@
   <symbol id="p-rodent" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="38" cy="46" r="10" fill-opacity=".45"></circle><circle cx="82" cy="46" r="10" fill-opacity=".45"></circle><ellipse cx="60" cy="68" rx="29" ry="24" fill-opacity=".28"></ellipse><circle cx="50" cy="65" r="4"></circle><circle cx="70" cy="65" r="4"></circle><ellipse cx="60" cy="75" rx="4.5" ry="3.5" fill-opacity=".8"></ellipse></g></symbol>
   <symbol id="p-paw" viewBox="0 0 120 120"><g fill="currentColor" fill-opacity=".55"><ellipse cx="42" cy="44" rx="9" ry="12"></ellipse><ellipse cx="60" cy="38" rx="9" ry="12"></ellipse><ellipse cx="78" cy="44" rx="9" ry="12"></ellipse><ellipse cx="90" cy="62" rx="8" ry="10"></ellipse></g><path d="M60 58c14 0 24 10 24 20s-11 12-24 12-24-2-24-12 10-20 24-20Z" fill="currentColor" fill-opacity=".35"></path></symbol>
   <symbol id="p-doc" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="60" cy="44" r="18" fill-opacity=".45"></circle><path d="M26 104c0-18 15-30 34-30s34 12 34 30z" fill-opacity=".3"></path></g></symbol>
+  <symbol id="i-search" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="5.5"></circle><path d="m13.5 13.5 3.5 3.5"></path></g></symbol>
   <symbol id="i-star" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.7 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.5l-3.8 2 .7-4.3-3.1-3 4.3-.6z"></path></symbol>
   <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
   <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></symbol>
@@ -338,11 +346,16 @@
           <button type="button" data-sp="cat" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-cat"></use></svg> Кошки</button>
           <button type="button" data-sp="dog" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-dog"></use></svg> Собаки</button>
           <button type="button" data-sp="exotic" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-bird"></use></svg> Птицы и экзоты</button>
+          <span class="pcount" id="price-count"></span>
         </div>
+        <label class="psearch" for="price-q">
+          <svg width="18" height="18" aria-hidden="true"><use href="#i-search"></use></svg>
+          <input type="search" id="price-q" placeholder="Поиск по прайсу: вакцинация, УЗИ, стерилизация…" autocomplete="off">
+        </label>
         <div class="plist" id="plist"></div>
         <p class="note" id="price-empty" hidden>В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.</p>
         <div class="pnote-box">
-          <p><strong>Здесь перенесены разделы прайса с вашей карточки на Яндекс Картах:</strong> вакцинация и процедуры, визуальная диагностика, диагностические пункции, общая хирургия, акушерство и репродукция, урология, стоматология, офтальмология, орнитология, анестезиология и блокады, гуманное усыпление — 102 позиции. Не хватает приёма терапевта, анализов и остальных строк раздела «Процедуры» (там их 50) — пришлите, добавим.</p>
+          <p><strong>Здесь перенесены разделы прайса с вашей карточки на Яндекс Картах:</strong> вакцинация и профилактика, осмотр и измерения, инъекции и капельницы, раны и дренажи, уход и гигиена, визуальная диагностика, диагностические пункции, общая хирургия, акушерство и репродукция, урология, стоматология, офтальмология, орнитология, анестезиология и блокады, гуманное усыпление — 137 позиций. Не хватает приёма терапевта и лабораторных анализов — пришлите, добавим.</p>
           <p class="note" style="margin-top:.6rem">Лекарства и расходники в стоимость не входят, если не указано отдельно. Итоговую сумму называем до начала лечения.</p>
         </div>
       </div>
@@ -562,7 +575,7 @@
 
   /* sp: для кого услуга — cat, dog, exotic. Пустой массив = для всех. */
   var PRICES = [
-    { g: "Вакцинация и процедуры", items: [
+    { g: "Вакцинация и профилактика", items: [
       { n: "Комплексная вакцинация с бешенством, импортная вакцина", v: "3 500 ₽", d: "Собаки и кошки.", sp: ["cat", "dog"] },
       { n: "Комплексная вакцинация с бешенством, отечественная вакцина", v: "2 500 ₽", sp: ["cat", "dog"] },
       { n: "Комплексная вакцинация без бешенства, импортная вакцина", v: "2 500 ₽", sp: ["cat", "dog"] },
@@ -572,10 +585,53 @@
       { n: "Чипирование с внесением в базу данных", v: "1 000 ₽", d: "Электронная метка под кожу — по ней питомца найдут, если он потеряется.", sp: [] },
       { n: "Считывание номера микрочипа", v: "100 ₽", sp: [] },
       { n: "Оформление ветеринарного паспорта", v: "200 ₽", sp: [] },
-      { n: "Люминесцентная диагностика на дерматофиты (лампа Вуда)", v: "400 ₽", d: "Холодный ультрафиолет — проверка кожи на грибковые заболевания.", sp: [] },
-      { n: "Обработка акарицидными препаратами", v: "150 ₽", d: "Без стоимости препарата. От покусов клещей.", sp: [] },
+      { n: "Обработка акарицидными препаратами", v: "150 ₽", d: "Без стоимости препарата. От покусов клещей.", sp: [] }
+    ]},
+    { g: "Осмотр и измерения", items: [
+      { n: "Термометрия", v: "50 ₽", d: "Ректальное измерение температуры.", sp: [] },
+      { n: "Взвешивание", v: "50 ₽", d: "В том числе для контроля веса на лечении.", sp: [] },
+      { n: "Отоскопия", v: "400 ₽", d: "Приборное исследование в глубине уха.", sp: [] },
+      { n: "Микроскопическое исследование", v: "400 ₽", d: "Отобранное содержимое под микроскопом при сильном увеличении.", sp: [] },
+      { n: "Люминесцентная диагностика на дерматофиты (лампа Вуда)", v: "400 ₽", d: "Холодный ультрафиолет — проверка кожи на грибковые заболевания.", sp: [] }
+    ]},
+    { g: "Инъекции, капельницы и катетеры", items: [
       { n: "Внутримышечное и подкожное введение препаратов", v: "100 ₽", d: "Без стоимости препарата.", sp: [] },
-      { n: "Взвешивание", v: "50 ₽", d: "В том числе для контроля веса на лечении.", sp: [] }
+      { n: "Внутримышечное и подкожное введение по направлению из другой клиники", v: "100 ₽", sp: [] },
+      { n: "Пероральное введение препаратов, кошки", v: "200 ₽", d: "Через ЖКТ, без стоимости препаратов.", sp: ["cat"] },
+      { n: "Пероральное введение препаратов, собаки", v: "200 ₽", sp: ["dog"] },
+      { n: "Ректальное введение препаратов", v: "200 ₽", sp: [] },
+      { n: "Интраназальное введение препаратов", v: "100 ₽", d: "Спреи, пипетка — через носовые ходы.", sp: [] },
+      { n: "Внутривенное введение препаратов", v: "200 ₽", d: "От 200 до 400 ₽.", sp: [] },
+      { n: "Внутривенное введение через катетер", v: "100 ₽", sp: [] },
+      { n: "Установка и фиксация внутривенного катетера", v: "500 ₽", d: "Без стоимости расходных материалов.", sp: [] },
+      { n: "Снятие внутривенного катетера", v: "200 ₽", sp: [] },
+      { n: "Подкожное капельное введение, 30 минут", v: "350 ₽", sp: [] },
+      { n: "Внутривенное аппаратное капельное введение", v: "1 000 ₽", d: "Через вену с применением инфузомата.", sp: [] },
+      { n: "Внутривенное введение через инфузомат, первый час", v: "1 000 ₽", sp: [] },
+      { n: "Внутривенное введение через инфузомат, следующий час", v: "600 ₽", sp: [] },
+      { n: "Введение контрацептива", v: "1 000 ₽", d: "Без стоимости препарата.", sp: [] }
+    ]},
+    { g: "Раны, швы и дренажи", items: [
+      { n: "Первичная хирургическая обработка раны", v: "500 ₽", d: "От 500 до 2 500 ₽. Расходные материалы и препараты не включены.", sp: [] },
+      { n: "Наложение швов", v: "200 ₽", d: "От 200 ₽, без стоимости расходных материалов.", sp: [] },
+      { n: "Наложение косметического шва, до 3 см", v: "500 ₽", d: "Шов, который не нужно снимать и который не отторгается.", sp: [] },
+      { n: "Наложение косметического шва, более 3 см", v: "1 000 ₽", d: "От 1 000 до 2 500 ₽.", sp: [] },
+      { n: "Обработка шва", v: "300 ₽", d: "От 300 до 1 000 ₽.", sp: [] },
+      { n: "Снятие швов", v: "100 ₽", d: "От 100 ₽.", sp: [] },
+      { n: "Наложение бинтовой повязки после взятия крови или катетера", v: "150 ₽", d: "Давящая повязка, чтобы не образовалась гематома.", sp: [] },
+      { n: "Вскрытие абсцессов, гематом и сером без дренажа", v: "500 ₽", d: "От 500 до 1 000 ₽.", sp: [] },
+      { n: "Установка дренажа", v: "800 ₽", d: "От 800 ₽.", sp: [] },
+      { n: "Промывание дренажа", v: "300 ₽", d: "От 300 до 500 ₽.", sp: [] },
+      { n: "Снятие дренажа", v: "200 ₽", sp: [] }
+    ]},
+    { g: "Уход и гигиена", items: [
+      { n: "Санация ушных раковин", v: "200 ₽", d: "Удаление серы и обработка слухового канала антимикробными средствами.", sp: [] },
+      { n: "Глубокая санация ушных раковин", v: "400 ₽", sp: [] },
+      { n: "Обрезка когтей, до 10 кг", v: "400 ₽", sp: [] },
+      { n: "Обрезка когтей, 10–20 кг", v: "500 ₽", sp: [] },
+      { n: "Обрезка когтей, 20–35 кг", v: "600 ₽", sp: [] },
+      { n: "Обрезка когтей, свыше 35 кг", v: "800 ₽", sp: [] },
+      { n: "Промывание толстого отдела кишечника", v: "800 ₽", d: "От 800 до 2 000 ₽.", sp: [] }
     ]},
     { g: "Визуальная диагностика", items: [
       { n: "УЗИ органов брюшной полости", v: "1 550 ₽", d: "Визуализация состояния внутренних органов.", sp: [] },
@@ -770,7 +826,8 @@
         var ic = s === "cat" ? "p-cat" : s === "dog" ? "p-dog" : "p-bird";
         return '<svg viewBox="0 0 120 120"><use href="#' + ic + '"></use></svg>';
       }).join("") + '</span>';
-      return '<div class="prow" data-sp="' + sp.join(" ") + '">' +
+      var text = (it.n + " " + (it.d || "")).toLowerCase();
+      return '<div class="prow" data-sp="' + sp.join(" ") + '" data-text="' + esc(text) + '">' +
         '<span class="pn">' + esc(it.n) + marks + '</span>' +
         '<span class="pv">' + esc(it.v) + '</span>' +
         (it.d ? '<span class="pd">' + esc(it.d) + '</span>' : '') +
@@ -779,25 +836,49 @@
     return '<section class="pgroup"><h4>' + esc(g.g) + '</h4>' + rows + '</section>';
   }).join("");
 
-  $("species").addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-sp]");
-    if (!btn) return;
-    var sp = btn.dataset.sp;
-    Array.prototype.forEach.call(this.querySelectorAll("button[data-sp]"), function (b) {
-      b.setAttribute("aria-pressed", String(b === btn));
-    });
+  var curSp = "all", curQ = "";
+  var allRows = document.querySelectorAll(".prow");
+
+  function applyPriceFilters() {
     var shown = 0;
-    Array.prototype.forEach.call(document.querySelectorAll(".prow"), function (row) {
+    Array.prototype.forEach.call(allRows, function (row) {
       var list = row.dataset.sp.split(" ");
-      var ok = sp === "all" || list.indexOf("all") > -1 || list.indexOf(sp) > -1;
-      row.hidden = !ok;
-      if (ok) shown++;
+      var okSp = curSp === "all" || list.indexOf("all") > -1 || list.indexOf(curSp) > -1;
+      var okQ = !curQ || row.dataset.text.indexOf(curQ) > -1;
+      row.hidden = !(okSp && okQ);
+      if (!row.hidden) shown++;
     });
     Array.prototype.forEach.call(document.querySelectorAll(".pgroup"), function (g) {
       g.hidden = !g.querySelector(".prow:not([hidden])");
     });
-    $("price-empty").hidden = shown > 0;
+    var empty = $("price-empty");
+    empty.hidden = shown > 0;
+    if (!empty.hidden) {
+      empty.textContent = curQ
+        ? "По запросу «" + curQ + "» в прайсе ничего не нашлось. Позвоните — назовём стоимость."
+        : "В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.";
+    }
+    $("price-count").textContent = shown === allRows.length
+      ? allRows.length + " позиций"
+      : "показано " + shown + " из " + allRows.length;
+  }
+
+  $("species").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-sp]");
+    if (!btn) return;
+    curSp = btn.dataset.sp;
+    Array.prototype.forEach.call(this.querySelectorAll("button[data-sp]"), function (b) {
+      b.setAttribute("aria-pressed", String(b === btn));
+    });
+    applyPriceFilters();
   });
+
+  $("price-q").addEventListener("input", function () {
+    curQ = this.value.trim().toLowerCase();
+    applyPriceFilters();
+  });
+
+  applyPriceFilters();
 
   /* ---------- товары ---------- */
   $("goods").innerHTML = GOODS.map(function (g) {
