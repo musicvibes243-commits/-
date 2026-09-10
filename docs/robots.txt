@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://musicvibes243-commits.github.io/-/sitemap.xml
+Sitemap: https://stroyinvest-mo.ru/sitemap.xml
