@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Студия йоги «Пауза»: расписание на неделю, направления, преподаватели и абонементы. Демонстрационный макет сайта.">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Студия йоги «Пауза»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Tenor+Sans&display=swap">
+<style>
+:root{
+  --bg:#ECECE6;
+  --surface:#F8F8F4;
+  --tint:#E2E5DC;
+  --text:#121A15;
+  --text-2:#5C6660;
+  --line:#D5D6CD;
+  --line-2:#BCBEB2;
+  --field-bg:#1E3B31;
+  --field-text:#EDEFE8;
+  --field-2:#9FB6AA;
+  --field-line:rgba(237,239,232,.16);
+  --accent:#B98C1E;
+  --accent-mark:#D9B65C;
+  --accent-soft:rgba(217,182,92,.26);
+  --btn-bg:#1E3B31;
+  --btn-text:#EDEFE8;
+  --shadow:0 1px 2px rgba(18,26,21,.05), 0 12px 32px -18px rgba(18,26,21,.35);
+
+  --display:"Tenor Sans","Golos Text",Georgia,serif;
+  --body:"Golos Text","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+
+  --wrap:1120px;
+  --gutter:clamp(20px,5vw,48px);
+  --sec:clamp(56px,8.5vw,112px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1411;
+    --surface:#161D18;
+    --tint:#1B231D;
+    --text:#E8EBE3;
+    --text-2:#98A29B;
+    --line:#2A322C;
+    --line-2:#3C463F;
+    --field-bg:#1B382E;
+    --field-text:#E9EDE4;
+    --field-2:#9FB6AA;
+    --field-line:rgba(233,237,228,.14);
+    --accent:#E0C06A;
+    --accent-mark:#E0C06A;
+    --accent-soft:rgba(224,192,106,.16);
+    --btn-bg:#E8EBE3;
+    --btn-text:#101611;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px -20px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1411;
+  --surface:#161D18;
+  --tint:#1B231D;
+  --text:#E8EBE3;
+  --text-2:#98A29B;
+  --line:#2A322C;
+  --line-2:#3C463F;
+  --field-bg:#1B382E;
+  --field-text:#E9EDE4;
+  --field-2:#9FB6AA;
+  --field-line:rgba(233,237,228,.14);
+  --accent:#E0C06A;
+  --accent-mark:#E0C06A;
+  --accent-soft:rgba(224,192,106,.16);
+  --btn-bg:#E8EBE3;
+  --btn-text:#101611;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px -20px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0}
+ul{padding:0;list-style:none}
+a{color:inherit}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* ---------- typography roles ---------- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--text-2);
+}
+.display{
+  font-family:var(--display);
+  font-weight:400;
+  line-height:1.04;
+  letter-spacing:-.005em;
+  text-wrap:balance;
+}
+h1.display{font-size:clamp(2.4rem,6vw,4.3rem)}
+h2.display{font-size:clamp(1.75rem,3.4vw,2.6rem);line-height:1.1}
+.lede{
+  font-size:clamp(1rem,1.4vw,1.125rem);
+  color:var(--text-2);
+  max-width:56ch;
+}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+.top{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease;
+}
+.top.is-stuck{border-bottom-color:var(--line)}
+.top__in{display:flex;align-items:center;gap:24px;min-height:62px}
+.mark{
+  font-family:var(--display);
+  font-size:1.05rem;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.mark span{color:var(--accent)}
+.nav{display:flex;gap:22px;margin-left:auto;align-items:center}
+.nav a{
+  font-size:.9rem;text-decoration:none;color:var(--text-2);
+  padding-block:4px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
+}
+.nav a:hover{color:var(--text);border-bottom-color:var(--accent-mark)}
+@media (max-width:860px){.nav{display:none}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--body);font-size:.9rem;font-weight:500;
+  padding:11px 20px;border:1px solid var(--btn-bg);border-radius:999px;
+  background:var(--btn-bg);color:var(--btn-text);
+  text-decoration:none;cursor:pointer;
+  transition:transform .18s ease,opacity .18s ease;
+}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.btn--ghost{background:transparent;color:var(--text);border-color:var(--line-2)}
+.btn--ghost:hover{border-color:var(--text)}
+.btn--sm{padding:7px 15px;font-size:.82rem}
+.btn--onfield{background:var(--field-text);color:var(--field-bg);border-color:var(--field-text)}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(40px,6vw,76px) clamp(48px,7vw,88px)}
+.hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,56px);align-items:end}
+@media (max-width:900px){.hero__grid{grid-template-columns:1fr;align-items:start}}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
+.hero h1{margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--accent);white-space:nowrap}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* live panel */
+.now{
+  background:var(--field-bg);color:var(--field-text);
+  border-radius:3px;padding:22px 24px 20px;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.now::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(158deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 46%);
+}
+.now__head{
+  display:flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--field-2);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent-mark);flex:none}
+.dot.is-live{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+.now__title{font-family:var(--display);font-size:1.6rem;line-height:1.15;margin:14px 0 4px}
+.now__sub{font-size:.92rem;color:var(--field-2)}
+.now__row{
+  display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline;
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--field-line);
+  font-family:var(--mono);font-size:.8rem;color:var(--field-2);
+}
+.now__row b{color:var(--field-text);font-weight:500}
+
+/* ---------- section shell ---------- */
+.sec{border-top:1px solid var(--line);padding-block:var(--sec);scroll-margin-top:76px}
+.sec__head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,48px)}
+.sec__head .eyebrow{display:flex;align-items:center;gap:14px}
+.sec__head .eyebrow::after{content:"";height:1px;flex:1;max-width:140px;background:var(--line-2)}
+.sec__intro{margin-top:14px}
+
+/* ---------- schedule ---------- */
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:8px;scrollbar-width:thin}
+.day{
+  flex:none;display:flex;flex-direction:column;gap:2px;align-items:flex-start;
+  padding:9px 14px;border:1px solid var(--line);border-radius:2px;
+  background:transparent;color:var(--text-2);cursor:pointer;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  transition:border-color .18s,color .18s,background .18s;
+}
+.day b{font-size:.95rem;letter-spacing:0;font-weight:500;font-variant-numeric:tabular-nums}
+.day:hover{border-color:var(--line-2);color:var(--text)}
+.day[aria-selected="true"]{background:var(--field-bg);border-color:var(--field-bg);color:var(--field-text)}
+.day[aria-selected="true"] b{color:var(--field-text)}
+.day em{font-style:normal;color:var(--accent)}
+.day[aria-selected="true"] em{color:var(--accent-mark)}
+
+.classes{border-top:1px solid var(--line-2)}
+.cls{
+  display:grid;
+  grid-template-columns:112px minmax(0,1fr) 172px 128px;
+  gap:16px;align-items:baseline;
+  padding:18px 4px;border-bottom:1px solid var(--line);
+  transition:background .18s ease;
+}
+.cls:hover{background:var(--surface)}
+.cls.is-now{background:var(--accent-soft)}
+.cls__time{font-family:var(--mono);font-size:1.05rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cls__dur{display:block;font-size:.7rem;color:var(--text-2);letter-spacing:.06em;margin-top:2px}
+.cls__name{font-size:1.05rem;font-weight:500;line-height:1.35}
+.cls__teacher{font-size:.86rem;color:var(--text-2)}
+.cls__lvl{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
+.cls__act{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.spots{font-family:var(--mono);font-size:.72rem;color:var(--text-2);font-variant-numeric:tabular-nums}
+.spots.is-low{color:var(--accent);font-weight:500}
+.spots.is-full{color:var(--text-2);opacity:.75}
+@media (max-width:820px){
+  .cls{grid-template-columns:88px minmax(0,1fr);gap:6px 14px;padding:16px 2px}
+  .cls__lvl{grid-column:2}
+  .cls__act{grid-column:2;flex-direction:row;align-items:center;gap:14px;margin-top:6px}
+}
+.sched__note{margin-top:18px;font-size:.85rem;color:var(--text-2);display:flex;gap:10px;align-items:flex-start}
+.sched__note .num{color:var(--accent)}
+
+/* ---------- styles list (направления) ---------- */
+.styles{display:grid;gap:0;border-top:1px solid var(--line-2)}
+.style{
+  display:grid;grid-template-columns:200px minmax(0,1fr) 180px;
+  gap:clamp(12px,2.5vw,32px);padding:20px 4px;border-bottom:1px solid var(--line);align-items:baseline;
+}
+.style__name{font-family:var(--display);font-size:1.3rem;line-height:1.2}
+.style__what{font-size:.95rem;color:var(--text-2)}
+.style__who{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text-2);text-align:right}
+@media (max-width:820px){
+  .style{grid-template-columns:1fr;gap:6px;padding:18px 2px}
+  .style__who{text-align:left}
+}
+
+/* ---------- teachers ---------- */
+.teachers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,28px)}
+@media (max-width:880px){.teachers{grid-template-columns:1fr}}
+.tch{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.tch__port{
+  aspect-ratio:4/3;display:grid;place-items:center;
+  background:
+    radial-gradient(115% 85% at 18% 8%, color-mix(in srgb,var(--accent-mark) 34%,transparent) 0%, transparent 62%),
+    linear-gradient(162deg, var(--tint) 0%, color-mix(in srgb,var(--field-bg) 38%,var(--tint)) 100%);
+  border-bottom:1px solid var(--line);
+}
+.tch__init{font-family:var(--display);font-size:2.6rem;letter-spacing:.14em;color:var(--text);opacity:.62}
+.tch__body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tch__name{font-family:var(--display);font-size:1.32rem;line-height:1.2}
+.tch__role{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.tch__cred{font-size:.86rem;color:var(--text-2)}
+.tch__quote{
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--line);
+  font-size:.92rem;line-height:1.55;
+}
+
+/* ---------- prices ---------- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden}
+@media (max-width:820px){.plans{grid-template-columns:1fr}}
+.plan{padding:26px 24px 28px;display:flex;flex-direction:column;gap:10px;border-right:1px solid var(--line)}
+.plan:last-child{border-right:0}
+@media (max-width:820px){.plan{border-right:0;border-bottom:1px solid var(--line)}.plan:last-child{border-bottom:0}}
+.plan__name{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2)}
+.plan__price{font-family:var(--display);font-size:2.3rem;line-height:1;font-variant-numeric:tabular-nums}
+.plan__price small{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--text-2);display:block;margin-top:8px}
+.plan ul{display:flex;flex-direction:column;gap:7px;font-size:.9rem;color:var(--text-2)}
+.plan li{padding-left:16px;position:relative}
+.plan li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
+.plan .btn{margin-top:auto;align-self:flex-start}
+.plan--hl{background:var(--tint)}
+.first-visit{
+  margin-top:20px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;
+  padding:18px 22px;border:1px dashed var(--line-2);border-radius:3px;
+}
+.first-visit p{font-size:.95rem}
+.first-visit b{color:var(--accent)}
+
+/* ---------- studio facts + breath ---------- */
+.studio{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:900px){.studio{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line)}
+.fact{padding:16px 4px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.fact:nth-child(2n){border-right:0;padding-left:18px}
+.fact dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-2)}
+.fact dd{font-family:var(--display);font-size:1.5rem;margin-top:4px;font-variant-numeric:tabular-nums}
+.rules{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-size:.92rem;color:var(--text-2)}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+.rules span{font-family:var(--mono);font-size:.72rem;color:var(--accent);padding-top:.25em}
+
+.breath{background:var(--field-bg);color:var(--field-text);border-radius:3px;padding:26px 26px 24px;text-align:center;box-shadow:var(--shadow)}
+.breath h3{font-family:var(--display);font-size:1.45rem;font-weight:400;margin-bottom:6px}
+.breath p{font-size:.9rem;color:var(--field-2);max-width:38ch;margin-inline:auto}
+.breath__stage{
+  width:min(240px,62vw);aspect-ratio:1;margin:22px auto 18px;
+  display:grid;place-items:center;position:relative;
+}
+.breath__ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid var(--field-line);
+}
+.breath__orb{
+  width:52%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, color-mix(in srgb,var(--accent-mark) 78%,transparent), color-mix(in srgb,var(--accent-mark) 26%,transparent) 70%);
+  transform:scale(.62);
+  transition:transform 4s cubic-bezier(.42,0,.58,1);
+}
+.breath__orb.is-big{transform:scale(1.28)}
+.breath__label{
+  position:absolute;font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--field-text);
+}
+.breath__count{position:absolute;bottom:14%;font-family:var(--mono);font-size:1.5rem;color:var(--field-2);font-variant-numeric:tabular-nums}
+
+/* ---------- faq ---------- */
+.faq{border-top:1px solid var(--line-2);max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  cursor:pointer;padding:16px 30px 16px 0;position:relative;list-style:none;
+  font-size:1.02rem;font-weight:500;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";position:absolute;right:4px;top:15px;
+  font-family:var(--mono);color:var(--accent);font-size:1.1rem;transition:transform .2s ease;
+}
+.faq details[open] summary::after{content:"–"}
+.faq p{padding:0 40px 18px 0;color:var(--text-2);font-size:.95rem;max-width:64ch}
+
+/* ---------- contacts ---------- */
+.contact{background:var(--field-bg);color:var(--field-text);border-radius:3px;padding:clamp(26px,4vw,48px);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,48px)}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+.contact h2{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.1;margin-bottom:14px}
+.contact p{color:var(--field-2);font-size:.98rem;max-width:44ch}
+.contact .eyebrow{color:var(--field-2)}
+.cdl{display:grid;gap:0;border-top:1px solid var(--field-line)}
+.cdl div{display:grid;grid-template-columns:112px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--field-line);align-items:baseline}
+.cdl dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--field-2)}
+.cdl dd{font-size:.96rem}
+.cdl a{text-decoration:none;border-bottom:1px solid var(--field-line)}
+.cdl a:hover{border-bottom-color:var(--accent-mark)}
+.contact .btn{margin-top:20px}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);padding-block:28px 40px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+.foot p{font-size:.8rem;color:var(--text-2)}
+.foot .demo{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+/* ---------- modal ---------- */
+.modal{
+  position:fixed;inset:0;z-index:60;display:none;
+  align-items:center;justify-content:center;padding:20px;
+  background:color-mix(in srgb,var(--text) 46%,transparent);
+  backdrop-filter:blur(3px);
+}
+.modal.is-open{display:flex}
+.sheet{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  width:min(460px,100%);padding:26px 26px 28px;box-shadow:var(--shadow);
+  max-height:92vh;overflow-y:auto;
+}
+.sheet h3{font-family:var(--display);font-size:1.55rem;font-weight:400;margin-bottom:4px}
+.sheet .eyebrow{margin-bottom:14px;display:block}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.field label{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
+.field input,.field select,.field textarea{
+  font-family:var(--body);font-size:.95rem;color:var(--text);
+  background:var(--bg);border:1px solid var(--line-2);border-radius:2px;padding:10px 12px;width:100%;
+}
+.field textarea{resize:vertical;min-height:66px}
+.sheet__actions{display:flex;gap:10px;margin-top:22px;align-items:center}
+.sheet__note{font-size:.76rem;color:var(--text-2);margin-top:14px;line-height:1.5}
+.ok{display:none;text-align:center;padding:10px 0 4px}
+.ok .tick{font-family:var(--mono);font-size:2rem;color:var(--accent)}
+.sheet.is-done form{display:none}
+.sheet.is-done .ok{display:block}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="wrap top__in">
+    <a class="mark" href="#top">Пауза<span>.</span></a>
+    <nav class="nav">
+      <a href="#raspisanie">Расписание</a>
+      <a href="#napravleniya">Направления</a>
+      <a href="#prepodavateli">Преподаватели</a>
+      <a href="#tseny">Абонементы</a>
+      <a href="#studiya">Студия</a>
+      <a href="#kontakty">Контакты</a>
+    </nav>
+    <button class="btn btn--sm js-book" type="button" data-class="">Записаться</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div class="hero__grid">
+      <div>
+        <div class="hero__meta">
+          <span class="eyebrow">Студия йоги</span>
+          <span class="eyebrow">Мясницкая, 24/7 · 2 этаж</span>
+          <span class="eyebrow">С 2019 года</span>
+        </div>
+        <h1 class="display">Кумбхака&nbsp;— <em>пауза</em> между вдохом и выдохом.</h1>
+        <p class="lede">Мы назвали студию в её честь. 78&nbsp;м² света в двух шагах от Чистых прудов, 16&nbsp;мест на коврике, пробковые маты и полный комплект пропсов. Приходите без формы, без опыта и без спешки.</p>
+        <div class="hero__actions">
+          <button class="btn js-book" type="button">Записаться на занятие</button>
+          <a class="btn btn--ghost" href="#raspisanie">Смотреть расписание</a>
+        </div>
+      </div>
+
+      <aside class="now" id="now-panel" aria-live="polite">
+        <p class="now__head"><span class="dot" id="now-dot"></span><span id="now-status">Расписание на сегодня</span></p>
+        <p class="now__title" id="now-title">—</p>
+        <p class="now__sub" id="now-sub">—</p>
+        <p class="now__row">
+          <span>Мест свободно: <b id="now-spots">—</b></span>
+          <span>Длительность: <b id="now-dur">—</b></span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="raspisanie">
+    <div class="sec__head">
+      <p class="eyebrow">Расписание</p>
+      <div>
+        <h2 class="display">Неделя в зале</h2>
+        <p class="lede sec__intro">Занятия идут семь дней в неделю. Запись открывается за неделю, отменить её можно не позже чем за 4 часа&nbsp;— иначе занятие списывается с абонемента.</p>
+      </div>
+    </div>
+
+    <div class="days" role="tablist" aria-label="Дни недели" id="days"></div>
+    <div class="classes" id="classes" role="tabpanel"></div>
+    <p class="sched__note"><span class="num">↳</span> <span>Вход в зал закрывается через 5 минут после начала: практика открывается настройкой дыхания, и опоздание сбивает её всей группе.</span></p>
+  </section>
+
+  <section class="wrap sec" id="napravleniya">
+    <div class="sec__head">
+      <p class="eyebrow">Направления</p>
+      <div>
+        <h2 class="display">Семь способов замедлиться</h2>
+        <p class="lede sec__intro">Если не знаете, с чего начать&nbsp;— начинайте с хатхи или мягкой практики для начинающих. Всё остальное подождёт.</p>
+      </div>
+    </div>
+    <div class="styles">
+      <article class="style"><h3 class="style__name">Хатха</h3><p class="style__what">Статика: асана удерживается 5–8 циклов дыхания, между ними&nbsp;— короткая компенсация. База, на которой стоит всё остальное.</p><p class="style__who">Любой уровень · 60–90 мин</p></article>
+      <article class="style"><h3 class="style__name">Виньяса-флоу</h3><p class="style__what">Движение связано с дыханием: сурья намаскар, стоячие связки, плавный выход в шавасану. Пульс поднимается, ум затихает.</p><p class="style__who">Средний · 75 мин</p></article>
+      <article class="style"><h3 class="style__name">Инь</h3><p class="style__what">Позы лёжа и сидя по 3–5 минут с болстерами и блоками. Работа с фасцией и суставами, а не с мышцами.</p><p class="style__who">Любой уровень · 75 мин</p></article>
+      <article class="style"><h3 class="style__name">Аштанга, Mysore</h3><p class="style__what">Самостоятельная практика первой серии в своём темпе, преподаватель подходит индивидуально. Приходите в любое время внутри окна 7:00–9:00.</p><p class="style__who">Продолжающие · 90 мин</p></article>
+      <article class="style"><h3 class="style__name">Пранаяма и медитация</h3><p class="style__what">Уджайи, нади шодхана, сама вритти. Сидя, без физической нагрузки&nbsp;— заметно тише, чем звучит.</p><p class="style__who">Любой уровень · 45 мин</p></article>
+      <article class="style"><h3 class="style__name">Йогатерапия для спины</h3><p class="style__what">Группа до 8 человек. Мягкие вытяжения, работа с поясницей и грудным отделом для тех, кто восемь часов сидит за столом.</p><p class="style__who">Начальный · 75 мин</p></article>
+      <article class="style"><h3 class="style__name">Йога-нидра</h3><p class="style__what">Практика лёжа под пледом: голос ведёт по телу, вы остаётесь на грани сна. Сорок минут нидры засчитываются телом за пару часов отдыха.</p><p class="style__who">Любой уровень · 60 мин</p></article>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="prepodavateli">
+    <div class="sec__head">
+      <p class="eyebrow">Преподаватели</p>
+      <div>
+        <h2 class="display">Кто ведёт практику</h2>
+        <p class="lede sec__intro">Трое преподавателей, все&nbsp;— с профильной сертификацией и собственной ежедневной практикой.</p>
+      </div>
+    </div>
+    <div class="teachers">
+      <article class="tch">
+        <div class="tch__port" aria-hidden="true"><span class="tch__init">ИК</span></div>
+        <div class="tch__body">
+          <p class="tch__role">Хатха · Йогатерапия</p>
+          <h3 class="tch__name">Ирина Кольцова</h3>
+          <p class="tch__cred">RYT-500 Yoga Alliance, курс йогатерапии позвоночника. 14 лет практики, 8 лет преподавания. Основала «Паузу» в 2019 году.</p>
+          <p class="tch__quote">«Асана начинается там, где вы перестали её терпеть».</p>
+        </div>
+      </article>
+      <article class="tch">
+        <div class="tch__port" aria-hidden="true"><span class="tch__init">МД</span></div>
+        <div class="tch__body">
+          <p class="tch__role">Аштанга · Виньяса</p>
+          <h3 class="tch__name">Марк Дейнега</h3>
+          <p class="tch__cred">Практикует первую и вторую серии аштанги с 2016 года, ежегодные интенсивы в Индии. Ведёт утренние Mysore-классы.</p>
+          <p class="tch__quote">«Считайте дыхание, а не повторы. Тело догонит».</p>
+        </div>
+      </article>
+      <article class="tch">
+        <div class="tch__port" aria-hidden="true"><span class="tch__init">ДМ</span></div>
+        <div class="tch__body">
+          <p class="tch__role">Инь · Нидра · Пранаяма</p>
+          <h3 class="tch__name">Дина Мустафина</h3>
+          <p class="tch__cred">RYT-300, обучение инь-йоге и работе с дыханием. До йоги&nbsp;— десять лет в реанимации; знает про усталость всё.</p>
+          <p class="tch__quote">«В инь-йоге ничего не нужно делать. Это самое трудное».</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="tseny">
+    <div class="sec__head">
+      <p class="eyebrow">Абонементы</p>
+      <div>
+        <h2 class="display">Сколько стоит</h2>
+        <p class="lede sec__intro">Маты, блоки, ремни, болстеры и пледы&nbsp;— в студии, платить за них не нужно. Абонемент можно заморозить на 14 дней один раз за срок действия.</p>
+      </div>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <p class="plan__name">Разовое занятие</p>
+        <p class="plan__price num">1 200 ₽<small>ЛЮБОЕ НАПРАВЛЕНИЕ</small></p>
+        <ul><li>Без привязки к расписанию</li><li>Действует 30 дней</li><li>Пропсы включены</li></ul>
+        <button class="btn btn--ghost btn--sm js-book" type="button">Записаться</button>
+      </div>
+      <div class="plan plan--hl">
+        <p class="plan__name">8 занятий · 2 месяца</p>
+        <p class="plan__price num">8 400 ₽<small>1 050 ₽ ЗА ЗАНЯТИЕ</small></p>
+        <ul><li>Самый частый выбор</li><li>Заморозка на 14 дней</li><li>Перенос записи за 4 часа</li></ul>
+        <button class="btn btn--sm js-book" type="button">Оформить</button>
+      </div>
+      <div class="plan">
+        <p class="plan__name">Безлимит · месяц</p>
+        <p class="plan__price num">12 000 ₽<small>ОТ 400 ₽ ЗА ЗАНЯТИЕ</small></p>
+        <ul><li>Все направления и Mysore</li><li>Гостевой визит для друга</li><li>Приоритет в записи</li></ul>
+        <button class="btn btn--ghost btn--sm js-book" type="button">Оформить</button>
+      </div>
+    </div>
+    <div class="first-visit">
+      <p>Первое занятие&nbsp;— <b>500 ₽</b>, и мы попросим прийти за 15 минут: покажем зал, душ и как собрать себе опору из блоков.</p>
+      <button class="btn btn--sm js-book" type="button">Прийти впервые</button>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="studiya">
+    <div class="sec__head">
+      <p class="eyebrow">Студия</p>
+      <div>
+        <h2 class="display">Один зал, много света</h2>
+        <p class="lede sec__intro">Второй этаж старого дома, окна на север&nbsp;— свет ровный весь день, солнце не бьёт в глаза в шавасане.</p>
+      </div>
+    </div>
+    <div class="studio">
+      <div>
+        <dl class="facts">
+          <div class="fact"><dt>Площадь зала</dt><dd>78 м²</dd></div>
+          <div class="fact"><dt>Мест в группе</dt><dd>16</dd></div>
+          <div class="fact"><dt>Пропсы</dt><dd>40+</dd></div>
+          <div class="fact"><dt>Температура</dt><dd>+23 °C</dd></div>
+        </dl>
+        <ul class="rules">
+          <li><span>01</span><span>Приходите за 10 минут. Практикуем босиком, форма&nbsp;— любая, в которой не жалко наклоняться.</span></li>
+          <li><span>02</span><span>Есть за два часа до занятия, пить&nbsp;— сколько угодно. Вода и чай после практики бесплатно.</span></li>
+          <li><span>03</span><span>Скажите преподавателю о травмах, давлении и беременности до начала&nbsp;— он подберёт замену асанам.</span></li>
+          <li><span>04</span><span>Душ, фен и шкафчики с замками&nbsp;— в раздевалке. Полотенце дадим.</span></li>
+        </ul>
+      </div>
+
+      <div class="breath">
+        <h3>Сама вритти</h3>
+        <p>Равное дыхание на четыре счёта. Попробуйте прямо сейчас, сидя за столом&nbsp;— четыре круга хватит, чтобы заметить разницу.</p>
+        <div class="breath__stage">
+          <span class="breath__ring" aria-hidden="true"></span>
+          <span class="breath__orb" id="orb" aria-hidden="true"></span>
+          <span class="breath__label" id="breath-label">Готовы?</span>
+          <span class="breath__count num" id="breath-count" aria-hidden="true"></span>
+        </div>
+        <button class="btn btn--onfield btn--sm" type="button" id="breath-btn" aria-live="polite">Начать дыхание</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="voprosy">
+    <div class="sec__head">
+      <p class="eyebrow">Вопросы</p>
+      <div><h2 class="display">Что обычно спрашивают</h2></div>
+    </div>
+    <div class="faq">
+      <details open><summary>Я вообще не гибкий. Мне подойдёт?</summary><p>Гибкость&nbsp;— результат практики, а не условие входа в неё. На занятиях для начинающих половина группы не достаёт до пола руками, и это нормально: под каждую асану есть опора из блоков и ремня.</p></details>
+      <details><summary>Что взять с собой?</summary><p>Ничего. Мат, блоки, ремни, болстеры, пледы и полотенце&nbsp;— в студии. Нужна только одежда, в которой удобно двигаться, и носки, если в зале прохладно.</p></details>
+      <details><summary>Что если я опоздаю?</summary><p>Вход закрывается через 5 минут после начала. Если опоздали&nbsp;— напишите в мессенджер, перенесём запись на ближайшее занятие без списания.</p></details>
+      <details><summary>Можно заниматься во время беременности?</summary><p>Со второго триместра и с разрешения врача&nbsp;— на йогатерапию и инь, предупредив преподавателя заранее. Виньясу и аштангу в этот период не рекомендуем.</p></details>
+      <details><summary>Как отменить запись?</summary><p>В мессенджере или по телефону не позже чем за 4 часа до начала. Позже занятие списывается: место в группе уже никто не займёт.</p></details>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="kontakty">
+    <div class="contact">
+      <div>
+        <p class="eyebrow">Контакты</p>
+        <h2>Приходите дышать</h2>
+        <p>Напишите в мессенджер&nbsp;— подберём занятие под ваш уровень и время. Отвечаем с 8:00 до 22:00, обычно в течение получаса.</p>
+        <button class="btn btn--onfield js-book" type="button">Записаться на занятие</button>
+      </div>
+      <dl class="cdl">
+        <div><dt>Адрес</dt><dd>ул. Мясницкая, 24/7, стр. 3<br>2 этаж, вход со двора</dd></div>
+        <div><dt>Метро</dt><dd>Чистые пруды · Тургеневская, 6 минут пешком</dd></div>
+        <div><dt>Телефон</dt><dd><a href="tel:+74951234567">+7 495 123-45-67</a></dd></div>
+        <div><dt>Почта</dt><dd><a href="mailto:hello@pauza-yoga.ru">hello@pauza-yoga.ru</a></dd></div>
+        <div><dt>Часы</dt><dd>Пн–Пт 7:00–22:00 · Сб–Вс 9:00–20:00</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer class="wrap foot">
+    <p>© 2026 Студия йоги «Пауза». Мясницкая, 24/7, стр. 3</p>
+    <p class="demo">Демонстрационный макет · тексты, цены и контакты условные</p>
+  </footer>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="sheet" id="sheet">
+    <form id="book-form" novalidate>
+      <span class="eyebrow">Запись на занятие</span>
+      <h3 id="modal-title">Оставьте контакты</h3>
+      <div class="field">
+        <label for="f-class">Занятие</label>
+        <select id="f-class" name="class"></select>
+      </div>
+      <div class="field">
+        <label for="f-name">Как вас зовут</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Имя" required>
+      </div>
+      <div class="field">
+        <label for="f-phone">Телефон или мессенджер</label>
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required>
+      </div>
+      <div class="field">
+        <label for="f-note">Что стоит знать заранее</label>
+        <textarea id="f-note" name="note" placeholder="Травмы, первый раз, вопросы к преподавателю"></textarea>
+      </div>
+      <div class="sheet__actions">
+        <button class="btn" type="submit">Отправить заявку</button>
+        <button class="btn btn--ghost" type="button" id="modal-close">Отмена</button>
+      </div>
+      <p class="sheet__note">Это демонстрационный макет: заявка никуда не уходит и нигде не сохраняется.</p>
+    </form>
+    <div class="ok">
+      <p class="tick num">✓</p>
+      <h3>Заявка принята</h3>
+      <p class="sheet__note" id="ok-text">Мы напишем в течение получаса и подтвердим место в группе.</p>
+      <div class="sheet__actions" style="justify-content:center">
+        <button class="btn btn--ghost btn--sm" type="button" id="ok-close">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  var DAYS_SHORT = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  var DAYS_FULL  = ["понедельник", "вторник", "среду", "четверг", "пятницу", "субботу", "воскресенье"];
+
+  /* Расписание: индекс 0 = понедельник. m — минуты от полуночи, d — длительность в минутах. */
+  var SCHEDULE = [
+    [
+      { m: 450, d: 60,  n: "Утренняя хатха",          t: "Ирина Кольцова",  l: "любой уровень",  s: 7 },
+      { m: 600, d: 75,  n: "Йогатерапия для спины",   t: "Ирина Кольцова",  l: "начальный",      s: 3 },
+      { m: 720, d: 75,  n: "Виньяса-флоу",            t: "Марк Дейнега",    l: "средний",        s: 6 },
+      { m: 1110, d: 90, n: "Хатха для начинающих",    t: "Ирина Кольцова",  l: "начальный",      s: 2 },
+      { m: 1215, d: 75, n: "Инь",                     t: "Дина Мустафина",  l: "любой уровень",  s: 9 }
+    ],
+    [
+      { m: 420, d: 120, n: "Аштанга, Mysore",         t: "Марк Дейнега",    l: "продолжающие",   s: 5 },
+      { m: 630, d: 90,  n: "Хатха",                   t: "Ирина Кольцова",  l: "любой уровень",  s: 8 },
+      { m: 1110, d: 75, n: "Виньяса-флоу",            t: "Марк Дейнега",    l: "средний",        s: 0 },
+      { m: 1215, d: 45, n: "Пранаяма и медитация",    t: "Дина Мустафина",  l: "любой уровень",  s: 11 }
+    ],
+    [
+      { m: 450, d: 60,  n: "Утренняя виньяса",        t: "Марк Дейнега",    l: "средний",        s: 6 },
+      { m: 600, d: 75,  n: "Йогатерапия для спины",   t: "Ирина Кольцова",  l: "начальный",      s: 4 },
+      { m: 720, d: 75,  n: "Инь",                     t: "Дина Мустафина",  l: "любой уровень",  s: 8 },
+      { m: 1110, d: 90, n: "Хатха",                   t: "Ирина Кольцова",  l: "любой уровень",  s: 5 },
+      { m: 1215, d: 60, n: "Йога-нидра",              t: "Дина Мустафина",  l: "любой уровень",  s: 3 }
+    ],
+    [
+      { m: 420, d: 120, n: "Аштанга, Mysore",         t: "Марк Дейнега",    l: "продолжающие",   s: 6 },
+      { m: 630, d: 60,  n: "Хатха для начинающих",    t: "Ирина Кольцова",  l: "начальный",      s: 7 },
+      { m: 1110, d: 75, n: "Виньяса-флоу",            t: "Марк Дейнега",    l: "средний",        s: 4 },
+      { m: 1215, d: 75, n: "Инь",                     t: "Дина Мустафина",  l: "любой уровень",  s: 10 }
+    ],
+    [
+      { m: 450, d: 60,  n: "Утренняя хатха",          t: "Ирина Кольцова",  l: "любой уровень",  s: 8 },
+      { m: 720, d: 45,  n: "Пранаяма и медитация",    t: "Дина Мустафина",  l: "любой уровень",  s: 12 },
+      { m: 1110, d: 75, n: "Виньяса-флоу",            t: "Марк Дейнега",    l: "средний",        s: 1 },
+      { m: 1200, d: 60, n: "Йога-нидра",              t: "Дина Мустафина",  l: "любой уровень",  s: 6 }
+    ],
+    [
+      { m: 600, d: 90,  n: "Хатха для начинающих",    t: "Ирина Кольцова",  l: "начальный",      s: 5 },
+      { m: 720, d: 75,  n: "Виньяса-флоу",            t: "Марк Дейнега",    l: "средний",        s: 7 },
+      { m: 840, d: 75,  n: "Инь",                     t: "Дина Мустафина",  l: "любой уровень",  s: 9 },
+      { m: 960, d: 75,  n: "Йогатерапия для спины",   t: "Ирина Кольцова",  l: "начальный",      s: 2 }
+    ],
+    [
+      { m: 630, d: 90,  n: "Хатха",                   t: "Ирина Кольцова",  l: "любой уровень",  s: 6 },
+      { m: 750, d: 45,  n: "Пранаяма и медитация",    t: "Дина Мустафина",  l: "любой уровень",  s: 10 },
+      { m: 1020, d: 60, n: "Йога-нидра",              t: "Дина Мустафина",  l: "любой уровень",  s: 8 }
+    ]
+  ];
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function hhmm(mins) { return pad(Math.floor(mins / 60) % 24) + ":" + pad(mins % 60); }
+  function isoDay(date) { return (date.getDay() + 6) % 7; }          /* 0 = понедельник */
+  function nowMinutes(date) { return date.getHours() * 60 + date.getMinutes(); }
+
+  function spotsText(s) {
+    if (s === 0) return "мест нет";
+    var tail = (s % 10 === 1 && s % 100 !== 11) ? "место" : (s % 10 >= 2 && s % 10 <= 4 && (s % 100 < 10 || s % 100 >= 20)) ? "места" : "мест";
+    return s + " " + tail;
+  }
+
+  /* ---------- расписание ---------- */
+  var daysEl = document.getElementById("days");
+  var classesEl = document.getElementById("classes");
+  var today = isoDay(new Date());
+  var selected = today;
+
+  function weekDate(dayIdx) {
+    var d = new Date();
+    d.setDate(d.getDate() + (dayIdx - today));
+    return d.getDate();
+  }
+
+  function renderDays() {
+    daysEl.innerHTML = "";
+    DAYS_SHORT.forEach(function (label, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "day";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", i === selected ? "true" : "false");
+      b.innerHTML = label + (i === today ? " <em>•</em>" : "") + "<b>" + weekDate(i) + "</b>";
+      b.addEventListener("click", function () { selected = i; renderDays(); renderClasses(); });
+      daysEl.appendChild(b);
+      if (i === selected) { daysEl.scrollLeft = Math.max(0, b.offsetLeft - 8); }
+    });
+  }
+
+  function renderClasses() {
+    var list = SCHEDULE[selected];
+    var mins = nowMinutes(new Date());
+    classesEl.innerHTML = "";
+    list.forEach(function (c) {
+      var live = selected === today && mins >= c.m && mins < c.m + c.d;
+      var row = document.createElement("article");
+      row.className = "cls" + (live ? " is-now" : "");
+      row.innerHTML =
+        '<div><span class="cls__time">' + hhmm(c.m) + "</span>" +
+          '<span class="cls__dur num">' + c.d + " МИН</span></div>" +
+        '<div><p class="cls__name">' + c.n + "</p>" +
+          '<p class="cls__teacher">' + c.t + (live ? " · идёт сейчас" : "") + "</p></div>" +
+        '<p class="cls__lvl">' + c.l + "</p>" +
+        '<div class="cls__act">' +
+          '<span class="spots ' + (c.s === 0 ? "is-full" : c.s <= 3 ? "is-low" : "") + '">' + spotsText(c.s) + "</span>" +
+          (c.s === 0
+            ? '<button class="btn btn--ghost btn--sm js-book" type="button" data-key="' + selected + "|" + c.m + '">В лист ожидания</button>'
+            : '<button class="btn btn--ghost btn--sm js-book" type="button" data-key="' + selected + "|" + c.m + '">Записаться</button>') +
+        "</div>";
+      classesEl.appendChild(row);
+    });
+  }
+
+  /* ---------- панель «сейчас» ---------- */
+  function findNow() {
+    var d = new Date();
+    var mins = nowMinutes(d);
+    var day = isoDay(d);
+    var i, c;
+    for (i = 0; i < SCHEDULE[day].length; i++) {
+      c = SCHEDULE[day][i];
+      if (mins >= c.m && mins < c.m + c.d) { return { c: c, day: day, state: "live" }; }
+      if (c.m > mins) { return { c: c, day: day, state: "today" }; }
+    }
+    for (i = 1; i <= 7; i++) {
+      var nd = (day + i) % 7;
+      if (SCHEDULE[nd].length) { return { c: SCHEDULE[nd][0], day: nd, state: i === 1 ? "tomorrow" : "later" }; }
+    }
+    return null;
+  }
+
+  function renderNow() {
+    var r = findNow();
+    if (!r) { return; }
+    var status = { live: "Сейчас в зале", today: "Ближайшее занятие сегодня", tomorrow: "Ближайшее занятие завтра", later: "Ближайшее занятие в " + DAYS_FULL[r.day] }[r.state];
+    document.getElementById("now-status").textContent = status;
+    document.getElementById("now-title").textContent = r.c.n;
+    document.getElementById("now-sub").textContent =
+      (r.state === "live" ? "до " + hhmm(r.c.m + r.c.d) : hhmm(r.c.m)) + " · " + r.c.t + " · " + r.c.l;
+    document.getElementById("now-spots").textContent = r.c.s === 0 ? "мест нет" : String(r.c.s);
+    document.getElementById("now-dur").textContent = r.c.d + " мин";
+    document.getElementById("now-dot").className = "dot" + (r.state === "live" ? " is-live" : "");
+  }
+
+  /* ---------- запись ---------- */
+  var modal = document.getElementById("modal");
+  var sheet = document.getElementById("sheet");
+  var select = document.getElementById("f-class");
+
+  function upcoming() {
+    var d = new Date();
+    var mins = nowMinutes(d);
+    var day = isoDay(d);
+    var out = [];
+    for (var i = 0; i < 7 && out.length < 14; i++) {
+      var idx = (day + i) % 7;
+      SCHEDULE[idx].forEach(function (c) {
+        if (i === 0 && c.m < mins) { return; }
+        out.push({ key: idx + "|" + c.m, label: DAYS_SHORT[idx] + ", " + hhmm(c.m) + " — " + c.n + (c.s === 0 ? " (лист ожидания)" : "") });
+      });
+    }
+    return out;
+  }
+
+  function fillSelect(key) {
+    select.innerHTML = "";
+    var first = new Option("Первое занятие — 500 ₽, подберите время", "first");
+    select.appendChild(first);
+    upcoming().forEach(function (o) { select.appendChild(new Option(o.label, o.key)); });
+    if (key) { select.value = key; }
+  }
+
+  function openModal(key) {
+    sheet.classList.remove("is-done");
+    fillSelect(key);
+    modal.hidden = false;
+    modal.classList.add("is-open");
+    document.getElementById("f-name").focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove("is-open");
+    modal.hidden = true;
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".js-book");
+    if (btn) { openModal(btn.getAttribute("data-key")); return; }
+    if (e.target === modal) { closeModal(); }
+  });
+  document.getElementById("modal-close").addEventListener("click", closeModal);
+  document.getElementById("ok-close").addEventListener("click", closeModal);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal.classList.contains("is-open")) { closeModal(); } });
+
+  document.getElementById("book-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("f-name").value.trim();
+    var phone = document.getElementById("f-phone").value.trim();
+    if (!name || !phone) {
+      (name ? document.getElementById("f-phone") : document.getElementById("f-name")).focus();
+      return;
+    }
+    var picked = select.options[select.selectedIndex].text;
+    document.getElementById("ok-text").textContent =
+      (select.value === "first" ? "Напишем вам и подберём время для первого занятия." : "Записали: " + picked + ". Напишем в течение получаса и подтвердим место.") +
+      " Это демонстрационный макет — заявка никуда не отправлена.";
+    sheet.classList.add("is-done");
+  });
+
+  /* ---------- сама вритти ---------- */
+  var PHASES = [
+    { name: "Вдох", big: true },
+    { name: "Задержка", big: true },
+    { name: "Выдох", big: false },
+    { name: "Задержка", big: false }
+  ];
+  var orb = document.getElementById("orb");
+  var bLabel = document.getElementById("breath-label");
+  var bCount = document.getElementById("breath-count");
+  var bBtn = document.getElementById("breath-btn");
+  var timer = null, phase = 0, count = 4;
+
+  function stopBreath() {
+    clearInterval(timer);
+    timer = null;
+    orb.classList.remove("is-big");
+    bLabel.textContent = "Готовы?";
+    bCount.textContent = "";
+    bBtn.textContent = "Начать дыхание";
+  }
+
+  function tick() {
+    count -= 1;
+    if (count <= 0) {
+      phase = (phase + 1) % PHASES.length;
+      count = 4;
+      orb.classList.toggle("is-big", PHASES[phase].big);
+      bLabel.textContent = PHASES[phase].name;
+    }
+    bCount.textContent = count;
+  }
+
+  bBtn.addEventListener("click", function () {
+    if (timer) { stopBreath(); return; }
+    phase = 0; count = 4;
+    orb.classList.add("is-big");
+    bLabel.textContent = PHASES[0].name;
+    bCount.textContent = count;
+    bBtn.textContent = "Остановить";
+    timer = setInterval(tick, 1000);
+  });
+
+  /* ---------- прочее ---------- */
+  var top = document.getElementById("top");
+  function onScroll() { top.classList.toggle("is-stuck", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  renderDays();
+  renderClasses();
+  renderNow();
+  onScroll();
+  setInterval(function () { renderNow(); if (selected === today) { renderClasses(); } }, 60000);
+})();
+</script>
+</body>
+</html>
