@@ -1,1248 +1,904 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Симба — ветеринарный кабинет</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<title>Симба — ветклиника в Королёве</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    /* палитра: петроль + янтарь (Симба) + нефрит */
-    --bg:#F2F5F2;
-    --bg-elev:#FFFFFF;
-    --deep:#12292B;
-    --deep-2:#1B3A3C;
-    --deep-fg:#E6EDE7;
-    --deep-fg-muted:#9FB6B3;
-    --fg:#12292B;
-    --fg-muted:#53696A;
-    --line:#D8E0D9;
-    --line-strong:#BDC9BE;
-    --accent:#B4700B;
-    --accent-bright:#E09B26;
-    --accent-wash:#F7EAD2;
-    --jade:#2E7D6E;
-    --jade-wash:#E0EDE8;
-    --alert:#A8402B;
-
-    --shell:1120px;
-    --gutter:clamp(16px,4vw,40px);
-    --s-1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.4375rem; --s3:1.875rem; --s4:2.5rem;
-    --sans:"Onest","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
-    --slab:"Bitter","Georgia",serif;
-    --mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+    --page:#E4E7F4;
+    --sheet:#FFFFFF;
+    --soft:#F4F5FA;
+    --ink:#15171D;
+    --muted:#6C7183;
+    --line:#E7E9F1;
+    --line-2:#D6DAE8;
+    --coral:#F9564F;
+    --coral-dark:#DE4139;
+    --coral-wash:#FFECEA;
+    --ok:#2F9E68;
+    --shell:1180px;
+    --gutter:clamp(16px,3.5vw,44px);
+    --r-lg:24px; --r-md:16px; --r-sm:10px;
+    --s-2:.75rem; --s-1:.8125rem; --s0:.9375rem; --s1:1.0625rem; --s2:1.375rem; --s3:1.75rem;
+    --head:"Golos Text","Onest","Segoe UI",system-ui,sans-serif;
+    --body:"Onest","Segoe UI",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0D1E20; --bg-elev:#152A2C; --deep:#091618; --deep-2:#132B2D;
-      --deep-fg:#E6EDE7; --deep-fg-muted:#9FB6B3;
-      --fg:#E7EEE8; --fg-muted:#9AB0AE; --line:#25403F; --line-strong:#33534F;
-      --accent:#E5A231; --accent-bright:#E5A231; --accent-wash:#33280F;
-      --jade:#5BAE99; --jade-wash:#12312C; --alert:#DE7259;
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0D1E20; --bg-elev:#152A2C; --deep:#091618; --deep-2:#132B2D;
-    --deep-fg:#E6EDE7; --deep-fg-muted:#9FB6B3;
-    --fg:#E7EEE8; --fg-muted:#9AB0AE; --line:#25403F; --line-strong:#33534F;
-    --accent:#E5A231; --accent-bright:#E5A231; --accent-wash:#33280F;
-    --jade:#5BAE99; --jade-wash:#12312C; --alert:#DE7259;
-  }
-
   *{box-sizing:border-box}
-  body{
-    margin:0; background:var(--bg); color:var(--fg);
-    font-family:var(--sans); font-size:var(--s0); line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:var(--slab); font-weight:700; line-height:1.15; text-wrap:balance; margin:0}
+  body{margin:0; background:var(--page); color:var(--ink); font-family:var(--body); font-size:var(--s0); line-height:1.55; -webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{margin:0; font-family:var(--head); font-weight:700; line-height:1.05; text-wrap:balance; letter-spacing:-.015em}
   p{margin:0}
   a{color:inherit}
   img,svg{max-width:100%}
-  :focus-visible{outline:2px solid var(--accent-bright); outline-offset:3px; border-radius:2px}
+  button{font-family:inherit}
+  :focus-visible{outline:2px solid var(--coral); outline-offset:2px; border-radius:6px}
 
-  .shell{max-width:var(--shell); margin-inline:auto; padding-inline:var(--gutter)}
-  .eyebrow{
-    font-family:var(--mono); font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--fg-muted); display:flex; align-items:center; gap:.6rem; margin-bottom:1rem;
-  }
-  .eyebrow::before{content:""; width:14px; height:2px; background:var(--accent); flex:none}
-  .lede{color:var(--fg-muted); max-width:62ch}
-  section{padding-block:clamp(48px,7vw,84px)}
-  .sec-head{display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:end; justify-content:space-between; margin-bottom:2.25rem}
-  .sec-head h2{font-size:var(--s3)}
+  .wrap{max-width:var(--shell); margin-inline:auto; padding:10px clamp(8px,2vw,18px) 18px}
+  .sheet{background:var(--sheet); border-radius:var(--r-lg); overflow:clip}
+  .pad{padding-inline:var(--gutter)}
+  .block{padding-block:clamp(38px,5vw,64px)}
+  .label{font-family:var(--head); font-weight:600; font-size:var(--s-2); letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .h-sec{font-size:clamp(1.5rem,3.2vw,2.25rem); text-transform:uppercase; margin-top:.75rem}
+  .sec-top{display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem}
+  .lede{color:var(--muted); max-width:56ch}
+  .note{font-size:var(--s-1); color:var(--muted)}
+  .chip-demo{font-family:var(--mono); font-size:.625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border:1px dashed var(--line-2); border-radius:99px; padding:.35rem .7rem; white-space:nowrap}
 
-  /* ---- демо-плашка ---- */
-  .demo-bar{
-    background:var(--accent); color:#1A1204;
-    font-family:var(--mono); font-size:.75rem; letter-spacing:.04em;
-    display:flex; gap:.5rem 1rem; flex-wrap:wrap; justify-content:center; align-items:center;
-    padding:.5rem var(--gutter); text-align:center;
-  }
-  .demo-bar b{font-weight:500; text-transform:uppercase; letter-spacing:.12em}
+  /* демо-плашка */
+  .demo{background:var(--ink); color:#fff; font-family:var(--mono); font-size:.6875rem; letter-spacing:.05em; text-align:center; padding:.55rem 1rem; border-radius:99px; margin-bottom:10px}
+  .demo b{color:var(--coral); font-weight:500; text-transform:uppercase; letter-spacing:.14em}
 
-  /* ---- шапка ---- */
-  .top{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
-  .top-in{display:flex; align-items:center; gap:1.25rem; padding-block:.75rem}
-  .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none; margin-right:auto}
-  .brand-name{font-family:var(--slab); font-size:1.25rem; letter-spacing:.01em}
-  .brand-sub{font-family:var(--mono); font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); display:block; margin-top:-2px}
-  .nav{display:flex; gap:1.5rem; font-size:var(--s-1)}
-  .nav a{text-decoration:none; color:var(--fg-muted); padding-block:.25rem; border-bottom:1px solid transparent}
-  .nav a:hover{color:var(--fg); border-bottom-color:var(--accent)}
-  .top-phone{font-family:var(--mono); font-size:var(--s-1); text-decoration:none; white-space:nowrap}
-  @media (max-width:900px){ .nav{display:none} }
-  @media (max-width:560px){ .top-phone{display:none} }
+  /* шапка */
+  .top{position:sticky; top:0; z-index:50; background:var(--sheet); border-bottom:1px solid var(--line)}
+  .top-in{display:flex; align-items:center; gap:1.25rem; padding-block:.85rem}
+  .logo{display:flex; align-items:center; gap:.55rem; text-decoration:none; margin-right:auto; font-family:var(--head); font-weight:700; font-size:1.15rem}
+  .logo small{display:block; font-family:var(--mono); font-size:.5625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:400; margin-top:1px}
+  .menu{display:flex; gap:1.4rem; font-size:var(--s-1)}
+  .menu a{text-decoration:none; color:var(--muted)}
+  .menu a:hover{color:var(--ink)}
+  .tel{font-family:var(--mono); font-size:var(--s-1); text-decoration:none; white-space:nowrap}
+  @media (max-width:1000px){ .menu{display:none} }
+  @media (max-width:520px){ .tel{display:none} }
 
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-    font:500 var(--s-1)/1 var(--sans); text-decoration:none; cursor:pointer;
-    padding:.75rem 1.1rem; border-radius:3px; border:1px solid transparent; white-space:nowrap;
-    transition:background .18s ease, color .18s ease, border-color .18s ease;
-  }
-  .btn-primary{background:var(--accent); color:#180F02; border-color:var(--accent)}
-  .btn-primary:hover{background:var(--accent-bright)}
-  .btn-ghost{border-color:var(--line-strong); color:var(--fg); background:transparent}
-  .btn-ghost:hover{border-color:var(--accent); color:var(--accent)}
-  .btn-on-deep{border-color:#3D5C5C; color:var(--deep-fg)}
-  .btn-on-deep:hover{border-color:var(--accent-bright); color:var(--accent-bright)}
-  .btn-lg{padding:.95rem 1.5rem; font-size:var(--s0)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem; cursor:pointer; text-decoration:none;
+       font:600 var(--s-1)/1 var(--head); padding:.8rem 1.2rem; border-radius:99px; border:1px solid transparent; transition:background .16s, color .16s, border-color .16s}
+  .btn-coral{background:var(--coral); color:#fff}
+  .btn-coral:hover{background:var(--coral-dark)}
+  .btn-line{border-color:var(--line-2); color:var(--ink)}
+  .btn-line:hover{border-color:var(--ink)}
+  .btn-dark{background:var(--ink); color:#fff}
+  .btn-dark:hover{background:#000}
+  .btn-wide{width:100%; padding-block:1.05rem; font-size:var(--s1)}
 
-  /* ---- герой ---- */
-  .hero{background:var(--deep); color:var(--deep-fg); padding-block:clamp(44px,6vw,72px)}
-  .hero-grid{display:grid; grid-template-columns:1.35fr .9fr; gap:clamp(28px,4vw,56px); align-items:start}
-  .hero .eyebrow{color:var(--deep-fg-muted)}
-  .hero h1{font-size:clamp(2rem,4.4vw,3.1rem); margin-bottom:1.1rem}
-  .hero h1 em{font-style:normal; color:var(--accent-bright)}
-  .hero-lede{color:var(--deep-fg-muted); max-width:52ch; font-size:var(--s1)}
-  .hero-cta{display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.75rem}
-  .facts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:#2C4646; margin-top:2.25rem; border:1px solid #2C4646}
-  .fact{background:var(--deep); padding:.9rem 1rem}
-  .fact dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--deep-fg-muted)}
-  .fact dd{margin:.35rem 0 0; font-size:var(--s-1); line-height:1.45}
-  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr} .facts{grid-template-columns:1fr} }
+  /* герой */
+  .hero{padding:clamp(10px,1.4vw,16px)}
+  .hero-photo{position:relative; border-radius:20px; overflow:hidden; min-height:clamp(330px,44vw,470px); display:flex; align-items:flex-end;
+              background:linear-gradient(135deg,#2B3350 0%,#54607F 45%,#9AA3BE 100%)}
+  .hero-art{position:absolute; right:-2%; bottom:-6%; width:min(46%,420px); color:#fff; opacity:.9}
+  .hero-art svg{width:100%; height:auto; filter:drop-shadow(0 24px 48px rgba(0,0,0,.25))}
+  .hero-shade{position:absolute; inset:0; background:linear-gradient(180deg,rgba(13,16,28,.05) 30%,rgba(13,16,28,.72) 100%)}
+  .hero-body{position:relative; padding:clamp(18px,3vw,32px); width:100%; display:flex; flex-wrap:wrap; gap:1.5rem; align-items:flex-end; justify-content:space-between}
+  .hero-body h1{color:#fff; font-size:clamp(1.75rem,4.6vw,3.4rem); text-transform:uppercase; max-width:16ch}
+  .hero-pills{display:flex; flex-wrap:wrap; gap:.6rem}
+  .pill{display:inline-flex; align-items:center; gap:.7rem; background:rgba(255,255,255,.94); color:var(--ink); text-decoration:none;
+        border-radius:99px; padding:.55rem .55rem .55rem 1rem; font:600 var(--s-1)/1.2 var(--head); max-width:230px}
+  .pill:hover{background:#fff}
+  .pill i{flex:none; width:30px; height:30px; border-radius:50%; background:var(--coral); color:#fff; display:grid; place-items:center; font-style:normal}
+  .hero-tag{position:absolute; top:14px; left:14px; font-family:var(--mono); font-size:.5625rem; letter-spacing:.12em; text-transform:uppercase;
+            background:rgba(0,0,0,.42); color:#fff; padding:.35rem .6rem; border-radius:99px}
+  .hero-phone{position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:var(--s-1); color:#fff; text-decoration:none}
 
-  /* ---- карточка записи в герое ---- */
-  .slotcard{background:var(--deep-2); border:1px solid #2E4B4B; padding:1.25rem}
-  .slotcard-head{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; border-bottom:1px solid #2E4B4B; padding-bottom:.75rem; margin-bottom:1rem}
-  .slotcard-head strong{font-family:var(--slab); font-size:var(--s1); font-weight:600}
-  .slotcard-head span{font-family:var(--mono); font-size:.6875rem; color:var(--deep-fg-muted); text-transform:uppercase; letter-spacing:.1em}
-  .slots{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem}
-  .slot{
-    font-family:var(--mono); font-size:var(--s-1); padding:.55rem .25rem; text-align:center;
-    background:transparent; color:var(--deep-fg); border:1px solid #3D5C5C; border-radius:2px; cursor:pointer;
-    transition:background .15s ease, border-color .15s ease, color .15s ease;
-  }
-  .slot:hover:not(:disabled){border-color:var(--accent-bright); color:var(--accent-bright)}
-  .slot[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#180F02}
-  .slot:disabled{color:#5B7676; border-style:dashed; cursor:not-allowed; text-decoration:line-through}
-  .slotcard-foot{margin-top:1rem; font-size:var(--s-1); color:var(--deep-fg-muted); display:flex; gap:.5rem; align-items:flex-start}
-  .slotcard-foot svg{flex:none; margin-top:3px}
+  .stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border-top:1px solid var(--line)}
+  .stat{background:var(--sheet); padding:clamp(16px,2.2vw,26px) clamp(14px,2vw,24px)}
+  .stat b{display:block; font-family:var(--head); font-weight:700; font-size:clamp(.95rem,1.7vw,1.25rem); letter-spacing:-.02em; text-wrap:balance}
+  .stat span{display:block; margin-top:.4rem; font-size:var(--s-1); color:var(--muted); line-height:1.4}
+  @media (max-width:760px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
 
-  /* ---- услуги: сетка на волосяных линиях ---- */
-  .grid-lines{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
-  .cell{background:var(--bg-elev); padding:1.5rem 1.4rem; display:flex; flex-direction:column; gap:.5rem}
-  .cell h3{font-size:var(--s1)}
-  .cell p{font-size:var(--s-1); color:var(--fg-muted)}
-  .cell .cell-meta{margin-top:auto; padding-top:.9rem; font-family:var(--mono); font-size:.6875rem; letter-spacing:.06em; color:var(--accent)}
-  .cell-mark{width:26px; height:26px; color:var(--jade)}
-  .cell--wide{grid-column:span 2}
-  @media (max-width:880px){ .grid-lines{grid-template-columns:repeat(2,minmax(0,1fr))} .cell--wide{grid-column:span 2} }
-  @media (max-width:560px){ .grid-lines{grid-template-columns:1fr} .cell--wide{grid-column:span 1} }
+  /* аккордеон услуг */
+  .acc{display:flex; flex-direction:column; gap:.5rem}
+  .acc-item{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--sheet); transition:background .2s, border-color .2s}
+  .acc-head{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:1rem; width:100%; background:none; border:0; cursor:pointer;
+            padding:clamp(.85rem,1.6vw,1.15rem) clamp(1rem,2vw,1.4rem); text-align:left; color:inherit}
+  .acc-num{font-family:var(--mono); font-size:var(--s-2); color:var(--muted)}
+  .acc-title{font-family:var(--head); font-weight:700; font-size:clamp(1.05rem,2.3vw,1.6rem); text-transform:uppercase; letter-spacing:-.015em}
+  .acc-ic{width:30px; height:30px; border-radius:50%; border:1px solid var(--line-2); display:grid; place-items:center; color:var(--muted); flex:none; transition:transform .2s}
+  .acc-body{display:none; padding:0 clamp(1rem,2vw,1.4rem) clamp(1rem,2vw,1.3rem); max-width:76ch}
+  .acc-body p{font-size:var(--s0)}
+  .acc-body .acc-meta{margin-top:.6rem; font-family:var(--mono); font-size:var(--s-2); letter-spacing:.04em; opacity:.85}
+  .acc-item[data-open="true"]{background:var(--coral); border-color:var(--coral); color:#fff}
+  .acc-item[data-open="true"] .acc-num{color:rgba(255,255,255,.75)}
+  .acc-item[data-open="true"] .acc-ic{border-color:rgba(255,255,255,.5); color:#fff; transform:rotate(45deg)}
+  .acc-item[data-open="true"] .acc-body{display:block}
 
-  /* ---- шаги приёма ---- */
-  .steps{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2rem 1.5rem; counter-reset:step}
-  .step{border-top:2px solid var(--line-strong); padding-top:1rem}
-  .step-n{font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; color:var(--accent); display:block; margin-bottom:.5rem}
-  .step h3{font-size:var(--s0); margin-bottom:.4rem}
-  .step p{font-size:var(--s-1); color:var(--fg-muted)}
-  @media (max-width:860px){ .steps{grid-template-columns:repeat(2,minmax(0,1fr))} }
-  @media (max-width:480px){ .steps{grid-template-columns:1fr} }
+  /* врачи */
+  .docs{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(12px,1.6vw,20px)}
+  @media (max-width:860px){ .docs{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .doc-photo{position:relative; aspect-ratio:4/5; border-radius:var(--r-md); background:var(--soft); display:grid; place-items:center; overflow:hidden; color:#B9BFD4}
+  .doc-photo img{width:100%; height:100%; object-fit:cover}
+  .doc-photo svg{width:62%; height:62%}
+  .slot-tag{position:absolute; left:8px; bottom:8px; font-family:var(--mono); font-size:.5625rem; letter-spacing:.1em; text-transform:uppercase;
+            background:rgba(21,23,29,.72); color:#fff; border-radius:99px; padding:.3rem .55rem}
+  .doc h4{margin-top:.7rem; font-size:var(--s1)}
+  .doc p{font-size:var(--s-1); color:var(--muted)}
 
-  /* ---- планировщик профилактики ---- */
-  .plan{background:var(--bg-elev); border:1px solid var(--line); display:grid; grid-template-columns:minmax(260px,320px) 1fr}
-  .plan-controls{padding:1.5rem; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:1.1rem}
-  .plan-out{padding:1.5rem}
-  @media (max-width:820px){ .plan{grid-template-columns:1fr} .plan-controls{border-right:0; border-bottom:1px solid var(--line)} }
-  .field{display:flex; flex-direction:column; gap:.4rem}
-  .field label{font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted)}
-  .field input,.field select,.field textarea{
-    font:400 var(--s0)/1.4 var(--sans); color:var(--fg); background:var(--bg);
-    border:1px solid var(--line-strong); border-radius:2px; padding:.65rem .7rem; width:100%;
-  }
-  .field textarea{resize:vertical; min-height:84px}
-  .seg{display:flex; flex-wrap:wrap; gap:.4rem}
-  .seg button{
-    font:500 var(--s-1)/1 var(--sans); padding:.55rem .8rem; cursor:pointer; border-radius:2px;
-    background:transparent; border:1px solid var(--line-strong); color:var(--fg-muted);
-  }
-  .seg button[aria-pressed="true"]{background:var(--jade-wash); border-color:var(--jade); color:var(--jade)}
-  .plan-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
-  .plan-list li{display:grid; grid-template-columns:auto 1fr; gap:.35rem 1rem; padding:.85rem 0; border-bottom:1px dashed var(--line)}
-  .plan-list li:last-child{border-bottom:0; padding-bottom:0}
-  .plan-when{font-family:var(--mono); font-size:.75rem; color:var(--accent); letter-spacing:.04em; padding-top:.2rem; white-space:nowrap}
-  .plan-what strong{display:block; font-weight:600}
-  .plan-what span{font-size:var(--s-1); color:var(--fg-muted)}
-  .plan-empty{color:var(--fg-muted); font-size:var(--s-1)}
-  @media (max-width:520px){ .plan-list li{grid-template-columns:1fr} .plan-when{padding-top:0} }
-
-  /* ---- цены ---- */
-  .tag{
-    font-family:var(--mono); font-size:.625rem; letter-spacing:.14em; text-transform:uppercase;
-    border:1px dashed var(--line-strong); color:var(--fg-muted); padding:.3rem .5rem; border-radius:2px; white-space:nowrap;
-  }
-  .price-wrap{overflow-x:auto; border:1px solid var(--line); background:var(--bg-elev)}
-  table.price{width:100%; border-collapse:collapse; min-width:520px}
-  table.price th,table.price td{text-align:left; padding:.8rem 1.25rem; border-bottom:1px solid var(--line)}
-  table.price thead th{font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted); font-weight:400}
-  table.price td:last-child,table.price th:last-child{text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
-  table.price tbody tr:last-child td{border-bottom:0}
-  table.price .grp td{background:var(--jade-wash); font-family:var(--mono); font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; color:var(--jade)}
-  .price-note{font-size:var(--s-1); color:var(--fg-muted); margin-top:.9rem}
-
-  /* ---- команда и отзывы ---- */
-  .people{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.5rem}
-  .person{display:flex; gap:1rem; align-items:flex-start}
-  .mono-avatar{
-    width:56px; height:56px; flex:none; border-radius:50%; display:grid; place-items:center;
-    background:var(--accent-wash); color:var(--accent); font-family:var(--slab); font-size:1.1rem;
-    border:1px solid var(--line);
-  }
-  .person h3{font-size:var(--s0)}
-  .person p{font-size:var(--s-1); color:var(--fg-muted)}
-  .person .role{font-family:var(--mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--jade); margin-bottom:.3rem}
-  @media (max-width:820px){ .people{grid-template-columns:1fr} }
-
-  .quotes{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
-  .quote{background:var(--bg-elev); padding:1.4rem; display:flex; flex-direction:column; gap:.9rem}
-  .quote blockquote{margin:0; font-size:var(--s-1); line-height:1.65}
-  .quote footer{margin-top:auto; font-family:var(--mono); font-size:.6875rem; letter-spacing:.06em; color:var(--fg-muted)}
-  @media (max-width:820px){ .quotes{grid-template-columns:1fr} }
-
-  /* ---- запись и контакты ---- */
-  .book{background:var(--deep); color:var(--deep-fg)}
-  .book .eyebrow{color:var(--deep-fg-muted)}
-  .book h2{font-size:var(--s3); color:var(--deep-fg)}
-  .book-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(28px,4vw,56px); align-items:start}
-  .book .field label{color:var(--deep-fg-muted)}
-  .book .field input,.book .field select,.book .field textarea{background:var(--deep-2); border-color:#33524F; color:var(--deep-fg)}
-  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
-  form.booking{display:flex; flex-direction:column; gap:1rem; margin-top:1.75rem}
-  .form-note{font-size:var(--s-1); color:var(--deep-fg-muted)}
-  .receipt{border:1px solid var(--accent); background:var(--deep-2); padding:1rem 1.1rem; font-size:var(--s-1); display:none}
-  .receipt[data-shown="true"]{display:block}
-  .receipt strong{font-family:var(--mono); color:var(--accent-bright); display:block; font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.45rem}
-  .contacts{display:flex; flex-direction:column; gap:1.25rem}
-  .contact-row{border-top:1px solid #2C4646; padding-top:.9rem}
-  .contact-row dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--deep-fg-muted); margin-bottom:.3rem}
-  .contact-row dd{margin:0; font-size:var(--s0)}
-  .contact-row a{text-decoration:none; border-bottom:1px solid #3D5C5C}
-  .contact-row a:hover{border-bottom-color:var(--accent-bright); color:var(--accent-bright)}
-  .map{width:100%; height:auto; border:1px solid #2C4646; display:block}
-  @media (max-width:860px){ .book-grid{grid-template-columns:1fr} .form-row{grid-template-columns:1fr} }
-
-  /* ---- подвал ---- */
-  .foot{background:var(--bg-elev); border-top:1px solid var(--line); padding-block:2.25rem; font-size:var(--s-1); color:var(--fg-muted)}
-  .foot-in{display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; justify-content:space-between; align-items:flex-start}
-  .foot strong{color:var(--fg); font-family:var(--slab); font-weight:600}
-  .disclaimer{border:1px dashed var(--line-strong); padding:1rem 1.1rem; max-width:56ch; line-height:1.55}
-
-
-  /* ---- вкладки прайса ---- */
-  .tabs{display:flex; gap:.35rem; border-bottom:1px solid var(--line); margin-bottom:1.75rem}
-  .tab{
-    font:500 var(--s0)/1 var(--sans); background:transparent; border:0; cursor:pointer;
-    color:var(--fg-muted); padding:.8rem 1.1rem; border-bottom:2px solid transparent; margin-bottom:-1px;
-  }
-  .tab[aria-selected="true"]{color:var(--fg); border-bottom-color:var(--accent)}
-  .tab:hover{color:var(--fg)}
-  .panel[hidden]{display:none}
-
-  /* ---- прайс услуг ---- */
-  .pricelist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2.5rem 3.5rem}
-  @media (max-width:820px){ .pricelist{grid-template-columns:1fr; gap:2rem} }
-  .price-group h3{
-    font-family:var(--mono); font-weight:500; font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--jade); padding-bottom:.6rem; border-bottom:1px solid var(--line-strong); margin-bottom:.35rem;
-  }
-  .price-item{
-    display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:.15rem .9rem;
-    padding:.7rem 0; border-bottom:1px dashed var(--line);
-  }
-  .price-item:last-child{border-bottom:0}
-  .price-item .pi-name{font-size:var(--s0)}
-  .price-item .pi-sum{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; font-size:var(--s0)}
-  .price-item .pi-desc{grid-column:1 / -1; font-size:var(--s-1); color:var(--fg-muted); max-width:46ch}
-  .pi-hit{
-    font-family:var(--mono); font-size:.5625rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:.1rem .3rem; margin-left:.5rem; vertical-align:2px;
-  }
-
-  .price-callout{
-    border:1px solid var(--line-strong); background:var(--bg); padding:1.3rem 1.4rem;
-    display:flex; flex-direction:column; gap:.7rem; align-self:start;
-  }
-  .price-callout h3{font-family:var(--slab); font-size:var(--s1); font-weight:600; color:var(--fg)}
-  .price-callout p{font-size:var(--s-1); color:var(--fg-muted)}
-  .price-callout .btn{align-self:flex-start}
-
-  /* ---- товары ---- */
-  .goods{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+  /* прайс */
+  .switch{display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1rem}
+  .switch button{background:var(--soft); border:1px solid transparent; border-radius:99px; padding:.6rem 1.05rem; cursor:pointer;
+                 font:600 var(--s-1)/1 var(--head); color:var(--muted)}
+  .switch button[aria-pressed="true"], .switch button[aria-selected="true"]{background:var(--ink); color:#fff}
+  .filters{display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; margin-bottom:1.5rem}
+  .filters .f-label{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-right:.4rem}
+  .filters button{background:#fff; border:1px solid var(--line-2); border-radius:99px; padding:.5rem .95rem; cursor:pointer; font:500 var(--s-1)/1 var(--body); color:var(--muted); display:inline-flex; align-items:center; gap:.45rem}
+  .filters button svg{width:16px; height:16px}
+  .filters button[aria-pressed="true"]{background:var(--coral-wash); border-color:var(--coral); color:var(--coral-dark)}
+  .plist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 clamp(24px,4vw,64px)}
+  @media (max-width:820px){ .plist{grid-template-columns:1fr} }
+  .pgroup{break-inside:avoid; margin-bottom:1.75rem}
+  .pgroup h4{font-family:var(--mono); font-weight:500; font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase; color:var(--coral);
+             padding-bottom:.55rem; border-bottom:1px solid var(--line)}
+  .prow{display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:.2rem .9rem; padding:.7rem 0; border-bottom:1px solid var(--line)}
+  .prow:last-child{border-bottom:0}
+  .prow .pn{font-size:var(--s0)}
+  .prow .pv{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .prow .pd{grid-column:1/-1; font-size:var(--s-1); color:var(--muted)}
+  .prow[hidden]{display:none}
+  .species{display:inline-flex; gap:.25rem; margin-left:.45rem; vertical-align:1px; color:var(--muted)}
+  .species svg{width:14px; height:14px}
+  .goods{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(10px,1.4vw,16px)}
   @media (max-width:900px){ .goods{grid-template-columns:repeat(2,minmax(0,1fr))} }
-  @media (max-width:480px){ .goods{grid-template-columns:1fr} }
-  .good{background:var(--bg-elev); padding:1.25rem; display:flex; flex-direction:column; gap:.35rem}
-  .good-art{
-    width:46px; height:46px; display:grid; place-items:center; margin-bottom:.5rem;
-    background:var(--jade-wash); color:var(--jade); border-radius:3px;
-  }
-  .good h4{margin:0; font-family:var(--slab); font-size:var(--s0); font-weight:600}
-  .good .g-sub{font-size:var(--s-1); color:var(--fg-muted)}
-  .good .g-price{margin-top:auto; padding-top:.75rem; font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--accent)}
-  .goods-note{margin-top:1rem; font-size:var(--s-1); color:var(--fg-muted)}
+  .good{border:1px solid var(--line); border-radius:var(--r-md); padding:1.1rem; display:flex; flex-direction:column; gap:.3rem}
+  .good .g-ic{width:42px; height:42px; border-radius:12px; background:var(--soft); display:grid; place-items:center; color:var(--coral); margin-bottom:.5rem}
+  .good h4{font-size:var(--s0); font-family:var(--head)}
+  .good .g-sub{font-size:var(--s-1); color:var(--muted)}
+  .good .g-price{margin-top:auto; padding-top:.7rem; font-family:var(--mono); font-variant-numeric:tabular-nums}
 
-  /* ---- отзывы ---- */
-  .rev-grid{display:grid; grid-template-columns:minmax(240px,300px) 1fr; gap:clamp(24px,3.5vw,48px); align-items:start}
-  @media (max-width:900px){ .rev-grid{grid-template-columns:1fr} }
-  .rating-box{border:1px solid var(--line); background:var(--bg-elev); padding:1.5rem}
-  .rating-num{font-family:var(--slab); font-size:3.25rem; line-height:1; font-weight:700}
-  .rating-head{display:flex; align-items:baseline; gap:.75rem}
-  .stars{display:inline-flex; gap:2px; color:var(--accent)}
-  .stars svg{width:15px; height:15px}
-  .stars .off{color:var(--line-strong)}
-  .rating-count{font-size:var(--s-1); color:var(--fg-muted); margin-top:.6rem}
-  .bars{display:grid; gap:.35rem; margin:1.1rem 0 1.25rem}
-  .bar{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.6rem; font-family:var(--mono); font-size:.6875rem; color:var(--fg-muted)}
-  .bar-track{height:5px; background:var(--line); border-radius:3px; overflow:hidden}
-  .bar-fill{display:block; height:100%; background:var(--accent)}
-  .reviews{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem}
-  @media (max-width:640px){ .reviews{grid-template-columns:1fr} }
-  .review{border:1px solid var(--line); background:var(--bg-elev); padding:1.25rem; display:flex; flex-direction:column; gap:.75rem}
-  .review-top{display:flex; gap:.85rem; align-items:center}
-  .pet-photo{
-    width:56px; height:56px; flex:none; border-radius:3px; display:grid; place-items:center; overflow:hidden;
-    background:var(--accent-wash); color:var(--accent);
-  }
-  .pet-photo svg{width:100%; height:100%}
-  .pet-photo.jade{background:var(--jade-wash); color:var(--jade)}
-  .review-who strong{display:block; font-size:var(--s0)}
-  .review-who span{font-size:var(--s-1); color:var(--fg-muted)}
-  .review p{font-size:var(--s-1); line-height:1.65}
-  .review footer{
-    margin-top:auto; padding-top:.6rem; border-top:1px dashed var(--line);
-    font-family:var(--mono); font-size:.625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted);
-    display:flex; justify-content:space-between; gap:1rem;
-  }
-  .gallery{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:1.25rem}
-  @media (max-width:700px){ .gallery{grid-template-columns:repeat(3,minmax(0,1fr))} }
-  .gallery figure{margin:0; aspect-ratio:1; display:grid; place-items:center; background:var(--bg-elev); color:var(--jade); position:relative}
-  .gallery figure:nth-child(even){color:var(--accent)}
-  .gallery svg{width:74%; height:74%}
-  .gallery figcaption{
-    position:absolute; inset-inline:0; bottom:0; text-align:center; padding:.3rem;
-    font-family:var(--mono); font-size:.5625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted);
-  }
+  /* отзывы */
+  .revs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(12px,1.6vw,18px)}
+  @media (max-width:860px){ .revs{grid-template-columns:1fr} }
+  .rev{border:1px solid var(--line); border-radius:var(--r-md); padding:1.25rem; display:flex; flex-direction:column; gap:.8rem; background:var(--sheet)}
+  .rev-top{display:flex; align-items:center; gap:.7rem}
+  .rev-ava{width:44px; height:44px; border-radius:50%; background:var(--coral-wash); color:var(--coral); display:grid; place-items:center; flex:none; overflow:hidden}
+  .rev-ava svg{width:100%; height:100%}
+  .rev-top strong{font-family:var(--head); font-size:var(--s0)}
+  .rev-top span{display:block; font-size:var(--s-2); color:var(--muted)}
+  .rev p{font-size:var(--s-1); line-height:1.6}
+  .rev footer{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-top:.7rem; border-top:1px solid var(--line)}
+  .rating{display:inline-flex; align-items:center; gap:.35rem; font-family:var(--mono); font-size:var(--s-2)}
+  .stars{display:inline-flex; gap:1px; color:#F5B921}
+  .stars svg{width:13px; height:13px}
+  .stars .off{color:var(--line-2)}
+  .rev footer time{font-family:var(--mono); font-size:.625rem; color:var(--muted)}
+  .rev-summary{display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.75rem; background:var(--soft); border-radius:var(--r-md); padding:1.1rem 1.35rem; margin-bottom:1.25rem}
+  .rev-summary .big{font-family:var(--head); font-size:2rem; line-height:1}
+  .rev-summary .note{max-width:44ch}
 
-  @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important; animation-duration:.01ms !important} }
+  /* запись */
+  .book{background:var(--soft); border-radius:20px; padding:clamp(18px,3vw,34px)}
+  .fgrid{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+  @media (max-width:720px){ .fgrid{grid-template-columns:1fr} }
+  .fld{display:flex; flex-direction:column; gap:.4rem}
+  .fld label,.flabel{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+  .fld input,.fld textarea,.fld select{background:#fff; border:1px solid var(--line); border-radius:12px; padding:.85rem 1rem; font:400 var(--s0)/1.4 var(--body); color:var(--ink); width:100%}
+  .fld textarea{min-height:82px; resize:vertical}
+  .pets{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.5rem}
+  @media (max-width:720px){ .pets{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  .pet-tile{background:#fff; border:1px solid var(--line); border-radius:14px; padding:.8rem .5rem .7rem; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:.35rem; color:var(--muted); transition:border-color .16s, color .16s}
+  .pet-tile svg{width:34px; height:34px}
+  .pet-tile span{font-size:var(--s-2); font-family:var(--head); font-weight:600}
+  .pet-tile em{width:14px; height:14px; border-radius:50%; border:1px solid var(--line-2); display:block}
+  .pet-tile[aria-pressed="true"]{border-color:var(--ink); color:var(--ink)}
+  .pet-tile[aria-pressed="true"] em{border-color:var(--ink); background:var(--ink); box-shadow:inset 0 0 0 3px #fff}
+  .chips{display:flex; gap:.4rem; flex-wrap:wrap}
+  .chip{background:#fff; border:1px solid var(--line); border-radius:10px; padding:.55rem .8rem; cursor:pointer; font:500 var(--s-1)/1 var(--mono); color:var(--ink); min-width:64px; text-align:center}
+  .chip small{display:block; font-family:var(--body); font-size:.625rem; color:var(--muted); margin-top:.2rem; text-transform:lowercase}
+  .chip[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .chip[aria-pressed="true"] small{color:rgba(255,255,255,.7)}
+  .chip:disabled{color:var(--line-2); border-style:dashed; cursor:not-allowed; text-decoration:line-through}
+  .form-ok{display:none; background:#fff; border:1px solid var(--ok); border-radius:14px; padding:1.1rem 1.25rem; margin-top:1rem}
+  .form-ok[data-shown="true"]{display:block}
+  .form-ok h4{font-size:var(--s1); color:var(--ok); margin-bottom:.5rem}
+  .form-ok pre{font-family:var(--mono); font-size:var(--s-1); white-space:pre-wrap; margin:.6rem 0 0; background:var(--soft); border-radius:10px; padding:.8rem; overflow-x:auto}
+  .form-ok .ok-actions{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.9rem}
+
+  /* карта и контакты */
+  .map-grid{display:grid; grid-template-columns:1.25fr .75fr; gap:clamp(14px,2vw,24px); align-items:stretch}
+  @media (max-width:860px){ .map-grid{grid-template-columns:1fr} }
+  .map-box{position:relative; border-radius:var(--r-md); overflow:hidden; background:var(--soft); min-height:340px}
+  .map-box iframe{width:100%; height:100%; min-height:340px; border:0; display:block}
+  .map-fallback{position:absolute; inset:0; display:grid; place-items:center}
+  .map-fallback svg{width:100%; height:100%}
+  .cbox{background:var(--soft); border-radius:var(--r-md); padding:1.4rem; display:flex; flex-direction:column; gap:1rem}
+  .crow{border-top:1px solid var(--line-2); padding-top:.8rem}
+  .crow:first-of-type{border-top:0; padding-top:0}
+  .crow dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem}
+  .crow dd{margin:0}
+
+  /* подвал */
+  .foot{background:var(--soft); border-radius:20px; margin-top:12px; padding:clamp(20px,3vw,34px)}
+  .foot-grid{display:grid; grid-template-columns:1.4fr repeat(3,minmax(0,1fr)); gap:1.5rem}
+  @media (max-width:820px){ .foot-grid{grid-template-columns:1fr 1fr} }
+  .foot h5{font-family:var(--mono); font-weight:500; font-size:.625rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 .7rem}
+  .foot ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.4rem; font-size:var(--s-1)}
+  .foot a{text-decoration:none; color:var(--ink)}
+  .foot a:hover{color:var(--coral)}
+  .foot-bottom{display:flex; flex-wrap:wrap; gap:.75rem 1.5rem; justify-content:space-between; margin-top:1.75rem; padding-top:1.1rem; border-top:1px solid var(--line-2); font-size:var(--s-2); color:var(--muted)}
+  .foot-disclaimer{max-width:70ch}
+
+  @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important; animation-duration:.01ms !important; scroll-behavior:auto !important} }
 </style>
 
-<div class="demo-bar">
-  <b>Демо-концепт</b>
-  <span>макет сайта для ветклиники «Симба», Королёв · это не официальный сайт · тексты, цены и фото — заглушки</span>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="p-cat" viewBox="0 0 120 120"><g fill="currentColor"><path d="M32 52 36 20l24 17z" fill-opacity=".45"></path><path d="M88 52 84 20 60 37z" fill-opacity=".45"></path><ellipse cx="60" cy="64" rx="32" ry="28" fill-opacity=".28"></ellipse><ellipse cx="48" cy="60" rx="4.5" ry="6"></ellipse><ellipse cx="72" cy="60" rx="4.5" ry="6"></ellipse><path d="M55 72h10l-5 6z" fill-opacity=".8"></path></g><g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" fill="none"><path d="M52 78c3 3 5 3 8 0M68 78c-3 3-5 3-8 0M50 74 30 70M50 79 32 82M70 74l20-4M70 79l18 3"></path></g></symbol>
+  <symbol id="p-dog" viewBox="0 0 120 120"><g fill="currentColor"><path d="M32 40c-13 2-16 18-12 30 3 9 12 10 16 5z" fill-opacity=".45"></path><path d="M88 40c13 2 16 18 12 30-3 9-12 10-16 5z" fill-opacity=".45"></path><ellipse cx="60" cy="62" rx="29" ry="28" fill-opacity=".28"></ellipse><ellipse cx="60" cy="78" rx="16" ry="11" fill-opacity=".36"></ellipse><circle cx="48" cy="56" r="4.5"></circle><circle cx="72" cy="56" r="4.5"></circle><ellipse cx="60" cy="72" rx="6" ry="4.5"></ellipse></g><path d="M60 77v4M56 84c2 2 6 2 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" fill="none"></path></symbol>
+  <symbol id="p-rabbit" viewBox="0 0 120 120"><g fill="currentColor"><ellipse cx="47" cy="34" rx="8" ry="24" transform="rotate(-11 47 34)" fill-opacity=".45"></ellipse><ellipse cx="73" cy="34" rx="8" ry="24" transform="rotate(11 73 34)" fill-opacity=".45"></ellipse><ellipse cx="60" cy="72" rx="27" ry="24" fill-opacity=".28"></ellipse><circle cx="50" cy="70" r="4"></circle><circle cx="70" cy="70" r="4"></circle><path d="M56 80h8l-4 5z" fill-opacity=".8"></path></g></symbol>
+  <symbol id="p-bird" viewBox="0 0 120 120"><g fill="currentColor"><path d="M50 36c-3-12 5-20 14-22-5 7-3 13 2 18z" fill-opacity=".45"></path><circle cx="56" cy="64" r="27" fill-opacity=".28"></circle><path d="M80 56c12 2 15 12 6 17-7 4-14 1-16-4z" fill-opacity=".6"></path><circle cx="66" cy="58" r="4.5"></circle></g></symbol>
+  <symbol id="p-rodent" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="38" cy="46" r="10" fill-opacity=".45"></circle><circle cx="82" cy="46" r="10" fill-opacity=".45"></circle><ellipse cx="60" cy="68" rx="29" ry="24" fill-opacity=".28"></ellipse><circle cx="50" cy="65" r="4"></circle><circle cx="70" cy="65" r="4"></circle><ellipse cx="60" cy="75" rx="4.5" ry="3.5" fill-opacity=".8"></ellipse></g></symbol>
+  <symbol id="p-paw" viewBox="0 0 120 120"><g fill="currentColor" fill-opacity=".55"><ellipse cx="42" cy="44" rx="9" ry="12"></ellipse><ellipse cx="60" cy="38" rx="9" ry="12"></ellipse><ellipse cx="78" cy="44" rx="9" ry="12"></ellipse><ellipse cx="90" cy="62" rx="8" ry="10"></ellipse></g><path d="M60 58c14 0 24 10 24 20s-11 12-24 12-24-2-24-12 10-20 24-20Z" fill="currentColor" fill-opacity=".35"></path></symbol>
+  <symbol id="p-doc" viewBox="0 0 120 120"><g fill="currentColor"><circle cx="60" cy="44" r="18" fill-opacity=".45"></circle><path d="M26 104c0-18 15-30 34-30s34 12 34 30z" fill-opacity=".3"></path></g></symbol>
+  <symbol id="i-star" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.7 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.5l-3.8 2 .7-4.3-3.1-3 4.3-.6z"></path></symbol>
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"></path><path d="M6 8 8 4h8l2 4M10.5 13.5h3"></path></g></symbol>
+  <symbol id="i-wet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M4 10h16M9 7V5h6v2"></path></g></symbol>
+  <symbol id="i-drops" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 3h4v5l3 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2l3-11z"></path><path d="M10 8h4"></path></g></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-30 12 12)"></rect><path d="M9 7.5 15 16"></path></g></symbol>
+  <symbol id="i-collar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="11" r="7"></circle><path d="M12 18v3"></path><circle cx="12" cy="21.5" r="1.2"></circle></g></symbol>
+  <symbol id="i-vit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 9h10l-1 11H8z"></path><path d="M9 9V6h6v3M10 14h4"></path></g></symbol>
+  <symbol id="i-shampoo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 9h8v11H8z"></path><path d="M10 9V6h4v3M9 13h6M16 5h2v2"></path></g></symbol>
+  <symbol id="i-litter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 8h16l-2 12H6z"></path><path d="M8 12h.01M12 14h.01M16 12h.01M10 17h.01M14 17h.01"></path></g></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <p class="demo"><b>Демо-концепт</b> &nbsp;макет для ветклиники «Симба», Королёв · не официальный сайт · цены, фото и отзывы — образцы</p>
+
+  <div class="sheet">
+    <header class="top">
+      <div class="pad top-in">
+        <a class="logo" href="#top">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#F9564F" opacity=".12"></circle><path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="#F9564F" stroke-width="1.6"></path><circle cx="17" cy="21" r="1.4" fill="#F9564F"></circle><circle cx="23" cy="21" r="1.4" fill="#F9564F"></circle><path d="M20 24.5v1.8M17.6 27.4c1.4 1 3.4 1 4.8 0" stroke="#F9564F" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <span>Симба<small>ветклиника · Королёв</small></span>
+        </a>
+        <nav class="menu" aria-label="Разделы">
+          <a href="#services">Услуги</a>
+          <a href="#doctors">Врачи</a>
+          <a href="#prices">Цены</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <a class="tel" href="tel:+79258711713">+7 925 871-17-13</a>
+        <a class="btn btn-coral" href="#book">Записаться</a>
+      </div>
+    </header>
+
+    <div id="top" class="hero">
+      <div class="hero-photo">
+        <span class="hero-tag">здесь встанет ваше фото</span>
+        <a class="hero-phone" href="tel:+79258711713">+7 925 871-17-13</a>
+        <span class="hero-art" aria-hidden="true"><svg viewBox="0 0 120 120"><use href="#p-dog"></use></svg></span>
+        <span class="hero-shade"></span>
+        <div class="hero-body">
+          <h1>Заботимся о тех, кто ждёт вас дома</h1>
+          <div class="hero-pills">
+            <a class="pill" href="#book">Записаться на приём <i><svg width="14" height="14"><use href="#i-arrow"></use></svg></i></a>
+            <a class="pill" href="tel:+79258711713">Вызвать врача на дом <i><svg width="14" height="14"><use href="#i-arrow"></use></svg></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>Пн–Пт 10:00–20:00</b><span>Сб и Вс — 10:00–19:00, без перерыва на обед</span></div>
+      <div class="stat"><b>7 дней в неделю</b><span>Срочные случаи принимаем вне очереди</span></div>
+      <div class="stat"><b>УЗИ и анализы на месте</b><span>Диагностика и результат за один визит</span></div>
+      <div class="stat"><b>Выезд на дом</b><span>Королёв и ближайшие города Подмосковья</span></div>
+    </div>
+
+    <section class="pad block" id="services">
+      <div class="sec-top">
+        <div>
+          <p class="label">Наши услуги</p>
+          <h2 class="h-sec">Что мы делаем</h2>
+        </div>
+        <p class="lede">Нажмите на услугу — расскажем, как проходит и сколько занимает.</p>
+      </div>
+      <div class="acc" id="acc"></div>
+    </section>
+
+    <section class="pad block" id="doctors" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Команда</p>
+          <h2 class="h-sec">Наши врачи</h2>
+        </div>
+        <span class="chip-demo">фото и имена — образцы</span>
+      </div>
+      <div class="docs" id="docs"></div>
+    </section>
+
+    <section class="pad block" id="prices">
+      <div class="sec-top">
+        <div>
+          <p class="label">Цены</p>
+          <h2 class="h-sec">Услуги и товары</h2>
+        </div>
+        <span class="chip-demo">цифры — образцы, подставим ваш прайс</span>
+      </div>
+
+      <div class="switch" role="tablist" aria-label="Прайс">
+        <button type="button" role="tab" id="t-serv" aria-controls="p-serv" aria-selected="true">Услуги</button>
+        <button type="button" role="tab" id="t-goods" aria-controls="p-goods" aria-selected="false">Ветаптека и зоотовары</button>
+      </div>
+
+      <div id="p-serv" role="tabpanel" aria-labelledby="t-serv">
+        <div class="filters" id="species" role="group" aria-label="Фильтр по питомцу">
+          <span class="f-label">Показать для</span>
+          <button type="button" data-sp="all" aria-pressed="true">Все</button>
+          <button type="button" data-sp="cat" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-cat"></use></svg> Кошки</button>
+          <button type="button" data-sp="dog" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-dog"></use></svg> Собаки</button>
+          <button type="button" data-sp="exotic" aria-pressed="false"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-rodent"></use></svg> Грызуны и птицы</button>
+        </div>
+        <div class="plist" id="plist"></div>
+        <p class="note" id="price-empty" hidden>Для этого питомца в прайсе пока ничего нет — позвоните, подберём.</p>
+        <p class="note" style="margin-top:1rem">Лекарства и расходники в стоимость приёма не входят, если не указано отдельно. Итоговую сумму называем до начала лечения.</p>
+      </div>
+
+      <div id="p-goods" role="tabpanel" aria-labelledby="t-goods" hidden>
+        <div class="goods" id="goods"></div>
+        <p class="note" style="margin-top:1rem">Корм и препараты по назначению врача можно забрать сразу после приёма. Наличие уточняйте по телефону.</p>
+      </div>
+    </section>
+
+    <section class="pad block" id="reviews" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Отзывы</p>
+          <h2 class="h-sec">Что пишут владельцы</h2>
+        </div>
+        <span class="chip-demo">тексты — образцы</span>
+      </div>
+      <div class="rev-summary">
+        <span class="big" id="rev-score">4,8</span>
+        <span class="stars" id="rev-stars" aria-hidden="true"></span>
+        <p class="note">Оценка и отзывы тянутся с карточки клиники на Яндекс Картах и обновляются сами — сайт править не нужно.</p>
+        <a class="btn btn-line" href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Открыть на Яндекс Картах</a>
+      </div>
+      <div class="revs" id="revs"></div>
+    </section>
+
+    <section class="pad block" id="book">
+      <div class="sec-top">
+        <div>
+          <p class="label">Запись</p>
+          <h2 class="h-sec">Записаться на приём</h2>
+        </div>
+        <p class="lede">Заявка уходит администратору в Telegram — перезвоним и подтвердим время.</p>
+      </div>
+
+      <form class="book" id="form" novalidate>
+        <div class="fgrid">
+          <div class="fld">
+            <label for="f-name">Ваше имя</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+          </div>
+          <div class="fld">
+            <label for="f-phone">Телефон</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__">
+          </div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="pets-label">Ваш питомец</span>
+          <div class="pets" id="pets" role="group" aria-labelledby="pets-label"></div>
+        </div>
+
+        <div class="fgrid" style="margin-top:1rem">
+          <div class="fld">
+            <label for="f-service">Услуга</label>
+            <select id="f-service" name="service">
+              <option>Приём терапевта</option>
+              <option>Вакцинация</option>
+              <option>УЗИ или анализы</option>
+              <option>Хирургия — консультация</option>
+              <option>Стоматология</option>
+              <option>Офтальмолог</option>
+              <option>Вызов врача на дом</option>
+            </select>
+          </div>
+          <div class="fld">
+            <label for="f-comment">Что беспокоит</label>
+            <textarea id="f-comment" name="comment" placeholder="Вялый второй день, не ест, три года, привит"></textarea>
+          </div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="date-label">Дата</span>
+          <div class="chips" id="dates" role="group" aria-labelledby="date-label"></div>
+        </div>
+
+        <div class="fld" style="margin-top:1rem">
+          <span class="flabel" id="time-label">Время</span>
+          <div class="chips" id="times" role="group" aria-labelledby="time-label"></div>
+        </div>
+
+        <button type="submit" class="btn btn-coral btn-wide" style="margin-top:1.5rem">Отправить заявку</button>
+        <div class="form-ok" id="ok" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="pad block" id="contacts" style="background:var(--soft)">
+      <div class="sec-top">
+        <div>
+          <p class="label">Контакты</p>
+          <h2 class="h-sec">Как нас найти</h2>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div class="map-box" id="map-box">
+          <div class="map-fallback" id="map-fallback">
+            <svg viewBox="0 0 420 300" role="img" aria-label="Схема расположения: улица Дзержинского, 8Б">
+              <rect width="420" height="300" fill="#EDEFF7"></rect>
+              <g stroke="#DCE0EE" stroke-width="16"><path d="M-10 108h440"></path><path d="M-10 236h440"></path><path d="M120 -10v320"></path><path d="M320 -10v320"></path></g>
+              <g stroke="#E6E9F3" stroke-width="8"><path d="M-10 172h440"></path><path d="M220 -10v320"></path></g>
+              <g fill="#E1E5F0"><rect x="140" y="126" width="56" height="30" rx="3"></rect><rect x="244" y="122" width="60" height="34" rx="3"></rect><rect x="140" y="192" width="72" height="28" rx="3"></rect><rect x="336" y="126" width="62" height="32" rx="3"></rect><rect x="24" y="126" width="70" height="32" rx="3"></rect></g>
+              <text x="14" y="100" fill="#8D93A8" font-family="JetBrains Mono, monospace" font-size="11">ул. Дзержинского</text>
+              <g transform="translate(220 172)"><circle r="28" fill="#F9564F" opacity=".14"></circle><path d="M0-20a12 12 0 0 1 12 12c0 9-12 21-12 21S-12 1-12-8A12 12 0 0 1 0-20Z" fill="#F9564F"></path><circle cy="-8" r="4.5" fill="#fff"></circle></g>
+              <text x="220" y="222" fill="#15171D" font-family="Golos Text, sans-serif" font-weight="700" font-size="14" text-anchor="middle">Симба · 8Б</text>
+              <text x="14" y="286" fill="#9AA0B4" font-family="JetBrains Mono, monospace" font-size="10">интерактивная карта откроется на вашем домене</text>
+            </svg>
+          </div>
+        </div>
+        <div class="cbox">
+          <dl class="crow"><dt>Адрес</dt><dd>Московская обл., Королёв,<br>ул. Дзержинского, 8Б</dd></dl>
+          <dl class="crow"><dt>Телефон</dt><dd><a href="tel:+79258711713" style="text-decoration:none">+7 925 871-17-13</a><br><span class="note">звонок, WhatsApp, Telegram</span></dd></dl>
+          <dl class="crow"><dt>Часы работы</dt><dd>Пн–Пт 10:00–20:00<br>Сб–Вс 10:00–19:00</dd></dl>
+          <a class="btn btn-dark" href="https://yandex.ru/maps/-/CThG6Y9-" target="_blank" rel="noopener">Проложить маршрут</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top" style="margin-bottom:.75rem">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#F9564F" opacity=".12"></circle><path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="#F9564F" stroke-width="1.6"></path><circle cx="17" cy="21" r="1.4" fill="#F9564F"></circle><circle cx="23" cy="21" r="1.4" fill="#F9564F"></circle></svg>
+          <span>Симба<small>ветклиника · Королёв</small></span>
+        </a>
+        <p class="note">Ветеринарный кабинет, аптека и зоотовары в одном месте.</p>
+      </div>
+      <div>
+        <h5>Клиника</h5>
+        <ul>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#doctors">Врачи</a></li>
+          <li><a href="#prices">Цены</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Приём</h5>
+        <ul>
+          <li><a href="#book">Записаться</a></li>
+          <li><a href="tel:+79258711713">Вызов на дом</a></li>
+          <li><a href="#prices">Ветаптека</a></li>
+          <li><a href="#contacts">Как добраться</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакты</h5>
+        <ul>
+          <li><a href="tel:+79258711713">+7 925 871-17-13</a></li>
+          <li><a href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Яндекс Карты</a></li>
+          <li>ул. Дзержинского, 8Б</li>
+          <li>Пн–Вс с 10:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> «Симба» · Королёв</span>
+      <span class="foot-disclaimer">Демонстрационный макет для показа клинике. Не является официальным сайтом. Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — образцы.</span>
+    </div>
+  </footer>
 </div>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <symbol id="pet-cat" viewBox="0 0 120 120">
-      <g fill="currentColor">
-        <path d="M32 52 36 20l24 17z" fill-opacity=".38"></path>
-        <path d="M88 52 84 20 60 37z" fill-opacity=".38"></path>
-        <ellipse cx="60" cy="64" rx="32" ry="28" fill-opacity=".2"></ellipse>
-        <ellipse cx="48" cy="60" rx="4.5" ry="6"></ellipse>
-        <ellipse cx="72" cy="60" rx="4.5" ry="6"></ellipse>
-        <path d="M55 72h10l-5 6z" fill-opacity=".7"></path>
-      </g>
-      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".55" fill="none">
-        <path d="M52 78c3 3 5 3 8 0M68 78c-3 3-5 3-8 0"></path>
-        <path d="M50 74 28 70M50 79 30 82M70 74l22-4M70 79l20 3"></path>
-      </g>
-    </symbol>
-    <symbol id="pet-dog" viewBox="0 0 120 120">
-      <g fill="currentColor">
-        <path d="M32 40c-13 2-16 18-12 30 3 9 12 10 16 5z" fill-opacity=".38"></path>
-        <path d="M88 40c13 2 16 18 12 30-3 9-12 10-16 5z" fill-opacity=".38"></path>
-        <ellipse cx="60" cy="62" rx="29" ry="28" fill-opacity=".2"></ellipse>
-        <ellipse cx="60" cy="78" rx="16" ry="11" fill-opacity=".28"></ellipse>
-        <circle cx="48" cy="56" r="4.5"></circle>
-        <circle cx="72" cy="56" r="4.5"></circle>
-        <ellipse cx="60" cy="72" rx="6" ry="4.5" fill-opacity=".85"></ellipse>
-      </g>
-      <path d="M60 77v4M56 84c2 2 6 2 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".55" fill="none"></path>
-    </symbol>
-    <symbol id="pet-rabbit" viewBox="0 0 120 120">
-      <g fill="currentColor">
-        <ellipse cx="47" cy="34" rx="8" ry="24" transform="rotate(-11 47 34)" fill-opacity=".38"></ellipse>
-        <ellipse cx="73" cy="34" rx="8" ry="24" transform="rotate(11 73 34)" fill-opacity=".38"></ellipse>
-        <ellipse cx="60" cy="72" rx="27" ry="24" fill-opacity=".2"></ellipse>
-        <circle cx="50" cy="70" r="4"></circle>
-        <circle cx="70" cy="70" r="4"></circle>
-        <path d="M56 80h8l-4 5z" fill-opacity=".7"></path>
-      </g>
-      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".5" fill="none">
-        <path d="M52 86c3 3 5 3 8 0M68 86c-3 3-5 3-8 0M50 78 32 76M70 78l18-2"></path>
-      </g>
-    </symbol>
-    <symbol id="pet-parrot" viewBox="0 0 120 120">
-      <g fill="currentColor">
-        <path d="M50 36c-3-12 5-20 14-22-5 7-3 13 2 18z" fill-opacity=".38"></path>
-        <circle cx="56" cy="64" r="27" fill-opacity=".2"></circle>
-        <path d="M80 56c12 2 15 12 6 17-7 4-14 1-16-4z" fill-opacity=".55"></path>
-        <circle cx="66" cy="58" r="4.5"></circle>
-      </g>
-      <path d="M40 78c6 6 14 8 22 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".45" fill="none"></path>
-    </symbol>
-    <symbol id="pet-hamster" viewBox="0 0 120 120">
-      <g fill="currentColor">
-        <circle cx="38" cy="46" r="10" fill-opacity=".38"></circle>
-        <circle cx="82" cy="46" r="10" fill-opacity=".38"></circle>
-        <ellipse cx="60" cy="68" rx="29" ry="24" fill-opacity=".2"></ellipse>
-        <circle cx="40" cy="76" r="10" fill-opacity=".14"></circle>
-        <circle cx="80" cy="76" r="10" fill-opacity=".14"></circle>
-        <circle cx="50" cy="65" r="4"></circle>
-        <circle cx="70" cy="65" r="4"></circle>
-        <ellipse cx="60" cy="75" rx="4.5" ry="3.5" fill-opacity=".7"></ellipse>
-      </g>
-      <path d="M60 79v3M55 85c3 2 7 2 10 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".5" fill="none"></path>
-    </symbol>
-    <g id="goods-icons"></g>
-    <symbol id="ic-food" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"></path><path d="M6 8 8 4h8l2 4"></path><path d="M10.5 13.5h3"></path></g></symbol>
-    <symbol id="ic-wet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M4 10h16M9 7V5h6v2"></path></g></symbol>
-    <symbol id="ic-drops" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 3h4v5l3 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2l3-11z"></path><path d="M10 8h4"></path></g></symbol>
-    <symbol id="ic-pill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-30 12 12)"></rect><path d="M9 7.5 15 16"></path></g></symbol>
-    <symbol id="ic-collar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="11" r="7"></circle><path d="M12 18v3"></path><circle cx="12" cy="21.5" r="1.2"></circle></g></symbol>
-    <symbol id="ic-vitamins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 9h10l-1 11H8z"></path><path d="M9 9V6h6v3M10 14h4"></path></g></symbol>
-    <symbol id="ic-shampoo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 9h8v11H8z"></path><path d="M10 9V6h4v3M9 13h6"></path><path d="M16 5h2v2"></path></g></symbol>
-    <symbol id="ic-litter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 8h16l-2 12H6z"></path><path d="M8 12h.01M12 14h.01M16 12h.01M10 17h.01M14 17h.01"></path></g></symbol>
-    <symbol id="ic-carrier" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"></rect><path d="M9 8V6a3 3 0 0 1 6 0v2M14 11v5M17 11v5"></path></g></symbol>
-    <symbol id="ic-toy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"></circle><path d="M4.5 9.5c5 1 10 1 15 0M12 4c-2.5 4-2.5 12 0 16"></path></g></symbol>
-    <symbol id="ic-star" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.7 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.5l-3.8 2 .7-4.3-3.1-3 4.3-.6z"></path></symbol>
-  </defs>
-</svg>
-
-<header class="top">
-  <div class="shell top-in">
-    <a class="brand" href="#top">
-      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true" fill="none">
-        <circle cx="20" cy="20" r="19" stroke="var(--accent)" stroke-width="1.5"></circle>
-        <path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="var(--accent)" stroke-width="1.5"></path>
-        <circle cx="17" cy="21" r="1.4" fill="var(--accent)"></circle>
-        <circle cx="23" cy="21" r="1.4" fill="var(--accent)"></circle>
-        <path d="M20 24.5v1.8M17.6 27.4c1.4 1 3.4 1 4.8 0" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"></path>
-      </svg>
-      <span>
-        <span class="brand-name">Симба</span>
-        <span class="brand-sub">ветеринарный кабинет</span>
-      </span>
-    </a>
-    <nav class="nav" aria-label="Разделы">
-      <a href="#services">Услуги</a>
-      <a href="#visit">Приём</a>
-      <a href="#plan">Прививки</a>
-      <a href="#prices">Цены и товары</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#contacts">Контакты</a>
-    </nav>
-    <a class="top-phone" href="tel:+79258711713">+7 925 871-17-13</a>
-    <a class="btn btn-primary" href="#book">Записаться</a>
-  </div>
-</header>
-
-<main id="top">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div>
-        <p class="eyebrow">Королёв · ул. Дзержинского, 8Б</p>
-        <h1>Клиника у дома, где вашего питомца <em>помнят по имени</em></h1>
-        <p class="hero-lede">Терапия, хирургия, УЗИ и анализы для кошек, собак, грызунов и птиц. Приём по записи — без очереди в коридоре и без спешки на осмотре.</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="#book">Записаться на приём</a>
-          <a class="btn btn-on-deep btn-lg" href="tel:+79258711713">Позвонить: +7 925 871-17-13</a>
-        </div>
-        <dl class="facts">
-          <div class="fact">
-            <dt>Часы приёма</dt>
-            <dd>Пн–Пт 10:00–20:00<br>Сб–Вс 10:00–19:00</dd>
-          </div>
-          <div class="fact">
-            <dt>Адрес</dt>
-            <dd>Королёв, Московская обл.<br>ул. Дзержинского, 8Б</dd>
-          </div>
-          <div class="fact">
-            <dt>Экстренный случай</dt>
-            <dd>Принимаем вне очереди — предупредите по телефону, что едете</dd>
-          </div>
-        </dl>
-      </div>
-
-      <aside class="slotcard" aria-labelledby="slots-title">
-        <div class="slotcard-head">
-          <strong id="slots-title">Свободное время</strong>
-          <span id="slots-date">сегодня</span>
-        </div>
-        <div class="slots" id="slots" role="group" aria-label="Свободные слоты на сегодня">
-          <button type="button" class="slot" disabled>10:00</button>
-          <button type="button" class="slot" disabled>10:30</button>
-          <button type="button" class="slot" data-time="11:00" aria-pressed="false">11:00</button>
-          <button type="button" class="slot" disabled>12:00</button>
-          <button type="button" class="slot" data-time="13:30" aria-pressed="false">13:30</button>
-          <button type="button" class="slot" data-time="14:00" aria-pressed="false">14:00</button>
-          <button type="button" class="slot" disabled>16:00</button>
-          <button type="button" class="slot" data-time="17:30" aria-pressed="false">17:30</button>
-          <button type="button" class="slot" data-time="19:00" aria-pressed="false">19:00</button>
-        </div>
-        <p class="slotcard-foot">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor"></circle><path d="M8 4.5V8l2.5 1.5" stroke="currentColor" stroke-linecap="round"></path></svg>
-          <span>Выберите время — оно подставится в форму записи. На осмотр закладываем 20–30 минут.</span>
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <section id="services">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Услуги</p>
-          <h2>Что делаем в кабинете</h2>
-        </div>
-        <p class="lede">Диагностику и большинство манипуляций проводим на месте — не отправляем вас с анализами в другой конец города.</p>
-      </div>
-      <div class="grid-lines">
-        <article class="cell cell--wide">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13h4l2-5 3 9 2-4h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <h3>Приём терапевта</h3>
-          <p>Осмотр, термометрия, сбор анамнеза, план обследования и лечения. Расписываем схему в ветпаспорт и объясняем, что делать дома. Повторный приём по этому же случаю — со скидкой.</p>
-          <p class="cell-meta">20–30 минут · по записи</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4h6M12 4v5m-4.5 3.5 9-9M6 15l3-3m6 6 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"></rect></svg>
-          <h3>Вакцинация</h3>
-          <p>Комплексные вакцины для кошек и собак, бешенство, ревакцинация. Перед прививкой — осмотр и проверка обработки от гельминтов.</p>
-          <p class="cell-meta">Отметка в ветпаспорте</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"></circle></svg>
-          <h3>Хирургия</h3>
-          <p>Кастрация и стерилизация, удаление новообразований, обработка ран и абсцессов. Контроль состояния во время наркоза и осмотр после.</p>
-          <p class="cell-meta">Швы снимаем бесплатно</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16c2-6 5-9 8-9s6 2 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="16" r="3" stroke="currentColor" stroke-width="1.6"></circle></svg>
-          <h3>УЗИ и диагностика</h3>
-          <p>УЗИ брюшной полости, диагностика беременности, оценка состояния почек, печени, мочевого пузыря. Результат — сразу на приёме.</p>
-          <p class="cell-meta">Без предварительной стрижки — по возможности</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="3" width="5" height="18" rx="2.5" stroke="currentColor" stroke-width="1.6"></rect><path d="M13 8h6M13 12h6M13 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
-          <h3>Лаборатория</h3>
-          <p>Общий клинический и биохимический анализ крови, анализ мочи, соскобы и цитология. Экспресс-тесты — в день обращения.</p>
-          <p class="cell-meta">Экспресс — от 30 минут</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14v12H5z" stroke="currentColor" stroke-width="1.6"></path><path d="M8 7V5h8v2M9 12h6M9 15.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
-          <h3>Чипирование и документы</h3>
-          <p>Микрочип стандарта ISO с регистрацией в базе, международный ветпаспорт, справки для перевозки и выставок.</p>
-          <p class="cell-meta">Для поездок — планируйте заранее</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5c3 0 5 2 5 5 0 4-1 9-3 9-1 0-1.3-2-2-2s-1 2-2 2c-2 0-3-5-3-9 0-3 2-5 5-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg>
-          <h3>Стоматология</h3>
-          <p>Осмотр пасти, ультразвуковая чистка зубного камня, удаление разрушенных зубов. Частая причина «плохого запаха» и отказа от еды.</p>
-          <p class="cell-meta">Кошкам и собакам</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12s3.5-5.5 9-5.5S21 12 21 12s-3.5 5.5-9 5.5S3 12 3 12Z" stroke="currentColor" stroke-width="1.6"></path><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"></circle></svg>
-          <h3>Офтальмология</h3>
-          <p>Приём профильного врача: конъюнктивиты, травмы роговицы, заворот век, слезотечение у брахицефалов.</p>
-          <p class="cell-meta">По записи в отдельные дни</p>
-        </article>
-        <article class="cell">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.6"></rect><path d="M9 7V5a3 3 0 0 1 6 0v2M12 11v5M9.5 13.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
-          <h3>Ветаптека и корма</h3>
-          <p>Назначенные препараты и лечебные диеты — сразу на месте, в нужной дозировке. Не нужно искать по городу то, что выписал врач.</p>
-          <p class="cell-meta">Дозировку рассчитываем по весу</p>
-        </article>
-        <article class="cell cell--wide">
-          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg>
-          <h3>Вызов врача на дом</h3>
-          <p>Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому.</p>
-          <p class="cell-meta">Королёв и ближайшие районы</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="visit" style="background:var(--bg-elev); border-block:1px solid var(--line)">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Как проходит приём</p>
-          <h2>Четыре шага — от звонка до контроля</h2>
-        </div>
-      </div>
-      <div class="steps">
-        <article class="step">
-          <span class="step-n">Шаг 01</span>
-          <h3>Записываетесь</h3>
-          <p>По телефону или через форму на сайте. Скажите вид, возраст питомца и что беспокоит — подберём время и врача.</p>
-        </article>
-        <article class="step">
-          <span class="step-n">Шаг 02</span>
-          <h3>Приезжаете к своему времени</h3>
-          <p>Возьмите ветпаспорт и переноску. Кошек в холле не выпускаем — так спокойнее и вашему питомцу, и соседям по очереди.</p>
-        </article>
-        <article class="step">
-          <span class="step-n">Шаг 03</span>
-          <h3>Осмотр и диагностика</h3>
-          <p>Осмотр, термометрия, при необходимости — УЗИ и анализы прямо на приёме. Всё объясняем словами, а не терминами.</p>
-        </article>
-        <article class="step">
-          <span class="step-n">Шаг 04</span>
-          <h3>Назначения и контроль</h3>
-          <p>Схема лечения письменно, препараты — в ветаптеке на месте. Напомним о ревакцинации и контрольном визите.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="plan">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Календарь профилактики</p>
-          <h2>Что нужно питомцу в его возрасте</h2>
-        </div>
-        <p class="lede">Выберите, кто у вас живёт, и возраст — покажем, что по плану и о чём стоит спросить врача на приёме.</p>
-      </div>
-      <div class="plan">
-        <div class="plan-controls">
-          <div class="field">
-            <span id="pet-label" class="field-label" style="font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted)">Питомец</span>
-            <div class="seg" id="pet-seg" role="group" aria-labelledby="pet-label">
-              <button type="button" data-pet="dog" aria-pressed="true">Собака</button>
-              <button type="button" data-pet="cat" aria-pressed="false">Кошка</button>
-              <button type="button" data-pet="exotic" aria-pressed="false">Грызун или птица</button>
-            </div>
-          </div>
-          <div class="field">
-            <label for="age">Возраст, месяцев</label>
-            <input type="number" id="age" name="age" min="1" max="240" value="3" inputmode="numeric">
-          </div>
-          <p class="plan-empty">Ориентир для планирования. Точные сроки и препараты врач подбирает на осмотре.</p>
-        </div>
-        <div class="plan-out">
-          <ul class="plan-list" id="plan-list"></ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="prices" style="background:var(--bg-elev); border-block:1px solid var(--line)">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Цены</p>
-          <h2>Услуги и товары — с ценами, без «уточняйте по телефону»</h2>
-        </div>
-        <span class="tag">Цифры для примера · подставим ваш прайс</span>
-      </div>
-
-      <div class="tabs" role="tablist" aria-label="Прайс">
-        <button type="button" class="tab" role="tab" id="tab-services" aria-controls="panel-services" aria-selected="true">Услуги</button>
-        <button type="button" class="tab" role="tab" id="tab-goods" aria-controls="panel-goods" aria-selected="false">Ветаптека и зоотовары</button>
-      </div>
-
-      <div class="panel" id="panel-services" role="tabpanel" aria-labelledby="tab-services" tabindex="0">
-        <div class="pricelist">
-        <div class="price-group">
-          <h3>Приём</h3>
-          <div class="price-item">
-            <span class="pi-name">Первичный приём терапевта<span class="pi-hit">часто</span></span>
-            <span class="pi-sum">900 ₽</span>
-            <span class="pi-desc">Осмотр, термометрия, план обследования, назначения в ветпаспорт.</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Повторный приём по тому же случаю</span>
-            <span class="pi-sum">600 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Приём офтальмолога</span>
-            <span class="pi-sum">1 500 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Консультация по анализам без питомца</span>
-            <span class="pi-sum">500 ₽</span>
-          </div>
-        </div>
-        <div class="price-group">
-          <h3>Профилактика</h3>
-          <div class="price-item">
-            <span class="pi-name">Вакцинация комплексная, с вакциной<span class="pi-hit">часто</span></span>
-            <span class="pi-sum">2 300 ₽</span>
-            <span class="pi-desc">Осмотр перед прививкой и отметка в паспорте — уже в стоимости.</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Вакцинация от бешенства</span>
-            <span class="pi-sum">1 200 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Чипирование с регистрацией в базе</span>
-            <span class="pi-sum">1 800 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Обработка от блох, клещей и гельминтов</span>
-            <span class="pi-sum">от 400 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Международный ветпаспорт</span>
-            <span class="pi-sum">400 ₽</span>
-          </div>
-        </div>
-        <div class="price-group">
-          <h3>Диагностика</h3>
-          <div class="price-item">
-            <span class="pi-name">УЗИ брюшной полости<span class="pi-hit">часто</span></span>
-            <span class="pi-sum">1 800 ₽</span>
-            <span class="pi-desc">Результат разбираем сразу на приёме, без ожидания заключения.</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Общий клинический анализ крови</span>
-            <span class="pi-sum">900 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Биохимия крови, 12 показателей</span>
-            <span class="pi-sum">2 200 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Анализ мочи</span>
-            <span class="pi-sum">700 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Соскоб, цитология</span>
-            <span class="pi-sum">800 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Экспресс-тест на инфекции</span>
-            <span class="pi-sum">1 400 ₽</span>
-          </div>
-        </div>
-        <div class="price-group">
-          <h3>Хирургия и стационар</h3>
-          <div class="price-item">
-            <span class="pi-name">Кастрация кота</span>
-            <span class="pi-sum">2 500 ₽</span>
-            <span class="pi-desc">Швы снимаем бесплатно, послеоперационный осмотр — тоже.</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Стерилизация кошки</span>
-            <span class="pi-sum">5 000 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Кастрация кобеля</span>
-            <span class="pi-sum">от 4 500 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Стерилизация суки</span>
-            <span class="pi-sum">от 8 000 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Удаление новообразования</span>
-            <span class="pi-sum">от 3 000 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Ультразвуковая чистка зубов</span>
-            <span class="pi-sum">3 500 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Стационар, сутки</span>
-            <span class="pi-sum">1 500 ₽</span>
-          </div>
-        </div>
-        <div class="price-group">
-          <h3>На дому</h3>
-          <div class="price-item">
-            <span class="pi-name">Вызов врача в Королёве</span>
-            <span class="pi-sum">2 000 ₽</span>
-            <span class="pi-desc">Осмотр, забор анализов, капельница или вакцинация на дому.</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Выезд в соседние города</span>
-            <span class="pi-sum">от 3 000 ₽</span>
-          </div>
-          <div class="price-item">
-            <span class="pi-name">Капельница на дому</span>
-            <span class="pi-sum">800 ₽</span>
-          </div>
-        </div>
-        <div class="price-callout">
-          <h3>Не нашли нужную услугу?</h3>
-          <p>Позвоните — назовём цену сразу и честно скажем, нужен ли вообще визит: часть вопросов решается консультацией по телефону.</p>
-          <a class="btn btn-ghost" href="tel:+79258711713">+7 925 871-17-13</a>
-        </div>
-        </div>
-        <p class="price-note">Лекарства, расходники и вакцина в цену приёма не входят, если это не указано отдельно. Итоговую сумму называем до начала лечения.</p>
-      </div>
-
-      <div class="panel" id="panel-goods" role="tabpanel" aria-labelledby="tab-goods" tabindex="0" hidden>
-        <div class="goods">
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-food"></use></svg></span>
-            <h4>Лечебный корм</h4>
-            <p class="g-sub">Сухой, 2 кг · почки, ЖКТ, мочекаменная</p>
-            <p class="g-price">1 490 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-wet"></use></svg></span>
-            <h4>Влажный корм</h4>
-            <p class="g-sub">Пауч 85 г · котятам и взрослым</p>
-            <p class="g-price">90 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-drops"></use></svg></span>
-            <h4>Капли от блох и клещей</h4>
-            <p class="g-sub">Пипетка, подбираем по весу</p>
-            <p class="g-price">590 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-pill"></use></svg></span>
-            <h4>Таблетки от гельминтов</h4>
-            <p class="g-sub">Дозировка на 10 кг веса</p>
-            <p class="g-price">250 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-collar"></use></svg></span>
-            <h4>Ошейник от паразитов</h4>
-            <p class="g-sub">До 8 месяцев защиты</p>
-            <p class="g-price">1 290 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-vitamins"></use></svg></span>
-            <h4>Витамины и добавки</h4>
-            <p class="g-sub">Шерсть, суставы, иммунитет</p>
-            <p class="g-price">690 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-shampoo"></use></svg></span>
-            <h4>Лечебный шампунь</h4>
-            <p class="g-sub">250 мл · при дерматитах</p>
-            <p class="g-price">540 ₽</p>
-          </article>
-          <article class="good">
-            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-litter"></use></svg></span>
-            <h4>Наполнитель</h4>
-            <p class="g-sub">Комкующийся, 5 л</p>
-            <p class="g-price">450 ₽</p>
-          </article>
-        </div>
-        <p class="goods-note">Ассортимент подбираем под назначения врача: корм и препарат можно забрать сразу после приёма, не разыскивая их по городу. Наличие уточняйте по телефону — <a href="tel:+79258711713" style="color:var(--accent)">+7 925 871-17-13</a>.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="team">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Команда</p>
-          <h2>Кто ведёт приём</h2>
-        </div>
-        <span class="tag">Имена и фото — заглушки</span>
-      </div>
-      <div class="people">
-        <article class="person">
-          <div class="mono-avatar" aria-hidden="true">ГВ</div>
-          <div>
-            <p class="role">Главный врач · терапевт</p>
-            <h3>Имя Фамилия</h3>
-            <p>Здесь будет пара строк: где учился, сколько лет в практике, чем занимается предметно. Такие подписи владельцы читают перед первым визитом чаще всего.</p>
-          </div>
-        </article>
-        <article class="person">
-          <div class="mono-avatar" aria-hidden="true">ХА</div>
-          <div>
-            <p class="role">Хирург · анестезиолог</p>
-            <h3>Имя Фамилия</h3>
-            <p>Плановая и экстренная хирургия, ведение наркоза, послеоперационный контроль. Фото в халате на однотонном фоне — снимем или возьмём ваши.</p>
-          </div>
-        </article>
-        <article class="person">
-          <div class="mono-avatar" aria-hidden="true">ОФ</div>
-          <div>
-            <p class="role">Врач-офтальмолог</p>
-            <h3>Имя Фамилия</h3>
-            <p>Приём по записи в отдельные дни. Для профильных специалистов имеет смысл сделать отдельную страницу — по ним приезжают из соседних городов.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="reviews" style="background:var(--bg-elev); border-block:1px solid var(--line)">
-    <div class="shell">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Отзывы</p>
-          <h2>Что пишут владельцы</h2>
-        </div>
-        <span class="tag">Тексты и оценки — образцы · подключим Яндекс Карты</span>
-      </div>
-
-      <div class="rev-grid">
-        <aside class="rating-box">
-          <div class="rating-head">
-            <span class="rating-num">4,8</span>
-            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
-          </div>
-          <p class="rating-count">Оценка и отзывы подтягиваются с карточки клиники — обновляются сами, без ручной правки сайта.</p>
-          <div class="bars">
-          <div class="bar"><span>5</span><span class="bar-track"><span class="bar-fill" style="width:78%"></span></span><span>78%</span></div>
-          <div class="bar"><span>4</span><span class="bar-track"><span class="bar-fill" style="width:14%"></span></span><span>14%</span></div>
-          <div class="bar"><span>3</span><span class="bar-track"><span class="bar-fill" style="width:4%"></span></span><span>4%</span></div>
-          <div class="bar"><span>2</span><span class="bar-track"><span class="bar-fill" style="width:2%"></span></span><span>2%</span></div>
-          <div class="bar"><span>1</span><span class="bar-track"><span class="bar-fill" style="width:2%"></span></span><span>2%</span></div>
-          </div>
-          <a class="btn btn-ghost" href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Открыть на Яндекс Картах</a>
-        </aside>
-
-        <div>
-          <div class="reviews">
-          <article class="review">
-            <div class="review-top">
-              <span class="pet-photo"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg></span>
-              <span class="review-who">
-                <strong>Анна</strong>
-                <span>хозяйка кота Рыжика</span>
-              </span>
-            </div>
-            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
-            <p>Пришли с отказом от еды, боялась, что придётся ехать в Москву. Сделали УЗИ и анализы на месте, за один приём стало понятно, что происходит. Объяснили нормальным языком, без запугивания.</p>
-            <footer><span>Яндекс Карты · образец</span><span>12 августа</span></footer>
-          </article>
-          <article class="review">
-            <div class="review-top">
-              <span class="pet-photo jade"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-dog"></use></svg></span>
-              <span class="review-who">
-                <strong>Дмитрий</strong>
-                <span>хозяин спаниеля Тоши</span>
-              </span>
-            </div>
-            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
-            <p>Стерилизация прошла спокойно, звонили на следующий день сами — спросить, как он ест и как шов. Швы сняли бесплатно, как и говорили.</p>
-            <footer><span>Яндекс Карты · образец</span><span>3 августа</span></footer>
-          </article>
-          <article class="review">
-            <div class="review-top">
-              <span class="pet-photo jade"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-rabbit"></use></svg></span>
-              <span class="review-who">
-                <strong>Ольга</strong>
-                <span>хозяйка кролика Персика</span>
-              </span>
-            </div>
-            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg class="off"><use href="#ic-star"></use></svg></span>
-            <p>С кроликом мало где берутся помогать, здесь взялись. Осмотрели зубы, поправили рацион. Единственное — по времени ждали минут пятнадцать сверх записи.</p>
-            <footer><span>Яндекс Карты · образец</span><span>27 июля</span></footer>
-          </article>
-          <article class="review">
-            <div class="review-top">
-              <span class="pet-photo"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-parrot"></use></svg></span>
-              <span class="review-who">
-                <strong>Марина</strong>
-                <span>хозяйка попугая Кеши</span>
-              </span>
-            </div>
-            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
-            <p>Ходим уже третий год: прививки, обработка, корм — всё в одном месте. Напоминают о ревакцинации сами, что очень выручает.</p>
-            <footer><span>Яндекс Карты · образец</span><span>19 июля</span></footer>
-          </article>
-          </div>
-          <div class="gallery">
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg><figcaption>кот</figcaption></figure>
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-dog"></use></svg><figcaption>собака</figcaption></figure>
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-rabbit"></use></svg><figcaption>кролик</figcaption></figure>
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-parrot"></use></svg><figcaption>попугай</figcaption></figure>
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-hamster"></use></svg><figcaption>хомяк</figcaption></figure>
-          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg><figcaption>кошка</figcaption></figure>
-          </div>
-          <p class="goods-note">Вместо иллюстраций здесь встанут настоящие фото пациентов и кабинета — достаточно 8–10 снимков с телефона.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="book" class="book">
-    <div class="shell book-grid">
-      <div>
-        <p class="eyebrow">Запись</p>
-        <h2>Записаться на приём</h2>
-        <p class="form-note" style="margin-top:.75rem">Заполните форму — в рабочей версии заявка уходит администратору в мессенджер и в CRM, а вам приходит подтверждение. В демо ничего никуда не отправляется.</p>
-        <form class="booking" id="booking" novalidate>
-          <div class="form-row">
-            <div class="field">
-              <label for="name">Ваше имя</label>
-              <input type="text" id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться">
-            </div>
-            <div class="field">
-              <label for="phone">Телефон</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label for="pet">Питомец</label>
-              <select id="pet" name="pet">
-                <option>Кошка</option>
-                <option>Собака</option>
-                <option>Грызун</option>
-                <option>Птица</option>
-                <option>Другой</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="service">Услуга</label>
-              <select id="service" name="service">
-                <option>Приём терапевта</option>
-                <option>Вакцинация</option>
-                <option>УЗИ или анализы</option>
-                <option>Хирургия — консультация</option>
-                <option>Стоматология</option>
-                <option>Офтальмолог</option>
-                <option>Вызов на дом</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label for="date">Дата</label>
-              <input type="date" id="date" name="date">
-            </div>
-            <div class="field">
-              <label for="time">Время</label>
-              <input type="text" id="time" name="time" placeholder="выберите слот выше" readonly>
-            </div>
-          </div>
-          <div class="field">
-            <label for="comment">Что беспокоит</label>
-            <textarea id="comment" name="comment" placeholder="Например: вялый второй день, отказывается от корма, третий год, не вакцинирован"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg" style="align-self:flex-start">Отправить заявку</button>
-          <div class="receipt" id="receipt" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-
-      <div class="contacts" id="contacts">
-        <svg class="map" viewBox="0 0 420 260" role="img" aria-label="Схема расположения: ул. Дзержинского, 8Б">
-          <rect width="420" height="260" fill="#152F31"></rect>
-          <g stroke="#24444A" stroke-width="14">
-            <path d="M-10 92h440"></path><path d="M-10 208h440"></path>
-            <path d="M118 -10v280"></path><path d="M312 -10v280"></path>
-          </g>
-          <g stroke="#1E3A3D" stroke-width="7">
-            <path d="M-10 150h440"></path><path d="M215 -10v280"></path>
-          </g>
-          <g fill="#1B3639">
-            <rect x="140" y="112" width="52" height="26" rx="2"></rect>
-            <rect x="236" y="108" width="58" height="32" rx="2"></rect>
-            <rect x="140" y="168" width="70" height="26" rx="2"></rect>
-            <rect x="330" y="112" width="60" height="30" rx="2"></rect>
-            <rect x="30" y="112" width="66" height="30" rx="2"></rect>
-          </g>
-          <text x="14" y="84" fill="#7E9C99" font-family="JetBrains Mono, monospace" font-size="11">ул. Дзержинского</text>
-          <text x="322" y="202" fill="#7E9C99" font-family="JetBrains Mono, monospace" font-size="11">двор</text>
-          <g transform="translate(215 150)">
-            <circle r="26" fill="#E09B26" opacity=".16"></circle>
-            <path d="M0-18a11 11 0 0 1 11 11c0 8-11 19-11 19S-11 1-11-7A11 11 0 0 1 0-18Z" fill="#E09B26"></path>
-            <circle cy="-7" r="4" fill="#152F31"></circle>
-          </g>
-          <text x="215" y="196" fill="#E6EDE7" font-family="Bitter, Georgia, serif" font-size="13" text-anchor="middle">Симба · 8Б</text>
-          <text x="14" y="248" fill="#5F807E" font-family="JetBrains Mono, monospace" font-size="10">схема — демо · в рабочей версии здесь интерактивная карта</text>
-        </svg>
-        <dl class="contact-row">
-          <dt>Телефон и мессенджеры</dt>
-          <dd><a href="tel:+79258711713">+7 925 871-17-13</a> — звонок, WhatsApp, Telegram</dd>
-        </dl>
-        <dl class="contact-row">
-          <dt>Адрес</dt>
-          <dd>Московская область, Королёв,<br>ул. Дзержинского, 8Б</dd>
-        </dl>
-        <dl class="contact-row">
-          <dt>Часы работы</dt>
-          <dd>Пн–Пт 10:00–20:00 · Сб–Вс 10:00–19:00<br><span style="color:var(--deep-fg-muted)">Без перерыва на обед</span></dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="foot">
-  <div class="shell foot-in">
-    <div>
-      <p><strong>Симба</strong> — ветеринарный кабинет в Королёве</p>
-      <p>ул. Дзержинского, 8Б · +7 925 871-17-13</p>
-    </div>
-    <p class="disclaimer">
-      Это демонстрационный макет, сделанный для показа клинике. Не является официальным сайтом «Симбы».
-      Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — заглушки.
-    </p>
-  </div>
-</footer>
 
 <script>
 (function () {
   "use strict";
 
-  /* ---------- дата в карточке слотов и в форме ---------- */
-  var today = new Date();
-  var fmt = new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long" });
-  var slotsDate = document.getElementById("slots-date");
-  if (slotsDate) slotsDate.textContent = "сегодня, " + fmt.format(today);
+  /* ==========================================================================
+     ДАННЫЕ КЛИНИКИ — всё, что нужно заменить на настоящее, лежит здесь.
+     ========================================================================== */
+  var CONFIG = {
+    phone: "+7 925 871-17-13",
+    phoneHref: "tel:+79258711713",
+    siteUrl: "https://simbavet.ru",
 
-  var iso = function (d) {
-    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    /* Куда уходит заявка.
+       1) endpoint — предпочтительный путь: ваш обработчик на сервере, который
+          сам дергает Telegram Bot API. Токен бота при этом не виден в браузере.
+       2) telegram — быстрый путь без сервера: токен бота лежит в коде страницы,
+          то есть доступен любому посетителю. Годится для теста, не для боевого сайта.
+       3) если оба поля пустые — страница покажет заявку и предложит открыть
+          Telegram вручную (так работает эта демо-версия). */
+    endpoint: "",
+    telegram: { botToken: "", chatId: "" },
+    adminTelegram: "",           /* @username администратора для ручной отправки */
+
+    /* Карта: oid — идентификатор организации в Яндекс Картах */
+    mapOid: "1116151732",
+    mapLink: "https://yandex.ru/maps/-/CThG6YLT",
+
+    hours: { weekday: [10, 20], weekend: [10, 19] }
   };
-  var dateInput = document.getElementById("date");
-  if (dateInput) {
-    dateInput.min = iso(today);
-    dateInput.value = iso(today);
-  }
 
-  /* ---------- выбор свободного времени ---------- */
-  var timeInput = document.getElementById("time");
-  var slots = document.getElementById("slots");
-  if (slots) {
-    slots.addEventListener("click", function (e) {
-      var btn = e.target.closest(".slot");
-      if (!btn || btn.disabled) return;
-      slots.querySelectorAll(".slot[data-time]").forEach(function (s) {
-        s.setAttribute("aria-pressed", String(s === btn));
-      });
-      if (timeInput) timeInput.value = btn.dataset.time;
-      if (dateInput) dateInput.value = iso(today);
-      document.getElementById("book").scrollIntoView({ behavior: "smooth", block: "start" });
+  var SERVICES = [
+    { t: "Приём терапевта", d: "Осмотр, термометрия, сбор анамнеза. Составляем план обследования и лечения, расписываем схему в ветпаспорт и объясняем, что делать дома. Повторный приём по тому же случаю — дешевле.", m: "20–30 минут · по записи" },
+    { t: "Вакцинация", d: "Комплексные вакцины для кошек и собак, бешенство, ревакцинация. Перед прививкой обязательно осматриваем питомца и проверяем, была ли обработка от гельминтов.", m: "Отметка в ветпаспорте · напомним о ревакцинации" },
+    { t: "Хирургия", d: "Кастрация и стерилизация, удаление новообразований, обработка ран и абсцессов. Контролируем состояние во время наркоза, после операции осматриваем и снимаем швы.", m: "Снятие швов — бесплатно" },
+    { t: "УЗИ и диагностика", d: "УЗИ брюшной полости, диагностика беременности, оценка состояния почек, печени и мочевого пузыря. Результат разбираем сразу на приёме, без ожидания заключения.", m: "Результат в день обращения" },
+    { t: "Лаборатория", d: "Общий клинический и биохимический анализ крови, анализ мочи, соскобы и цитология, экспресс-тесты на инфекции. Сдать анализы можно на том же приёме.", m: "Экспресс — от 30 минут" },
+    { t: "Стоматология", d: "Осмотр пасти, ультразвуковая чистка зубного камня, удаление разрушенных зубов. Запах из пасти и отказ от твёрдого корма — почти всегда про зубы.", m: "Кошкам и собакам" },
+    { t: "Офтальмология", d: "Приём профильного врача: конъюнктивиты, травмы роговицы, заворот век, слезотечение у брахицефалов. Приём в отдельные дни по записи.", m: "По записи" },
+    { t: "Чипирование и документы", d: "Микрочип стандарта ISO с регистрацией в базе, международный ветпаспорт, справки для перевозки и выставок. Для поездки за границу документы готовим заранее.", m: "Планируйте за месяц до поездки" },
+    { t: "Вызов врача на дом", d: "Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому. Королёв и ближайшие города.", m: "Королёв и Подмосковье" },
+    { t: "Ветаптека и зоотовары", d: "Назначенные препараты, лечебные корма, антипаразитарные средства и наполнители — на месте. Дозировку рассчитываем по весу питомца.", m: "Забрать сразу после приёма" }
+  ];
+
+  var DOCTORS = [
+    { name: "Имя Фамилия", role: "Главный врач · терапевт", photo: "" },
+    { name: "Имя Фамилия", role: "Хирург · анестезиолог", photo: "" },
+    { name: "Имя Фамилия", role: "Врач УЗ-диагностики", photo: "" },
+    { name: "Имя Фамилия", role: "Врач-офтальмолог", photo: "" }
+  ];
+
+  /* sp: для кого услуга — cat, dog, exotic. Пустой массив = для всех. */
+  var PRICES = [
+    { g: "Приём", items: [
+      { n: "Первичный приём терапевта", v: "900 ₽", d: "Осмотр, термометрия, план обследования и назначения.", sp: [] },
+      { n: "Повторный приём по тому же случаю", v: "600 ₽", sp: [] },
+      { n: "Приём офтальмолога", v: "1 500 ₽", sp: ["cat", "dog"] },
+      { n: "Приём врача по экзотическим животным", v: "1 200 ₽", sp: ["exotic"] },
+      { n: "Консультация по анализам без питомца", v: "500 ₽", sp: [] }
+    ]},
+    { g: "Профилактика", items: [
+      { n: "Вакцинация кошки, комплексная с вакциной", v: "2 300 ₽", d: "Панлейкопения, калицивироз, ринотрахеит.", sp: ["cat"] },
+      { n: "Вакцинация собаки, комплексная с вакциной", v: "2 500 ₽", d: "Чума, парвовирусный энтерит, аденовироз, парагрипп, лептоспироз.", sp: ["dog"] },
+      { n: "Вакцинация кролика (миксоматоз, ВГБК)", v: "1 600 ₽", sp: ["exotic"] },
+      { n: "Вакцинация от бешенства", v: "1 200 ₽", sp: ["cat", "dog"] },
+      { n: "Чипирование с регистрацией в базе", v: "1 800 ₽", sp: [] },
+      { n: "Обработка от блох, клещей и гельминтов", v: "от 400 ₽", sp: [] },
+      { n: "Международный ветпаспорт", v: "400 ₽", sp: [] }
+    ]},
+    { g: "Диагностика", items: [
+      { n: "УЗИ брюшной полости", v: "1 800 ₽", d: "Результат разбираем сразу на приёме.", sp: ["cat", "dog"] },
+      { n: "Общий клинический анализ крови", v: "900 ₽", sp: [] },
+      { n: "Биохимия крови, 12 показателей", v: "2 200 ₽", sp: [] },
+      { n: "Анализ мочи", v: "700 ₽", sp: [] },
+      { n: "Соскоб, цитология", v: "800 ₽", sp: [] },
+      { n: "Экспресс-тест на инфекции", v: "1 400 ₽", sp: ["cat", "dog"] },
+      { n: "Осмотр и подрезание зубов, когтей, клюва", v: "от 600 ₽", sp: ["exotic"] }
+    ]},
+    { g: "Хирургия и стационар", items: [
+      { n: "Кастрация кота", v: "2 500 ₽", sp: ["cat"] },
+      { n: "Стерилизация кошки", v: "5 000 ₽", d: "Швы снимаем бесплатно, послеоперационный осмотр тоже.", sp: ["cat"] },
+      { n: "Кастрация кобеля", v: "от 4 500 ₽", sp: ["dog"] },
+      { n: "Стерилизация суки", v: "от 8 000 ₽", d: "Цена зависит от веса собаки.", sp: ["dog"] },
+      { n: "Кастрация кролика или грызуна", v: "от 3 500 ₽", sp: ["exotic"] },
+      { n: "Удаление новообразования", v: "от 3 000 ₽", sp: [] },
+      { n: "Ультразвуковая чистка зубов", v: "3 500 ₽", sp: ["cat", "dog"] },
+      { n: "Стационар, сутки", v: "1 500 ₽", sp: [] }
+    ]},
+    { g: "На дому", items: [
+      { n: "Вызов врача в Королёве", v: "2 000 ₽", d: "Осмотр, забор анализов, капельница или вакцинация на дому.", sp: [] },
+      { n: "Выезд в соседние города", v: "от 3 000 ₽", sp: [] },
+      { n: "Капельница на дому", v: "800 ₽", sp: [] }
+    ]}
+  ];
+
+  var GOODS = [
+    { ic: "i-food", n: "Лечебный корм", s: "Сухой, 2 кг · почки, ЖКТ, мочекаменная", v: "1 490 ₽" },
+    { ic: "i-wet", n: "Влажный корм", s: "Пауч 85 г · котятам и взрослым", v: "90 ₽" },
+    { ic: "i-drops", n: "Капли от блох и клещей", s: "Пипетка, подбираем по весу", v: "590 ₽" },
+    { ic: "i-pill", n: "Таблетки от гельминтов", s: "Дозировка на 10 кг веса", v: "250 ₽" },
+    { ic: "i-collar", n: "Ошейник от паразитов", s: "До 8 месяцев защиты", v: "1 290 ₽" },
+    { ic: "i-vit", n: "Витамины и добавки", s: "Шерсть, суставы, иммунитет", v: "690 ₽" },
+    { ic: "i-shampoo", n: "Лечебный шампунь", s: "250 мл · при дерматитах", v: "540 ₽" },
+    { ic: "i-litter", n: "Наполнитель", s: "Комкующийся, 5 л", v: "450 ₽" }
+  ];
+
+  var REVIEWS = [
+    { pet: "p-cat", who: "Анна", sub: "хозяйка кота Рыжика", r: 5, date: "12 августа",
+      text: "Пришли с отказом от еды, боялась, что придётся ехать в Москву. УЗИ и анализы сделали на месте, за один приём стало понятно, что происходит. Объяснили нормальным языком, без запугивания." },
+    { pet: "p-dog", who: "Дмитрий", sub: "хозяин спаниеля Тоши", r: 5, date: "3 августа",
+      text: "Стерилизация прошла спокойно, на следующий день позвонили сами — спросить, как он ест и как шов. Швы сняли бесплатно, как и говорили на приёме." },
+    { pet: "p-rabbit", who: "Ольга", sub: "хозяйка кролика Персика", r: 4, date: "27 июля",
+      text: "С кроликами мало где берутся помогать, здесь взялись. Осмотрели зубы, поправили рацион, объяснили, чем кормить. Единственное — ждали минут пятнадцать сверх записи." }
+  ];
+
+  var PET_TYPES = [
+    { id: "dog", ic: "p-dog", label: "Собака" },
+    { id: "cat", ic: "p-cat", label: "Кошка" },
+    { id: "rodent", ic: "p-rodent", label: "Грызун" },
+    { id: "rabbit", ic: "p-rabbit", label: "Кролик" },
+    { id: "bird", ic: "p-bird", label: "Птица" },
+    { id: "other", ic: "p-paw", label: "Другой" }
+  ];
+
+  /* ========================================================================== */
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var starsHtml = function (n) {
+    var out = '';
+    for (var i = 0; i < 5; i++) out += '<svg' + (i < n ? '' : ' class="off"') + '><use href="#i-star"></use></svg>';
+    return out;
+  };
+
+  /* ---------- услуги: аккордеон ---------- */
+  $("acc").innerHTML = SERVICES.map(function (s, i) {
+    var n = String(i + 1).padStart(2, "0");
+    return '<div class="acc-item" data-open="' + (i === 0) + '">' +
+      '<button type="button" class="acc-head" aria-expanded="' + (i === 0) + '">' +
+        '<span class="acc-num">' + n + '</span>' +
+        '<span class="acc-title">' + esc(s.t) + '</span>' +
+        '<span class="acc-ic" aria-hidden="true"><svg width="14" height="14"><use href="#i-plus"></use></svg></span>' +
+      '</button>' +
+      '<div class="acc-body"><p>' + esc(s.d) + '</p><p class="acc-meta">' + esc(s.m) + '</p></div>' +
+    '</div>';
+  }).join("");
+
+  $("acc").addEventListener("click", function (e) {
+    var head = e.target.closest(".acc-head");
+    if (!head) return;
+    var item = head.parentNode;
+    var open = item.dataset.open !== "true";
+    Array.prototype.forEach.call(this.children, function (el) {
+      el.dataset.open = "false";
+      el.querySelector(".acc-head").setAttribute("aria-expanded", "false");
     });
-  }
+    item.dataset.open = String(open);
+    head.setAttribute("aria-expanded", String(open));
+  });
 
-  /* ---------- календарь профилактики ---------- */
-  var PLANS = {
-    dog: [
-      { to: 2,   when: "сейчас",           title: "Первый осмотр щенка",              text: "Взвешивание, осмотр, проверка на паразитов. Обсуждаем корм и карантин до прививок." },
-      { to: 2,   when: "за 10–14 дней",    title: "Дегельминтизация перед прививкой", text: "Обработка от глистов — обязательный шаг, иначе вакцина сработает хуже." },
-      { to: 3,   when: "8–9 недель",       title: "Первая комплексная вакцинация",    text: "Чума плотоядных, парвовирусный энтерит, аденовироз, парагрипп, лептоспироз." },
-      { to: 4,   when: "через 21–28 дней", title: "Ревакцинация и бешенство",         text: "После второй прививки — карантин ещё 10–14 дней, потом можно гулять спокойно." },
-      { to: 7,   when: "4–6 месяцев",      title: "Смена зубов",                      text: "Смотрим прикус и молочные клыки: если постоянный зуб растёт рядом с молочным, его удаляют." },
-      { to: 12,  when: "6–12 месяцев",     title: "Кастрация или стерилизация",       text: "Сроки зависят от породы и размера: крупным собакам операцию чаще откладывают." },
-      { to: 84,  when: "раз в год",        title: "Ежегодная ревакцинация",           text: "Комплексная вакцина плюс бешенство, с осмотром перед прививкой." },
-      { to: 999, when: "с 7 лет, ежегодно", title: "Диспансеризация",                 text: "Общий и биохимический анализ крови, УЗИ брюшной полости, оценка сердца и суставов." },
-      { to: 999, when: "март–ноябрь",      title: "Обработка от клещей — ежемесячно", text: "Пироплазмоз в Подмосковье — сезонная реальность, а не редкость." },
-      { to: 999, when: "раз в 3 месяца",   title: "Обработка от гельминтов",          text: "Чаще, если собака подбирает на улице или ест сырое мясо." }
-    ],
-    cat: [
-      { to: 2,   when: "сейчас",           title: "Первый осмотр котёнка",            text: "Осмотр, вес, проверка ушей и шерсти на паразитов, подбор корма." },
-      { to: 2,   when: "за 10–14 дней",    title: "Дегельминтизация перед прививкой", text: "Обработка от глистов до первой вакцинации." },
-      { to: 3,   when: "8–9 недель",       title: "Первая комплексная вакцинация",    text: "Панлейкопения, калицивироз, ринотрахеит." },
-      { to: 4,   when: "через 21–28 дней", title: "Ревакцинация и бешенство",         text: "Прививка от бешенства нужна даже домашним: без неё не выехать и не заселиться в передержку." },
-      { to: 10,  when: "6–8 месяцев",      title: "Кастрация или стерилизация",       text: "До первой течки у кошек — меньше риск опухолей молочных желёз в будущем." },
-      { to: 96,  when: "раз в год",        title: "Ежегодная ревакцинация",           text: "Комплексная вакцина и бешенство, с осмотром перед прививкой." },
-      { to: 999, when: "с 8 лет, ежегодно", title: "Гериатрический чек-ап",           text: "Почки, щитовидная железа, давление — три главные проблемы возрастных кошек." },
-      { to: 999, when: "раз в 3 месяца",   title: "Обработка от гельминтов",          text: "И от блох — их приносят на обуви даже в квартиру на высоком этаже." },
-      { to: 999, when: "по возрасту",      title: "Осмотр пасти",                     text: "Зубной камень и резорбтивные поражения у кошек находят чаще, чем замечают дома." }
-    ],
-    exotic: [
-      { to: 999, when: "при заселении",    title: "Осмотр и условия содержания",      text: "Температура, влажность, размер клетки и корм: у грызунов и птиц большая часть болезней начинается отсюда." },
-      { to: 999, when: "кроликам, с 1,5 мес", title: "Вакцинация от миксоматоза и ВГБК", text: "Ежегодная ревакцинация — даже если кролик никогда не выходит на улицу." },
-      { to: 999, when: "раз в 6–8 недель", title: "Осмотр зубов и когтей",            text: "У кроликов, шиншилл и морских свинок зубы растут всю жизнь; птицам подрезаем клюв и когти при необходимости." },
-      { to: 999, when: "раз в год",        title: "Профилактический приём",           text: "Вес, состояние помёта, дыхание, кожа и оперение. Мелкие питомцы скрывают болезнь до последнего." },
-      { to: 999, when: "при тревоге",      title: "Срочно к врачу",                   text: "Отказ от еды дольше 12 часов у грызуна или птицы — повод ехать в тот же день." }
-    ]
-  };
+  /* ---------- врачи ---------- */
+  $("docs").innerHTML = DOCTORS.map(function (d) {
+    var art = d.photo
+      ? '<img src="' + esc(d.photo) + '" alt="' + esc(d.name) + ', ' + esc(d.role) + '">'
+      : '<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-doc"></use></svg><span class="slot-tag">фото врача</span>';
+    return '<article class="doc"><div class="doc-photo">' + art + '</div>' +
+      '<h4>' + esc(d.name) + '</h4><p>' + esc(d.role) + '</p></article>';
+  }).join("");
 
-  var pet = "dog";
-  var petSeg = document.getElementById("pet-seg");
-  var ageInput = document.getElementById("age");
-  var planList = document.getElementById("plan-list");
-
-  function renderPlan() {
-    if (!planList) return;
-    var age = parseInt(ageInput && ageInput.value, 10);
-    if (isNaN(age) || age < 0) age = 0;
-    var items = PLANS[pet].filter(function (i) { return age <= i.to; });
-    if (!items.length) items = PLANS[pet].slice(-3);
-    planList.innerHTML = items.map(function (i) {
-      return '<li><span class="plan-when">' + i.when + '</span>' +
-             '<span class="plan-what"><strong>' + i.title + '</strong><span>' + i.text + '</span></span></li>';
+  /* ---------- прайс + фильтр по питомцу ---------- */
+  $("plist").innerHTML = PRICES.map(function (g) {
+    var rows = g.items.map(function (it) {
+      var sp = (it.sp && it.sp.length) ? it.sp : ["all"];
+      var marks = sp[0] === "all" ? "" : '<span class="species" aria-hidden="true">' + sp.map(function (s) {
+        var ic = s === "cat" ? "p-cat" : s === "dog" ? "p-dog" : "p-rodent";
+        return '<svg viewBox="0 0 120 120"><use href="#' + ic + '"></use></svg>';
+      }).join("") + '</span>';
+      return '<div class="prow" data-sp="' + sp.join(" ") + '">' +
+        '<span class="pn">' + esc(it.n) + marks + '</span>' +
+        '<span class="pv">' + esc(it.v) + '</span>' +
+        (it.d ? '<span class="pd">' + esc(it.d) + '</span>' : '') +
+      '</div>';
     }).join("");
-  }
+    return '<section class="pgroup"><h4>' + esc(g.g) + '</h4>' + rows + '</section>';
+  }).join("");
 
-  if (petSeg) {
-    petSeg.addEventListener("click", function (e) {
-      var btn = e.target.closest("button[data-pet]");
-      if (!btn) return;
-      pet = btn.dataset.pet;
-      petSeg.querySelectorAll("button[data-pet]").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b === btn));
-      });
-      if (ageInput) ageInput.disabled = pet === "exotic";
-      renderPlan();
+  $("species").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-sp]");
+    if (!btn) return;
+    var sp = btn.dataset.sp;
+    Array.prototype.forEach.call(this.querySelectorAll("button[data-sp]"), function (b) {
+      b.setAttribute("aria-pressed", String(b === btn));
     });
-  }
-  if (ageInput) ageInput.addEventListener("input", renderPlan);
-  renderPlan();
+    var shown = 0;
+    Array.prototype.forEach.call(document.querySelectorAll(".prow"), function (row) {
+      var list = row.dataset.sp.split(" ");
+      var ok = sp === "all" || list.indexOf("all") > -1 || list.indexOf(sp) > -1;
+      row.hidden = !ok;
+      if (ok) shown++;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".pgroup"), function (g) {
+      g.hidden = !g.querySelector(".prow:not([hidden])");
+    });
+    $("price-empty").hidden = shown > 0;
+  });
 
-  /* ---------- форма записи (демо, ничего не отправляет) ---------- */
-  var form = document.getElementById("booking");
-  var receipt = document.getElementById("receipt");
-  if (form && receipt) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var v = function (id) {
-        var el = document.getElementById(id);
-        return el && el.value ? el.value.trim() : "";
-      };
-      var name = v("name") || "без имени";
-      var phone = v("phone") || "телефон не указан";
-      var when = v("date") + (v("time") ? ", " + v("time") : "");
-      receipt.setAttribute("data-shown", "true");
-      receipt.innerHTML =
-        "<strong>Заявка сформирована — демо</strong>" +
-        name + " · " + phone + "<br>" +
-        v("pet") + " · " + v("service") + "<br>" +
-        "Когда: " + (when || "время не выбрано") +
-        "<br><span style=\"color:var(--deep-fg-muted)\">В рабочей версии эта заявка ушла бы администратору в Telegram и в журнал записи. Здесь она никуда не отправляется.</span>";
-      receipt.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-  }
+  /* ---------- товары ---------- */
+  $("goods").innerHTML = GOODS.map(function (g) {
+    return '<article class="good">' +
+      '<span class="g-ic"><svg width="24" height="24" aria-hidden="true"><use href="#' + g.ic + '"></use></svg></span>' +
+      '<h4>' + esc(g.n) + '</h4><p class="g-sub">' + esc(g.s) + '</p>' +
+      '<p class="g-price">' + esc(g.v) + '</p></article>';
+  }).join("");
 
   /* ---------- вкладки прайса ---------- */
-  var tablist = document.querySelector('.tabs');
-  if (tablist) {
-    var tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
-    var select = function (tab) {
+  var tabs = [$("t-serv"), $("t-goods")];
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
       tabs.forEach(function (t) {
         var on = t === tab;
         t.setAttribute("aria-selected", String(on));
-        var panel = document.getElementById(t.getAttribute("aria-controls"));
-        if (panel) panel.hidden = !on;
+        $(t.getAttribute("aria-controls")).hidden = !on;
       });
-    };
-    tablist.addEventListener("click", function (e) {
-      var tab = e.target.closest('[role="tab"]');
-      if (tab) select(tab);
     });
-    tablist.addEventListener("keydown", function (e) {
-      var i = tabs.indexOf(document.activeElement);
-      if (i < 0) return;
-      var next = e.key === "ArrowRight" ? tabs[(i + 1) % tabs.length]
-              : e.key === "ArrowLeft" ? tabs[(i - 1 + tabs.length) % tabs.length] : null;
-      if (next) { e.preventDefault(); next.focus(); select(next); }
-    });
+  });
+
+  /* ---------- отзывы ---------- */
+  $("rev-stars").innerHTML = starsHtml(5);
+  $("revs").innerHTML = REVIEWS.map(function (r) {
+    return '<article class="rev">' +
+      '<div class="rev-top"><span class="rev-ava"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#' + r.pet + '"></use></svg></span>' +
+      '<span><strong>' + esc(r.who) + '</strong><span>' + esc(r.sub) + '</span></span></div>' +
+      '<p>' + esc(r.text) + '</p>' +
+      '<footer><span class="rating">' + r.r.toFixed(1).replace(".", ",") + ' <span class="stars">' + starsHtml(r.r) + '</span></span>' +
+      '<time>' + esc(r.date) + '</time></footer></article>';
+  }).join("");
+
+  /* ---------- форма: питомец ---------- */
+  var pet = PET_TYPES[1].id;
+  $("pets").innerHTML = PET_TYPES.map(function (p) {
+    return '<button type="button" class="pet-tile" data-pet="' + p.id + '" aria-pressed="' + (p.id === pet) + '">' +
+      '<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#' + p.ic + '"></use></svg>' +
+      '<span>' + p.label + '</span><em aria-hidden="true"></em></button>';
+  }).join("");
+  $("pets").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-pet]");
+    if (!btn) return;
+    pet = btn.dataset.pet;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+  });
+
+  /* ---------- форма: дата и время ---------- */
+  var MONTHS = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
+  var WDAYS = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var days = [];
+  for (var i = 0; i < 7; i++) { var d = new Date(today); d.setDate(today.getDate() + i); days.push(d); }
+  var chosenDay = 0, chosenTime = "";
+
+  var key = function (d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); };
+  /* занятость слотов — детерминированная, чтобы страница выглядела одинаково при перезагрузке */
+  var busy = function (d, t) {
+    var s = key(d) + t, h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
+    return h % 100 < 38;
+  };
+
+  $("dates").innerHTML = days.map(function (d, i) {
+    return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="' + (i === 0) + '">' +
+      d.getDate() + ' ' + MONTHS[d.getMonth()] + '<small>' + (i === 0 ? "сегодня" : WDAYS[d.getDay()]) + '</small></button>';
+  }).join("");
+
+  function renderTimes() {
+    var d = days[chosenDay];
+    var weekend = d.getDay() === 0 || d.getDay() === 6;
+    var range = weekend ? CONFIG.hours.weekend : CONFIG.hours.weekday;
+    var now = new Date();
+    var html = "", first = "";
+    for (var h = range[0]; h < range[1]; h++) {
+      for (var m = 0; m < 60; m += 30) {
+        var t = h + ":" + (m ? "30" : "00");
+        var past = chosenDay === 0 && (h < now.getHours() || (h === now.getHours() && m <= now.getMinutes()));
+        if (past) continue;                    /* прошедшее время не показываем совсем */
+        var off = busy(d, t);                  /* занятые слоты остаются видимыми, но недоступными */
+        if (!off && !first) first = t;
+        html += '<button type="button" class="chip" data-time="' + t + '"' + (off ? " disabled" : "") +
+                ' aria-pressed="false">' + t + '</button>';
+      }
+    }
+    $("times").innerHTML = html || '<p class="note">На сегодня запись закрыта — выберите другой день или позвоните нам.</p>';
+    chosenTime = first;
+    var btn = $("times").querySelector('[data-time="' + first + '"]');
+    if (btn) btn.setAttribute("aria-pressed", "true");
+  }
+  renderTimes();
+
+  $("dates").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-day]");
+    if (!btn) return;
+    chosenDay = +btn.dataset.day;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+    renderTimes();
+  });
+  $("times").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-time]");
+    if (!btn || btn.disabled) return;
+    chosenTime = btn.dataset.time;
+    Array.prototype.forEach.call(this.children, function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+  });
+
+  /* ---------- форма: отправка ---------- */
+  function leadText() {
+    var d = days[chosenDay];
+    var petLabel = (PET_TYPES.filter(function (p) { return p.id === pet; })[0] || {}).label || "—";
+    return [
+      "🐾 Заявка с сайта «Симба»",
+      "Имя: " + ($("f-name").value.trim() || "не указано"),
+      "Телефон: " + ($("f-phone").value.trim() || "не указан"),
+      "Питомец: " + petLabel,
+      "Услуга: " + $("f-service").value,
+      "Когда: " + d.getDate() + " " + MONTHS[d.getMonth()] + ", " + (chosenTime || "время не выбрано"),
+      "Комментарий: " + ($("f-comment").value.trim() || "—")
+    ].join("\n");
   }
 
-  /* ---------- плавная прокрутка по якорям ---------- */
+  function sendLead(text) {
+    if (CONFIG.endpoint) {
+      return fetch(CONFIG.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text })
+      }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return true; });
+    }
+    if (CONFIG.telegram.botToken && CONFIG.telegram.chatId) {
+      return fetch("https://api.telegram.org/bot" + CONFIG.telegram.botToken + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CONFIG.telegram.chatId, text: text })
+      }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return true; });
+    }
+    return Promise.reject(new Error("not-configured"));
+  }
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var phone = $("f-phone");
+    if (!phone.value.trim()) {
+      phone.style.borderColor = "var(--coral)";
+      phone.focus();
+      return;
+    }
+    phone.style.borderColor = "";
+
+    var text = leadText();
+    var ok = $("ok");
+    var show = function (title, note, actions) {
+      ok.innerHTML = '<h4>' + title + '</h4><p class="note">' + note + '</p>' +
+        '<pre>' + esc(text) + '</pre>' + (actions || "");
+      ok.dataset.shown = "true";
+      ok.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+
+    sendLead(text).then(function () {
+      show("Заявка отправлена", "Администратор получил её в Telegram и перезвонит, чтобы подтвердить время.");
+    }).catch(function () {
+      var tg = CONFIG.adminTelegram
+        ? "https://t.me/" + CONFIG.adminTelegram.replace("@", "")
+        : "https://t.me/share/url?url=" + encodeURIComponent(CONFIG.siteUrl) + "&text=" + encodeURIComponent(text);
+      show(
+        "Заявка сформирована",
+        "Это демо-версия: автоматическая отправка в Telegram включается вместе с ботом клиники. Пока можно отправить заявку вручную или позвонить.",
+        '<div class="ok-actions">' +
+          '<a class="btn btn-coral" href="' + tg + '" target="_blank" rel="noopener">Отправить в Telegram</a>' +
+          '<a class="btn btn-line" href="' + CONFIG.phoneHref + '">Позвонить ' + CONFIG.phone + '</a>' +
+        '</div>'
+      );
+    });
+  });
+
+  /* ---------- карта ---------- */
+  (function initMap() {
+    if (!CONFIG.mapOid) return;
+    var box = $("map-box"), fallback = $("map-fallback");
+    var frame = document.createElement("iframe");
+    frame.title = "Ветклиника «Симба» на карте";
+    frame.loading = "lazy";
+    frame.style.opacity = "0";
+    frame.src = "https://yandex.ru/map-widget/v1/?oid=" + CONFIG.mapOid + "&z=17";
+    var done = false;
+    frame.addEventListener("load", function () {
+      done = true;
+      frame.style.opacity = "1";
+      fallback.hidden = true;
+    });
+    box.appendChild(frame);
+    setTimeout(function () { if (!done) frame.remove(); }, 4000);
+  })();
+
+  /* ---------- мелочи ---------- */
+  $("year").textContent = String(new Date().getFullYear());
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener("click", function (e) {
       var target = document.querySelector(a.getAttribute("href"));
