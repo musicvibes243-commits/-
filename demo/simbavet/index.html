@@ -60,6 +60,10 @@
   .menu{display:flex; gap:1.4rem; font-size:var(--s-1)}
   .menu a{text-decoration:none; color:var(--muted)}
   .menu a:hover{color:var(--ink)}
+  .lang{display:flex; gap:2px; background:var(--soft); border-radius:99px; padding:3px}
+  .lang button{border:0; background:transparent; cursor:pointer; border-radius:99px; padding:.35rem .6rem;
+               font:700 .6875rem/1 var(--head); letter-spacing:.06em; color:var(--muted)}
+  .lang button[aria-pressed="true"]{background:var(--ink); color:#fff}
   .tel{font-family:var(--mono); font-size:var(--s-1); text-decoration:none; white-space:nowrap}
   @media (max-width:1000px){ .menu{display:none} }
   @media (max-width:520px){ .tel{display:none} }
@@ -372,6 +376,10 @@
           <a href="#reviews">Отзывы</a>
           <a href="#contacts">Контакты</a>
         </nav>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang-btn="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        </div>
         <a class="tel" href="tel:+79258711713">+7 925 871-17-13</a>
         <a class="btn btn-coral" href="#book">Записаться</a>
       </div>
@@ -752,6 +760,612 @@
 (function () {
   "use strict";
 
+
+  /* ==========================================================================
+     ЯЗЫК: русский по умолчанию, английский по кнопке в шапке.
+     Словарь ниже переводит текст прямо в готовой странице, поэтому вёрстку
+     дублировать не нужно. Динамические строки — в DYN.
+     ========================================================================== */
+  var DICT = {
+"Приём терапевта": "General consultation",
+"Клинический осмотр, термометрия, сбор анамнеза. Составляем план обследования и лечения, объясняем, что делать дома. Есть отдельная консультация по уходу и содержанию, а также разбор результатов анализов без питомца.": "Clinical examination, temperature check and history taking. We draw up a plan for tests and treatment and explain what to do at home. There is also a separate consultation on care and housing, and a review of test results without the pet.",
+"Осмотр 950 ₽ · повторный 500 ₽": "Examination 950 ₽ · follow-up 500 ₽",
+"Общая хирургия": "General surgery",
+"Грыжесечение, удаление новообразований на теле и молочных пакетах, ампутации, удаление инородных предметов из ЖКТ, инвагинация кишечника, заворот желудка, диагностическая лапаротомия.": "Hernia repair, removal of skin and mammary tumours, amputations, foreign bodies in the gut, intussusception, gastric torsion and exploratory laparotomy.",
+"22 позиции в прайсе · наркоз под контролем": "22 items in the price list · monitored anaesthesia",
+"Урология и мочекаменная болезнь": "Urology and urinary stones",
+"Катетеризация мочевого пузыря, промывание и снятие катетера, уретростомия, цистотомия. Кот, который не может сходить в туалет, — это неотложный случай: звоните и везите сразу.": "Bladder catheterisation, flushing and removing catheters, urethrostomy, cystotomy. A cat that cannot pass urine is an emergency: call and bring him straight in.",
+"Приём вне очереди при задержке мочи": "Blocked cats are seen immediately",
+"УЗИ и диагностические пункции": "Ultrasound and diagnostic taps",
+"УЗИ брюшной полости, мочеполовой системы и отдельного органа. Цистоцентез, лапароцентез, пункция грудной полости и гематом с эвакуацией жидкости.": "Ultrasound of the abdomen, the urinary tract or a single organ. Cystocentesis, laparocentesis, chest taps and drainage of haematomas.",
+"УЗИ одного органа — 700 ₽": "Single-organ ultrasound — 700 ₽",
+"Стоматология": "Dentistry",
+"Ультразвуковая чистка зубного камня под седацией, механическая чистка, удаление молочных зубов и подвижных постоянных. Запах из пасти и отказ от твёрдого корма — почти всегда про зубы.": "Ultrasonic scaling under sedation, manual tartar removal, extraction of milk teeth and loose permanent teeth. Bad breath and refusing hard food almost always come down to teeth.",
+"Кошкам и собакам": "Cats and dogs",
+"Офтальмология": "Ophthalmology",
+"Приём ведёт Тамара Юрьевна Лозовская: осмотр, удаление аденомы третьего века, коррекция заворота века, удаление новообразований на веке, микрохирургические операции. При травме глаза не ждите — записывайтесь в тот же день.": "Seen by Tamara Lozovskaya: examination, cherry eye removal, entropion correction, eyelid tumour removal and microsurgery. With an eye injury, do not wait — book the same day.",
+"Приём — 1 500 ₽": "Consultation — 1,500 ₽",
+"Приём орнитолога": "Avian vet",
+"Клинический осмотр специалистом по птицам, помощь при задержке яйца — физическим и хирургическим способом. Птицы скрывают болезнь до последнего: вялость и взъерошенность уже повод приехать.": "Clinical examination by a bird specialist and help with egg binding, manually or surgically. Birds hide illness to the last: listlessness and ruffled feathers are already a reason to come in.",
+"Приём — 1 200 ₽": "Consultation — 1,200 ₽",
+"Анестезиология и блокады": "Anaesthesia and nerve blocks",
+"Седация для исследований и манипуляций, местная и аппликационная анестезия, блокада параанальных желёз при воспалении. Протокол подбираем по возрасту, весу и состоянию.": "Sedation for tests and procedures, local and topical anaesthesia, anal gland blocks for inflammation. The protocol is chosen by age, weight and condition.",
+"Кошки и собаки": "Cats and dogs",
+"Акушерство и репродукция": "Obstetrics and reproduction",
+"Кастрация и стерилизация кошек, собак, кроликов и хорьков — по весу и с учётом патологий. Кесарево сечение, родовспоможение, реанимация плода. Косметический шов по желанию.": "Neutering and spaying of cats, dogs, rabbits and ferrets — priced by weight and any pathology. Caesareans, assisted whelping, neonate resuscitation. Cosmetic sutures on request.",
+"Кастрация кота от 2 600 ₽ · стерилизация кошки от 5 000 ₽": "Cat neutering from 2,600 ₽ · cat spaying from 5,000 ₽",
+"Вакцинация и документы": "Vaccination and documents",
+"Комплексные вакцины для кошек и собак — импортные и отечественные, с бешенством и без. Вакцинируем кроликов. Оформляем ветпаспорт, чипируем с внесением в базу, готовим документы для поездок.": "Combined vaccines for cats and dogs — imported and domestic, with or without rabies. We vaccinate rabbits, issue pet passports, microchip with database registration and prepare travel paperwork.",
+"Комплексная — от 1 700 ₽ · чипирование 1 000 ₽": "Combined from 1,700 ₽ · microchipping 1,000 ₽",
+"Стационар": "Inpatient care",
+"Отдельный бокс с круглосуточным наблюдением: обычный стационар, инфекционный для заразных пациентов и отдельный — для животных в тяжёлом и критическом состоянии.": "A separate box with round-the-clock monitoring: the general ward, an isolation ward for infectious patients and a separate one for animals in a serious or critical condition.",
+"От 800 ₽ в сутки": "From 800 ₽ per day",
+"Вызов врача на дом": "Home visits",
+"Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому. Королёв и ближайшие города.": "For elderly, seriously ill and very anxious patients: examination, sample taking, fluids or vaccination at home. Korolyov and nearby towns.",
+"Королёв и Подмосковье": "Korolyov and the Moscow Region",
+"Ветаптека и зоотовары": "Pharmacy and pet supplies",
+"Назначенные препараты, лечебные корма, антипаразитарные средства и наполнители — на месте. Дозировку рассчитываем по весу питомца.": "Prescribed medication, therapeutic diets, antiparasitics and litter — all on site. We calculate dosage by your pet's weight.",
+"Забрать сразу после приёма": "Collect straight after the appointment",
+"Приём и консультации": "Appointments and advice",
+"Вакцинация и профилактика": "Vaccination and prevention",
+"Осмотр и измерения": "Examination and measurements",
+"Взятие проб и материалов": "Sample collection",
+"Инъекции, капельницы и катетеры": "Injections, drips and catheters",
+"Раны, швы и дренажи": "Wounds, sutures and drains",
+"Уход и гигиена": "Care and grooming",
+"Визуальная диагностика": "Imaging",
+"Диагностические пункции": "Diagnostic taps",
+"Урология и МКБ": "Urology and urinary stones",
+"Орнитолог": "Avian vet",
+"Гуманное усыпление": "Humane euthanasia",
+"Клинический осмотр животного": "Clinical examination",
+"Повторный клинический осмотр": "Follow-up examination",
+"Клинический осмотр агрессивного животного": "Examination of an aggressive animal",
+"Фиксация животного": "Restraining an animal",
+"Консультация по уходу и содержанию": "Advice on care and housing",
+"Консультация владельца без животного или по результатам анализов": "Owner consultation without the pet or on test results",
+"Страхование животных, оформление полиса": "Pet insurance policy",
+"Комплексная вакцинация с бешенством, импортная вакцина": "Combined vaccination with rabies, imported vaccine",
+"Комплексная вакцинация с бешенством, отечественная вакцина": "Combined vaccination with rabies, domestic vaccine",
+"Комплексная вакцинация без бешенства, импортная вакцина": "Combined vaccination without rabies, imported vaccine",
+"Комплексная вакцинация без бешенства, отечественная вакцина": "Combined vaccination without rabies, domestic vaccine",
+"Вакцинация только от бешенства": "Rabies vaccination only",
+"Вакцинация кролика": "Rabbit vaccination",
+"Чипирование с внесением в базу данных": "Microchipping with database registration",
+"Считывание номера микрочипа": "Microchip scanning",
+"Оформление ветеринарного паспорта": "Issuing a pet passport",
+"Обработка акарицидными препаратами": "Acaricide treatment against ticks",
+"Термометрия": "Temperature measurement",
+"Взвешивание": "Weighing",
+"Отоскопия": "Otoscopy",
+"Микроскопическое исследование": "Microscopic examination",
+"Люминесцентная диагностика на дерматофиты (лампа Вуда)": "Wood's lamp test for dermatophytes",
+"Взятие соскобов и мазков на паразитарные и кожные заболевания": "Skin scrapings and smears for parasitic and skin disease",
+"Взятие проб венозной крови": "Venous blood sampling",
+"Взятие мазка-отпечатка на цитологический анализ": "Impression smear for cytology",
+"Взятие смывов для микробиологического исследования": "Swabs for microbiological testing",
+"Взятие мочи, механическое опорожнение": "Urine collection by manual expression",
+"Внутримышечное и подкожное введение препаратов": "Intramuscular and subcutaneous injection",
+"Внутримышечное и подкожное введение по направлению из другой клиники": "Injection on referral from another clinic",
+"Пероральное введение препаратов, кошки": "Oral medication, cats",
+"Пероральное введение препаратов, собаки": "Oral medication, dogs",
+"Ректальное введение препаратов": "Rectal medication",
+"Интраназальное введение препаратов": "Intranasal medication",
+"Внутривенное введение препаратов": "Intravenous injection",
+"Внутривенное введение через катетер": "Intravenous injection through a catheter",
+"Установка и фиксация внутривенного катетера": "Placing and securing an IV catheter",
+"Снятие внутривенного катетера": "Removing an IV catheter",
+"Подкожное капельное введение, 30 минут": "Subcutaneous fluids, 30 minutes",
+"Внутривенное аппаратное капельное введение": "Intravenous infusion by pump",
+"Внутривенное введение через инфузомат, первый час": "Infusion pump, first hour",
+"Внутривенное введение через инфузомат, следующий час": "Infusion pump, each further hour",
+"Введение контрацептива": "Contraceptive injection",
+"Первичная хирургическая обработка раны": "Primary wound debridement",
+"Наложение швов": "Suturing",
+"Наложение косметического шва, до 3 см": "Cosmetic suture, up to 3 cm",
+"Наложение косметического шва, более 3 см": "Cosmetic suture, over 3 cm",
+"Обработка шва": "Wound dressing",
+"Снятие швов": "Suture removal",
+"Наложение бинтовой повязки после взятия крови или катетера": "Bandage after a blood draw or catheter",
+"Вскрытие абсцессов, гематом и сером без дренажа": "Lancing abscesses, haematomas and seromas without a drain",
+"Установка дренажа": "Placing a drain",
+"Промывание дренажа": "Flushing a drain",
+"Снятие дренажа": "Removing a drain",
+"Санация ушных раковин": "Ear cleaning",
+"Глубокая санация ушных раковин": "Deep ear cleaning",
+"Обрезка когтей, до 10 кг": "Nail trim, up to 10 kg",
+"Обрезка когтей, 10–20 кг": "Nail trim, 10–20 kg",
+"Обрезка когтей, 20–35 кг": "Nail trim, 20–35 kg",
+"Обрезка когтей, свыше 35 кг": "Nail trim, over 35 kg",
+"Промывание толстого отдела кишечника": "Colon lavage",
+"Санация параанальных желёз": "Anal gland expression",
+"Удаление иксодовых клещей": "Tick removal",
+"Удаление сломанного когтя": "Removal of a broken claw",
+"Стационар, кошки — сутки": "Inpatient stay, cats — per day",
+"Стационар, собаки до 10 кг — сутки": "Inpatient stay, dogs up to 10 kg — per day",
+"Стационар, собаки 10–25 кг — сутки": "Inpatient stay, dogs 10–25 kg — per day",
+"Стационар, собаки от 25 кг — сутки": "Inpatient stay, dogs over 25 kg — per day",
+"Инфекционный стационар, кошки — сутки": "Isolation ward, cats — per day",
+"Инфекционный стационар, собаки до 10 кг — сутки": "Isolation ward, dogs up to 10 kg — per day",
+"Инфекционный стационар, собаки 10–25 кг — сутки": "Isolation ward, dogs 10–25 kg — per day",
+"Инфекционный стационар, собаки от 25 кг — сутки": "Isolation ward, dogs over 25 kg — per day",
+"Стационар для тяжёлых пациентов, кошки — сутки": "Critical care, cats — per day",
+"Стационар для тяжёлых пациентов, собаки до 10 кг — сутки": "Critical care, dogs up to 10 kg — per day",
+"Стационар для тяжёлых пациентов, собаки 10–25 кг — сутки": "Critical care, dogs 10–25 kg — per day",
+"Стационар для тяжёлых пациентов, собаки от 25 кг — сутки": "Critical care, dogs over 25 kg — per day",
+"УЗИ органов брюшной полости": "Abdominal ultrasound",
+"УЗИ мочеполовой системы": "Urogenital ultrasound",
+"УЗИ одного органа": "Single-organ ultrasound",
+"Пункция мочевого пузыря (цистоцентез)": "Bladder puncture (cystocentesis)",
+"Пункция брюшной полости с эвакуацией жидкости (лапароцентез)": "Abdominal tap with fluid drainage (laparocentesis)",
+"Пункция грудной полости с эвакуацией жидкости или воздуха": "Chest tap with fluid or air drainage",
+"Пункция брюшной или грудной полости, диагностическая": "Diagnostic abdominal or chest tap",
+"Пункция гематомы или серомы с эвакуацией жидкости": "Haematoma or seroma drainage",
+"Грыжесечение пупочное, кошки": "Umbilical hernia repair, cats",
+"Грыжесечение пупочное, собаки": "Umbilical hernia repair, dogs",
+"Оперативное лечение ушной гематомы": "Aural haematoma surgery",
+"Купирование ушей": "Ear cropping",
+"Ампутация конечности, кошки": "Limb amputation, cats",
+"Ампутация конечности, собаки": "Limb amputation, dogs",
+"Ампутация хвоста, собаки": "Tail amputation, dogs",
+"Купирование хвоста до 10 дней": "Tail docking, under 10 days old",
+"Купирование хвоста старше 10 дней": "Tail docking, over 10 days old",
+"Удаление рудиментарных фаланг до 10 дней": "Dewclaw removal, under 10 days old",
+"Удаление рудиментарных фаланг старше 2 месяцев": "Dewclaw removal, over 2 months old",
+"Удаление новообразований молочных пакетов, кошки": "Mammary tumour removal, cats",
+"Удаление новообразований молочных пакетов, собаки": "Mammary tumour removal, dogs",
+"Удаление новообразований на теле, кошки": "Body tumour removal, cats",
+"Удаление новообразований на теле, собаки": "Body tumour removal, dogs",
+"Удаление инородного предмета из ЖКТ": "Removal of a foreign body from the gut",
+"Хирургическое лечение инвагинации кишечника": "Surgery for intestinal intussusception",
+"Хирургическое лечение выпадения прямой кишки": "Surgery for rectal prolapse",
+"Заворот желудка с удалением селезёнки": "Gastric torsion with splenectomy",
+"Диагностическая лапаротомия, кошки": "Exploratory laparotomy, cats",
+"Диагностическая лапаротомия, собаки": "Exploratory laparotomy, dogs",
+"Катетеризация мочевого пузыря, коты": "Bladder catheterisation, male cats",
+"Катетеризация мочевого пузыря, кошки": "Bladder catheterisation, female cats",
+"Катетеризация мочевого пузыря, кобели": "Bladder catheterisation, male dogs",
+"Катетеризация мочевого пузыря, суки": "Bladder catheterisation, female dogs",
+"Промывание уретрального катетера": "Flushing a urinary catheter",
+"Подшивание уретрального катетера": "Securing a urinary catheter",
+"Снятие уретрального катетера": "Removing a urinary catheter",
+"Уретростомия, коты": "Urethrostomy, male cats",
+"Уретростомия, кобели": "Urethrostomy, male dogs",
+"Цистотомия, кошки": "Cystotomy, cats",
+"Цистотомия, собаки": "Cystotomy, dogs",
+"Кастрация кота без патологии, вес до 5 кг": "Cat neutering, no complications, up to 5 kg",
+"Кастрация кота без патологии, вес от 5 кг": "Cat neutering, no complications, over 5 kg",
+"Кастрация кота-крипторха": "Cryptorchid cat neutering",
+"Кастрация кобеля без патологии, вес до 10 кг": "Dog neutering, no complications, up to 10 kg",
+"Кастрация кобеля без патологии, вес 10–25 кг": "Dog neutering, no complications, 10–25 kg",
+"Кастрация кобеля без патологии, вес от 25 кг": "Dog neutering, no complications, over 25 kg",
+"Кастрация кобеля-крипторха": "Cryptorchid dog neutering",
+"Кастрация кролика или хорька": "Rabbit or ferret neutering",
+"Стерилизация кошки без патологий, вес до 5 кг": "Cat spaying, no pathology, up to 5 kg",
+"Стерилизация кошки до 5 кг, косметический шов": "Cat spaying up to 5 kg, cosmetic suture",
+"Стерилизация кошки без патологий, вес от 5 кг": "Cat spaying, no pathology, over 5 kg",
+"Стерилизация кошки с патологией репродуктивной системы": "Cat spaying with reproductive pathology",
+"Стерилизация суки до 10 кг без патологий": "Dog spaying up to 10 kg, no pathology",
+"Стерилизация суки 10–25 кг без патологий": "Dog spaying 10–25 kg, no pathology",
+"Стерилизация суки от 25 кг без патологий": "Dog spaying over 25 kg, no pathology",
+"Стерилизация суки с патологией репродуктивной системы": "Dog spaying with reproductive pathology",
+"Стерилизация крольчихи или хорька": "Rabbit or ferret spaying",
+"Кесарево сечение кошки со стерилизацией": "Caesarean in cats with spaying",
+"Кесарево сечение кошки с сохранением репродуктивных органов": "Caesarean in cats preserving the reproductive organs",
+"Кесарево сечение суки со стерилизацией": "Caesarean in dogs with spaying",
+"Кесарево сечение суки с сохранением репродуктивных органов": "Caesarean in dogs preserving the reproductive organs",
+"Родовспоможение, 1 час": "Assisted whelping, 1 hour",
+"Реанимация плода, 1 час": "Neonate resuscitation, 1 hour",
+"Механическая чистка зубного камня": "Manual tartar removal",
+"УЗ чистка зубного камня, кошки": "Ultrasonic scaling, cats",
+"УЗ чистка зубного камня, собаки": "Ultrasonic scaling, dogs",
+"Удаление молочных зубов, резцы": "Milk tooth extraction, incisors",
+"Удаление молочных зубов, клыки и премоляры": "Milk tooth extraction, canines and premolars",
+"Удаление постоянных зубов (подвижных)": "Extraction of loose permanent teeth",
+"Удаление постоянных зубов": "Permanent tooth extraction",
+"Приём офтальмолога": "Ophthalmologist consultation",
+"Удаление аденомы третьего века": "Cherry eye (third eyelid gland) removal",
+"Удаление новообразования на веке": "Eyelid tumour removal",
+"Заворот века": "Entropion correction",
+"Удаление глазного яблока": "Eye enucleation",
+"Приём врачом-орнитологом": "Avian vet consultation",
+"Изъятие яйца через клоаку, физическим способом": "Egg removal through the cloaca, manual",
+"Изъятие яйца через клоаку, хирургическим способом": "Egg removal through the cloaca, surgical",
+"Седация кошки для исследований и манипуляций": "Sedation for cats, tests and procedures",
+"Седация собаки для исследований и манипуляций": "Sedation for dogs, tests and procedures",
+"Местная анестезия (новокаин, лидокаин, ультракаин)": "Local anaesthesia (procaine, lidocaine, articaine)",
+"Аппликационная анестезия": "Topical anaesthesia",
+"Блокада параанальных желёз": "Anal gland block",
+"Медикаментозная эвтаназия, кошки": "Euthanasia, cats",
+"Медикаментозная эвтаназия, собаки до 5 кг": "Euthanasia, dogs up to 5 kg",
+"Медикаментозная эвтаназия, собаки 5–10 кг": "Euthanasia, dogs 5–10 kg",
+"Медикаментозная эвтаназия, собаки 11–25 кг": "Euthanasia, dogs 11–25 kg",
+"Медикаментозная эвтаназия, собаки до 40 кг": "Euthanasia, dogs up to 40 kg",
+"Медикаментозная эвтаназия, собаки 40–60 кг": "Euthanasia, dogs 40–60 kg",
+"Без стоимости препарата.": "Medication not included.",
+"Без стоимости препарата. От покусов клещей.": "Medication not included. Protects against tick bites.",
+"Без стоимости расходных материалов.": "Consumables not included.",
+"В просвет мочеиспускательного канала вводят уретральный катетер, чтобы восстановить отток мочи.": "A urinary catheter is passed into the urethra to restore the flow of urine.",
+"В стоимость заложена фиксация.": "Restraint is included in the price.",
+"В том числе для контроля веса на лечении.": "Including weight checks during treatment.",
+"В том числе после травмы конечности.": "Including after limb trauma.",
+"Визуализация состояния внутренних органов.": "Imaging of the internal organs.",
+"Врач методом нажатия опорожняет параанальные железы.": "The vet empties the anal glands by manual pressure.",
+"Врач оценивает состояние, ставит предварительный диагноз и составляет план обследования.": "The vet assesses the animal, makes a working diagnosis and plans further tests.",
+"Временно снижает уровень сознания, чтобы спокойно провести осмотр или процедуру.": "Briefly lowers consciousness so the examination or procedure can be done calmly.",
+"Вскрытие мочевого пузыря, в том числе для удаления камней.": "Opening the bladder, including to remove stones.",
+"Глубинный соскоб со слизистых оболочек и кожи.": "Deep scraping from mucous membranes and skin.",
+"Давящая повязка, чтобы не образовалась гематома.": "A pressure bandage to prevent a haematoma.",
+"Дешевле первичного осмотра.": "Cheaper than the first examination.",
+"Доступ к органам брюшной полости, чтобы поставить или уточнить диагноз.": "Access to the abdominal organs to make or confirm a diagnosis.",
+"Ищем изменения в клетках и тканях, в том числе признаки перерождения.": "Looks for changes in cells and tissue, including signs of malignancy.",
+"Клинический осмотр специалистом по лечению птиц.": "Clinical examination by a bird specialist.",
+"Когда молочные зубы не выпали сами.": "When the milk teeth have not fallen out on their own.",
+"Манипуляции для сохранения жизни рождённых плодов. Без препаратов и расходных материалов.": "Procedures to keep the newborns alive. Medication and consumables not included.",
+"Методом выкручивания из кожи.": "Removed from the skin by twisting.",
+"Наркоз входит в стоимость.": "Anaesthesia is included.",
+"Наркоз, препараты и расходные материалы не включены.": "Anaesthesia, medication and consumables not included.",
+"Обезболивание параанальных желёз при воспалении.": "Pain relief for inflamed anal glands.",
+"Образец из периферической вены для лабораторных исследований.": "A sample from a peripheral vein for laboratory testing.",
+"Овариогистерэктомия.": "Ovariohysterectomy.",
+"Операция, при которой создаётся новое отверстие в уретре в обход проблемного участка.": "Surgery creating a new urethral opening that bypasses the blocked section.",
+"От 1 200 до 2 000 ₽. Для животных в тяжёлом и критическом состоянии.": "From 1,200 to 2,000 ₽. For animals in a serious or critical condition.",
+"От 1 200 до 2 000 ₽. Отдельный бокс, круглосуточное наблюдение.": "From 1,200 to 2,000 ₽. A separate box with round-the-clock monitoring.",
+"От 13 000 до 30 000 ₽. Неотложная операция — везите сразу.": "From 13,000 to 30,000 ₽. Emergency surgery — bring your pet in at once.",
+"От 15 000 ₽. Наркоз и препараты не включены.": "From 15,000 ₽. Anaesthesia and medication not included.",
+"От 2 000 до 4 000 ₽. Препараты и расходные материалы не включены.": "From 2,000 to 4,000 ₽. Medication and consumables not included.",
+"От 200 ₽, без стоимости расходных материалов.": "From 200 ₽, consumables not included.",
+"От 3 000 до 5 000 ₽. Препараты и расходные материалы не включены.": "From 3,000 to 5,000 ₽. Medication and consumables not included.",
+"От 3 000 до 6 000 ₽. Препараты и расходные материалы не включены.": "From 3,000 to 6,000 ₽. Medication and consumables not included.",
+"От 3 000 ₽ — зависит от сложности процедуры.": "From 3,000 ₽ — depends on how complex the procedure is.",
+"От 4 000 до 10 000 ₽. Препараты и расходные материалы не включены.": "From 4,000 to 10,000 ₽. Medication and consumables not included.",
+"От 4 000 до 5 000 ₽. Наркоз, препараты и расходные материалы не включены.": "From 4,000 to 5,000 ₽. Anaesthesia, medication and consumables not included.",
+"От 5 000 до 8 000 ₽ — зависит от массы питомца.": "From 5,000 to 8,000 ₽ — depends on the pet's weight.",
+"От 500 до 2 500 ₽. Расходные материалы и препараты не включены.": "From 500 to 2,500 ₽. Consumables and medication not included.",
+"От 7 000 ₽ — зависит от сложности процедуры.": "From 7,000 ₽ — depends on how complex the procedure is.",
+"Отобранное содержимое под микроскопом при сильном увеличении.": "The collected sample under a microscope at high magnification.",
+"Полис «Ренессанс.Страхование» — компенсация за лечение в клинике.": "A Renaissance Insurance policy — reimbursement for treatment at the clinic.",
+"Посредством шприца.": "Collected with a syringe.",
+"При формировании второго ряда зубов вместе с постоянными.": "When a second row forms alongside the permanent teeth.",
+"Приборное исследование в глубине уха.": "Instrument examination deep inside the ear.",
+"Проводится под седацией.": "Performed under sedation.",
+"Разбор профилактики: кормление, содержание, что делать дома.": "Preventive advice: feeding, housing and what to do at home.",
+"Ректальное измерение температуры.": "Rectal temperature measurement.",
+"Собаки и кошки.": "Dogs and cats.",
+"Спреи, пипетка — через носовые ходы.": "Sprays or drops through the nasal passages.",
+"Удаление серы и обработка слухового канала антимикробными средствами.": "Removing wax and treating the ear canal with antimicrobials.",
+"Хирургическая операция для извлечения плодов.": "Surgery to deliver the young.",
+"Холодный ультрафиолет — проверка кожи на грибковые заболевания.": "Cold ultraviolet light — checking the skin for fungal disease.",
+"Через ЖКТ, без стоимости препаратов.": "Given by mouth; medication not included.",
+"Через вену с применением инфузомата.": "Into a vein using an infusion pump.",
+"Чтобы конечности правильно ставились при ходьбе.": "So the limbs sit correctly when the puppy walks.",
+"Шов, который не нужно снимать и который не отторгается.": "A suture that does not need removing and is not rejected.",
+"Электронная метка под кожу — по ней питомца найдут, если он потеряется.": "An electronic tag under the skin so a lost pet can be identified.",
+"950 ₽": "950 ₽",
+"500 ₽": "500 ₽",
+"3 500 ₽": "3,500 ₽",
+"От 800 до 2 000 ₽.": "From 800 to 2,000 ₽.",
+"2 000 ₽": "2,000 ₽",
+"350 ₽": "350 ₽",
+"2 500 ₽": "2,500 ₽",
+"1 700 ₽": "1,700 ₽",
+"1 200 ₽": "1,200 ₽",
+"1 000 ₽": "1,000 ₽",
+"100 ₽": "100 ₽",
+"200 ₽": "200 ₽",
+"150 ₽": "150 ₽",
+"50 ₽": "50 ₽",
+"400 ₽": "400 ₽",
+"250 ₽": "250 ₽",
+"От 200 до 400 ₽.": "From 200 to 400 ₽.",
+"600 ₽": "600 ₽",
+"От 1 000 до 2 500 ₽.": "From 1,000 to 2,500 ₽.",
+"От 300 до 1 000 ₽.": "From 300 to 1,000 ₽.",
+"300 ₽": "300 ₽",
+"От 100 ₽.": "From 100 ₽.",
+"От 500 до 1 000 ₽.": "From 500 to 1,000 ₽.",
+"От 800 ₽.": "From 800 ₽.",
+"800 ₽": "800 ₽",
+"От 300 до 500 ₽.": "From 300 to 500 ₽.",
+"От 600 до 1 000 ₽.": "From 600 to 1,000 ₽.",
+"От 1 000 до 1 500 ₽.": "From 1,000 to 1,500 ₽.",
+"От 1 500 до 2 000 ₽.": "From 1,500 to 2,000 ₽.",
+"1 500 ₽": "1,500 ₽",
+"От 2 000 ₽.": "From 2,000 ₽.",
+"От 2 000 до 2 500 ₽.": "From 2,000 to 2,500 ₽.",
+"От 2 500 до 4 000 ₽.": "From 2,500 to 4,000 ₽.",
+"1 550 ₽": "1,550 ₽",
+"1 250 ₽": "1,250 ₽",
+"700 ₽": "700 ₽",
+"От 500 до 2 000 ₽.": "From 500 to 2,000 ₽.",
+"От 1 000 до 2 000 ₽.": "From 1,000 to 2,000 ₽.",
+"От 500 до 1 500 ₽.": "From 500 to 1,500 ₽.",
+"3 000 ₽": "3,000 ₽",
+"4 000 ₽": "4,000 ₽",
+"От 3 000 до 6 000 ₽.": "From 3,000 to 6,000 ₽.",
+"От 7 000 до 10 000 ₽.": "From 7,000 to 10,000 ₽.",
+"7 000 ₽": "7,000 ₽",
+"5 500 ₽": "5,500 ₽",
+"От 4 500 до 8 000 ₽.": "From 4,500 to 8,000 ₽.",
+"8 000 ₽": "8,000 ₽",
+"От 2 000 до 4 500 ₽.": "From 2,000 to 4,500 ₽.",
+"От 3 000 до 5 000 ₽.": "From 3,000 to 5,000 ₽.",
+"5 000 ₽": "5,000 ₽",
+"6 000 ₽": "6,000 ₽",
+"От 3 500 до 8 000 ₽.": "From 3,500 to 8,000 ₽.",
+"От 8 000 до 15 000 ₽.": "From 8,000 to 15,000 ₽.",
+"15 000 ₽": "15,000 ₽",
+"От 10 000 до 15 000 ₽.": "From 10,000 to 15,000 ₽.",
+"10 000 ₽": "10,000 ₽",
+"13 000 ₽": "13,000 ₽",
+"От 5 000 до 8 000 ₽.": "From 5,000 to 8,000 ₽.",
+"900 ₽": "900 ₽",
+"От 3 000 до 4 000 ₽.": "From 3,000 to 4,000 ₽.",
+"От 400 до 500 ₽.": "From 400 to 500 ₽.",
+"8 500 ₽": "8,500 ₽",
+"От 10 000 до 12 000 ₽.": "From 10,000 to 12,000 ₽.",
+"12 000 ₽": "12,000 ₽",
+"От 7 500 до 12 000 ₽.": "From 7,500 to 12,000 ₽.",
+"7 500 ₽": "7,500 ₽",
+"2 600 ₽": "2,600 ₽",
+"От 3 500 ₽.": "From 3,500 ₽.",
+"От 10 000 ₽.": "From 10,000 ₽.",
+"От 6 500 ₽.": "From 6,500 ₽.",
+"6 500 ₽": "6,500 ₽",
+"От 6 000 до 8 000 ₽.": "From 6,000 to 8,000 ₽.",
+"От 10 500 ₽.": "From 10,500 ₽.",
+"10 500 ₽": "10,500 ₽",
+"От 5 500 до 7 000 ₽.": "From 5,500 to 7,000 ₽.",
+"От 9 000 до 11 000 ₽.": "From 9,000 to 11,000 ₽.",
+"9 000 ₽": "9,000 ₽",
+"От 8 000 до 25 000 ₽.": "From 8,000 to 25,000 ₽.",
+"От 9 000 до 25 000 ₽.": "From 9,000 to 25,000 ₽.",
+"650 ₽": "650 ₽",
+"От 1 500 до 3 000 ₽.": "From 1,500 to 3,000 ₽.",
+"От 200 до 300 ₽.": "From 200 to 300 ₽.",
+"Плюс 500 ₽ медикаменты.": "Plus 500 ₽ for medication.",
+"Плюс 600 ₽ медикаменты.": "Plus 600 ₽ for medication.",
+"Плюс 1 000 ₽ медикаменты.": "Plus 1,000 ₽ for medication.",
+"Плюс 1 300 ₽ медикаменты.": "Plus 1,300 ₽ for medication.",
+"5 200 ₽": "5,200 ₽",
+"Плюс 1 500 ₽ медикаменты.": "Plus 1,500 ₽ for medication.",
+"Демо-концепт": "Demo concept",
+"макет для ветклиники «Симба», Королёв · не официальный сайт · часть карточек врачей — заглушки": "a concept site for Simba veterinary clinic, Korolyov · not the official site · some doctor cards are placeholders",
+"ветклиника · Королёв": "vet clinic · Korolyov",
+"Услуги": "Services",
+"Клиника": "Clinic",
+"Врачи": "Doctors",
+"Цены": "Prices",
+"Отзывы": "Reviews",
+"Контакты": "Contacts",
+"Записаться": "Book a visit",
+"Разделы": "Sections",
+"Ветеринарная": "Veterinary",
+"клиника в Королёве": "clinic in Korolyov",
+"Лечим кошек, собак, грызунов и птиц на улице Дзержинского, 8Б. Приём по записи с 10:00, срочные случаи — вне очереди.": "We treat cats, dogs, rodents and birds at 8B Dzerzhinskogo Street. Appointments from 10:00; urgent cases are seen straight away.",
+"Записаться на приём": "Book an appointment",
+"Позвонить в клинику": "Call the clinic",
+"Проложить маршрут": "Get directions",
+"Львёнок Симба — талисман клиники": "Simba the lion cub, the clinic's mascot",
+"Пн–Пт 10:00–20:00": "Mon–Fri 10:00–20:00",
+"Сб и Вс — 10:00–19:00, без перерыва на обед": "Sat and Sun 10:00–19:00, no lunch break",
+"7 дней в неделю": "Open 7 days a week",
+"Срочные случаи принимаем вне очереди": "Urgent cases are seen without waiting",
+"УЗИ от 700 ₽": "Ultrasound from 700 ₽",
+"Брюшная полость, мочеполовая система, отдельный орган": "Abdomen, urinary tract, single organ",
+"Принимаем птиц": "We see birds",
+"Приём врача-орнитолога — 1 200 ₽": "Avian vet consultation — 1,200 ₽",
+"Наши услуги": "Our services",
+"Что мы делаем": "What we do",
+"Нажмите на услугу — расскажем, как проходит и сколько занимает.": "Tap a service to see how it works and how long it takes.",
+"Клиника изнутри": "Inside the clinic",
+"Чем мы лечим": "How we work",
+"Диагностика и лаборатория — в кабинете, а не в другом городе: анализы и УЗИ делаем на том же приёме.": "Diagnostics and the lab are in the room, not in another town: bloodwork and ultrasound happen during the same visit.",
+"Ресепшн, рабочее место врача и ветаптека — с этого начинается визит. Приём по записи, ждать в коридоре не придётся.": "Reception, the vet's desk and the pharmacy — where every visit starts. By appointment, so there is no waiting in the corridor.",
+"Смотровой кабинет: осмотр, термометрия и назначения — 950 ₽, повторный приём 500 ₽.": "Consulting room: examination, temperature check and treatment plan — 950 ₽, follow-up 500 ₽.",
+"УЗИ-аппарат в кабинете: брюшная полость, мочеполовая система, отдельный орган — от 700 ₽.": "Ultrasound unit on site: abdomen, urinary tract or a single organ — from 700 ₽.",
+"Микроскопия, цитология и пробы крови — берём и смотрим на месте, результат в тот же день.": "Microscopy, cytology and blood samples — taken and read here, results the same day.",
+"Ванна для мытья и обработки — от санации до противопаразитарных процедур.": "Bathing and treatment tub — from cleaning to antiparasitic care.",
+"Стойка администратора клиники «Симба»": "Reception desk at Simba clinic",
+"Рабочее место врача: отоскоп, стетоскоп, препараты": "The vet's desk: otoscope, stethoscope, medicines",
+"Полки ветаптеки: корма и лечебные диеты": "Pharmacy shelves: food and prescription diets",
+"Смотровой кабинет клиники «Симба»": "Consulting room at Simba clinic",
+"Аппарат УЗИ в кабинете клиники «Симба»": "Ultrasound unit at Simba clinic",
+"Микроскоп и пробирки для анализов": "Microscope and sample tubes",
+"Ванна для мытья и обработки животных": "Tub for bathing and treating animals",
+"Команда": "Our team",
+"Наши врачи": "Our doctors",
+"Офтальмология": "Ophthalmology",
+"Тамара Юрьевна Лозовская": "Tamara Yurievna Lozovskaya",
+"Врач-офтальмолог": "Veterinary ophthalmologist",
+"Проводит операции на веках и глазном яблоке, включая микрохирургические.": "Performs eyelid and eyeball surgery, including microsurgery.",
+"Назначает современные высокоэффективные препараты.": "Prescribes modern, high-efficacy medication.",
+"Работает по методике офтальмологического обследования с тест-полосками — оценка слёзопродукции и проходимости слёзных путей.": "Uses a test-strip eye examination protocol — measuring tear production and tear duct patency.",
+"Записаться к офтальмологу": "Book the ophthalmologist",
+"Приём — 1 500 ₽ · операции на веках от 3 000 ₽": "Consultation 1,500 ₽ · eyelid surgery from 3,000 ₽",
+"Обучение и сертификаты": "Training and certificates",
+"10 документов · нажмите, чтобы увеличить": "10 documents · tap to enlarge",
+"Остальные врачи": "Other doctors",
+"фото и имена — заглушки, пришлите свои": "photos and names are placeholders — send us yours",
+"Тамара Юрьевна Лозовская, врач-офтальмолог клиники «Симба»": "Tamara Lozovskaya, veterinary ophthalmologist at Simba clinic",
+"Имя Фамилия": "Name Surname",
+"Главный врач · терапевт": "Head vet · general practice",
+"Хирург · анестезиолог": "Surgeon · anaesthetist",
+"Врач УЗ-диагностики": "Ultrasound specialist",
+"фото врача": "doctor photo",
+"«Офтальмоскопия в диагностике заболеваний глазного дна» · Международная ветеринарная академия, 2023": "“Ophthalmoscopy in fundus disease diagnostics” · International Veterinary Academy, 2023",
+"«Хирургия век и лакримальной системы» · ИВЦ МВА, 2022": "“Eyelid and lacrimal system surgery” · IVC MVA, 2022",
+"«Швы в офтальмохирургии» · MicroLab, Москва, 2022": "“Sutures in eye surgery” · MicroLab, Moscow, 2022",
+"Школа офтальмологии доктора Олейник: передний отрезок глаза, 32 ч, и микрохирургия роговицы, 20 ч": "Dr Oleynik School of Ophthalmology: anterior segment disease, 32 h, and corneal microsurgery, 20 h",
+"«Офтальмология. Дерматология. Лабораторная диагностика» · Подольск, 2022": "“Ophthalmology. Dermatology. Laboratory diagnostics” · Podolsk, 2022",
+"IV Международный съезд ветеринарных офтальмологов": "4th International Congress of Veterinary Ophthalmologists",
+"III Международный съезд ветеринарных офтальмологов": "3rd International Congress of Veterinary Ophthalmologists",
+"II Международный съезд ветеринарных офтальмологов, май 2022": "2nd International Congress of Veterinary Ophthalmologists, May 2022",
+"Санкт-Петербургская ветеринарная офтальмологическая конференция, 2023": "St Petersburg Veterinary Ophthalmology Conference, 2023",
+"Санкт-Петербургская ветеринарная офтальмологическая конференция, 2022": "St Petersburg Veterinary Ophthalmology Conference, 2022",
+"Просмотр сертификата": "Certificate viewer",
+"Закрыть": "Close",
+"Услуги и товары": "Services and products",
+"164 позиции с карточки на Яндекс Картах": "164 items from the Yandex Maps listing",
+"Ветаптека и зоотовары": "Pharmacy and pet supplies",
+"Прайс": "Price list",
+"Показать для": "Show for",
+"Все": "All",
+"Кошки": "Cats",
+"Собаки": "Dogs",
+"Птицы и экзоты": "Birds and exotics",
+"Фильтр по питомцу": "Filter by pet",
+"Поиск по прайсу: вакцинация, УЗИ, стерилизация…": "Search the price list: vaccination, ultrasound, spaying…",
+"В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.": "There are no items for this pet in the price list yet — call us and we'll quote you.",
+"Это полный прайс клиники «Симба».": "This is Simba's complete price list.",
+"164 позиции в 18 разделах перенесены с карточки на Яндекс Картах без изменений: цены, диапазоны «от и до» и пометки о препаратах — как у вас.": "164 items across 18 sections, copied from the Yandex Maps listing unchanged: prices, “from–to” ranges and notes about medication, exactly as you have them.",
+"Лекарства и расходники в стоимость не входят, если не указано отдельно. Итоговую сумму называем до начала лечения.": "Medication and consumables are not included unless stated. We quote the final amount before treatment begins.",
+"Ветаптека и зоомагазин в клинике": "Pharmacy and pet shop on site",
+"Препараты по назначению врача, корма и всё для содержания — можно забрать сразу после приёма, не разыскивая по городу. Дозировку рассчитываем по весу питомца.": "Prescribed medication, food and everyday supplies — pick them up right after the appointment instead of hunting around town. We calculate dosage by your pet's weight.",
+"Корма Dailycat и Dailydog": "Dailycat and Dailydog food",
+"Лечебные диеты Hill's Prescription Diet": "Hill's Prescription Diet",
+"Наполнители": "Cat litter",
+"Поводки, ошейники, шлейки": "Leads, collars, harnesses",
+"Лежанки и когтеточки": "Beds and scratching posts",
+"Сушёные лакомства": "Dried treats",
+"Антипаразитарные средства": "Antiparasitic products",
+"Витамины и добавки": "Vitamins and supplements",
+"Цен на товары в прайсе на Яндекс Картах нет — пришлите список с ценами, выведем их здесь так же, как услуги. Наличие уточняйте по телефону.": "Product prices are not in the Yandex listing — send us the list and we'll show them here just like the services. Call to check stock.",
+"Торговый зал и стойка администратора клиники «Симба»": "Shop floor and reception at Simba clinic",
+"Что пишут владельцы": "What owners say",
+"отзывы с Яндекс Карт": "reviews from Yandex Maps",
+"отзывов и 60 фото на Яндекс Картах": "reviews and 60 photos on Yandex Maps",
+"Отзывы и оценка подтягиваются с карточки клиники и обновляются сами — сайт править не нужно. Ниже — три отзыва с карточки; на боевом сайте они будут обновляться автоматически.": "Reviews and the rating are pulled from the clinic's listing and refresh on their own — no need to edit the site. Three of them are shown below.",
+"Читать отзывы": "Read the reviews",
+"Знаток города 3 уровня": "Local expert, level 3",
+"Знаток города 6 уровня": "Local expert, level 6",
+"Выражаю огромную благодарность коллективу клиники! Делали стерилизацию кошечки. Подробно проинструктировали о всех предстоящих манипуляциях и о постоперационном уходе. Особенно важно для меня, что разрешили находиться рядом с кошкой и успокаивать её во время седации.": "Huge thanks to the whole team! They spayed our cat. They talked us through every step and the aftercare in detail. What mattered most to me is that they let me stay beside her and calm her during sedation.",
+"Спасибо огромное врачу Анне Михайловне! Очень заботливый и внимательный врач. Приём прошёл в спокойной обстановке, сделали всё прекрасно. Осмотр, анализы, прививки. Организация на высоком уровне: запись, отсутствие очереди, уделяют максимум времени и не торопят. Рекомендуем эту клинику!": "Thank you so much to Dr Anna Mikhailovna! A very caring and attentive vet. The appointment was calm and everything went perfectly: examination, tests, vaccinations. Excellent organisation — booking, no queue, they give you plenty of time and never rush. We recommend this clinic!",
+"Специалисты ветклиники «Симба» — постоянные партнёры фестиваля «Уютный дом»: осмотр животных на мероприятии, сертификаты здоровья, лекции, приём в самой клинике наших волонтёров с их подопечными — спокойно, толково, по делу и с искренней любовью к животным!": "The Simba team are long-standing partners of the Cosy Home festival: they examine animals at the event, issue health certificates, give talks and see our volunteers and their rescues at the clinic — calmly, competently, to the point and with genuine love for animals!",
+"Запись": "Booking",
+"Записаться на приём ": "Book an appointment ",
+"Заявка уходит администратору в Telegram — перезвоним и подтвердим время.": "The request goes to the front desk on Telegram — we'll call back to confirm the time.",
+"Ваше имя": "Your name",
+"Как к вам обращаться": "What should we call you",
+"Телефон": "Phone",
+"Ваш питомец": "Your pet",
+"Услуга": "Service",
+"Что беспокоит": "What's wrong",
+"Вялый второй день, не ест, три года, привит": "Lethargic for two days, not eating, three years old, vaccinated",
+"Дата": "Date",
+"Время": "Time",
+"Отправить заявку": "Send the request",
+"Приём терапевта": "General consultation",
+"Вакцинация": "Vaccination",
+"УЗИ или анализы": "Ultrasound or lab tests",
+"Хирургия — консультация": "Surgery — consultation",
+"Стоматология": "Dentistry",
+"Офтальмолог": "Ophthalmologist",
+"Вызов врача на дом": "Home visit",
+"Собака": "Dog",
+"Кошка": "Cat",
+"Грызун": "Rodent",
+"Кролик": "Rabbit",
+"Птица": "Bird",
+"Другой": "Other",
+"Как нас найти": "Finding us",
+"ул. Дзержинского": "Dzerzhinskogo St",
+"Симба · 8Б": "Simba · 8B",
+"интерактивная карта откроется на вашем домене": "the interactive map loads on your own domain",
+"Схема расположения: улица Дзержинского, 8Б": "Location plan: 8B Dzerzhinskogo Street",
+"Ветклиника «Симба» на карте": "Simba vet clinic on the map",
+"Адрес": "Address",
+"Московская обл., Королёв,": "Moscow Region, Korolyov,",
+"ул. Дзержинского, 8Б": "8B Dzerzhinskogo Street",
+"звонок, WhatsApp, Telegram": "call, WhatsApp, Telegram",
+"Часы работы": "Opening hours",
+"Сб–Вс 10:00–19:00": "Sat–Sun 10:00–19:00",
+"Ветеринарный кабинет, аптека и зоотовары в одном месте.": "A vet practice, pharmacy and pet shop in one place.",
+"Приём": "Appointments",
+"Вызов на дом": "Home visits",
+"Ветаптека": "Pharmacy",
+"Как добраться": "Directions",
+"Яндекс Карты": "Yandex Maps",
+"Пн–Вс с 10:00": "Mon–Sun from 10:00",
+"«Симба» · Королёв": "Simba · Korolyov",
+"Демонстрационный макет для показа клинике. Не является официальным сайтом. Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — образцы.": "A demonstration mock-up made to show the clinic. Not the official site. Address, phone and opening hours come from public listings and need confirming; some doctor cards and product prices are placeholders."
+};
+
+  var DYN = {
+    count_all: { ru: function (n) { return n + " позиций"; }, en: function (n) { return n + " items"; } },
+    count_some: { ru: function (a, b) { return "показано " + a + " из " + b; }, en: function (a, b) { return "showing " + a + " of " + b; } },
+    empty_q: { ru: function (q) { return "По запросу «" + q + "» в прайсе ничего не нашлось. Позвоните — назовём стоимость."; },
+               en: function (q) { return "Nothing in the price list matches \u201C" + q + "\u201D. Call us and we'll quote you."; } },
+    today: { ru: "сегодня", en: "today" },
+    closed: { ru: "На сегодня запись закрыта — выберите другой день или позвоните нам.",
+              en: "Booking for today is closed — pick another day or give us a call." },
+    lead_title: { ru: "🐾 Заявка с сайта «Симба»", en: "🐾 Booking request from the Simba website" },
+    lead_name: { ru: "Имя: ", en: "Name: " }, lead_phone: { ru: "Телефон: ", en: "Phone: " },
+    lead_pet: { ru: "Питомец: ", en: "Pet: " }, lead_service: { ru: "Услуга: ", en: "Service: " },
+    lead_when: { ru: "Когда: ", en: "When: " }, lead_comment: { ru: "Комментарий: ", en: "Comment: " },
+    lead_noname: { ru: "не указано", en: "not given" }, lead_nophone: { ru: "не указан", en: "not given" },
+    lead_notime: { ru: "время не выбрано", en: "no time selected" }, dash: { ru: "—", en: "—" },
+    ok_sent: { ru: "Заявка отправлена", en: "Request sent" },
+    ok_sent_note: { ru: "Администратор получил её в Telegram и перезвонит, чтобы подтвердить время.",
+                    en: "The front desk has it on Telegram and will call back to confirm the time." },
+    ok_demo: { ru: "Заявка сформирована", en: "Request prepared" },
+    ok_demo_note: { ru: "Это демо-версия: автоматическая отправка в Telegram включается вместе с ботом клиники. Пока можно отправить заявку вручную или позвонить.",
+                    en: "This is a demo: automatic Telegram delivery switches on with the clinic's bot. For now you can send it by hand or call." },
+    ok_tg: { ru: "Отправить в Telegram", en: "Send via Telegram" },
+    ok_call: { ru: "Позвонить ", en: "Call " },
+    months: { ru: ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"],
+              en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] },
+    wdays: { ru: ["вс","пн","вт","ср","чт","пт","сб"], en: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"] }
+  };
+
+  var LANG = "ru";
+  try { LANG = localStorage.getItem("simba-lang") === "en" ? "en" : "ru"; } catch (e) {}
+  function dyn(key) { var v = DYN[key]; return v ? v[LANG] : ""; }
+
+  var origText = new WeakMap(), origAttr = new WeakMap();
+  var ATTRS = ["alt", "placeholder", "aria-label", "title"];
+
+  function translateTree(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
+      acceptNode: function (n) {
+        if (n.nodeType === 1 && (n.tagName === "SCRIPT" || n.tagName === "STYLE")) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeType === 3) {
+        if (!origText.has(node)) origText.set(node, node.nodeValue);
+        var src = origText.get(node);
+        if (LANG === "ru") { if (node.nodeValue !== src) node.nodeValue = src; continue; }
+        var key = src.replace(/\u00A0/g, " ").trim();
+        if (key && DICT[key]) node.nodeValue = src.match(/^\s*/)[0] + DICT[key] + src.match(/\s*$/)[0];
+      } else {
+        for (var i = 0; i < ATTRS.length; i++) {
+          var a = ATTRS[i];
+          if (!node.hasAttribute(a)) continue;
+          var store = origAttr.get(node) || {};
+          if (!(a in store)) { store[a] = node.getAttribute(a); origAttr.set(node, store); }
+          var val = store[a];
+          node.setAttribute(a, LANG === "en" && DICT[val] ? DICT[val] : val);
+        }
+      }
+    }
+  }
+
+  function applyLang(lang) {
+    LANG = lang === "en" ? "en" : "ru";
+    try { localStorage.setItem("simba-lang", LANG); } catch (e) {}
+    document.documentElement.lang = LANG;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-lang-btn]"), function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.langBtn === LANG));
+    });
+    renderDates();
+    renderTimes();
+    applyPriceFilters();
+    translateTree(document.body);
+  }
+
   /* ==========================================================================
      ДАННЫЕ КЛИНИКИ — всё, что нужно заменить на настоящее, лежит здесь.
      ========================================================================== */
@@ -1103,13 +1717,13 @@
     var empty = $("price-empty");
     empty.hidden = shown > 0;
     if (!empty.hidden) {
-      empty.textContent = curQ
-        ? "По запросу «" + curQ + "» в прайсе ничего не нашлось. Позвоните — назовём стоимость."
-        : "В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.";
+      empty.textContent = curQ ? dyn("empty_q")(curQ)
+        : (LANG === "en" ? DICT["В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость."]
+                         : "В перенесённых разделах прайса позиций для этого питомца пока нет — позвоните, назовём стоимость.");
     }
     $("price-count").textContent = shown === allRows.length
-      ? allRows.length + " позиций"
-      : "показано " + shown + " из " + allRows.length;
+      ? dyn("count_all")(allRows.length)
+      : dyn("count_some")(shown, allRows.length);
   }
 
   $("species").addEventListener("click", function (e) {
@@ -1166,8 +1780,6 @@
   });
 
   /* ---------- форма: дата и время ---------- */
-  var MONTHS = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
-  var WDAYS = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
   var today = new Date(); today.setHours(0, 0, 0, 0);
   var days = [];
   for (var i = 0; i < 7; i++) { var d = new Date(today); d.setDate(today.getDate() + i); days.push(d); }
@@ -1181,10 +1793,14 @@
     return h % 100 < 38;
   };
 
-  $("dates").innerHTML = days.map(function (d, i) {
-    return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="' + (i === 0) + '">' +
-      d.getDate() + ' ' + MONTHS[d.getMonth()] + '<small>' + (i === 0 ? "сегодня" : WDAYS[d.getDay()]) + '</small></button>';
-  }).join("");
+  function renderDates() {
+    var months = dyn("months"), wdays = dyn("wdays");
+    $("dates").innerHTML = days.map(function (d, i) {
+      return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="' + (i === chosenDay) + '">' +
+        d.getDate() + ' ' + months[d.getMonth()] + '<small>' + (i === 0 ? dyn("today") : wdays[d.getDay()]) + '</small></button>';
+    }).join("");
+  }
+  renderDates();
 
   function renderTimes() {
     var d = days[chosenDay];
@@ -1203,7 +1819,7 @@
                 ' aria-pressed="false">' + t + '</button>';
       }
     }
-    $("times").innerHTML = html || '<p class="note">На сегодня запись закрыта — выберите другой день или позвоните нам.</p>';
+    $("times").innerHTML = html || '<p class="note">' + dyn("closed") + '</p>';
     chosenTime = first;
     var btn = $("times").querySelector('[data-time="' + first + '"]');
     if (btn) btn.setAttribute("aria-pressed", "true");
@@ -1227,15 +1843,16 @@
   /* ---------- форма: отправка ---------- */
   function leadText() {
     var d = days[chosenDay];
-    var petLabel = (PET_TYPES.filter(function (p) { return p.id === pet; })[0] || {}).label || "—";
+    var tile = $("pets").querySelector('[data-pet="' + pet + '"] span');
+    var petLabel = tile ? tile.textContent : "—";
     return [
-      "🐾 Заявка с сайта «Симба»",
-      "Имя: " + ($("f-name").value.trim() || "не указано"),
-      "Телефон: " + ($("f-phone").value.trim() || "не указан"),
-      "Питомец: " + petLabel,
-      "Услуга: " + $("f-service").value,
-      "Когда: " + d.getDate() + " " + MONTHS[d.getMonth()] + ", " + (chosenTime || "время не выбрано"),
-      "Комментарий: " + ($("f-comment").value.trim() || "—")
+      dyn("lead_title"),
+      dyn("lead_name") + ($("f-name").value.trim() || dyn("lead_noname")),
+      dyn("lead_phone") + ($("f-phone").value.trim() || dyn("lead_nophone")),
+      dyn("lead_pet") + petLabel,
+      dyn("lead_service") + $("f-service").selectedOptions[0].textContent,
+      dyn("lead_when") + d.getDate() + " " + dyn("months")[d.getMonth()] + ", " + (chosenTime || dyn("lead_notime")),
+      dyn("lead_comment") + ($("f-comment").value.trim() || "—")
     ].join("\n");
   }
 
@@ -1277,17 +1894,16 @@
     };
 
     sendLead(text).then(function () {
-      show("Заявка отправлена", "Администратор получил её в Telegram и перезвонит, чтобы подтвердить время.");
+      show(dyn("ok_sent"), dyn("ok_sent_note"));
     }).catch(function () {
       var tg = CONFIG.adminTelegram
         ? "https://t.me/" + CONFIG.adminTelegram.replace("@", "")
         : "https://t.me/share/url?url=" + encodeURIComponent(CONFIG.siteUrl) + "&text=" + encodeURIComponent(text);
       show(
-        "Заявка сформирована",
-        "Это демо-версия: автоматическая отправка в Telegram включается вместе с ботом клиники. Пока можно отправить заявку вручную или позвонить.",
+        dyn("ok_demo"), dyn("ok_demo_note"),
         '<div class="ok-actions">' +
-          '<a class="btn btn-coral" href="' + tg + '" target="_blank" rel="noopener">Отправить в Telegram</a>' +
-          '<a class="btn btn-line" href="' + CONFIG.phoneHref + '">Позвонить ' + CONFIG.phone + '</a>' +
+          '<a class="btn btn-coral" href="' + tg + '" target="_blank" rel="noopener">' + dyn("ok_tg") + '</a>' +
+          '<a class="btn btn-line" href="' + CONFIG.phoneHref + '">' + dyn("ok_call") + CONFIG.phone + '</a>' +
         '</div>'
       );
     });
@@ -1342,8 +1958,15 @@
     });
   }
 
+  /* ---------- переключение языка ---------- */
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-lang-btn]");
+    if (btn) applyLang(btn.dataset.langBtn);
+  });
+
   /* ---------- мелочи ---------- */
   $("year").textContent = String(new Date().getFullYear());
+  applyLang(LANG);
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener("click", function (e) {
       var target = document.querySelector(a.getAttribute("href"));
