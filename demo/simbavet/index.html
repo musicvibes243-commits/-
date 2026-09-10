@@ -1,0 +1,826 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Симба — ветеринарный кабинет</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    /* палитра: петроль + янтарь (Симба) + нефрит */
+    --bg:#F2F5F2;
+    --bg-elev:#FFFFFF;
+    --deep:#12292B;
+    --deep-2:#1B3A3C;
+    --deep-fg:#E6EDE7;
+    --deep-fg-muted:#9FB6B3;
+    --fg:#12292B;
+    --fg-muted:#53696A;
+    --line:#D8E0D9;
+    --line-strong:#BDC9BE;
+    --accent:#B4700B;
+    --accent-bright:#E09B26;
+    --accent-wash:#F7EAD2;
+    --jade:#2E7D6E;
+    --jade-wash:#E0EDE8;
+    --alert:#A8402B;
+
+    --shell:1120px;
+    --gutter:clamp(16px,4vw,40px);
+    --s-1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.4375rem; --s3:1.875rem; --s4:2.5rem;
+    --sans:"Onest","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    --slab:"Bitter","Georgia",serif;
+    --mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0D1E20; --bg-elev:#152A2C; --deep:#091618; --deep-2:#132B2D;
+      --deep-fg:#E6EDE7; --deep-fg-muted:#9FB6B3;
+      --fg:#E7EEE8; --fg-muted:#9AB0AE; --line:#25403F; --line-strong:#33534F;
+      --accent:#E5A231; --accent-bright:#E5A231; --accent-wash:#33280F;
+      --jade:#5BAE99; --jade-wash:#12312C; --alert:#DE7259;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D1E20; --bg-elev:#152A2C; --deep:#091618; --deep-2:#132B2D;
+    --deep-fg:#E6EDE7; --deep-fg-muted:#9FB6B3;
+    --fg:#E7EEE8; --fg-muted:#9AB0AE; --line:#25403F; --line-strong:#33534F;
+    --accent:#E5A231; --accent-bright:#E5A231; --accent-wash:#33280F;
+    --jade:#5BAE99; --jade-wash:#12312C; --alert:#DE7259;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:var(--sans); font-size:var(--s0); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--slab); font-weight:700; line-height:1.15; text-wrap:balance; margin:0}
+  p{margin:0}
+  a{color:inherit}
+  img,svg{max-width:100%}
+  :focus-visible{outline:2px solid var(--accent-bright); outline-offset:3px; border-radius:2px}
+
+  .shell{max-width:var(--shell); margin-inline:auto; padding-inline:var(--gutter)}
+  .eyebrow{
+    font-family:var(--mono); font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--fg-muted); display:flex; align-items:center; gap:.6rem; margin-bottom:1rem;
+  }
+  .eyebrow::before{content:""; width:14px; height:2px; background:var(--accent); flex:none}
+  .lede{color:var(--fg-muted); max-width:62ch}
+  section{padding-block:clamp(48px,7vw,84px)}
+  .sec-head{display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:end; justify-content:space-between; margin-bottom:2.25rem}
+  .sec-head h2{font-size:var(--s3)}
+
+  /* ---- демо-плашка ---- */
+  .demo-bar{
+    background:var(--accent); color:#1A1204;
+    font-family:var(--mono); font-size:.75rem; letter-spacing:.04em;
+    display:flex; gap:.5rem 1rem; flex-wrap:wrap; justify-content:center; align-items:center;
+    padding:.5rem var(--gutter); text-align:center;
+  }
+  .demo-bar b{font-weight:500; text-transform:uppercase; letter-spacing:.12em}
+
+  /* ---- шапка ---- */
+  .top{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  .top-in{display:flex; align-items:center; gap:1.25rem; padding-block:.75rem}
+  .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none; margin-right:auto}
+  .brand-name{font-family:var(--slab); font-size:1.25rem; letter-spacing:.01em}
+  .brand-sub{font-family:var(--mono); font-size:.625rem; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); display:block; margin-top:-2px}
+  .nav{display:flex; gap:1.5rem; font-size:var(--s-1)}
+  .nav a{text-decoration:none; color:var(--fg-muted); padding-block:.25rem; border-bottom:1px solid transparent}
+  .nav a:hover{color:var(--fg); border-bottom-color:var(--accent)}
+  .top-phone{font-family:var(--mono); font-size:var(--s-1); text-decoration:none; white-space:nowrap}
+  @media (max-width:900px){ .nav{display:none} }
+  @media (max-width:560px){ .top-phone{display:none} }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+    font:500 var(--s-1)/1 var(--sans); text-decoration:none; cursor:pointer;
+    padding:.75rem 1.1rem; border-radius:3px; border:1px solid transparent; white-space:nowrap;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .btn-primary{background:var(--accent); color:#180F02; border-color:var(--accent)}
+  .btn-primary:hover{background:var(--accent-bright)}
+  .btn-ghost{border-color:var(--line-strong); color:var(--fg); background:transparent}
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent)}
+  .btn-on-deep{border-color:#3D5C5C; color:var(--deep-fg)}
+  .btn-on-deep:hover{border-color:var(--accent-bright); color:var(--accent-bright)}
+  .btn-lg{padding:.95rem 1.5rem; font-size:var(--s0)}
+
+  /* ---- герой ---- */
+  .hero{background:var(--deep); color:var(--deep-fg); padding-block:clamp(44px,6vw,72px)}
+  .hero-grid{display:grid; grid-template-columns:1.35fr .9fr; gap:clamp(28px,4vw,56px); align-items:start}
+  .hero .eyebrow{color:var(--deep-fg-muted)}
+  .hero h1{font-size:clamp(2rem,4.4vw,3.1rem); margin-bottom:1.1rem}
+  .hero h1 em{font-style:normal; color:var(--accent-bright)}
+  .hero-lede{color:var(--deep-fg-muted); max-width:52ch; font-size:var(--s1)}
+  .hero-cta{display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.75rem}
+  .facts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:#2C4646; margin-top:2.25rem; border:1px solid #2C4646}
+  .fact{background:var(--deep); padding:.9rem 1rem}
+  .fact dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--deep-fg-muted)}
+  .fact dd{margin:.35rem 0 0; font-size:var(--s-1); line-height:1.45}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr} .facts{grid-template-columns:1fr} }
+
+  /* ---- карточка записи в герое ---- */
+  .slotcard{background:var(--deep-2); border:1px solid #2E4B4B; padding:1.25rem}
+  .slotcard-head{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; border-bottom:1px solid #2E4B4B; padding-bottom:.75rem; margin-bottom:1rem}
+  .slotcard-head strong{font-family:var(--slab); font-size:var(--s1); font-weight:600}
+  .slotcard-head span{font-family:var(--mono); font-size:.6875rem; color:var(--deep-fg-muted); text-transform:uppercase; letter-spacing:.1em}
+  .slots{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem}
+  .slot{
+    font-family:var(--mono); font-size:var(--s-1); padding:.55rem .25rem; text-align:center;
+    background:transparent; color:var(--deep-fg); border:1px solid #3D5C5C; border-radius:2px; cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .slot:hover:not(:disabled){border-color:var(--accent-bright); color:var(--accent-bright)}
+  .slot[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#180F02}
+  .slot:disabled{color:#5B7676; border-style:dashed; cursor:not-allowed; text-decoration:line-through}
+  .slotcard-foot{margin-top:1rem; font-size:var(--s-1); color:var(--deep-fg-muted); display:flex; gap:.5rem; align-items:flex-start}
+  .slotcard-foot svg{flex:none; margin-top:3px}
+
+  /* ---- услуги: сетка на волосяных линиях ---- */
+  .grid-lines{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+  .cell{background:var(--bg-elev); padding:1.5rem 1.4rem; display:flex; flex-direction:column; gap:.5rem}
+  .cell h3{font-size:var(--s1)}
+  .cell p{font-size:var(--s-1); color:var(--fg-muted)}
+  .cell .cell-meta{margin-top:auto; padding-top:.9rem; font-family:var(--mono); font-size:.6875rem; letter-spacing:.06em; color:var(--accent)}
+  .cell-mark{width:26px; height:26px; color:var(--jade)}
+  .cell--wide{grid-column:span 2}
+  @media (max-width:880px){ .grid-lines{grid-template-columns:repeat(2,minmax(0,1fr))} .cell--wide{grid-column:span 2} }
+  @media (max-width:560px){ .grid-lines{grid-template-columns:1fr} .cell--wide{grid-column:span 1} }
+
+  /* ---- шаги приёма ---- */
+  .steps{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2rem 1.5rem; counter-reset:step}
+  .step{border-top:2px solid var(--line-strong); padding-top:1rem}
+  .step-n{font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; color:var(--accent); display:block; margin-bottom:.5rem}
+  .step h3{font-size:var(--s0); margin-bottom:.4rem}
+  .step p{font-size:var(--s-1); color:var(--fg-muted)}
+  @media (max-width:860px){ .steps{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:480px){ .steps{grid-template-columns:1fr} }
+
+  /* ---- планировщик профилактики ---- */
+  .plan{background:var(--bg-elev); border:1px solid var(--line); display:grid; grid-template-columns:minmax(260px,320px) 1fr}
+  .plan-controls{padding:1.5rem; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:1.1rem}
+  .plan-out{padding:1.5rem}
+  @media (max-width:820px){ .plan{grid-template-columns:1fr} .plan-controls{border-right:0; border-bottom:1px solid var(--line)} }
+  .field{display:flex; flex-direction:column; gap:.4rem}
+  .field label{font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted)}
+  .field input,.field select,.field textarea{
+    font:400 var(--s0)/1.4 var(--sans); color:var(--fg); background:var(--bg);
+    border:1px solid var(--line-strong); border-radius:2px; padding:.65rem .7rem; width:100%;
+  }
+  .field textarea{resize:vertical; min-height:84px}
+  .seg{display:flex; flex-wrap:wrap; gap:.4rem}
+  .seg button{
+    font:500 var(--s-1)/1 var(--sans); padding:.55rem .8rem; cursor:pointer; border-radius:2px;
+    background:transparent; border:1px solid var(--line-strong); color:var(--fg-muted);
+  }
+  .seg button[aria-pressed="true"]{background:var(--jade-wash); border-color:var(--jade); color:var(--jade)}
+  .plan-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
+  .plan-list li{display:grid; grid-template-columns:auto 1fr; gap:.35rem 1rem; padding:.85rem 0; border-bottom:1px dashed var(--line)}
+  .plan-list li:last-child{border-bottom:0; padding-bottom:0}
+  .plan-when{font-family:var(--mono); font-size:.75rem; color:var(--accent); letter-spacing:.04em; padding-top:.2rem; white-space:nowrap}
+  .plan-what strong{display:block; font-weight:600}
+  .plan-what span{font-size:var(--s-1); color:var(--fg-muted)}
+  .plan-empty{color:var(--fg-muted); font-size:var(--s-1)}
+  @media (max-width:520px){ .plan-list li{grid-template-columns:1fr} .plan-when{padding-top:0} }
+
+  /* ---- цены ---- */
+  .tag{
+    font-family:var(--mono); font-size:.625rem; letter-spacing:.14em; text-transform:uppercase;
+    border:1px dashed var(--line-strong); color:var(--fg-muted); padding:.3rem .5rem; border-radius:2px; white-space:nowrap;
+  }
+  .price-wrap{overflow-x:auto; border:1px solid var(--line); background:var(--bg-elev)}
+  table.price{width:100%; border-collapse:collapse; min-width:520px}
+  table.price th,table.price td{text-align:left; padding:.8rem 1.25rem; border-bottom:1px solid var(--line)}
+  table.price thead th{font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted); font-weight:400}
+  table.price td:last-child,table.price th:last-child{text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+  table.price tbody tr:last-child td{border-bottom:0}
+  table.price .grp td{background:var(--jade-wash); font-family:var(--mono); font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; color:var(--jade)}
+  .price-note{font-size:var(--s-1); color:var(--fg-muted); margin-top:.9rem}
+
+  /* ---- команда и отзывы ---- */
+  .people{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.5rem}
+  .person{display:flex; gap:1rem; align-items:flex-start}
+  .mono-avatar{
+    width:56px; height:56px; flex:none; border-radius:50%; display:grid; place-items:center;
+    background:var(--accent-wash); color:var(--accent); font-family:var(--slab); font-size:1.1rem;
+    border:1px solid var(--line);
+  }
+  .person h3{font-size:var(--s0)}
+  .person p{font-size:var(--s-1); color:var(--fg-muted)}
+  .person .role{font-family:var(--mono); font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; color:var(--jade); margin-bottom:.3rem}
+  @media (max-width:820px){ .people{grid-template-columns:1fr} }
+
+  .quotes{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+  .quote{background:var(--bg-elev); padding:1.4rem; display:flex; flex-direction:column; gap:.9rem}
+  .quote blockquote{margin:0; font-size:var(--s-1); line-height:1.65}
+  .quote footer{margin-top:auto; font-family:var(--mono); font-size:.6875rem; letter-spacing:.06em; color:var(--fg-muted)}
+  @media (max-width:820px){ .quotes{grid-template-columns:1fr} }
+
+  /* ---- запись и контакты ---- */
+  .book{background:var(--deep); color:var(--deep-fg)}
+  .book .eyebrow{color:var(--deep-fg-muted)}
+  .book h2{font-size:var(--s3); color:var(--deep-fg)}
+  .book-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(28px,4vw,56px); align-items:start}
+  .book .field label{color:var(--deep-fg-muted)}
+  .book .field input,.book .field select,.book .field textarea{background:var(--deep-2); border-color:#33524F; color:var(--deep-fg)}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+  form.booking{display:flex; flex-direction:column; gap:1rem; margin-top:1.75rem}
+  .form-note{font-size:var(--s-1); color:var(--deep-fg-muted)}
+  .receipt{border:1px solid var(--accent); background:var(--deep-2); padding:1rem 1.1rem; font-size:var(--s-1); display:none}
+  .receipt[data-shown="true"]{display:block}
+  .receipt strong{font-family:var(--mono); color:var(--accent-bright); display:block; font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.45rem}
+  .contacts{display:flex; flex-direction:column; gap:1.25rem}
+  .contact-row{border-top:1px solid #2C4646; padding-top:.9rem}
+  .contact-row dt{font-family:var(--mono); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--deep-fg-muted); margin-bottom:.3rem}
+  .contact-row dd{margin:0; font-size:var(--s0)}
+  .contact-row a{text-decoration:none; border-bottom:1px solid #3D5C5C}
+  .contact-row a:hover{border-bottom-color:var(--accent-bright); color:var(--accent-bright)}
+  .map{width:100%; height:auto; border:1px solid #2C4646; display:block}
+  @media (max-width:860px){ .book-grid{grid-template-columns:1fr} .form-row{grid-template-columns:1fr} }
+
+  /* ---- подвал ---- */
+  .foot{background:var(--bg-elev); border-top:1px solid var(--line); padding-block:2.25rem; font-size:var(--s-1); color:var(--fg-muted)}
+  .foot-in{display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; justify-content:space-between; align-items:flex-start}
+  .foot strong{color:var(--fg); font-family:var(--slab); font-weight:600}
+  .disclaimer{border:1px dashed var(--line-strong); padding:1rem 1.1rem; max-width:56ch; line-height:1.55}
+
+  @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important; animation-duration:.01ms !important} }
+</style>
+
+<div class="demo-bar">
+  <b>Демо-концепт</b>
+  <span>макет сайта для ветклиники «Симба», Королёв · это не официальный сайт · тексты, цены и фото — заглушки</span>
+</div>
+
+<header class="top">
+  <div class="shell top-in">
+    <a class="brand" href="#top">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="var(--accent)" stroke-width="1.5"></circle>
+        <path d="M13 15c0-3 3-5 7-5s7 2 7 5c0 1.5-.6 2.6-1.4 3.6.9 1.2 1.4 2.6 1.4 4.1 0 4-3.1 6.8-7 6.8s-7-2.8-7-6.8c0-1.5.5-2.9 1.4-4.1C13.6 17.6 13 16.5 13 15Z" stroke="var(--accent)" stroke-width="1.5"></path>
+        <circle cx="17" cy="21" r="1.4" fill="var(--accent)"></circle>
+        <circle cx="23" cy="21" r="1.4" fill="var(--accent)"></circle>
+        <path d="M20 24.5v1.8M17.6 27.4c1.4 1 3.4 1 4.8 0" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <span>
+        <span class="brand-name">Симба</span>
+        <span class="brand-sub">ветеринарный кабинет</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#services">Услуги</a>
+      <a href="#visit">Как проходит приём</a>
+      <a href="#plan">Календарь прививок</a>
+      <a href="#prices">Цены</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="top-phone" href="tel:+79258711713">+7 925 871-17-13</a>
+    <a class="btn btn-primary" href="#book">Записаться</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <p class="eyebrow">Королёв · ул. Дзержинского, 8Б</p>
+        <h1>Клиника у дома, где вашего питомца <em>помнят по имени</em></h1>
+        <p class="hero-lede">Терапия, хирургия, УЗИ и анализы для кошек, собак, грызунов и птиц. Приём по записи — без очереди в коридоре и без спешки на осмотре.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#book">Записаться на приём</a>
+          <a class="btn btn-on-deep btn-lg" href="tel:+79258711713">Позвонить: +7 925 871-17-13</a>
+        </div>
+        <dl class="facts">
+          <div class="fact">
+            <dt>Часы приёма</dt>
+            <dd>Пн–Пт 10:00–20:00<br>Сб–Вс 10:00–19:00</dd>
+          </div>
+          <div class="fact">
+            <dt>Адрес</dt>
+            <dd>Королёв, Московская обл.<br>ул. Дзержинского, 8Б</dd>
+          </div>
+          <div class="fact">
+            <dt>Экстренный случай</dt>
+            <dd>Принимаем вне очереди — предупредите по телефону, что едете</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside class="slotcard" aria-labelledby="slots-title">
+        <div class="slotcard-head">
+          <strong id="slots-title">Свободное время</strong>
+          <span id="slots-date">сегодня</span>
+        </div>
+        <div class="slots" id="slots" role="group" aria-label="Свободные слоты на сегодня">
+          <button type="button" class="slot" disabled>10:00</button>
+          <button type="button" class="slot" disabled>10:30</button>
+          <button type="button" class="slot" data-time="11:00" aria-pressed="false">11:00</button>
+          <button type="button" class="slot" disabled>12:00</button>
+          <button type="button" class="slot" data-time="13:30" aria-pressed="false">13:30</button>
+          <button type="button" class="slot" data-time="14:00" aria-pressed="false">14:00</button>
+          <button type="button" class="slot" disabled>16:00</button>
+          <button type="button" class="slot" data-time="17:30" aria-pressed="false">17:30</button>
+          <button type="button" class="slot" data-time="19:00" aria-pressed="false">19:00</button>
+        </div>
+        <p class="slotcard-foot">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor"></circle><path d="M8 4.5V8l2.5 1.5" stroke="currentColor" stroke-linecap="round"></path></svg>
+          <span>Выберите время — оно подставится в форму записи. На осмотр закладываем 20–30 минут.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Услуги</p>
+          <h2>Что делаем в кабинете</h2>
+        </div>
+        <p class="lede">Диагностику и большинство манипуляций проводим на месте — не отправляем вас с анализами в другой конец города.</p>
+      </div>
+      <div class="grid-lines">
+        <article class="cell cell--wide">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13h4l2-5 3 9 2-4h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <h3>Приём терапевта</h3>
+          <p>Осмотр, термометрия, сбор анамнеза, план обследования и лечения. Расписываем схему в ветпаспорт и объясняем, что делать дома. Повторный приём по этому же случаю — со скидкой.</p>
+          <p class="cell-meta">20–30 минут · по записи</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4h6M12 4v5m-4.5 3.5 9-9M6 15l3-3m6 6 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"></rect></svg>
+          <h3>Вакцинация</h3>
+          <p>Комплексные вакцины для кошек и собак, бешенство, ревакцинация. Перед прививкой — осмотр и проверка обработки от гельминтов.</p>
+          <p class="cell-meta">Отметка в ветпаспорте</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"></circle></svg>
+          <h3>Хирургия</h3>
+          <p>Кастрация и стерилизация, удаление новообразований, обработка ран и абсцессов. Контроль состояния во время наркоза и осмотр после.</p>
+          <p class="cell-meta">Швы снимаем бесплатно</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16c2-6 5-9 8-9s6 2 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="16" r="3" stroke="currentColor" stroke-width="1.6"></circle></svg>
+          <h3>УЗИ и диагностика</h3>
+          <p>УЗИ брюшной полости, диагностика беременности, оценка состояния почек, печени, мочевого пузыря. Результат — сразу на приёме.</p>
+          <p class="cell-meta">Без предварительной стрижки — по возможности</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="3" width="5" height="18" rx="2.5" stroke="currentColor" stroke-width="1.6"></rect><path d="M13 8h6M13 12h6M13 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <h3>Лаборатория</h3>
+          <p>Общий клинический и биохимический анализ крови, анализ мочи, соскобы и цитология. Экспресс-тесты — в день обращения.</p>
+          <p class="cell-meta">Экспресс — от 30 минут</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14v12H5z" stroke="currentColor" stroke-width="1.6"></path><path d="M8 7V5h8v2M9 12h6M9 15.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <h3>Чипирование и документы</h3>
+          <p>Микрочип стандарта ISO с регистрацией в базе, международный ветпаспорт, справки для перевозки и выставок.</p>
+          <p class="cell-meta">Для поездок — планируйте заранее</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5c3 0 5 2 5 5 0 4-1 9-3 9-1 0-1.3-2-2-2s-1 2-2 2c-2 0-3-5-3-9 0-3 2-5 5-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+          <h3>Стоматология</h3>
+          <p>Осмотр пасти, ультразвуковая чистка зубного камня, удаление разрушенных зубов. Частая причина «плохого запаха» и отказа от еды.</p>
+          <p class="cell-meta">Кошкам и собакам</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12s3.5-5.5 9-5.5S21 12 21 12s-3.5 5.5-9 5.5S3 12 3 12Z" stroke="currentColor" stroke-width="1.6"></path><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"></circle></svg>
+          <h3>Офтальмология</h3>
+          <p>Приём профильного врача: конъюнктивиты, травмы роговицы, заворот век, слезотечение у брахицефалов.</p>
+          <p class="cell-meta">По записи в отдельные дни</p>
+        </article>
+        <article class="cell">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.6"></rect><path d="M9 7V5a3 3 0 0 1 6 0v2M12 11v5M9.5 13.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <h3>Ветаптека и корма</h3>
+          <p>Назначенные препараты и лечебные диеты — сразу на месте, в нужной дозировке. Не нужно искать по городу то, что выписал врач.</p>
+          <p class="cell-meta">Дозировку рассчитываем по весу</p>
+        </article>
+        <article class="cell cell--wide">
+          <svg class="cell-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+          <h3>Вызов врача на дом</h3>
+          <p>Для пожилых, тяжёлых и очень пугливых пациентов: осмотр, забор анализов, капельница, вакцинация на дому.</p>
+          <p class="cell-meta">Королёв и ближайшие районы</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" style="background:var(--bg-elev); border-block:1px solid var(--line)">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Как проходит приём</p>
+          <h2>Четыре шага — от звонка до контроля</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <span class="step-n">Шаг 01</span>
+          <h3>Записываетесь</h3>
+          <p>По телефону или через форму на сайте. Скажите вид, возраст питомца и что беспокоит — подберём время и врача.</p>
+        </article>
+        <article class="step">
+          <span class="step-n">Шаг 02</span>
+          <h3>Приезжаете к своему времени</h3>
+          <p>Возьмите ветпаспорт и переноску. Кошек в холле не выпускаем — так спокойнее и вашему питомцу, и соседям по очереди.</p>
+        </article>
+        <article class="step">
+          <span class="step-n">Шаг 03</span>
+          <h3>Осмотр и диагностика</h3>
+          <p>Осмотр, термометрия, при необходимости — УЗИ и анализы прямо на приёме. Всё объясняем словами, а не терминами.</p>
+        </article>
+        <article class="step">
+          <span class="step-n">Шаг 04</span>
+          <h3>Назначения и контроль</h3>
+          <p>Схема лечения письменно, препараты — в ветаптеке на месте. Напомним о ревакцинации и контрольном визите.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Календарь профилактики</p>
+          <h2>Что нужно питомцу в его возрасте</h2>
+        </div>
+        <p class="lede">Выберите, кто у вас живёт, и возраст — покажем, что по плану и о чём стоит спросить врача на приёме.</p>
+      </div>
+      <div class="plan">
+        <div class="plan-controls">
+          <div class="field">
+            <span id="pet-label" class="field-label" style="font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted)">Питомец</span>
+            <div class="seg" id="pet-seg" role="group" aria-labelledby="pet-label">
+              <button type="button" data-pet="dog" aria-pressed="true">Собака</button>
+              <button type="button" data-pet="cat" aria-pressed="false">Кошка</button>
+              <button type="button" data-pet="exotic" aria-pressed="false">Грызун или птица</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="age">Возраст, месяцев</label>
+            <input type="number" id="age" name="age" min="1" max="240" value="3" inputmode="numeric">
+          </div>
+          <p class="plan-empty">Ориентир для планирования. Точные сроки и препараты врач подбирает на осмотре.</p>
+        </div>
+        <div class="plan-out">
+          <ul class="plan-list" id="plan-list"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prices" style="background:var(--bg-elev); border-block:1px solid var(--line)">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Цены</p>
+          <h2>Понятный прайс без «уточняйте по телефону»</h2>
+        </div>
+        <span class="tag">В демо — числа-заглушки</span>
+      </div>
+      <div class="price-wrap">
+        <table class="price">
+          <thead>
+            <tr><th scope="col">Услуга</th><th scope="col">Стоимость</th></tr>
+          </thead>
+          <tbody>
+            <tr class="grp"><td colspan="2">Приём</td></tr>
+            <tr><td>Первичный приём терапевта</td><td>—— ₽</td></tr>
+            <tr><td>Повторный приём по тому же случаю</td><td>—— ₽</td></tr>
+            <tr><td>Приём офтальмолога</td><td>—— ₽</td></tr>
+            <tr class="grp"><td colspan="2">Профилактика</td></tr>
+            <tr><td>Вакцинация комплексная (с вакциной)</td><td>—— ₽</td></tr>
+            <tr><td>Вакцинация от бешенства</td><td>—— ₽</td></tr>
+            <tr><td>Чипирование с регистрацией в базе</td><td>—— ₽</td></tr>
+            <tr class="grp"><td colspan="2">Диагностика</td></tr>
+            <tr><td>УЗИ брюшной полости</td><td>—— ₽</td></tr>
+            <tr><td>Общий клинический анализ крови</td><td>—— ₽</td></tr>
+            <tr><td>Биохимический анализ крови</td><td>—— ₽</td></tr>
+            <tr class="grp"><td colspan="2">Хирургия</td></tr>
+            <tr><td>Кастрация кота</td><td>—— ₽</td></tr>
+            <tr><td>Стерилизация кошки</td><td>—— ₽</td></tr>
+            <tr><td>Ультразвуковая чистка зубов</td><td>—— ₽</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="price-note">Пришлите ваш актуальный прайс — подставим цифры и добавим фильтр «кошка / собака», чтобы владелец сразу видел свою цену.</p>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Команда</p>
+          <h2>Кто ведёт приём</h2>
+        </div>
+        <span class="tag">Имена и фото — заглушки</span>
+      </div>
+      <div class="people">
+        <article class="person">
+          <div class="mono-avatar" aria-hidden="true">ГВ</div>
+          <div>
+            <p class="role">Главный врач · терапевт</p>
+            <h3>Имя Фамилия</h3>
+            <p>Здесь будет пара строк: где учился, сколько лет в практике, чем занимается предметно. Такие подписи владельцы читают перед первым визитом чаще всего.</p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="mono-avatar" aria-hidden="true">ХА</div>
+          <div>
+            <p class="role">Хирург · анестезиолог</p>
+            <h3>Имя Фамилия</h3>
+            <p>Плановая и экстренная хирургия, ведение наркоза, послеоперационный контроль. Фото в халате на однотонном фоне — снимем или возьмём ваши.</p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="mono-avatar" aria-hidden="true">ОФ</div>
+          <div>
+            <p class="role">Врач-офтальмолог</p>
+            <h3>Имя Фамилия</h3>
+            <p>Приём по записи в отдельные дни. Для профильных специалистов имеет смысл сделать отдельную страницу — по ним приезжают из соседних городов.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" style="background:var(--bg-elev); border-block:1px solid var(--line)">
+    <div class="shell">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Отзывы</p>
+          <h2>Что пишут владельцы</h2>
+        </div>
+        <span class="tag">Текст-рыба · подключим Яндекс Карты</span>
+      </div>
+      <div class="quotes">
+        <article class="quote">
+          <blockquote>Место для реального отзыва с Яндекс Карт или 2ГИС. Такие блоки лучше не писать вручную, а подтягивать автоматически — тогда они всегда свежие и им верят.</blockquote>
+          <footer>Владелец кота · отзыв-заглушка</footer>
+        </article>
+        <article class="quote">
+          <blockquote>Второй отзыв. В готовой версии рядом стоит оценка и дата, а по клику открывается карточка клиники на карте.</blockquote>
+          <footer>Владелец собаки · отзыв-заглушка</footer>
+        </article>
+        <article class="quote">
+          <blockquote>Третий отзыв. Если отзывов много, показываем три последних и ссылку «смотреть все» — страница не разрастается.</blockquote>
+          <footer>Владелец шиншиллы · отзыв-заглушка</footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" class="book">
+    <div class="shell book-grid">
+      <div>
+        <p class="eyebrow">Запись</p>
+        <h2>Записаться на приём</h2>
+        <p class="form-note" style="margin-top:.75rem">Заполните форму — в рабочей версии заявка уходит администратору в мессенджер и в CRM, а вам приходит подтверждение. В демо ничего никуда не отправляется.</p>
+        <form class="booking" id="booking" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Ваше имя</label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться">
+            </div>
+            <div class="field">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+7 ___ ___-__-__">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="pet">Питомец</label>
+              <select id="pet" name="pet">
+                <option>Кошка</option>
+                <option>Собака</option>
+                <option>Грызун</option>
+                <option>Птица</option>
+                <option>Другой</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="service">Услуга</label>
+              <select id="service" name="service">
+                <option>Приём терапевта</option>
+                <option>Вакцинация</option>
+                <option>УЗИ или анализы</option>
+                <option>Хирургия — консультация</option>
+                <option>Стоматология</option>
+                <option>Офтальмолог</option>
+                <option>Вызов на дом</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="date">Дата</label>
+              <input type="date" id="date" name="date">
+            </div>
+            <div class="field">
+              <label for="time">Время</label>
+              <input type="text" id="time" name="time" placeholder="выберите слот выше" readonly>
+            </div>
+          </div>
+          <div class="field">
+            <label for="comment">Что беспокоит</label>
+            <textarea id="comment" name="comment" placeholder="Например: вялый второй день, отказывается от корма, третий год, не вакцинирован"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="align-self:flex-start">Отправить заявку</button>
+          <div class="receipt" id="receipt" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="contacts" id="contacts">
+        <svg class="map" viewBox="0 0 420 260" role="img" aria-label="Схема расположения: ул. Дзержинского, 8Б">
+          <rect width="420" height="260" fill="#152F31"></rect>
+          <g stroke="#24444A" stroke-width="14">
+            <path d="M-10 92h440"></path><path d="M-10 208h440"></path>
+            <path d="M118 -10v280"></path><path d="M312 -10v280"></path>
+          </g>
+          <g stroke="#1E3A3D" stroke-width="7">
+            <path d="M-10 150h440"></path><path d="M215 -10v280"></path>
+          </g>
+          <g fill="#1B3639">
+            <rect x="140" y="112" width="52" height="26" rx="2"></rect>
+            <rect x="236" y="108" width="58" height="32" rx="2"></rect>
+            <rect x="140" y="168" width="70" height="26" rx="2"></rect>
+            <rect x="330" y="112" width="60" height="30" rx="2"></rect>
+            <rect x="30" y="112" width="66" height="30" rx="2"></rect>
+          </g>
+          <text x="14" y="84" fill="#7E9C99" font-family="JetBrains Mono, monospace" font-size="11">ул. Дзержинского</text>
+          <text x="322" y="202" fill="#7E9C99" font-family="JetBrains Mono, monospace" font-size="11">двор</text>
+          <g transform="translate(215 150)">
+            <circle r="26" fill="#E09B26" opacity=".16"></circle>
+            <path d="M0-18a11 11 0 0 1 11 11c0 8-11 19-11 19S-11 1-11-7A11 11 0 0 1 0-18Z" fill="#E09B26"></path>
+            <circle cy="-7" r="4" fill="#152F31"></circle>
+          </g>
+          <text x="215" y="196" fill="#E6EDE7" font-family="Bitter, Georgia, serif" font-size="13" text-anchor="middle">Симба · 8Б</text>
+          <text x="14" y="248" fill="#5F807E" font-family="JetBrains Mono, monospace" font-size="10">схема — демо · в рабочей версии здесь интерактивная карта</text>
+        </svg>
+        <dl class="contact-row">
+          <dt>Телефон и мессенджеры</dt>
+          <dd><a href="tel:+79258711713">+7 925 871-17-13</a> — звонок, WhatsApp, Telegram</dd>
+        </dl>
+        <dl class="contact-row">
+          <dt>Адрес</dt>
+          <dd>Московская область, Королёв,<br>ул. Дзержинского, 8Б</dd>
+        </dl>
+        <dl class="contact-row">
+          <dt>Часы работы</dt>
+          <dd>Пн–Пт 10:00–20:00 · Сб–Вс 10:00–19:00<br><span style="color:var(--deep-fg-muted)">Без перерыва на обед</span></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="shell foot-in">
+    <div>
+      <p><strong>Симба</strong> — ветеринарный кабинет в Королёве</p>
+      <p>ул. Дзержинского, 8Б · +7 925 871-17-13</p>
+    </div>
+    <p class="disclaimer">
+      Это демонстрационный макет, сделанный для показа клинике. Не является официальным сайтом «Симбы».
+      Адрес, телефон и часы работы взяты из открытых источников и требуют подтверждения; цены, фото, имена врачей и отзывы — заглушки.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- дата в карточке слотов и в форме ---------- */
+  var today = new Date();
+  var fmt = new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long" });
+  var slotsDate = document.getElementById("slots-date");
+  if (slotsDate) slotsDate.textContent = "сегодня, " + fmt.format(today);
+
+  var iso = function (d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  };
+  var dateInput = document.getElementById("date");
+  if (dateInput) {
+    dateInput.min = iso(today);
+    dateInput.value = iso(today);
+  }
+
+  /* ---------- выбор свободного времени ---------- */
+  var timeInput = document.getElementById("time");
+  var slots = document.getElementById("slots");
+  if (slots) {
+    slots.addEventListener("click", function (e) {
+      var btn = e.target.closest(".slot");
+      if (!btn || btn.disabled) return;
+      slots.querySelectorAll(".slot[data-time]").forEach(function (s) {
+        s.setAttribute("aria-pressed", String(s === btn));
+      });
+      if (timeInput) timeInput.value = btn.dataset.time;
+      if (dateInput) dateInput.value = iso(today);
+      document.getElementById("book").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  /* ---------- календарь профилактики ---------- */
+  var PLANS = {
+    dog: [
+      { to: 2,   when: "сейчас",           title: "Первый осмотр щенка",              text: "Взвешивание, осмотр, проверка на паразитов. Обсуждаем корм и карантин до прививок." },
+      { to: 2,   when: "за 10–14 дней",    title: "Дегельминтизация перед прививкой", text: "Обработка от глистов — обязательный шаг, иначе вакцина сработает хуже." },
+      { to: 3,   when: "8–9 недель",       title: "Первая комплексная вакцинация",    text: "Чума плотоядных, парвовирусный энтерит, аденовироз, парагрипп, лептоспироз." },
+      { to: 4,   when: "через 21–28 дней", title: "Ревакцинация и бешенство",         text: "После второй прививки — карантин ещё 10–14 дней, потом можно гулять спокойно." },
+      { to: 7,   when: "4–6 месяцев",      title: "Смена зубов",                      text: "Смотрим прикус и молочные клыки: если постоянный зуб растёт рядом с молочным, его удаляют." },
+      { to: 12,  when: "6–12 месяцев",     title: "Кастрация или стерилизация",       text: "Сроки зависят от породы и размера: крупным собакам операцию чаще откладывают." },
+      { to: 84,  when: "раз в год",        title: "Ежегодная ревакцинация",           text: "Комплексная вакцина плюс бешенство, с осмотром перед прививкой." },
+      { to: 999, when: "с 7 лет, ежегодно", title: "Диспансеризация",                 text: "Общий и биохимический анализ крови, УЗИ брюшной полости, оценка сердца и суставов." },
+      { to: 999, when: "март–ноябрь",      title: "Обработка от клещей — ежемесячно", text: "Пироплазмоз в Подмосковье — сезонная реальность, а не редкость." },
+      { to: 999, when: "раз в 3 месяца",   title: "Обработка от гельминтов",          text: "Чаще, если собака подбирает на улице или ест сырое мясо." }
+    ],
+    cat: [
+      { to: 2,   when: "сейчас",           title: "Первый осмотр котёнка",            text: "Осмотр, вес, проверка ушей и шерсти на паразитов, подбор корма." },
+      { to: 2,   when: "за 10–14 дней",    title: "Дегельминтизация перед прививкой", text: "Обработка от глистов до первой вакцинации." },
+      { to: 3,   when: "8–9 недель",       title: "Первая комплексная вакцинация",    text: "Панлейкопения, калицивироз, ринотрахеит." },
+      { to: 4,   when: "через 21–28 дней", title: "Ревакцинация и бешенство",         text: "Прививка от бешенства нужна даже домашним: без неё не выехать и не заселиться в передержку." },
+      { to: 10,  when: "6–8 месяцев",      title: "Кастрация или стерилизация",       text: "До первой течки у кошек — меньше риск опухолей молочных желёз в будущем." },
+      { to: 96,  when: "раз в год",        title: "Ежегодная ревакцинация",           text: "Комплексная вакцина и бешенство, с осмотром перед прививкой." },
+      { to: 999, when: "с 8 лет, ежегодно", title: "Гериатрический чек-ап",           text: "Почки, щитовидная железа, давление — три главные проблемы возрастных кошек." },
+      { to: 999, when: "раз в 3 месяца",   title: "Обработка от гельминтов",          text: "И от блох — их приносят на обуви даже в квартиру на высоком этаже." },
+      { to: 999, when: "по возрасту",      title: "Осмотр пасти",                     text: "Зубной камень и резорбтивные поражения у кошек находят чаще, чем замечают дома." }
+    ],
+    exotic: [
+      { to: 999, when: "при заселении",    title: "Осмотр и условия содержания",      text: "Температура, влажность, размер клетки и корм: у грызунов и птиц большая часть болезней начинается отсюда." },
+      { to: 999, when: "кроликам, с 1,5 мес", title: "Вакцинация от миксоматоза и ВГБК", text: "Ежегодная ревакцинация — даже если кролик никогда не выходит на улицу." },
+      { to: 999, when: "раз в 6–8 недель", title: "Осмотр зубов и когтей",            text: "У кроликов, шиншилл и морских свинок зубы растут всю жизнь; птицам подрезаем клюв и когти при необходимости." },
+      { to: 999, when: "раз в год",        title: "Профилактический приём",           text: "Вес, состояние помёта, дыхание, кожа и оперение. Мелкие питомцы скрывают болезнь до последнего." },
+      { to: 999, when: "при тревоге",      title: "Срочно к врачу",                   text: "Отказ от еды дольше 12 часов у грызуна или птицы — повод ехать в тот же день." }
+    ]
+  };
+
+  var pet = "dog";
+  var petSeg = document.getElementById("pet-seg");
+  var ageInput = document.getElementById("age");
+  var planList = document.getElementById("plan-list");
+
+  function renderPlan() {
+    if (!planList) return;
+    var age = parseInt(ageInput && ageInput.value, 10);
+    if (isNaN(age) || age < 0) age = 0;
+    var items = PLANS[pet].filter(function (i) { return age <= i.to; });
+    if (!items.length) items = PLANS[pet].slice(-3);
+    planList.innerHTML = items.map(function (i) {
+      return '<li><span class="plan-when">' + i.when + '</span>' +
+             '<span class="plan-what"><strong>' + i.title + '</strong><span>' + i.text + '</span></span></li>';
+    }).join("");
+  }
+
+  if (petSeg) {
+    petSeg.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-pet]");
+      if (!btn) return;
+      pet = btn.dataset.pet;
+      petSeg.querySelectorAll("button[data-pet]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      if (ageInput) ageInput.disabled = pet === "exotic";
+      renderPlan();
+    });
+  }
+  if (ageInput) ageInput.addEventListener("input", renderPlan);
+  renderPlan();
+
+  /* ---------- форма записи (демо, ничего не отправляет) ---------- */
+  var form = document.getElementById("booking");
+  var receipt = document.getElementById("receipt");
+  if (form && receipt) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = function (id) {
+        var el = document.getElementById(id);
+        return el && el.value ? el.value.trim() : "";
+      };
+      var name = v("name") || "без имени";
+      var phone = v("phone") || "телефон не указан";
+      var when = v("date") + (v("time") ? ", " + v("time") : "");
+      receipt.setAttribute("data-shown", "true");
+      receipt.innerHTML =
+        "<strong>Заявка сформирована — демо</strong>" +
+        name + " · " + phone + "<br>" +
+        v("pet") + " · " + v("service") + "<br>" +
+        "Когда: " + (when || "время не выбрано") +
+        "<br><span style=\"color:var(--deep-fg-muted)\">В рабочей версии эта заявка ушла бы администратору в Telegram и в журнал записи. Здесь она никуда не отправляется.</span>";
+      receipt.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }
+
+  /* ---------- плавная прокрутка по якорям ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var target = document.querySelector(a.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+})();
+</script>
