@@ -244,6 +244,101 @@
   .foot strong{color:var(--fg); font-family:var(--slab); font-weight:600}
   .disclaimer{border:1px dashed var(--line-strong); padding:1rem 1.1rem; max-width:56ch; line-height:1.55}
 
+
+  /* ---- вкладки прайса ---- */
+  .tabs{display:flex; gap:.35rem; border-bottom:1px solid var(--line); margin-bottom:1.75rem}
+  .tab{
+    font:500 var(--s0)/1 var(--sans); background:transparent; border:0; cursor:pointer;
+    color:var(--fg-muted); padding:.8rem 1.1rem; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab[aria-selected="true"]{color:var(--fg); border-bottom-color:var(--accent)}
+  .tab:hover{color:var(--fg)}
+  .panel[hidden]{display:none}
+
+  /* ---- прайс услуг ---- */
+  .pricelist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2.5rem 3.5rem}
+  @media (max-width:820px){ .pricelist{grid-template-columns:1fr; gap:2rem} }
+  .price-group h3{
+    font-family:var(--mono); font-weight:500; font-size:.6875rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--jade); padding-bottom:.6rem; border-bottom:1px solid var(--line-strong); margin-bottom:.35rem;
+  }
+  .price-item{
+    display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:.15rem .9rem;
+    padding:.7rem 0; border-bottom:1px dashed var(--line);
+  }
+  .price-item:last-child{border-bottom:0}
+  .price-item .pi-name{font-size:var(--s0)}
+  .price-item .pi-sum{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; font-size:var(--s0)}
+  .price-item .pi-desc{grid-column:1 / -1; font-size:var(--s-1); color:var(--fg-muted); max-width:46ch}
+  .pi-hit{
+    font-family:var(--mono); font-size:.5625rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:.1rem .3rem; margin-left:.5rem; vertical-align:2px;
+  }
+
+  .price-callout{
+    border:1px solid var(--line-strong); background:var(--bg); padding:1.3rem 1.4rem;
+    display:flex; flex-direction:column; gap:.7rem; align-self:start;
+  }
+  .price-callout h3{font-family:var(--slab); font-size:var(--s1); font-weight:600; color:var(--fg)}
+  .price-callout p{font-size:var(--s-1); color:var(--fg-muted)}
+  .price-callout .btn{align-self:flex-start}
+
+  /* ---- товары ---- */
+  .goods{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+  @media (max-width:900px){ .goods{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:480px){ .goods{grid-template-columns:1fr} }
+  .good{background:var(--bg-elev); padding:1.25rem; display:flex; flex-direction:column; gap:.35rem}
+  .good-art{
+    width:46px; height:46px; display:grid; place-items:center; margin-bottom:.5rem;
+    background:var(--jade-wash); color:var(--jade); border-radius:3px;
+  }
+  .good h4{margin:0; font-family:var(--slab); font-size:var(--s0); font-weight:600}
+  .good .g-sub{font-size:var(--s-1); color:var(--fg-muted)}
+  .good .g-price{margin-top:auto; padding-top:.75rem; font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--accent)}
+  .goods-note{margin-top:1rem; font-size:var(--s-1); color:var(--fg-muted)}
+
+  /* ---- отзывы ---- */
+  .rev-grid{display:grid; grid-template-columns:minmax(240px,300px) 1fr; gap:clamp(24px,3.5vw,48px); align-items:start}
+  @media (max-width:900px){ .rev-grid{grid-template-columns:1fr} }
+  .rating-box{border:1px solid var(--line); background:var(--bg-elev); padding:1.5rem}
+  .rating-num{font-family:var(--slab); font-size:3.25rem; line-height:1; font-weight:700}
+  .rating-head{display:flex; align-items:baseline; gap:.75rem}
+  .stars{display:inline-flex; gap:2px; color:var(--accent)}
+  .stars svg{width:15px; height:15px}
+  .stars .off{color:var(--line-strong)}
+  .rating-count{font-size:var(--s-1); color:var(--fg-muted); margin-top:.6rem}
+  .bars{display:grid; gap:.35rem; margin:1.1rem 0 1.25rem}
+  .bar{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.6rem; font-family:var(--mono); font-size:.6875rem; color:var(--fg-muted)}
+  .bar-track{height:5px; background:var(--line); border-radius:3px; overflow:hidden}
+  .bar-fill{display:block; height:100%; background:var(--accent)}
+  .reviews{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem}
+  @media (max-width:640px){ .reviews{grid-template-columns:1fr} }
+  .review{border:1px solid var(--line); background:var(--bg-elev); padding:1.25rem; display:flex; flex-direction:column; gap:.75rem}
+  .review-top{display:flex; gap:.85rem; align-items:center}
+  .pet-photo{
+    width:56px; height:56px; flex:none; border-radius:3px; display:grid; place-items:center; overflow:hidden;
+    background:var(--accent-wash); color:var(--accent);
+  }
+  .pet-photo svg{width:100%; height:100%}
+  .pet-photo.jade{background:var(--jade-wash); color:var(--jade)}
+  .review-who strong{display:block; font-size:var(--s0)}
+  .review-who span{font-size:var(--s-1); color:var(--fg-muted)}
+  .review p{font-size:var(--s-1); line-height:1.65}
+  .review footer{
+    margin-top:auto; padding-top:.6rem; border-top:1px dashed var(--line);
+    font-family:var(--mono); font-size:.625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted);
+    display:flex; justify-content:space-between; gap:1rem;
+  }
+  .gallery{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:1.25rem}
+  @media (max-width:700px){ .gallery{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  .gallery figure{margin:0; aspect-ratio:1; display:grid; place-items:center; background:var(--bg-elev); color:var(--jade); position:relative}
+  .gallery figure:nth-child(even){color:var(--accent)}
+  .gallery svg{width:74%; height:74%}
+  .gallery figcaption{
+    position:absolute; inset-inline:0; bottom:0; text-align:center; padding:.3rem;
+    font-family:var(--mono); font-size:.5625rem; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted);
+  }
+
   @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important; animation-duration:.01ms !important} }
 </style>
 
@@ -251,6 +346,84 @@
   <b>Демо-концепт</b>
   <span>макет сайта для ветклиники «Симба», Королёв · это не официальный сайт · тексты, цены и фото — заглушки</span>
 </div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pet-cat" viewBox="0 0 120 120">
+      <g fill="currentColor">
+        <path d="M32 52 36 20l24 17z" fill-opacity=".38"></path>
+        <path d="M88 52 84 20 60 37z" fill-opacity=".38"></path>
+        <ellipse cx="60" cy="64" rx="32" ry="28" fill-opacity=".2"></ellipse>
+        <ellipse cx="48" cy="60" rx="4.5" ry="6"></ellipse>
+        <ellipse cx="72" cy="60" rx="4.5" ry="6"></ellipse>
+        <path d="M55 72h10l-5 6z" fill-opacity=".7"></path>
+      </g>
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".55" fill="none">
+        <path d="M52 78c3 3 5 3 8 0M68 78c-3 3-5 3-8 0"></path>
+        <path d="M50 74 28 70M50 79 30 82M70 74l22-4M70 79l20 3"></path>
+      </g>
+    </symbol>
+    <symbol id="pet-dog" viewBox="0 0 120 120">
+      <g fill="currentColor">
+        <path d="M32 40c-13 2-16 18-12 30 3 9 12 10 16 5z" fill-opacity=".38"></path>
+        <path d="M88 40c13 2 16 18 12 30-3 9-12 10-16 5z" fill-opacity=".38"></path>
+        <ellipse cx="60" cy="62" rx="29" ry="28" fill-opacity=".2"></ellipse>
+        <ellipse cx="60" cy="78" rx="16" ry="11" fill-opacity=".28"></ellipse>
+        <circle cx="48" cy="56" r="4.5"></circle>
+        <circle cx="72" cy="56" r="4.5"></circle>
+        <ellipse cx="60" cy="72" rx="6" ry="4.5" fill-opacity=".85"></ellipse>
+      </g>
+      <path d="M60 77v4M56 84c2 2 6 2 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".55" fill="none"></path>
+    </symbol>
+    <symbol id="pet-rabbit" viewBox="0 0 120 120">
+      <g fill="currentColor">
+        <ellipse cx="47" cy="34" rx="8" ry="24" transform="rotate(-11 47 34)" fill-opacity=".38"></ellipse>
+        <ellipse cx="73" cy="34" rx="8" ry="24" transform="rotate(11 73 34)" fill-opacity=".38"></ellipse>
+        <ellipse cx="60" cy="72" rx="27" ry="24" fill-opacity=".2"></ellipse>
+        <circle cx="50" cy="70" r="4"></circle>
+        <circle cx="70" cy="70" r="4"></circle>
+        <path d="M56 80h8l-4 5z" fill-opacity=".7"></path>
+      </g>
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".5" fill="none">
+        <path d="M52 86c3 3 5 3 8 0M68 86c-3 3-5 3-8 0M50 78 32 76M70 78l18-2"></path>
+      </g>
+    </symbol>
+    <symbol id="pet-parrot" viewBox="0 0 120 120">
+      <g fill="currentColor">
+        <path d="M50 36c-3-12 5-20 14-22-5 7-3 13 2 18z" fill-opacity=".38"></path>
+        <circle cx="56" cy="64" r="27" fill-opacity=".2"></circle>
+        <path d="M80 56c12 2 15 12 6 17-7 4-14 1-16-4z" fill-opacity=".55"></path>
+        <circle cx="66" cy="58" r="4.5"></circle>
+      </g>
+      <path d="M40 78c6 6 14 8 22 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".45" fill="none"></path>
+    </symbol>
+    <symbol id="pet-hamster" viewBox="0 0 120 120">
+      <g fill="currentColor">
+        <circle cx="38" cy="46" r="10" fill-opacity=".38"></circle>
+        <circle cx="82" cy="46" r="10" fill-opacity=".38"></circle>
+        <ellipse cx="60" cy="68" rx="29" ry="24" fill-opacity=".2"></ellipse>
+        <circle cx="40" cy="76" r="10" fill-opacity=".14"></circle>
+        <circle cx="80" cy="76" r="10" fill-opacity=".14"></circle>
+        <circle cx="50" cy="65" r="4"></circle>
+        <circle cx="70" cy="65" r="4"></circle>
+        <ellipse cx="60" cy="75" rx="4.5" ry="3.5" fill-opacity=".7"></ellipse>
+      </g>
+      <path d="M60 79v3M55 85c3 2 7 2 10 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-opacity=".5" fill="none"></path>
+    </symbol>
+    <g id="goods-icons"></g>
+    <symbol id="ic-food" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"></path><path d="M6 8 8 4h8l2 4"></path><path d="M10.5 13.5h3"></path></g></symbol>
+    <symbol id="ic-wet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11" rx="2"></rect><path d="M4 10h16M9 7V5h6v2"></path></g></symbol>
+    <symbol id="ic-drops" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M10 3h4v5l3 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2l3-11z"></path><path d="M10 8h4"></path></g></symbol>
+    <symbol id="ic-pill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-30 12 12)"></rect><path d="M9 7.5 15 16"></path></g></symbol>
+    <symbol id="ic-collar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="11" r="7"></circle><path d="M12 18v3"></path><circle cx="12" cy="21.5" r="1.2"></circle></g></symbol>
+    <symbol id="ic-vitamins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M7 9h10l-1 11H8z"></path><path d="M9 9V6h6v3M10 14h4"></path></g></symbol>
+    <symbol id="ic-shampoo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 9h8v11H8z"></path><path d="M10 9V6h4v3M9 13h6"></path><path d="M16 5h2v2"></path></g></symbol>
+    <symbol id="ic-litter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 8h16l-2 12H6z"></path><path d="M8 12h.01M12 14h.01M16 12h.01M10 17h.01M14 17h.01"></path></g></symbol>
+    <symbol id="ic-carrier" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"></rect><path d="M9 8V6a3 3 0 0 1 6 0v2M14 11v5M17 11v5"></path></g></symbol>
+    <symbol id="ic-toy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"></circle><path d="M4.5 9.5c5 1 10 1 15 0M12 4c-2.5 4-2.5 12 0 16"></path></g></symbol>
+    <symbol id="ic-star" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.7 1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.5l-3.8 2 .7-4.3-3.1-3 4.3-.6z"></path></symbol>
+  </defs>
+</svg>
 
 <header class="top">
   <div class="shell top-in">
@@ -269,9 +442,10 @@
     </a>
     <nav class="nav" aria-label="Разделы">
       <a href="#services">Услуги</a>
-      <a href="#visit">Как проходит приём</a>
-      <a href="#plan">Календарь прививок</a>
-      <a href="#prices">Цены</a>
+      <a href="#visit">Приём</a>
+      <a href="#plan">Прививки</a>
+      <a href="#prices">Цены и товары</a>
+      <a href="#reviews">Отзывы</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <a class="top-phone" href="tel:+79258711713">+7 925 871-17-13</a>
@@ -474,36 +648,200 @@
       <div class="sec-head">
         <div>
           <p class="eyebrow">Цены</p>
-          <h2>Понятный прайс без «уточняйте по телефону»</h2>
+          <h2>Услуги и товары — с ценами, без «уточняйте по телефону»</h2>
         </div>
-        <span class="tag">В демо — числа-заглушки</span>
+        <span class="tag">Цифры для примера · подставим ваш прайс</span>
       </div>
-      <div class="price-wrap">
-        <table class="price">
-          <thead>
-            <tr><th scope="col">Услуга</th><th scope="col">Стоимость</th></tr>
-          </thead>
-          <tbody>
-            <tr class="grp"><td colspan="2">Приём</td></tr>
-            <tr><td>Первичный приём терапевта</td><td>—— ₽</td></tr>
-            <tr><td>Повторный приём по тому же случаю</td><td>—— ₽</td></tr>
-            <tr><td>Приём офтальмолога</td><td>—— ₽</td></tr>
-            <tr class="grp"><td colspan="2">Профилактика</td></tr>
-            <tr><td>Вакцинация комплексная (с вакциной)</td><td>—— ₽</td></tr>
-            <tr><td>Вакцинация от бешенства</td><td>—— ₽</td></tr>
-            <tr><td>Чипирование с регистрацией в базе</td><td>—— ₽</td></tr>
-            <tr class="grp"><td colspan="2">Диагностика</td></tr>
-            <tr><td>УЗИ брюшной полости</td><td>—— ₽</td></tr>
-            <tr><td>Общий клинический анализ крови</td><td>—— ₽</td></tr>
-            <tr><td>Биохимический анализ крови</td><td>—— ₽</td></tr>
-            <tr class="grp"><td colspan="2">Хирургия</td></tr>
-            <tr><td>Кастрация кота</td><td>—— ₽</td></tr>
-            <tr><td>Стерилизация кошки</td><td>—— ₽</td></tr>
-            <tr><td>Ультразвуковая чистка зубов</td><td>—— ₽</td></tr>
-          </tbody>
-        </table>
+
+      <div class="tabs" role="tablist" aria-label="Прайс">
+        <button type="button" class="tab" role="tab" id="tab-services" aria-controls="panel-services" aria-selected="true">Услуги</button>
+        <button type="button" class="tab" role="tab" id="tab-goods" aria-controls="panel-goods" aria-selected="false">Ветаптека и зоотовары</button>
       </div>
-      <p class="price-note">Пришлите ваш актуальный прайс — подставим цифры и добавим фильтр «кошка / собака», чтобы владелец сразу видел свою цену.</p>
+
+      <div class="panel" id="panel-services" role="tabpanel" aria-labelledby="tab-services" tabindex="0">
+        <div class="pricelist">
+        <div class="price-group">
+          <h3>Приём</h3>
+          <div class="price-item">
+            <span class="pi-name">Первичный приём терапевта<span class="pi-hit">часто</span></span>
+            <span class="pi-sum">900 ₽</span>
+            <span class="pi-desc">Осмотр, термометрия, план обследования, назначения в ветпаспорт.</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Повторный приём по тому же случаю</span>
+            <span class="pi-sum">600 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Приём офтальмолога</span>
+            <span class="pi-sum">1 500 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Консультация по анализам без питомца</span>
+            <span class="pi-sum">500 ₽</span>
+          </div>
+        </div>
+        <div class="price-group">
+          <h3>Профилактика</h3>
+          <div class="price-item">
+            <span class="pi-name">Вакцинация комплексная, с вакциной<span class="pi-hit">часто</span></span>
+            <span class="pi-sum">2 300 ₽</span>
+            <span class="pi-desc">Осмотр перед прививкой и отметка в паспорте — уже в стоимости.</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Вакцинация от бешенства</span>
+            <span class="pi-sum">1 200 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Чипирование с регистрацией в базе</span>
+            <span class="pi-sum">1 800 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Обработка от блох, клещей и гельминтов</span>
+            <span class="pi-sum">от 400 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Международный ветпаспорт</span>
+            <span class="pi-sum">400 ₽</span>
+          </div>
+        </div>
+        <div class="price-group">
+          <h3>Диагностика</h3>
+          <div class="price-item">
+            <span class="pi-name">УЗИ брюшной полости<span class="pi-hit">часто</span></span>
+            <span class="pi-sum">1 800 ₽</span>
+            <span class="pi-desc">Результат разбираем сразу на приёме, без ожидания заключения.</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Общий клинический анализ крови</span>
+            <span class="pi-sum">900 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Биохимия крови, 12 показателей</span>
+            <span class="pi-sum">2 200 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Анализ мочи</span>
+            <span class="pi-sum">700 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Соскоб, цитология</span>
+            <span class="pi-sum">800 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Экспресс-тест на инфекции</span>
+            <span class="pi-sum">1 400 ₽</span>
+          </div>
+        </div>
+        <div class="price-group">
+          <h3>Хирургия и стационар</h3>
+          <div class="price-item">
+            <span class="pi-name">Кастрация кота</span>
+            <span class="pi-sum">2 500 ₽</span>
+            <span class="pi-desc">Швы снимаем бесплатно, послеоперационный осмотр — тоже.</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Стерилизация кошки</span>
+            <span class="pi-sum">5 000 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Кастрация кобеля</span>
+            <span class="pi-sum">от 4 500 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Стерилизация суки</span>
+            <span class="pi-sum">от 8 000 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Удаление новообразования</span>
+            <span class="pi-sum">от 3 000 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Ультразвуковая чистка зубов</span>
+            <span class="pi-sum">3 500 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Стационар, сутки</span>
+            <span class="pi-sum">1 500 ₽</span>
+          </div>
+        </div>
+        <div class="price-group">
+          <h3>На дому</h3>
+          <div class="price-item">
+            <span class="pi-name">Вызов врача в Королёве</span>
+            <span class="pi-sum">2 000 ₽</span>
+            <span class="pi-desc">Осмотр, забор анализов, капельница или вакцинация на дому.</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Выезд в соседние города</span>
+            <span class="pi-sum">от 3 000 ₽</span>
+          </div>
+          <div class="price-item">
+            <span class="pi-name">Капельница на дому</span>
+            <span class="pi-sum">800 ₽</span>
+          </div>
+        </div>
+        <div class="price-callout">
+          <h3>Не нашли нужную услугу?</h3>
+          <p>Позвоните — назовём цену сразу и честно скажем, нужен ли вообще визит: часть вопросов решается консультацией по телефону.</p>
+          <a class="btn btn-ghost" href="tel:+79258711713">+7 925 871-17-13</a>
+        </div>
+        </div>
+        <p class="price-note">Лекарства, расходники и вакцина в цену приёма не входят, если это не указано отдельно. Итоговую сумму называем до начала лечения.</p>
+      </div>
+
+      <div class="panel" id="panel-goods" role="tabpanel" aria-labelledby="tab-goods" tabindex="0" hidden>
+        <div class="goods">
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-food"></use></svg></span>
+            <h4>Лечебный корм</h4>
+            <p class="g-sub">Сухой, 2 кг · почки, ЖКТ, мочекаменная</p>
+            <p class="g-price">1 490 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-wet"></use></svg></span>
+            <h4>Влажный корм</h4>
+            <p class="g-sub">Пауч 85 г · котятам и взрослым</p>
+            <p class="g-price">90 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-drops"></use></svg></span>
+            <h4>Капли от блох и клещей</h4>
+            <p class="g-sub">Пипетка, подбираем по весу</p>
+            <p class="g-price">590 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-pill"></use></svg></span>
+            <h4>Таблетки от гельминтов</h4>
+            <p class="g-sub">Дозировка на 10 кг веса</p>
+            <p class="g-price">250 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-collar"></use></svg></span>
+            <h4>Ошейник от паразитов</h4>
+            <p class="g-sub">До 8 месяцев защиты</p>
+            <p class="g-price">1 290 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-vitamins"></use></svg></span>
+            <h4>Витамины и добавки</h4>
+            <p class="g-sub">Шерсть, суставы, иммунитет</p>
+            <p class="g-price">690 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-shampoo"></use></svg></span>
+            <h4>Лечебный шампунь</h4>
+            <p class="g-sub">250 мл · при дерматитах</p>
+            <p class="g-price">540 ₽</p>
+          </article>
+          <article class="good">
+            <span class="good-art"><svg width="26" height="26" aria-hidden="true"><use href="#ic-litter"></use></svg></span>
+            <h4>Наполнитель</h4>
+            <p class="g-sub">Комкующийся, 5 л</p>
+            <p class="g-price">450 ₽</p>
+          </article>
+        </div>
+        <p class="goods-note">Ассортимент подбираем под назначения врача: корм и препарат можно забрать сразу после приёма, не разыскивая их по городу. Наличие уточняйте по телефону — <a href="tel:+79258711713" style="color:var(--accent)">+7 925 871-17-13</a>.</p>
+      </div>
     </div>
   </section>
 
@@ -552,21 +890,87 @@
           <p class="eyebrow">Отзывы</p>
           <h2>Что пишут владельцы</h2>
         </div>
-        <span class="tag">Текст-рыба · подключим Яндекс Карты</span>
+        <span class="tag">Тексты и оценки — образцы · подключим Яндекс Карты</span>
       </div>
-      <div class="quotes">
-        <article class="quote">
-          <blockquote>Место для реального отзыва с Яндекс Карт или 2ГИС. Такие блоки лучше не писать вручную, а подтягивать автоматически — тогда они всегда свежие и им верят.</blockquote>
-          <footer>Владелец кота · отзыв-заглушка</footer>
-        </article>
-        <article class="quote">
-          <blockquote>Второй отзыв. В готовой версии рядом стоит оценка и дата, а по клику открывается карточка клиники на карте.</blockquote>
-          <footer>Владелец собаки · отзыв-заглушка</footer>
-        </article>
-        <article class="quote">
-          <blockquote>Третий отзыв. Если отзывов много, показываем три последних и ссылку «смотреть все» — страница не разрастается.</blockquote>
-          <footer>Владелец шиншиллы · отзыв-заглушка</footer>
-        </article>
+
+      <div class="rev-grid">
+        <aside class="rating-box">
+          <div class="rating-head">
+            <span class="rating-num">4,8</span>
+            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
+          </div>
+          <p class="rating-count">Оценка и отзывы подтягиваются с карточки клиники — обновляются сами, без ручной правки сайта.</p>
+          <div class="bars">
+          <div class="bar"><span>5</span><span class="bar-track"><span class="bar-fill" style="width:78%"></span></span><span>78%</span></div>
+          <div class="bar"><span>4</span><span class="bar-track"><span class="bar-fill" style="width:14%"></span></span><span>14%</span></div>
+          <div class="bar"><span>3</span><span class="bar-track"><span class="bar-fill" style="width:4%"></span></span><span>4%</span></div>
+          <div class="bar"><span>2</span><span class="bar-track"><span class="bar-fill" style="width:2%"></span></span><span>2%</span></div>
+          <div class="bar"><span>1</span><span class="bar-track"><span class="bar-fill" style="width:2%"></span></span><span>2%</span></div>
+          </div>
+          <a class="btn btn-ghost" href="https://yandex.ru/maps/-/CThG6YLT" target="_blank" rel="noopener">Открыть на Яндекс Картах</a>
+        </aside>
+
+        <div>
+          <div class="reviews">
+          <article class="review">
+            <div class="review-top">
+              <span class="pet-photo"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg></span>
+              <span class="review-who">
+                <strong>Анна</strong>
+                <span>хозяйка кота Рыжика</span>
+              </span>
+            </div>
+            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
+            <p>Пришли с отказом от еды, боялась, что придётся ехать в Москву. Сделали УЗИ и анализы на месте, за один приём стало понятно, что происходит. Объяснили нормальным языком, без запугивания.</p>
+            <footer><span>Яндекс Карты · образец</span><span>12 августа</span></footer>
+          </article>
+          <article class="review">
+            <div class="review-top">
+              <span class="pet-photo jade"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-dog"></use></svg></span>
+              <span class="review-who">
+                <strong>Дмитрий</strong>
+                <span>хозяин спаниеля Тоши</span>
+              </span>
+            </div>
+            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
+            <p>Стерилизация прошла спокойно, звонили на следующий день сами — спросить, как он ест и как шов. Швы сняли бесплатно, как и говорили.</p>
+            <footer><span>Яндекс Карты · образец</span><span>3 августа</span></footer>
+          </article>
+          <article class="review">
+            <div class="review-top">
+              <span class="pet-photo jade"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-rabbit"></use></svg></span>
+              <span class="review-who">
+                <strong>Ольга</strong>
+                <span>хозяйка кролика Персика</span>
+              </span>
+            </div>
+            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg class="off"><use href="#ic-star"></use></svg></span>
+            <p>С кроликом мало где берутся помогать, здесь взялись. Осмотрели зубы, поправили рацион. Единственное — по времени ждали минут пятнадцать сверх записи.</p>
+            <footer><span>Яндекс Карты · образец</span><span>27 июля</span></footer>
+          </article>
+          <article class="review">
+            <div class="review-top">
+              <span class="pet-photo"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-parrot"></use></svg></span>
+              <span class="review-who">
+                <strong>Марина</strong>
+                <span>хозяйка попугая Кеши</span>
+              </span>
+            </div>
+            <span class="stars" aria-hidden="true"><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg><svg><use href="#ic-star"></use></svg></span>
+            <p>Ходим уже третий год: прививки, обработка, корм — всё в одном месте. Напоминают о ревакцинации сами, что очень выручает.</p>
+            <footer><span>Яндекс Карты · образец</span><span>19 июля</span></footer>
+          </article>
+          </div>
+          <div class="gallery">
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg><figcaption>кот</figcaption></figure>
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-dog"></use></svg><figcaption>собака</figcaption></figure>
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-rabbit"></use></svg><figcaption>кролик</figcaption></figure>
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-parrot"></use></svg><figcaption>попугай</figcaption></figure>
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-hamster"></use></svg><figcaption>хомяк</figcaption></figure>
+          <figure><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#pet-cat"></use></svg><figcaption>кошка</figcaption></figure>
+          </div>
+          <p class="goods-note">Вместо иллюстраций здесь встанут настоящие фото пациентов и кабинета — достаточно 8–10 снимков с телефона.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -810,6 +1214,31 @@
         "Когда: " + (when || "время не выбрано") +
         "<br><span style=\"color:var(--deep-fg-muted)\">В рабочей версии эта заявка ушла бы администратору в Telegram и в журнал записи. Здесь она никуда не отправляется.</span>";
       receipt.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }
+
+  /* ---------- вкладки прайса ---------- */
+  var tablist = document.querySelector('.tabs');
+  if (tablist) {
+    var tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
+    var select = function (tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", String(on));
+        var panel = document.getElementById(t.getAttribute("aria-controls"));
+        if (panel) panel.hidden = !on;
+      });
+    };
+    tablist.addEventListener("click", function (e) {
+      var tab = e.target.closest('[role="tab"]');
+      if (tab) select(tab);
+    });
+    tablist.addEventListener("keydown", function (e) {
+      var i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      var next = e.key === "ArrowRight" ? tabs[(i + 1) % tabs.length]
+              : e.key === "ArrowLeft" ? tabs[(i - 1 + tabs.length) % tabs.length] : null;
+      if (next) { e.preventDefault(); next.focus(); select(next); }
     });
   }
 
