@@ -372,6 +372,11 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 <section class="hero">
   <div class="hero__media">
     <img src="assets/photos/hero.jpg" alt="" aria-hidden="true" fetchpriority="high">
+    <!-- На телефонах вместо фотографии играет ролик с объекта: вертикальный кадр
+         как раз под экран телефона. Грузится скриптом и только там, где нужен. -->
+    <video class="hero__video" data-src="assets/video/rabota.mp4"
+           poster="assets/video/rabota-poster.jpg"
+           muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
 
   <div class="wrap hero__in">
@@ -410,6 +415,27 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     <li><b>0 ₽</b><span>доставка оборудования при заказе установки</span></li>
     <li><b class="txt">Москва<em> и область</em></b><span>выезжаем по всему региону</span></li>
   </ul>
+</section>
+
+<!-- ================= РОЛИК С ОБЪЕКТА ================= -->
+<section class="clip-sec">
+  <div class="wrap clip-grid">
+    <figure class="clip">
+      <video class="clip__video" data-src="assets/video/rabota.mp4"
+             poster="assets/video/rabota-poster.jpg"
+             muted loop playsinline preload="none"></video>
+    </figure>
+    <div>
+      <p class="eyebrow">Один день на объекте</p>
+      <h2>Так это выглядит вживую</h2>
+      <p class="lead">Не постановочный ролик и не стоковое видео: подсыпаем песок под корпус станции.
+        Ровно эту работу вы увидите на своём участке — с той же лопатой и той же тачкой.</p>
+      <p class="hero__cta">
+        <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
+        <a class="btn btn--outline" href="#raboty">Посмотреть работы</a>
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- ================= КАК ЭТО УСТРОЕНО ================= -->
@@ -1154,6 +1180,26 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .step{transition:transform .25s ease}
   .step:hover{transform:translateY(-3px)}
 
+  /* --- Ролик с объекта --- */
+  .hero__video{display:none}
+  @media (max-width:700px){
+    .hero__media img{display:none}
+    .hero__video{display:block;width:100%;height:100%;object-fit:cover}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero__video{display:none !important}
+    .hero__media img{display:block !important}
+  }
+  .clip-sec{background:var(--surface-2)}
+  .clip-grid{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);
+    gap:clamp(26px,4vw,60px);align-items:center}
+  @media (max-width:760px){.clip-grid{grid-template-columns:1fr}}
+  .clip{margin:0;max-width:330px;margin-inline:auto;border-radius:var(--r);overflow:hidden;
+    border:1px solid var(--line);background:var(--band);box-shadow:0 26px 58px rgba(0,0,0,.5)}
+  .clip video{display:block;width:100%;aspect-ratio:464/848;object-fit:cover;background:var(--band)}
+  .clip-grid > div{display:flex;flex-direction:column;gap:14px}
+  .clip-sec .hero__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-start;margin-top:12px}
+
   /* Птица на тёмном фоне */
   .bird svg{filter:drop-shadow(0 10px 22px rgba(0,0,0,.6))}
 </style>
@@ -1284,6 +1330,35 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   tabs.forEach(function(t){ t.addEventListener('click', function(){ selectService(t.dataset.svc); }); });
   range.addEventListener('input', function(){ SERVICES[current].val = +range.value; render(); });
   selectService('septik');
+
+  /* ---------- ВИДЕО С ОБЪЕКТА ----------
+     Файл грузится только когда нужен: на первом экране — лишь на телефонах,
+     в разделе — когда доехали прокруткой. Так страница открывается быстро,
+     а мобильный трафик не тратится впустую. */
+  (function(){
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function start(v){
+      if (!v || v.src) return;
+      v.src = v.dataset.src;
+      var play = v.play();
+      if (play && play.catch) play.catch(function(){});   // не дал автозапуск — останется постер
+    }
+
+    var heroVideo = document.querySelector('.hero__video');
+    if (heroVideo && !still && window.matchMedia('(max-width: 700px)').matches) start(heroVideo);
+
+    var clip = document.querySelector('.clip__video');
+    if (clip && !still && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { start(clip); if (clip.paused) clip.play().catch(function(){}); }
+          else if (!clip.paused) clip.pause();          // за экраном не крутим впустую
+        });
+      }, { threshold: 0.25 });
+      io.observe(clip);
+    }
+  })();
 
   /* ---------- ГАЛЕРЕЯ ----------
      Раздел показан сразу — так он работает и без скриптов, и не мешает
