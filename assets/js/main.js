@@ -8,6 +8,34 @@
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
 
+  /* ---------- Видеофон первого экрана ----------
+     Положите ролик студии в assets/video/hero.mp4 и впишите путь ниже.
+     Фото зала работает постером, пока видео грузится, и остаётся
+     запасным вариантом, если браузер его не проиграет. */
+  var HERO_VIDEO = '';
+
+  (function heroVideo() {
+    var box = document.getElementById('heroBg');
+    if (!box || !HERO_VIDEO || reduced.matches) return;
+
+    var video = document.createElement('video');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
+    video.muted = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.preload = 'auto';
+    video.poster = 'assets/img/studio-hall.jpg';
+    video.src = HERO_VIDEO;
+
+    var drop = function () { if (video.parentNode) video.parentNode.removeChild(video); };
+    video.addEventListener('error', drop);
+
+    box.insertBefore(video, box.querySelector('.hero__veil'));
+    var started = video.play();
+    if (started && started.catch) started.catch(drop);
+  })();
+
   /* ---------- Тема ---------- */
   (function theme() {
     var btn = $('#themeToggle');

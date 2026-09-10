@@ -114,14 +114,14 @@
 <span id="top"></span>
 
 <section class="hero">
-  <div class="hero__bg" aria-hidden="true">
+  <div class="hero__bg" id="heroBg" aria-hidden="true">
     <img src="assets/img/studio-hall.jpg" alt="" width="1320" height="693" loading="eager" fetchpriority="high">
     <span class="hero__veil"></span>
   </div>
 
   <div class="container hero__inner">
     <div class="hero__content">
-      <p class="hero__eyebrow reveal">
+      <p class="hero__eyebrow hero-in" style="--d:.15s">
         <svg aria-hidden="true" focusable="false"><use href="#i-leaf"/></svg>
         Студия йоги и телесных практик
       </p>
@@ -147,17 +147,17 @@
         </svg>
         <span class="wordmark__glow" aria-hidden="true"></span>
       </h1>
-      <p class="wordmark__caption reveal">
+      <p class="wordmark__caption hero-in" style="--d:.75s">
         <span>дыхание</span><i aria-hidden="true"></i><span>тело</span><i aria-hidden="true"></i><span>тишина</span>
       </p>
 
-      <p class="hero__lead reveal">
+      <p class="hero__lead hero-in" style="--d:.9s">
         Тёплое зелёное пространство на Дзержинского, 4А. Хатха-йога и йогатерапия,
         гвоздестояние, поющие тибетские чаши и ароматерапия — в группах
         и индивидуально, в своём темпе.
       </p>
 
-      <div class="hero__actions reveal">
+      <div class="hero__actions hero-in" style="--d:1.05s">
         <a class="btn btn--primary" href="https://wa.me/79160304436" target="_blank" rel="noopener">
           <svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>
           Записаться в WhatsApp
@@ -165,7 +165,7 @@
         <a class="btn btn--ghost" href="#pricing">Практики и цены</a>
       </div>
 
-      <ul class="hero__meta reveal">
+      <ul class="hero__meta hero-in" style="--d:1.2s">
         <li>
           <svg aria-hidden="true" focusable="false"><use href="#i-pin"/></svg>
           <a href="https://yandex.ru/maps/-/CTh0a2li" target="_blank" rel="noopener">ул. Дзержинского, 4А</a>
@@ -181,7 +181,7 @@
       </ul>
     </div>
 
-    <div class="hero__visual" id="heroVisual" aria-hidden="true">
+    <div class="hero__visual hero-in" id="heroVisual" style="--d:.5s" aria-hidden="true">
       <div class="mandala">
         <svg viewBox="0 0 400 400" class="mandala__svg" focusable="false">
           <defs>
