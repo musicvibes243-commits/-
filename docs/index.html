@@ -417,24 +417,41 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   </ul>
 </section>
 
-<!-- ================= РОЛИК С ОБЪЕКТА ================= -->
+<!-- ================= РОЛИКИ С ОБЪЕКТА ================= -->
 <section class="clip-sec">
-  <div class="wrap clip-grid">
-    <figure class="clip">
-      <video class="clip__video" data-src="assets/video/rabota.mp4"
-             poster="assets/video/rabota-poster.jpg"
-             muted loop playsinline preload="none"></video>
-    </figure>
-    <div>
+  <div class="wrap">
+    <div class="head">
       <p class="eyebrow">Один день на объекте</p>
       <h2>Так это выглядит вживую</h2>
-      <p class="lead">Не постановочный ролик и не стоковое видео: подсыпаем песок под корпус станции.
-        Ровно эту работу вы увидите на своём участке — с той же лопатой и той же тачкой.</p>
-      <p class="hero__cta">
-        <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
-        <a class="btn btn--outline" href="#raboty">Посмотреть работы</a>
-      </p>
+      <p class="lead">Не постановочные ролики и не стоковое видео — снято у нас на объектах.
+        От первой лопаты до закрытой крышки, выведенной в уровень с землёй.</p>
     </div>
+
+    <ul class="clips">
+      <li class="clip">
+        <video class="clip__video" data-src="assets/video/rabota.mp4"
+               poster="assets/video/rabota-poster.jpg"
+               muted loop playsinline preload="none"></video>
+        <p class="clip__cap"><b>Земляные работы</b><i>Песок под корпус станции и колодец, поставленный в траншею</i></p>
+      </li>
+      <li class="clip">
+        <video class="clip__video" data-src="assets/video/process.mp4"
+               poster="assets/video/process-poster.jpg"
+               muted loop playsinline preload="none"></video>
+        <p class="clip__cap"><b>Процесс работы</b><i>Котлован выбираем вручную — даже когда в нём стоит вода</i></p>
+      </li>
+      <li class="clip">
+        <video class="clip__video" data-src="assets/video/final.mp4"
+               poster="assets/video/final-poster.jpg"
+               muted loop playsinline preload="none"></video>
+        <p class="clip__cap"><b>Финальный штрих</b><i>Насос, обвязка, автоматика — и крышка вровень с землёй</i></p>
+      </li>
+    </ul>
+
+    <p class="clips__cta">
+      <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
+      <a class="btn btn--outline" href="#raboty">Посмотреть фотографии</a>
+    </p>
   </div>
 </section>
 
@@ -1191,14 +1208,20 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     .hero__media img{display:block !important}
   }
   .clip-sec{background:var(--surface-2)}
-  .clip-grid{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);
-    gap:clamp(26px,4vw,60px);align-items:center}
-  @media (max-width:760px){.clip-grid{grid-template-columns:1fr}}
-  .clip{margin:0;max-width:330px;margin-inline:auto;border-radius:var(--r);overflow:hidden;
-    border:1px solid var(--line);background:var(--band);box-shadow:0 26px 58px rgba(0,0,0,.5)}
+  .clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+    max-width:960px;margin-inline:auto}
+  @media (max-width:860px){.clips{grid-template-columns:1fr;max-width:330px}}
+  .clip{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;box-shadow:0 20px 46px rgba(0,0,0,.42);display:flex;flex-direction:column;
+    transition:transform .25s ease,box-shadow .25s ease}
+  .clip:hover{transform:translateY(-4px);box-shadow:0 26px 56px rgba(0,0,0,.5)}
   .clip video{display:block;width:100%;aspect-ratio:464/848;object-fit:cover;background:var(--band)}
-  .clip-grid > div{display:flex;flex-direction:column;gap:14px}
-  .clip-sec .hero__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-start;margin-top:12px}
+  .clip__cap{margin:0;padding:16px 18px 18px}
+  .clip__cap b{display:block;font-family:"Playfair Display",Georgia,serif;
+    font-size:20px;font-weight:700;line-height:1.2}
+  .clip__cap i{display:block;font-style:normal;font-size:14px;color:var(--muted);
+    margin-top:6px;line-height:1.45}
+  .clips__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:28px 0 0}
 
   /* Птица на тёмном фоне */
   .bird svg{filter:drop-shadow(0 10px 22px rgba(0,0,0,.6))}
@@ -1348,15 +1371,16 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     var heroVideo = document.querySelector('.hero__video');
     if (heroVideo && !still && window.matchMedia('(max-width: 700px)').matches) start(heroVideo);
 
-    var clip = document.querySelector('.clip__video');
-    if (clip && !still && 'IntersectionObserver' in window) {
+    var clips = document.querySelectorAll('.clip__video');
+    if (clips.length && !still && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if (e.isIntersecting) { start(clip); if (clip.paused) clip.play().catch(function(){}); }
-          else if (!clip.paused) clip.pause();          // за экраном не крутим впустую
+          var v = e.target;
+          if (e.isIntersecting) { start(v); if (v.paused) v.play().catch(function(){}); }
+          else if (!v.paused) v.pause();               // за экраном не крутим впустую
         });
       }, { threshold: 0.25 });
-      io.observe(clip);
+      Array.prototype.forEach.call(clips, function(v){ io.observe(v); });
     }
   })();
 
