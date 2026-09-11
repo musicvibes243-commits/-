@@ -138,6 +138,27 @@ p.lead { font-weight: 500; color: #C7BCA5; }
 .sk.btn { background: linear-gradient(135deg, #E2C378, #A98418); }
 .thumbs div { background: linear-gradient(140deg, #4A3F22, #2A2415); }
 
+/* слайды с объёмными объектами — тёмный фон вместо жёлтого */
+.poster.warm {
+  background:
+    radial-gradient(85% 55% at 50% 0%, rgba(232,200,126,.14) 0%, rgba(232,200,126,0) 60%),
+    linear-gradient(165deg, #16130F 0%, #0B0A09 50%, #000 100%);
+}
+.price-line { color: #BCB19A; }
+.price-line b { color: var(--gold); }
+
+/* слайд про ниши остаётся светлым — фиксируем тёмный текст */
+.poster.shop h1 { color: #23211D; }
+.poster.shop p { color: #4A463D; }
+.poster.shop .eyebrow { color: #B0421F; }
+
+/* ленты акции */
+.ribbon.r1 { background: #E0301E; color: #fff; }
+.ribbon.r2 {
+  background: linear-gradient(120deg, #F6E6BC, #D9B75C 60%, #A98418);
+  color: #17130A;
+}
+
 /* обложка */
 .sale { background: #E0301E; color: #fff; box-shadow: 0 10px 26px rgba(224,48,30,.4); }
 

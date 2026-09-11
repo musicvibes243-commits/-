@@ -523,3 +523,31 @@ p.small { font-size: 26px; line-height: 1.45; }
   color: var(--red);
   text-transform: uppercase;
 }
+
+/* --- диагональные ленты акции ------------------------------------------- */
+.ribbon {
+  position: absolute;
+  left: -16%;
+  width: 132%;
+  z-index: 1;
+  padding: 15px 0;
+  font-size: 33px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0 12px 26px rgba(150,100,20,.2);
+}
+.ribbon.r1 {
+  top: 352px;
+  transform: rotate(-11deg);
+  background: var(--red);
+  color: #fff;
+}
+.ribbon.r2 {
+  top: 244px;
+  transform: rotate(8deg);
+  background: #fff;
+  color: var(--ink);
+}
