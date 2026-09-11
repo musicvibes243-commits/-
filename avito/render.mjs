@@ -22,7 +22,7 @@ const MAIN = [
   'kot-otdyhayte',    // кот и ленты акции
   'podtyoki',         // подтёки: сочный дизайн
   'deadline-akciya',  // акция до 30 сентября
-  'zvezda-na-pyat',   // звезда: делаем на пять
+  'zvezda-razrez',    // звезда разрезана пополам
   'etapy-raboty',     // четыре шага до запуска
   'dzhinsy-nishi',    // сайт для магазина
   'final-cta',        // цена, срок, консультация
