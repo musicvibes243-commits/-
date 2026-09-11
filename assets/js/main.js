@@ -151,43 +151,6 @@
     }
   })();
 
-  /* ---------- Расписание: вкладки ---------- */
-  (function schedule() {
-    var widget = $('#scheduleWidget');
-    if (!widget) return;
-    var tabs = $$('[role="tab"]', widget);
-    var panels = $$('[role="tabpanel"]', widget);
-    if (!tabs.length) return;
-
-    var select = function (index, focus) {
-      tabs.forEach(function (tab, i) {
-        var on = i === index;
-        tab.setAttribute('aria-selected', String(on));
-        tab.tabIndex = on ? 0 : -1;
-        if (on && focus) tab.focus();
-      });
-      panels.forEach(function (panel, i) { panel.hidden = i !== index; });
-    };
-
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(i); });
-      tab.addEventListener('keydown', function (e) {
-        var next = null;
-        if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
-        if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
-        if (e.key === 'Home') next = 0;
-        if (e.key === 'End') next = tabs.length - 1;
-        if (next === null) return;
-        e.preventDefault();
-        select(next, true);
-      });
-    });
-
-    // текущий день недели: 0 = воскресенье
-    var today = (new Date().getDay() + 6) % 7;
-    select(today < tabs.length ? today : 0);
-  })();
-
   /* ---------- Форма записи (демо) ---------- */
   (function form() {
     var form = $('#bookingForm');
