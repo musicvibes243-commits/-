@@ -18,7 +18,7 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 const MAIN = [
   'cover',            // обложка: акция, 2 дня, 15 000 ₽
   'blyudo-klosh',     // клош и поднос: подаём готовым
-  'uslugi',           // что делаем
+  'uslugi-volna',     // услуги по волне
   'kot-otdyhayte',    // кот и ленты акции
   'podtyoki',         // подтёки: сочный дизайн
   'deadline-akciya',  // акция до 30 сентября

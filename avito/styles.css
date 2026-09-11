@@ -624,3 +624,59 @@ p.small { font-size: 26px; line-height: 1.45; }
 .split-foot b { display: block; font-size: 27px; font-weight: 900; color: var(--ink); }
 .split-foot span { display: block; font-size: 23px; font-weight: 600; color: var(--red); margin-top: 4px; }
 .split-foot-note { flex: 1; font-size: 19px; line-height: 1.4; font-weight: 500; color: #6B5F4B; text-align: right; }
+
+/* --- услуги по волне ----------------------------------------------------- */
+.poster.wave-slide { background: #FFF8E6; }
+
+.wave { position: absolute; inset: 0; z-index: 0; }
+.wave path { fill: url(#none); fill: #FBC53C; }
+
+.brush {
+  position: absolute;
+  left: 10px; bottom: 92px;
+  width: 330px;
+  z-index: 1;
+  opacity: .6;
+}
+.brush path { stroke: var(--red); }
+
+.wave-head { position: absolute; top: 78px; left: 62px; z-index: 3; }
+
+.dish {
+  position: absolute;
+  z-index: 3;
+  width: 208px;
+  margin-left: -104px;
+  text-align: center;
+}
+.dish-plate {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #1F1B16;
+  box-shadow: 0 16px 30px rgba(90,60,10,.3), inset 0 2px 0 rgba(255,255,255,.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dish-plate svg { width: 56px; height: 56px; }
+.dish-plate svg path, .dish-plate svg rect, .dish-plate svg circle { stroke: #FBC53C; }
+.dish-label {
+  margin-top: 14px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.wave-foot {
+  position: absolute;
+  left: 62px; right: 62px; bottom: 56px;
+  z-index: 3;
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #4A4134;
+  text-align: center;
+}
