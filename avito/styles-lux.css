@@ -139,6 +139,8 @@ p.lead { font-weight: 500; color: #C7BCA5; }
 .thumbs div { background: linear-gradient(140deg, #4A3F22, #2A2415); }
 
 /* обложка */
+.sale { background: #E0301E; color: #fff; box-shadow: 0 10px 26px rgba(224,48,30,.4); }
+
 .hero-num {
   font-family: 'Playfair Display', 'Liberation Serif', serif;
   font-weight: 900;
