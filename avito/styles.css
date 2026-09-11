@@ -497,7 +497,7 @@ p.small { font-size: 26px; line-height: 1.45; }
 .shop-photo {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 720px;
+  height: 672px;
   z-index: 1;
   background: url(assets/jeans.jpg) center bottom / cover no-repeat;
 }

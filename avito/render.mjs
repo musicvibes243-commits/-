@@ -17,15 +17,15 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 /** Порядок десяти слайдов объявления. */
 const MAIN = [
   'cover',            // обложка: акция, 2 дня, 15 000 ₽
-  'deadline-akciya',  // акция до 30 сентября
-  'blyudo-klosh',     // оффер «подаём готовым»
+  'blyudo-klosh',     // клош и поднос: подаём готовым
   'uslugi',           // что делаем
-  'kot-otdyhayte',    // отдыхайте — мы всё сделаем
-  'zadachi-sayta',    // что нужно для создания сайта
-  'struktura',        // структура и продвижение
+  'kot-otdyhayte',    // кот и ленты акции
+  'podtyoki',         // подтёки: сочный дизайн
+  'deadline-akciya',  // акция до 30 сентября
+  'zvezda-na-pyat',   // звезда: делаем на пять
   'etapy-raboty',     // четыре шага до запуска
-  'zvezda-na-pyat',   // делаем на пять
-  'final-cta',        // консультация бесплатна
+  'dzhinsy-nishi',    // сайт для магазина
+  'final-cta',        // цена, срок, консультация
 ];
 
 const themes = [
