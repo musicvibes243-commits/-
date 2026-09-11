@@ -548,6 +548,28 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 .hours__steps p { margin: .15rem 0 0; font-size: .95rem; color: var(--muted-fg); }
 .hours__cta { display: flex; flex-wrap: wrap; gap: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--border-soft); }
 
+/* ---------- Групповые занятия ---------- */
+.classes { display: grid; gap: var(--space-2); align-content: start; }
+.class-slot {
+  display: grid; gap: .15rem; padding: var(--space-3);
+  background: var(--primary-soft); border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.class-slot__day { margin: 0; font-size: .76rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.class-slot__time { margin: 0; font-family: var(--font-head); font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.3rem); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.class-slot__name { margin: 0; font-weight: 600; }
+.class-slot--note {
+  grid-template-columns: auto 1fr; align-items: start; gap: var(--space-2);
+  background: transparent; border-style: dashed;
+}
+.class-slot--note .card__icon { margin: 0; width: 40px; height: 40px; }
+.class-slot--note p { margin: 0; font-size: .92rem; color: var(--muted-fg); }
+.class-slot--note b { color: var(--fg); }
+@media (min-width: 560px) and (max-width: 899px) {
+  .classes { grid-template-columns: 1fr 1fr; }
+  .class-slot--note { grid-column: 1 / -1; }
+}
+
 /* ---------- Отзывы ---------- */
 .review {
   display: flex; flex-direction: column; gap: var(--space-2);
