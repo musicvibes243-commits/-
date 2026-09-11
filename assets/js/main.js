@@ -168,18 +168,42 @@
 
     var digits = function (value) { return (value || '').replace(/\D/g, ''); };
 
+    var STRINGS = {
+      ru: {
+        name: 'Напишите, как к вам обращаться',
+        nameShort: 'Слишком короткое имя',
+        phone: 'Без телефона мы не сможем перезвонить',
+        phoneFormat: 'Проверьте номер: нужно 10–11 цифр',
+        agree: 'Без согласия мы не можем принять заявку',
+        invalid: 'Проверьте отмеченные поля — что-то заполнено не до конца.',
+        sending: 'Отправляем…',
+        sent: 'Готово! Это демо-версия, поэтому заявка не ушла. Для настоящей записи напишите в WhatsApp: +7 (916) 030-44-36.'
+      },
+      en: {
+        name: 'Tell us what to call you',
+        nameShort: 'That name looks too short',
+        phone: 'Without a phone number we cannot call you back',
+        phoneFormat: 'Check the number: 10–11 digits',
+        agree: 'We need your consent to accept the request',
+        invalid: 'Check the highlighted fields — something is missing.',
+        sending: 'Sending…',
+        sent: 'Done! This is a demo, so nothing was sent. To book for real, message us on WhatsApp: +7 (916) 030-44-36.'
+      }
+    };
+    var t = STRINGS[(document.documentElement.lang || 'ru').slice(0, 2)] || STRINGS.ru;
+
     var check = function (input) {
       var value = input.type === 'checkbox' ? input.checked : input.value.trim();
       if (input.id === 'name') {
-        if (!value) return 'Напишите, как к вам обращаться';
-        if (value.length < 2) return 'Слишком короткое имя';
+        if (!value) return t.name;
+        if (value.length < 2) return t.nameShort;
       }
       if (input.id === 'phone') {
-        if (!value) return 'Без телефона мы не сможем перезвонить';
+        if (!value) return t.phone;
         var d = digits(value);
-        if (d.length < 10 || d.length > 12) return 'Проверьте номер: нужно 10–11 цифр';
+        if (d.length < 10 || d.length > 12) return t.phoneFormat;
       }
-      if (input.id === 'agree' && !value) return 'Без согласия мы не можем принять заявку';
+      if (input.id === 'agree' && !value) return t.agree;
       return '';
     };
 
@@ -221,19 +245,19 @@
       });
 
       if (firstInvalid) {
-        status.textContent = 'Проверьте отмеченные поля — что-то заполнено не до конца.';
+        status.textContent = t.invalid;
         status.className = 'form__status is-error';
         firstInvalid.focus();
         return;
       }
 
       submit.disabled = true;
-      status.textContent = 'Отправляем…';
+      status.textContent = t.sending;
       status.className = 'form__status';
 
       window.setTimeout(function () {
         submit.disabled = false;
-        status.textContent = 'Готово! Это демо-версия, поэтому заявка не ушла. Для настоящей записи напишите в WhatsApp: +7 (916) 030-44-36.';
+        status.textContent = t.sent;
         status.className = 'form__status is-success';
         form.reset();
         fields.forEach(function (input) { showError(input, ''); });

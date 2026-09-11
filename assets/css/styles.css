@@ -191,6 +191,16 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 .nav__cta { display: none; }
 
 .header__tools { display: flex; align-items: center; gap: .5rem; margin-left: auto; }
+.lang { display: inline-flex; align-items: center; gap: 1px; padding: 3px; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: var(--radius-pill); }
+.lang__item {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 34px; min-height: 38px; padding: 0 .45rem; border-radius: var(--radius-pill);
+  font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-decoration: none; opacity: .7;
+  transition: background-color var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.lang__item:hover { opacity: 1; background: color-mix(in srgb, currentColor 12%, transparent); }
+.lang__item.is-active { opacity: 1; background: color-mix(in srgb, currentColor 16%, transparent); }
+.site-header.is-stuck .lang__item.is-active { background: var(--primary); color: var(--on-primary); }
 .header__phone { display: inline-flex; align-items: center; gap: .45rem; font-size: .95rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .icon-btn--wa:hover { color: #25D366; border-color: currentColor; }
 .icon-btn--tg:hover { color: #2AABEE; border-color: currentColor; }
@@ -213,6 +223,13 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 }
 @media (max-width: 700px) {
   .header__phone, .icon-btn--wa, .icon-btn--tg { display: none; }
+}
+@media (max-width: 480px) {
+  .header__inner { gap: var(--space-2); }
+  .lang__item { min-width: 28px; padding: 0 .25rem; font-size: .75rem; }
+  .logo__mark { width: 34px; height: 34px; }
+  .logo__name { font-size: 1.3rem; letter-spacing: .1em; }
+  .logo__sub { font-size: .62rem; letter-spacing: .16em; }
 }
 @media (max-width: 1080px) {
   .nav-toggle { display: inline-flex; }
