@@ -21,7 +21,7 @@
 <body>
 <div class="wrap">
   <h1>Объявление на Авито: «Разработка сайтов»</h1>
-  <p class="sub">10 изображений, 1800×2400 px. Порядок — как в галерее объявления.</p>
+  <p class="sub">10 изображений для объявления + запасной слайд, 1800×2400 px. Порядок — как в галерее объявления.</p>
   <div class="grid" id="g"></div>
 </div>
 <script>
@@ -36,6 +36,7 @@ const items = [
   ["08-gotovye-sayty", "Готовые сайты", "Установка — 2 дня"],
   ["09-etapy-raboty", "Этапы", "Четыре шага до запуска"],
   ["10-konsultaciya-besplatna", "Финал", "Консультация бесплатна"],
+  ["11-citata-eynshteyn", "Запасной слайд", "Цитата Эйнштейна"],
 ];
 document.getElementById('g').innerHTML = items.map(([f, t, d], i) =>
   `<figure><img src="images/${f}.png" alt="${t}" loading="lazy">
