@@ -294,3 +294,30 @@ p.small { font-size: 26px; line-height: 1.45; }
 
 .spacer { flex: 1; }
 .foot { font-size: 25px; line-height: 1.4; font-weight: 600; color: #4A4134; max-width: 618px; }
+
+/* --- фото-слайды (поднос) ------------------------------------------------ */
+.poster.photo { background: #F6F6F6; }
+.poster.photo.photo-y { background: #FBC90D; }
+
+.photo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.photo-text {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 2;
+  text-align: center;
+  color: #17140B;
+  padding: 0 60px;
+}
+.photo-kicker { font-size: 23px; font-weight: 800; letter-spacing: 6px; text-transform: uppercase; color: #5A4A12; }
+.photo-h { font-size: 58px; font-weight: 900; line-height: 1.04; letter-spacing: -1px; margin-top: 10px; text-transform: uppercase; }
+.photo-sub { font-size: 30px; font-weight: 700; margin-top: 10px; color: #2D2717; line-height: 1.35; }
+.photo-price { font-size: 62px; font-weight: 900; letter-spacing: -1px; color: #17140B; }
+/* цена, лежащая на подносе */
+.photo-price.on-tray { font-size: 46px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.45); }
