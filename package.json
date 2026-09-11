@@ -1,9 +1,10 @@
 {
-  "name": "design-workspace",
+  "name": "anikor-yoga-site",
   "version": "0.0.0",
   "private": true,
-  "description": "Design workspace: UI/UX Pro Max skills + 21st.dev CLI",
+  "description": "Демо-сайт студии йоги «Аникор» + дизайн-скиллы UI/UX Pro Max",
   "scripts": {
+    "dev": "npx --yes http-server -p 8080 -c-1 .",
     "21st": "21st",
     "21st:whoami": "21st whoami",
     "21st:review": "21st review .",

@@ -16,3 +16,9 @@ node_modules/
 # OS / editor noise
 .DS_Store
 Thumbs.db
+
+# Сборка Vite
+dist/
+
+# Архивы и временные сборки
+*.zip
