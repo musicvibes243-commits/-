@@ -3,25 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Авито — 10 изображений объявления «Разработка сайтов»</title>
+<title>Авито — макеты объявления «Разработка сайтов»</title>
 <style>
-  :root { color-scheme: light; }
+  :root { color-scheme: light; --bg: #F4F1EA; --fg: #2A2520; --muted: #6B5F4B; --card: #fff; }
+  body.lux { --bg: #0B0A09; --fg: #F3DFA8; --muted: #9A8F7A; --card: #141310; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #F4F1EA; color: #2A2520; padding: 32px 16px 64px; }
+  body { font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); padding: 32px 16px 64px; transition: background .2s; }
   .wrap { max-width: 1180px; margin: 0 auto; }
   h1 { font-size: 32px; line-height: 1.15; margin-bottom: 8px; }
-  .sub { color: #6B5F4B; margin-bottom: 28px; }
+  .sub { color: var(--muted); margin-bottom: 20px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 28px; }
+  button { font: inherit; font-weight: 600; padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(128,110,60,.45); background: transparent; color: var(--fg); cursor: pointer; }
+  button[aria-pressed="true"] { background: #E8B21F; border-color: #E8B21F; color: #1B1608; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-  figure { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(120,90,20,.12); }
+  figure { background: var(--card); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
   img { display: block; width: 100%; height: auto; }
-  figcaption { padding: 12px 14px; font-size: 14px; color: #6B5F4B; }
-  figcaption b { display: block; color: #2A2520; font-size: 15px; }
+  figcaption { padding: 12px 14px; font-size: 14px; color: var(--muted); }
+  figcaption b { display: block; color: var(--fg); font-size: 15px; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Объявление на Авито: «Разработка сайтов»</h1>
-  <p class="sub">10 изображений для объявления + запасной слайд, 1800×2400 px. Порядок — как в галерее объявления.</p>
+  <p class="sub">10 изображений для объявления + запасной слайд, 1800×2400 px. Две темы на выбор.</p>
+  <div class="tabs">
+    <button id="b-light" aria-pressed="true">Жёлтая</button>
+    <button id="b-lux" aria-pressed="false">Тёмная</button>
+  </div>
   <div class="grid" id="g"></div>
 </div>
 <script>
@@ -38,9 +46,24 @@ const items = [
   ["10-konsultaciya-besplatna", "Финал", "Консультация бесплатна"],
   ["11-citata-eynshteyn", "Запасной слайд", "Цитата Эйнштейна"],
 ];
-document.getElementById('g').innerHTML = items.map(([f, t, d], i) =>
-  `<figure><img src="images/${f}.png" alt="${t}" loading="lazy">
-   <figcaption><b>${String(i + 1).padStart(2, '0')}. ${t}</b>${d}</figcaption></figure>`).join('');
+
+const grid = document.getElementById('g');
+const render = (dir) => {
+  grid.innerHTML = items.map(([f, t, d], i) =>
+    `<figure><img src="${dir}/${f}.png" alt="${t}" loading="lazy">
+     <figcaption><b>${String(i + 1).padStart(2, '0')}. ${t}</b>${d}</figcaption></figure>`).join('');
+};
+
+const setTheme = (lux) => {
+  document.body.classList.toggle('lux', lux);
+  document.getElementById('b-light').ariaPressed = String(!lux);
+  document.getElementById('b-lux').ariaPressed = String(lux);
+  render(lux ? 'images-lux' : 'images');
+};
+
+document.getElementById('b-light').onclick = () => setTheme(false);
+document.getElementById('b-lux').onclick = () => setTheme(true);
+setTheme(false);
 </script>
 </body>
 </html>

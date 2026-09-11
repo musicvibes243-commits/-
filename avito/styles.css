@@ -143,6 +143,19 @@ p.small { font-size: 26px; line-height: 1.45; }
   text-transform: uppercase;
 }
 
+/* надстрочник над ценой */
+.kicker {
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #4A4134;
+}
+
+/* подпись рядом с крупной цифрой */
+.bignum-label { font-size: 34px; font-weight: 900; line-height: 1.1; text-transform: uppercase; }
+.bignum-label span { display: block; font-size: 24px; font-weight: 700; color: #5E5342; text-transform: none; margin-top: 4px; }
+
 /* огромная красная цена */
 .price {
   font-weight: 900;
