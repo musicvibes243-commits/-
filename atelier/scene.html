@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atelier — Свет, ткань, силуэт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS + GLOBALS
+   ============================================================ */
+:root {
+  --retake-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --retake-slow-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Manrope', system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: 'Manrope', system-ui, sans-serif;
+  color: inherit;
+}
+
+::selection { background: rgba(255, 255, 255, 0.2); }
+
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   STAGE + MEDIA
+   ============================================================ */
+.stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.media.is-visible { visibility: visible; }
+
+/* ============================================================
+   HERO COPY
+   ============================================================ */
+.hero {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero h1 {
+  position: absolute;
+  top: 35.9%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(901px, calc(100vw - 48px));
+  margin: 0;
+  text-align: center;
+  font-size: clamp(58px, 6.5vw, 93px);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.14);
+}
+
+.hero h1 span {
+  display: inline-block;
+  opacity: 1;
+  filter: blur(0px);
+  transform: translateY(0);
+  transition:
+    opacity 900ms var(--retake-ease),
+    filter 900ms var(--retake-ease),
+    transform 900ms var(--retake-ease);
+}
+
+.hero h1 span:nth-child(1) { transition-delay: 0ms; }
+.hero h1 span:nth-child(2) { transition-delay: 90ms; }
+.hero h1 span:nth-child(3) { transition-delay: 180ms; }
+
+.stage.title-hidden .hero h1 span {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(-10px);
+}
+
+.hero p {
+  position: absolute;
+  top: calc(46.78% + 94px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(734px, calc(100vw - 48px));
+  margin: 0;
+  text-align: center;
+  font-size: clamp(14px, 1.25vw, 18px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.16);
+}
+
+/* ============================================================
+   CONTROLLER
+   ============================================================ */
+.controller {
+  position: absolute;
+  top: 46.78%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(880px, calc(100vw - 48px));
+  height: 72px;
+  z-index: 20;
+}
+
+/* --- glass material shared shell --- */
+.glass {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.glass::before,
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass::before {
+  background:
+    radial-gradient(120% 150% at var(--glass-x, 24%) var(--glass-y, 8%),
+                    rgb(255 255 255 / 0.25), rgb(255 255 255 / 0) 53%),
+    linear-gradient(115deg, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0) 42%);
+}
+
+.glass::after {
+  padding: 1px;
+  background: conic-gradient(from 225deg, #f0d7b4, rgb(255 255 255 / 0.35), #ffffff,
+                             #f0cfd6, rgb(255 255 255 / 0.35), #f0d7b4);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+/* --- rear track --- */
+.track {
+  top: 4px;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  opacity: 1;
+  background: rgb(24 55 82 / 0.31);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  -webkit-backdrop-filter: blur(9px) saturate(126%) contrast(108%) brightness(103%);
+          backdrop-filter: blur(9px) saturate(126%) contrast(108%) brightness(103%);
+  box-shadow:
+    0 14px 38px rgb(4 24 43 / 0.16),
+    0 2px 7px rgb(4 24 43 / 0.1),
+    inset 1px 1px 0 rgb(255 255 255 / 0.48),
+    inset -1px -1px 0 rgb(21 49 73 / 0.14),
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.16);
+  transition:
+    left 980ms var(--retake-slow-ease),
+    width 980ms var(--retake-slow-ease),
+    opacity 520ms linear;
+}
+
+.track::after { opacity: 0.27; }
+
+/* --- foreground capsule --- */
+.capsule {
+  top: -1px; /* -5px relative to the track, which itself sits at 4px */
+  left: var(--cap-left, -5px);
+  width: var(--cap-width, calc(20% + 5px));
+  height: 72px;
+  background: rgb(246 251 255 / 0.24);
+  border: 1px solid rgb(255 255 255 / 0.28);
+  -webkit-backdrop-filter: blur(13px) saturate(128%) contrast(107%) brightness(105%);
+          backdrop-filter: blur(13px) saturate(128%) contrast(107%) brightness(105%);
+  box-shadow:
+    0 11px 28px rgb(4 24 43 / 0.17),
+    0 2px 6px rgb(4 24 43 / 0.1),
+    inset 1px 1px 0 rgb(255 255 255 / 0.62),
+    inset -1px -1px 0 rgb(20 49 73 / 0.18),
+    inset 0 0 12px rgb(255 255 255 / 0.055);
+  transition:
+    left 620ms var(--retake-ease),
+    width 620ms var(--retake-ease),
+    background 620ms var(--retake-ease),
+    opacity 420ms var(--retake-ease);
+}
+
+.capsule::after { opacity: 0.30; }
+
+/* --- cells --- */
+.cells {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 14px;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: #fff;
+  opacity: 1;
+  filter: blur(0px);
+  transform: none;
+  transition:
+    opacity 420ms var(--retake-ease),
+    filter 420ms var(--retake-ease),
+    transform 980ms var(--retake-slow-ease);
+}
+
+button.cell {
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-appearance: none;
+          appearance: none;
+}
+
+button.cell[disabled] { cursor: default; }
+
+.controller.hot .cell.label {
+  opacity: 0.5;
+  transition:
+    opacity 300ms var(--retake-ease),
+    filter 420ms var(--retake-ease),
+    transform 980ms var(--retake-slow-ease);
+}
+
+/* --- collapsed / selected --- */
+.controller.collapsed .capsule {
+  left: calc(50% - 100px);
+  width: 200px;
+  background: rgb(246 251 255 / 0.14);
+  transition:
+    left 980ms var(--retake-slow-ease),
+    width 980ms var(--retake-slow-ease),
+    background 980ms var(--retake-slow-ease),
+    opacity 420ms var(--retake-ease);
+}
+
+.controller.collapsed .track {
+  left: calc(50% - 96px);
+  width: 192px;
+}
+
+.controller.rear-out .track {
+  opacity: 0;
+  transition:
+    left 980ms var(--retake-slow-ease),
+    width 980ms var(--retake-slow-ease),
+    opacity 400ms linear 650ms;
+}
+
+.controller.collapsed .cell:not(.chosen) {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(0.94);
+  pointer-events: none;
+}
+
+.controller.collapsed .cell.chosen {
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+}
+
+.controller.expanding .capsule,
+.controller.expanding .track {
+  transition:
+    left 980ms var(--retake-slow-ease),
+    width 980ms var(--retake-slow-ease),
+    background 980ms var(--retake-slow-ease),
+    opacity 520ms linear;
+}
+
+.controller.restoring .cell {
+  transition:
+    opacity 760ms var(--retake-ease) 60ms,
+    filter 760ms var(--retake-ease) 60ms,
+    transform 980ms var(--retake-slow-ease);
+}
+
+.cell.swap-out {
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    opacity 300ms var(--retake-ease),
+    filter 300ms var(--retake-ease),
+    transform 980ms var(--retake-slow-ease);
+}
+
+.cell.is-reset {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  animation: resetReveal 520ms var(--retake-ease) both;
+}
+
+@keyframes resetReveal {
+  from { opacity: 0; filter: blur(10px); }
+  to   { opacity: 1; filter: blur(0px); }
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: calc(58px + env(safe-area-inset-top)) 40px 40px;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.18);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.brand svg {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.lockup {
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.wordmark {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  margin-left: clamp(48px, 5vw, 70px);
+  gap: clamp(28px, 3vw, 44px);
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.try-now {
+  grid-column: 3;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 152px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background: transparent;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  transition:
+    color 300ms var(--retake-ease),
+    background-color 300ms var(--retake-ease),
+    border-color 300ms var(--retake-ease);
+}
+
+.try-now:hover,
+.try-now:focus-visible {
+  background: #fff;
+  color: #211a15;
+  border-color: #fff;
+}
+
+/* ============================================================
+   NOTICE (errors / retry)
+   ============================================================ */
+.notice {
+  position: absolute;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 16px 12px 20px;
+  border-radius: 999px;
+  background: rgb(24 55 82 / 0.42);
+  border: 1px solid rgb(255 255 255 / 0.24);
+  -webkit-backdrop-filter: blur(9px) saturate(126%);
+          backdrop-filter: blur(9px) saturate(126%);
+  font-size: 15px;
+  letter-spacing: -0.03em;
+}
+
+.notice[hidden] { display: none; }
+
+.notice button {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background: transparent;
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  transition:
+    color 300ms var(--retake-ease),
+    background-color 300ms var(--retake-ease);
+}
+
+.notice button:hover,
+.notice button:focus-visible {
+  background: #fff;
+  color: #211a15;
+}
+
+/* ============================================================
+   RESPONSIVE — 900
+   ============================================================ */
+@media (max-width: 900px) {
+  .site-header { padding: calc(24px + env(safe-area-inset-top)) 24px 24px; }
+  .meta { font-size: 14px; gap: 22px; margin-left: 34px; }
+  .try-now { width: 116px; height: 36px; font-size: 14px; }
+  .cell { font-size: clamp(17px, 2.5vw, 24px); }
+}
+
+/* ============================================================
+   RESPONSIVE — 700
+   ============================================================ */
+@media (max-width: 700px) {
+  .site-header { padding-left: 18px; padding-right: 18px; }
+  .brand svg { height: 21px; }
+  .lockup { gap: 9px; }
+  .wordmark { font-size: 14px; letter-spacing: 0.14em; }
+  .meta { font-size: 12px; }
+  .meta .meta-2 { display: none; }
+
+  .try-now { width: 92px; height: 34px; font-size: 13px; }
+  .try-now::after {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+  }
+
+  .hero h1 {
+    top: 34%;
+    width: calc(100vw - 40px);
+    font-size: clamp(48px, 14vw, 64px);
+    line-height: 0.88;
+    white-space: normal;
+  }
+
+  .hero p {
+    top: 77%;
+    width: calc(100vw - 44px);
+    font-size: 14px;
+  }
+
+  .controller {
+    top: 53%;
+    width: calc(100vw - 40px);
+    height: 156px;
+  }
+
+  .track {
+    top: 0;
+    height: 156px;
+    border-radius: 28px;
+  }
+
+  .cells {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 48px 54px 54px;
+  }
+
+  .cell { font-size: 17px; }
+  .cell.label { grid-column: 1 / -1; }
+
+  /* square corners so the 1px dividers read as straight grid rules
+     rather than bending around a 999px radius */
+  .cells .opt { border-radius: 0; border-top: 1px solid rgb(255 255 255 / 0.12); }
+  .cells .opt:nth-child(3),
+  .cells .opt:nth-child(5) { border-left: 1px solid rgb(255 255 255 / 0.12); }
+
+  /* the travelling label must not carry a divider into the capsule */
+  .controller.collapsed .cells .opt { border-color: transparent; }
+
+  .cells .opt:active { background: rgb(255 255 255 / 0.07); }
+  .cells .opt:focus-visible { outline-offset: -3px; }
+
+  /* the sliding hover capsule is off on touch layouts */
+  .capsule { opacity: 0; pointer-events: none; }
+
+  /* collapsed track keeps its footprint and simply fades under the capsule */
+  .controller.collapsed .track { left: 0; width: 100%; }
+
+  .controller.collapsed .capsule {
+    opacity: 1;
+    left: 50%;
+    top: 4vh;
+    top: 4dvh;
+    transform: translate(-50%, -50%);
+    width: 196px;
+    height: 64px;
+    border-radius: 999px;
+    background: rgb(246 251 255 / 0.18);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — narrow phones: only the wordmark stays in the header
+   ============================================================ */
+@media (max-width: 460px) {
+  .meta { display: none; }
+}
+
+/* ============================================================
+   RESPONSIVE — short phones
+   ============================================================ */
+@media (max-width: 700px) and (max-height: 700px) {
+  .hero h1 {
+    top: 26%;
+    font-size: clamp(38px, 12vw, 52px);
+  }
+  .controller { top: 50%; }
+  .hero p {
+    top: calc(50% + 168px);
+    width: calc(100vw - 32px);
+    font-size: 13px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — landscape
+   ============================================================ */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero h1 {
+    top: 20%;
+    font-size: clamp(34px, 8vh, 56px);
+  }
+  .controller { top: 50%; }
+  .hero p {
+    top: auto;
+    bottom: 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 700px) and (max-height: 520px) and (orientation: landscape) {
+  .hero h1 {
+    top: 12%;
+    font-size: clamp(28px, 7vh, 44px);
+  }
+  .controller {
+    top: 46%;
+    height: 118px;
+  }
+  .track { height: 118px; }
+  .cells { grid-template-rows: 36px 41px 41px; }
+  .cell { font-size: 15px; }
+  .hero p { bottom: 6px; font-size: 12px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .capsule,
+  .track,
+  .cell,
+  .hero h1 span,
+  .try-now,
+  .controller.collapsed .capsule,
+  .controller.collapsed .track,
+  .controller.rear-out .track,
+  .controller.expanding .capsule,
+  .controller.expanding .track,
+  .controller.restoring .cell,
+  .controller.hot .cell.label,
+  .cell.swap-out {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .hero h1 span,
+  .cell,
+  .stage.title-hidden .hero h1 span,
+  .controller.collapsed .cell:not(.chosen),
+  .cell.swap-out {
+    filter: none !important;
+  }
+
+  .cell.is-reset { animation-duration: 1ms; }
+}
+</style>
+</head>
+<body>
+
+<main class="stage" id="stage">
+
+  <!-- ===== MEDIA: eight persistent clips, fixed src, never remounted ===== -->
+  <video class="media" id="v1f" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-1.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v1r" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-1-reverse.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v2f" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-2.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v2r" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-2-reverse.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v3f" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-3.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v3r" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-3-reverse.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v4f" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-4.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="media" id="v4r" src="https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/designs/video-4-reverse.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <h1><span>Свет,</span> <span>ткань,</span> <span>силуэт</span></h1>
+    <p>Atelier собирает образ целиком — от кроя и ткани до света в студии и силуэта в кадре. Меняйте любую составляющую и смотрите, как перестраивается сцена.</p>
+  </div>
+
+  <!-- ===== CONTROLLER ===== -->
+  <div class="controller" id="controller" role="group" aria-label="Переключатель состояния сцены">
+    <div class="track glass" aria-hidden="true"></div>
+    <div class="capsule glass" id="capsule" aria-hidden="true"></div>
+    <div class="cells">
+      <div class="cell label" id="selectLabel" aria-hidden="true">Что меняем &rarr;</div>
+      <button type="button" class="cell opt" data-branch="scene" disabled>Сцена</button>
+      <button type="button" class="cell opt" data-branch="light" disabled>Свет</button>
+      <button type="button" class="cell opt" data-branch="colorway" disabled>Одежда</button>
+      <button type="button" class="cell opt" data-branch="fullLook" disabled>Модель</button>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="brand">
+      <a class="lockup" href="./" aria-label="Atelier — на главную">
+        <svg viewBox="0 0 28 32" role="img" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#ffffff" fill-rule="evenodd" d="M14 0L28 32H21L18.6 26H9.4L7 32H0ZM14 11L18 21H10Z"></path>
+        </svg>
+        <span class="wordmark">Atelier</span>
+      </a>
+      <div class="meta">
+        <span class="meta-1">Новая коллекция FW25</span>
+        <span class="meta-2">Запись на примерку</span>
+      </div>
+    </div>
+    <!-- TODO: подставьте ссылку на форму записи -->
+    <a class="try-now" href="#">Записаться</a>
+  </header>
+
+  <!-- ===== STATUS + NOTICE ===== -->
+  <p class="sr-only" id="status" role="status" aria-live="polite"></p>
+  <div class="notice" id="notice" hidden>
+    <span id="noticeText"></span>
+    <button type="button" id="retryBtn">Повторить</button>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================
+     CONFIG
+     ========================================================== */
+  var HOLD_GUARD = 0.08;        /* seconds before duration, default */
+  var SCENE_REVERSE_GUARD = 0.18; /* verified empirically for video-2-reverse */
+  var FIRST_FRAME_TIMEOUT = 12000;
+  var SEEK_TIMEOUT = 6000;
+
+  var BRANCHES = {
+    scene:    { label: 'Сцена',  state: 'scene',    fwd: 'v2f', rev: 'v2r', fwdDur: 2.08, revDur: 2.08, fwdGuard: HOLD_GUARD, revGuard: SCENE_REVERSE_GUARD },
+    light:    { label: 'Свет',   state: 'light',    fwd: 'v3f', rev: 'v3r', fwdDur: 2.08, revDur: 2.04, fwdGuard: HOLD_GUARD, revGuard: HOLD_GUARD },
+    colorway: { label: 'Одежда', state: 'colorway', fwd: 'v1f', rev: 'v1r', fwdDur: 2.08, revDur: 2.08, fwdGuard: HOLD_GUARD, revGuard: HOLD_GUARD },
+    fullLook: { label: 'Модель', state: 'fullLook', fwd: 'v4f', rev: 'v4r', fwdDur: 3.00, revDur: 2.48, fwdGuard: HOLD_GUARD, revGuard: HOLD_GUARD }
+  };
+
+  var BRANCH_KEYS = ['scene', 'light', 'colorway', 'fullLook'];
+
+  /* capsule rail positions: index 0 is the label, 1-4 the buttons.
+     The 5px protrusion at both ends keeps the outer labels from pinching. */
+  var CAP = [
+    { left: '-5px', width: 'calc(20% + 5px)' },
+    { left: '20%',  width: '20%' },
+    { left: '40%',  width: '20%' },
+    { left: '60%',  width: '20%' },
+    { left: '80%',  width: 'calc(20% + 5px)' }
+  ];
+
+  /* Collapsed capsule geometry, mirrored from CSS so the travelling label
+     can be aimed at its centre before the capsule has moved there.
+     desktop: top:-1px height:72px  ->  centre 35px below the controller top
+     compact: top:4dvh translate(-50%,-50%)  ->  centre 4dvh below it */
+  var COLLAPSED_CENTER_DESKTOP = 35;
+  var COLLAPSED_CENTER_COMPACT_DVH = 0.04;
+
+  /* ==========================================================
+     DOM
+     ========================================================== */
+  var stage = document.getElementById('stage');
+  var controller = document.getElementById('controller');
+  var selectLabel = document.getElementById('selectLabel');
+  var statusEl = document.getElementById('status');
+  var notice = document.getElementById('notice');
+  var noticeText = document.getElementById('noticeText');
+  var retryBtn = document.getElementById('retryBtn');
+  var buttons = [];
+  var nodes = controller.getElementsByTagName('button');
+  var i;
+  for (i = 0; i < nodes.length; i++) { buttons.push(nodes[i]); }
+
+  var V = {};
+  var VIDEO_IDS = ['v1f', 'v1r', 'v2f', 'v2r', 'v3f', 'v3r', 'v4f', 'v4r'];
+  for (i = 0; i < VIDEO_IDS.length; i++) { V[VIDEO_IDS[i]] = document.getElementById(VIDEO_IDS[i]); }
+
+  /* ==========================================================
+     STATE (kept in refs; nothing re-renders per frame)
+     ========================================================== */
+  var state = { scene: 'base', playback: 'loading', direction: 'forward' };
+  var locked = false;
+  var token = 0;
+  var visibleEl = null;
+  var chosenBtn = null;
+  var focusWasOnControl = false;
+  var lastAttempt = null;      /* { key, dir } for Retry */
+  var timers = [];
+  var ready = {};              /* videoId -> bool */
+  var allReady = false;
+
+  var hoverIndex = -1;
+  var focusIndex = -1;
+  var glassRect = null;
+
+  /* ==========================================================
+     SMALL HELPERS
+     ========================================================== */
+  function announce(msg) {
+    if (statusEl.textContent !== msg) { statusEl.textContent = msg; }
+  }
+
+  function later(fn, ms) {
+    var tok = token;
+    var id = window.setTimeout(function () {
+      if (tok !== token) { return; }
+      fn();
+    }, ms);
+    timers.push(id);
+    return id;
+  }
+
+  function clearTimers() {
+    for (var t = 0; t < timers.length; t++) { window.clearTimeout(timers[t]); }
+    timers = [];
+  }
+
+  function isCompact() {
+    try { return window.matchMedia('(max-width: 700px)').matches; } catch (e) { return false; }
+  }
+
+  function viewportH() {
+    return document.documentElement.clientHeight || window.innerHeight || 0;
+  }
+
+  function showNotice(msg) {
+    noticeText.textContent = msg;
+    notice.hidden = false;
+  }
+
+  function hideNotice() {
+    notice.hidden = true;
+    noticeText.textContent = '';
+  }
+
+  /* ==========================================================
+     CAPSULE RAIL
+     ========================================================== */
+  function moveCapsule(index) {
+    controller.style.setProperty('--cap-left', CAP[index].left);
+    controller.style.setProperty('--cap-width', CAP[index].width);
+  }
+
+  function syncHighlight() {
+    if (locked || controller.classList.contains('collapsed')) { return; }
+    var idx = focusIndex >= 0 ? focusIndex : (hoverIndex >= 0 ? hoverIndex : 0);
+    moveCapsule(idx);
+    if (idx > 0) { controller.classList.add('hot'); }
+    else { controller.classList.remove('hot'); }
+  }
+
+  function buttonIndex(el) {
+    for (var b = 0; b < buttons.length; b++) {
+      if (buttons[b] === el) { return b + 1; }
+    }
+    return -1;
+  }
+
+  /* ==========================================================
+     CONTROL SEMANTICS
+     ========================================================== */
+  function setOptionInert(btn, inert) {
+    if (inert) {
+      btn.setAttribute('aria-hidden', 'true');
+      btn.setAttribute('tabindex', '-1');
+    } else {
+      btn.removeAttribute('aria-hidden');
+      btn.removeAttribute('tabindex');
+    }
+  }
+
+  function disableAllButtons() {
+    for (var b = 0; b < buttons.length; b++) { buttons[b].disabled = true; }
+  }
+
+  /* Base presentation: every control whose clip pair is loaded is live. */
+  function applyBaseSemantics() {
+    for (var b = 0; b < buttons.length; b++) {
+      var btn = buttons[b];
+      var cfg = BRANCHES[btn.getAttribute('data-branch')];
+      var pairReady = !!(ready[cfg.fwd] && ready[cfg.rev]);
+      btn.disabled = !pairReady;
+      setOptionInert(btn, false);
+    }
+  }
+
+  /* Selected presentation: only the Reset control remains reachable. */
+  function applySelectedSemantics(chosen) {
+    for (var b = 0; b < buttons.length; b++) {
+      var btn = buttons[b];
+      if (btn === chosen) {
+        btn.disabled = false;
+        setOptionInert(btn, false);
+      } else {
+        btn.disabled = true;
+        setOptionInert(btn, true);
+      }
+    }
+  }
+
+  /* ==========================================================
+     READINESS
+     ========================================================== */
+  function refreshReadiness() {
+    var count = 0;
+    for (var k = 0; k < VIDEO_IDS.length; k++) { if (ready[VIDEO_IDS[k]]) { count++; } }
+
+    if (!locked && state.scene === 'base' && state.playback !== 'error') {
+      applyBaseSemantics();
+    }
+
+    if (count === VIDEO_IDS.length && !allReady) {
+      allReady = true;
+      if (state.playback === 'loading') {
+        state.playback = 'ready';
+        announce('Сцена готова. Выберите: сцена, свет, одежда или модель.');
+      }
+    }
+  }
+
+  function markReady(id) {
+    if (ready[id]) { return; }
+    ready[id] = true;
+
+    /* the base scene is video-1 parked on frame 0 */
+    if (id === 'v1f' && visibleEl === null) {
+      var el = V.v1f;
+      try { if (el.currentTime > 0.001) { el.currentTime = 0; } } catch (e) {}
+      el.classList.add('is-visible');
+      visibleEl = el;
+    }
+
+    refreshReadiness();
+  }
+
+  function watchReadiness(id) {
+    var el = V[id];
+    /* cached media may never fire loadeddata again, so check up front too */
+    if (el.readyState >= 2) { markReady(id); }
+    el.addEventListener('loadeddata', function () { markReady(id); });
+    el.addEventListener('error', function () {
+      if (state.playback !== 'error') {
+        showNotice('Не удалось загрузить один из роликов.');
+        announce('Не удалось загрузить один из роликов.');
+      }
+    });
+    if (el.readyState === 0) { try { el.load(); } catch (e) {} }
+  }
+
+  /* ==========================================================
+     SEAM-SAFE PLAYBACK
+     ========================================================== */
+
+  function pauseOthers(keep) {
+    for (var k = 0; k < VIDEO_IDS.length; k++) {
+      var el = V[VIDEO_IDS[k]];
+      if (el !== keep && !el.paused) { try { el.pause(); } catch (e) {} }
+    }
+  }
+
+  /* Rewind to 0 and wait for the seek to land. */
+  function rewind(el, tok) {
+    return new Promise(function (resolve, reject) {
+      if (tok !== token) { reject(new Error('stale')); return; }
+      if (el.currentTime <= 0.001) { resolve(); return; }
+
+      var settled = false;
+      var timeoutId = null;
+
+      function done(ok) {
+        if (settled) { return; }
+        settled = true;
+        el.removeEventListener('seeked', onSeeked);
+        if (timeoutId !== null) { window.clearTimeout(timeoutId); }
+        if (ok) { resolve(); } else { reject(new Error('seek')); }
+      }
+
+      function onSeeked() {
+        if (tok !== token) { done(false); return; }
+        done(true);
+      }
+
+      el.addEventListener('seeked', onSeeked);
+      timeoutId = window.setTimeout(function () { done(false); }, SEEK_TIMEOUT);
+
+      try { el.currentTime = 0; } catch (e) { done(false); }
+    });
+  }
+
+  /* Resolve only when a decoded frame belonging to THIS request is on screen.
+     A timeout never resolves this - it can only reject the outer race. */
+  function firstFrame(el, tok) {
+    var cancel = function () {};
+    var promise = new Promise(function (resolve, reject) {
+      var settled = false;
+      var handle = null;
+      var rafId = null;
+      var playingSeen = false;
+
+      function teardown() {
+        if (handle !== null && el.cancelVideoFrameCallback) {
+          try { el.cancelVideoFrameCallback(handle); } catch (e) {}
+          handle = null;
+        }
+        if (rafId !== null) { window.cancelAnimationFrame(rafId); rafId = null; }
+        el.removeEventListener('playing', onPlaying);
+        el.removeEventListener('error', onError);
+      }
+
+      function done(ok, why) {
+        if (settled) { return; }
+        settled = true;
+        teardown();
+        if (ok) { resolve(); } else { reject(new Error(why || 'frame')); }
+      }
+
+      function onPlaying() { playingSeen = true; }
+      function onError() { done(false, 'media'); }
+
+      el.addEventListener('playing', onPlaying);
+      el.addEventListener('error', onError);
+
+      if (typeof el.requestVideoFrameCallback === 'function') {
+        var onFrame = function (now, meta) {
+          if (tok !== token) { done(false, 'stale'); return; }
+          /* a stale endpoint frame carries a large mediaTime - keep waiting */
+          if (meta && meta.mediaTime <= 0.5 && el.readyState >= 2) { done(true); return; }
+          handle = el.requestVideoFrameCallback(onFrame);
+        };
+        handle = el.requestVideoFrameCallback(onFrame);
+      } else {
+        var poll = function () {
+          if (tok !== token) { done(false, 'stale'); return; }
+          if (playingSeen && el.readyState >= 2 && el.currentTime > 0 && el.currentTime <= 0.5) {
+            rafId = window.requestAnimationFrame(function () {
+              rafId = window.requestAnimationFrame(function () {
+                if (tok !== token) { done(false, 'stale'); return; }
+                done(true);
+              });
+            });
+            return;
+          }
+          rafId = window.requestAnimationFrame(poll);
+        };
+        rafId = window.requestAnimationFrame(poll);
+      }
+
+      cancel = function () { done(false, 'cancelled'); };
+    });
+
+    /* swallow the rejection produced by an explicit cancel */
+    return { promise: promise, cancel: function () { cancel(); } };
+  }
+
+  /* Owns the play() attempt for one transition. A genuine rejection (autoplay
+     blocked, decode failure) rejects the chain. A rejection caused by our own
+     suspend-on-hide does not - pausing a video aborts its pending play()
+     promise, and a tab switch is not a failed transition. */
+  function playRunner(el, tok) {
+    var settled = false;
+    var suspending = false;
+    var resolveFn = null;
+    var rejectFn = null;
+    var promise = new Promise(function (res, rej) { resolveFn = res; rejectFn = rej; });
+
+    function onOk() {
+      if (settled || tok !== token) { return; }
+      settled = true;
+      resolveFn();
+    }
+
+    function onErr(err) {
+      if (settled || tok !== token) { return; }
+      if (suspending || document.hidden) { return; }
+      settled = true;
+      rejectFn(err);
+    }
+
+    function attempt() {
+      if (tok !== token) { return; }
+      /* never start (or restart) a clip that is parked for a hidden tab */
+      if (suspending || document.hidden) { return; }
+      var p;
+      try { p = el.play(); } catch (e) { onErr(e); return; }
+      if (!p || typeof p.then !== 'function') { onOk(); return; }
+      p.then(onOk, onErr);
+    }
+
+    return {
+      promise: promise,
+      start: attempt,
+      suspend: function () {
+        suspending = true;
+        try { el.pause(); el.currentTime = 0; } catch (e) {}
+      },
+      resume: function () {
+        suspending = false;
+        attempt();
+      },
+      cancel: function () { settled = true; }
+    };
+  }
+
+  /* A deadline that stops counting while the tab is hidden, because frame
+     callbacks freeze in a background tab and a naive timer fires a false error. */
+  function makeDeadline(ms, tok, runner) {
+    var remaining = ms;
+    var startedAt = 0;
+    var id = null;
+    var finished = false;
+    var rejectFn = null;
+
+    var promise = new Promise(function (_res, rej) { rejectFn = rej; });
+
+    function fire() {
+      if (finished) { return; }
+      finished = true;
+      rejectFn(new Error('timeout'));
+    }
+
+    function arm() {
+      if (finished) { return; }
+      startedAt = Date.now();
+      id = window.setTimeout(fire, remaining);
+    }
+
+    function disarm() {
+      if (id !== null) {
+        window.clearTimeout(id);
+        id = null;
+        remaining = Math.max(0, remaining - (Date.now() - startedAt));
+      }
+    }
+
+    function onVisibility() {
+      if (finished || tok !== token) { return; }
+      if (document.hidden) {
+        /* frame callbacks freeze in a background tab: stop the clock, park
+           the pending clip back at 0 */
+        disarm();
+        runner.suspend();
+      } else {
+        arm();
+        runner.resume();
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisibility);
+
+    /* the tab may already be hidden by the time the clip is armed */
+    if (document.hidden) { runner.suspend(); } else { arm(); }
+
+    return {
+      promise: promise,
+      cancel: function () {
+        finished = true;
+        disarm();
+        document.removeEventListener('visibilitychange', onVisibility);
+      }
+    };
+  }
+
+  /* Watch only the ACTIVE clip and pause it on its terminal frame. */
+  function monitorHold(el, guard, fallbackDur, tok, onHold) {
+    var duration = (isFinite(el.duration) && el.duration > 0) ? el.duration : fallbackDur;
+    var holdAt = Math.max(0, duration - guard);
+    var rafId = null;
+    var timerId = null;
+    var vfcHandle = null;
+    var stopped = false;
+
+    function stop() {
+      if (stopped) { return; }
+      stopped = true;
+      if (rafId !== null) { window.cancelAnimationFrame(rafId); rafId = null; }
+      if (timerId !== null) { window.clearTimeout(timerId); timerId = null; }
+      if (vfcHandle !== null && el.cancelVideoFrameCallback) {
+        try { el.cancelVideoFrameCallback(vfcHandle); } catch (e) {}
+        vfcHandle = null;
+      }
+      el.removeEventListener('ended', onEnded);
+    }
+
+    function finish() {
+      try { el.pause(); } catch (e) {}
+      stop();
+      onHold();
+    }
+
+    function onEnded() {
+      /* fallback only - the rAF watcher normally lands first */
+      if (tok !== token) { stop(); return; }
+      finish();
+    }
+
+    function tick() {
+      if (stopped) { return; }
+      if (tok !== token) { stop(); return; }
+      if (el.currentTime >= holdAt || el.ended) { finish(); return; }
+      /* a whole animation frame of slack would overshoot the guard, so switch
+         to a short self-correcting timer for the last stretch */
+      var remaining = (holdAt - el.currentTime) * 1000;
+      if (remaining < 90) {
+        /* poll tightly through the last stretch: one long sleep would overshoot
+           the guard if the main thread stalls */
+        timerId = window.setTimeout(tick, Math.min(8, Math.max(0, remaining - 4)));
+      } else {
+        rafId = window.requestAnimationFrame(tick);
+      }
+    }
+
+    /* frame callbacks race the timer; whichever sees the crossing first wins */
+    function onFrame(now, meta) {
+      if (stopped) { return; }
+      if (tok !== token) { stop(); return; }
+      /* the same crossing test as the timer - a frame's mediaTime can lead
+         currentTime, and pausing on it would stop short of the hold */
+      if (el.currentTime >= holdAt || el.ended) { finish(); return; }
+      vfcHandle = el.requestVideoFrameCallback(onFrame);
+    }
+
+    el.addEventListener('ended', onEnded);
+    rafId = window.requestAnimationFrame(tick);
+    if (typeof el.requestVideoFrameCallback === 'function') {
+      vfcHandle = el.requestVideoFrameCallback(onFrame);
+    }
+
+    return { stop: stop };
+  }
+
+  function reveal(el) {
+    /* atomic swap - never a crossfade between two scene states */
+    var previous = visibleEl;
+    el.classList.add('is-visible');
+    if (previous && previous !== el) { previous.classList.remove('is-visible'); }
+    visibleEl = el;
+  }
+
+  /* ==========================================================
+     CHOREOGRAPHY
+     ========================================================== */
+  function collapsedCapsuleCenter() {
+    var r = controller.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+    var cy = isCompact()
+      ? r.top + viewportH() * COLLAPSED_CENTER_COMPACT_DVH
+      : r.top + COLLAPSED_CENTER_DESKTOP;
+    return { x: cx, y: cy };
+  }
+
+  function aimChosenLabel(btn) {
+    /* offsetLeft/offsetTop ignore transforms, so re-aiming a label that is
+       already translated (a resize mid-collapse, or a recovery after a failed
+       reverse) measures from its untransformed home rather than compounding */
+    var ctrl = controller.getBoundingClientRect();
+    var homeX = ctrl.left + btn.offsetLeft + btn.offsetWidth / 2;
+    var homeY = ctrl.top + btn.offsetTop + btn.offsetHeight / 2;
+    var c = collapsedCapsuleCenter();
+    btn.style.setProperty('--tx', (c.x - homeX).toFixed(2) + 'px');
+    btn.style.setProperty('--ty', (c.y - homeY).toFixed(2) + 'px');
+  }
+
+  function collapseFor(btn) {
+    aimChosenLabel(btn);
+    btn.classList.add('chosen');
+    controller.classList.remove('hot', 'expanding', 'restoring');
+    /* collapse + rear fade land in the SAME style recalc; the 650ms CSS
+       delay is what holds the fade back, never a setTimeout */
+    controller.classList.add('collapsed', 'rear-out');
+  }
+
+  function expandFromSelected() {
+    moveCapsule(0);
+    controller.classList.remove('collapsed', 'rear-out', 'hot');
+    controller.classList.add('expanding', 'restoring');
+  }
+
+  function labelToReset(btn) {
+    btn.textContent = 'Сбросить';
+    btn.setAttribute('aria-label', 'Сбросить и вернуться к исходной сцене');
+    btn.classList.add('is-reset');
+  }
+
+  function labelToOption(btn) {
+    var cfg = BRANCHES[btn.getAttribute('data-branch')];
+    btn.textContent = cfg.label;
+    btn.removeAttribute('aria-label');
+    btn.classList.remove('is-reset');
+  }
+
+  function hideTitle() { stage.classList.add('title-hidden'); }
+  function showTitle() { stage.classList.remove('title-hidden'); }
+
+  /* ==========================================================
+     TRANSITIONS
+     ========================================================== */
+  function transition(key, dir) {
+    /* ---- synchronous gate: lock and disable in the same tick ---- */
+    if (locked) { return; }
+    var cfg = BRANCHES[key];
+    if (!cfg) { return; }
+    if (dir === 'forward' && state.scene !== 'base') { return; }
+    if (dir === 'reverse' && state.scene !== cfg.state) { return; }
+
+    locked = true;
+    clearTimers();
+    var tok = ++token;
+    state.direction = dir;
+    state.playback = 'starting';
+    lastAttempt = { key: key, dir: dir };
+    hideNotice();
+
+    var btn = null;
+    for (var b = 0; b < buttons.length; b++) {
+      if (buttons[b].getAttribute('data-branch') === key) { btn = buttons[b]; }
+    }
+    focusWasOnControl = (document.activeElement === btn);
+    disableAllButtons();
+
+    var forward = (dir === 'forward');
+    var el = V[forward ? cfg.fwd : cfg.rev];
+    var guard = forward ? cfg.fwdGuard : cfg.revGuard;
+    var fallbackDur = forward ? cfg.fwdDur : cfg.revDur;
+
+    if (forward) {
+      chosenBtn = btn;
+      collapseFor(btn);
+      announce('Переход «' + cfg.label + '». Загрузка.');
+    } else {
+      /* clip and bar expansion run in parallel - neither waits on the other */
+      expandFromSelected();
+      btn.classList.add('swap-out');
+      later(function () {
+        btn.classList.remove('swap-out');
+        btn.classList.remove('chosen');
+        labelToOption(btn);
+      }, 320);
+      later(function () { controller.classList.remove('expanding'); }, 1000);
+      later(function () { controller.classList.remove('restoring'); }, 1120);
+      announce('Возврат к исходной сцене.');
+    }
+
+    var frameGate = null;
+    var deadline = null;
+    var monitor = null;
+    var runner = null;
+
+    function cleanup() {
+      if (frameGate) { frameGate.cancel(); frameGate = null; }
+      if (deadline) { deadline.cancel(); deadline = null; }
+      if (runner) { runner.cancel(); runner = null; }
+      if (monitor) { monitor.stop(); monitor = null; }
+    }
+
+    function fail(err) {
+      if (tok !== token) { return; }
+      cleanup();
+      clearTimers();
+      try { el.pause(); } catch (e) {}
+      state.playback = 'error';
+      locked = false;
+
+      /* the last valid frame stays exactly where it is */
+      if (forward) {
+        controller.classList.remove('collapsed', 'rear-out', 'expanding', 'restoring');
+        btn.classList.remove('chosen', 'swap-out');
+        labelToOption(btn);
+        chosenBtn = null;
+        moveCapsule(0);
+        showTitle();
+        applyBaseSemantics();
+        showNotice('Не удалось воспроизвести переход «' + cfg.label + '».');
+        announce('Переход «' + cfg.label + '» не удался. Сцена не изменилась. Нажмите «Повторить».');
+      } else {
+        /* reverse failed: the branch is still on screen, so show it as selected */
+        controller.classList.remove('expanding', 'restoring');
+        btn.classList.remove('swap-out');
+        btn.classList.add('chosen');
+        labelToReset(btn);
+        collapseFor(btn);
+        applySelectedSemantics(btn);
+        showNotice('Не удалось вернуться к исходной сцене.');
+        announce('Сброс не удался. На экране по-прежнему «' + cfg.label + '». Нажмите «Повторить».');
+      }
+      if (err && window.console && console.warn) { console.warn('[ltx]', err.message || err); }
+      retryBtn.focus({ preventScroll: true });
+    }
+
+    function commit() {
+      if (tok !== token) { return; }
+      cleanup();
+      state.playback = 'ready';
+      locked = false;
+
+      if (forward) {
+        state.scene = cfg.state;
+        labelToReset(btn);
+        applySelectedSemantics(btn);
+        announce('Выбрано: ' + cfg.label + '. «Сбросить» вернёт исходную сцену.');
+      } else {
+        state.scene = 'base';
+        chosenBtn = null;
+        btn.classList.remove('chosen', 'swap-out');
+        labelToOption(btn);
+        controller.classList.remove('expanding', 'restoring');
+        moveCapsule(0);
+        showTitle();
+        applyBaseSemantics();
+        announce('Исходная сцена восстановлена.');
+      }
+
+      /* disabling a focused control drops focus to <body> - put it back */
+      if (focusWasOnControl && !btn.disabled) {
+        try { btn.focus({ preventScroll: true }); } catch (e) { btn.focus(); }
+      }
+      focusWasOnControl = false;
+      syncHighlight();
+    }
+
+    function onFirstFrame() {
+      if (tok !== token) { return; }
+      if (deadline) { deadline.cancel(); deadline = null; }
+      state.playback = 'playing';
+      reveal(el);
+
+      if (forward) {
+        var duration = (isFinite(el.duration) && el.duration > 0) ? el.duration : cfg.fwdDur;
+        var at = Math.min(duration * 0.12, 0.9);
+        later(hideTitle, Math.round(at * 1000));
+      }
+
+      monitor = monitorHold(el, guard, fallbackDur, tok, commit);
+    }
+
+    pauseOthers(el);
+
+    rewind(el, tok).then(function () {
+      if (tok !== token) { return; }
+
+      /* the frame callback is registered BEFORE play() */
+      frameGate = firstFrame(el, tok);
+      runner = playRunner(el, tok);
+      deadline = makeDeadline(FIRST_FRAME_TIMEOUT, tok, runner);
+
+      runner.start();
+
+      /* play() rejection must reject the chain, not just be logged */
+      var playPromise = runner.promise;
+      var gate = Promise.all([playPromise, frameGate.promise]);
+
+      return Promise.race([gate, deadline.promise]).then(onFirstFrame);
+    })['catch'](fail);
+  }
+
+  /* ==========================================================
+     EVENTS
+     ========================================================== */
+  for (i = 0; i < buttons.length; i++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.disabled) { return; }
+        var key = btn.getAttribute('data-branch');
+        if (state.scene === 'base') {
+          transition(key, 'forward');
+        } else if (BRANCHES[key] && state.scene === BRANCHES[key].state) {
+          transition(key, 'reverse');
+        }
+        /* clicking any other control while a branch is selected does nothing */
+      });
+
+      btn.addEventListener('mouseenter', function () {
+        hoverIndex = buttonIndex(btn);
+        syncHighlight();
+      });
+
+      btn.addEventListener('focus', function () {
+        var keyboard = true;
+        try { keyboard = btn.matches(':focus-visible'); } catch (e) { keyboard = true; }
+        if (keyboard) {
+          focusIndex = buttonIndex(btn);
+          syncHighlight();
+        }
+      });
+
+      btn.addEventListener('blur', function () {
+        if (focusIndex === buttonIndex(btn)) {
+          focusIndex = -1;
+          syncHighlight();
+        }
+      });
+    }(buttons[i]));
+  }
+
+  controller.addEventListener('mouseleave', function () {
+    hoverIndex = -1;
+    /* a button that still holds keyboard focus keeps the capsule */
+    syncHighlight();
+  });
+
+  function cacheGlassRect() { glassRect = controller.getBoundingClientRect(); }
+
+  controller.addEventListener('pointermove', function (ev) {
+    if (!glassRect) { cacheGlassRect(); }
+    if (!glassRect || !glassRect.width || !glassRect.height) { return; }
+    var x = ((ev.clientX - glassRect.left) / glassRect.width) * 100;
+    var y = ((ev.clientY - glassRect.top) / glassRect.height) * 100;
+    controller.style.setProperty('--glass-x', x.toFixed(2) + '%');
+    controller.style.setProperty('--glass-y', y.toFixed(2) + '%');
+  });
+
+  window.addEventListener('resize', function () {
+    glassRect = null;
+    if (chosenBtn && controller.classList.contains('collapsed')) {
+      /* keep the travelling label aligned with the capsule through a resize */
+      aimChosenLabel(chosenBtn);
+    }
+  });
+
+  window.addEventListener('scroll', function () { glassRect = null; }, true);
+
+  retryBtn.addEventListener('click', function () {
+    if (!lastAttempt) { return; }
+    var attempt = lastAttempt;
+    hideNotice();
+    state.playback = 'ready';
+    transition(attempt.key, attempt.dir);
+  });
+
+  /* ==========================================================
+     BOOT
+     ========================================================== */
+  moveCapsule(0);
+  announce('Загрузка переходов сцены.');
+  for (i = 0; i < VIDEO_IDS.length; i++) { watchReadiness(VIDEO_IDS[i]); }
+  refreshReadiness();
+}());
+</script>
+</body>
+</html>
