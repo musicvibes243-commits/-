@@ -143,6 +143,37 @@ p.small { font-size: 26px; line-height: 1.45; }
   text-transform: uppercase;
 }
 
+/* гигантский срок на обложке */
+.hero-num {
+  font-size: 186px;
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: -6px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.rule {
+  width: 180px;
+  height: 9px;
+  border-radius: 5px;
+  background: var(--red);
+  margin-top: 40px;
+}
+
+/* короткие тезисы на обложке */
+.ticks { display: flex; flex-direction: column; gap: 14px; margin-top: 34px; }
+.ticks div { display: flex; align-items: center; gap: 16px; font-size: 27px; font-weight: 600; color: #4A4134; }
+.ticks i {
+  flex: 0 0 auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font: 900 17px/1 'Montserrat', sans-serif;
+  font-style: normal;
+  display: flex; align-items: center; justify-content: center;
+}
+
 /* надстрочник над ценой */
 .kicker {
   font-size: 29px;

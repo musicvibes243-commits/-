@@ -138,5 +138,20 @@ p.lead { font-weight: 500; color: #C7BCA5; }
 .sk.btn { background: linear-gradient(135deg, #E2C378, #A98418); }
 .thumbs div { background: linear-gradient(140deg, #4A3F22, #2A2415); }
 
+/* обложка */
+.hero-num {
+  font-family: 'Playfair Display', 'Liberation Serif', serif;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: var(--gold-soft);
+}
+.rule { background: linear-gradient(90deg, #F3DFA8, #C9A227 60%, rgba(201,162,39,0)); }
+.ticks div { color: #BCB19A; }
+.ticks i {
+  background: linear-gradient(140deg, #F3DFA8, #C9A227 60%, #8C6B1F);
+  color: #17130A;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+}
+
 /* в антикве пробел перед знаком рубля теряется */
 .price .cur { margin-left: .14em; }
