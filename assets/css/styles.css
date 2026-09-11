@@ -231,7 +231,7 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
   .logo__name { font-size: 1.3rem; letter-spacing: .1em; }
   .logo__sub { font-size: .62rem; letter-spacing: .16em; }
 }
-@media (max-width: 1080px) {
+@media (max-width: 1160px) {
   .nav-toggle { display: inline-flex; }
   .logo, .header__tools { position: relative; z-index: 80; }
   body.is-locked .site-header { color: var(--fg); }
