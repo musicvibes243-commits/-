@@ -28,7 +28,12 @@ def build(url, theme='light', name='anikor', caption='студия йоги · �
     qr.save(svg_path, scale=10, border=3, dark=t['dark'], light=t['light'])
     qr.save(png_path, scale=14, border=3, dark=t['dark'], light=t['light'])
 
-    inline = qr.svg_inline(scale=9, border=0, dark=t['dark'], light=t['light'])
+    # в карточку кладём тот самый PNG, который проверен на считывание,
+    # а не повторный рендер: так картинка в карточке гарантированно рабочая
+    import base64
+    with open(png_path, 'rb') as fh:
+        inline = ('<img alt="QR-код на сайт студии" src="data:image/png;base64,'
+                  + base64.b64encode(fh.read()).decode() + '">')
     card = os.path.join(QR, f'{name}-{theme}-card.html')
     with open(card, 'w') as f:
         f.write(f'''<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8">
@@ -40,8 +45,8 @@ def build(url, theme='light', name='anikor', caption='студия йоги · �
   .card {{ display: grid; justify-items: center; gap: 30px; text-align: center; padding: 60px; }}
   .name {{ font-family: {t['font']}; font-size: 62px; letter-spacing: .16em; text-transform: uppercase; }}
   .sub {{ font-size: 15px; letter-spacing: .24em; text-transform: uppercase; color: {t['accent']}; }}
-  .qr {{ padding: 26px; background: {t['light']}; border: 1px solid {t['accent']}33; }}
-  .qr svg {{ display: block; width: 340px; height: 340px; }}
+  .qr {{ padding: 14px; background: {t['light']}; border: 1px solid {t['accent']}33; }}
+  .qr img {{ display: block; width: 380px; height: 380px; image-rendering: pixelated; }}
   .hint {{ font-size: 17px; letter-spacing: .04em; }}
   .tel {{ font-family: {t['font']}; font-size: 30px; letter-spacing: .04em; }}
 </style></head><body>
