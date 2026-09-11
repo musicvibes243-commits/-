@@ -217,7 +217,7 @@ svg:not(.sprite):not(.logo__mark):not(.mandala__svg):not(.wordmark__svg) {
 [data-theme="dark"] .icon-sun { display: none; }
 [data-theme="dark"] .icon-moon { display: inline-block; }
 
-@media (max-width: 1180px) {
+@media (max-width: 1400px) {
   .header__phone span { display: none; }
   .header__phone { width: 46px; height: 46px; justify-content: center; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: var(--radius-pill); }
 }
