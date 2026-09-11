@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Atelier — школа портного и швейная мастерская в Королёве</title>
-<meta name="description" content="Atelier в Королёве: пошив и подгонка по фигуре, Школа портного с курсами с нуля и для опытных, швейный коворкинг за 300 ₽ в час. ТЦ «Статус», 4 этаж.">
+<meta name="description" content="Идёт набор в Школу портного: старт занятий 17 сентября, бронь места до 14 сентября. Atelier в Королёве — пошив, курсы кройки и шитья, швейный коворкинг 300 ₽ в час.">
 <meta name="theme-color" content="#0E0E0D">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Atelier — школа портного и швейная мастерская в Королёве">
-<meta property="og:description" content="Открыт набор в Школу портного. Пошив, курсы кроя и шитья, коворкинг 300 ₽/час. Королёв, ТЦ «Статус», 4 этаж.">
+<meta property="og:description" content="Осталось немного мест в новом наборе Школы портного. Старт 17 сентября, бронь до 14 сентября. Королёв, ТЦ «Статус», 4 этаж.">
 <meta property="og:locale" content="ru_RU">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -270,6 +270,76 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
   color: var(--faint);
   white-space: nowrap;
 }
+
+/* ============================================================
+   НАБОР
+   ============================================================ */
+.ticker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 14px;
+  min-height: 46px;
+  padding: 9px var(--gutter);
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 240ms var(--ease);
+}
+
+.ticker:hover, .ticker:focus-visible { opacity: 0.78; }
+.ticker .sep { opacity: 0.42; }
+.ticker svg { flex-shrink: 0; }
+
+.enrol {
+  margin-top: 52px;
+  padding: clamp(28px, 3.4vw, 44px);
+  border: 1px solid var(--hair);
+  background: rgba(241, 237, 228, 0.045);
+}
+
+.enrol > .tag {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--fg);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+  gap: 0 clamp(24px, 4vw, 64px);
+  margin-top: 26px;
+  border-top: 1px solid var(--hair);
+}
+
+.facts li { padding: 20px 0; }
+
+.facts .k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.facts .v {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--display);
+  font-size: clamp(26px, 2.8vw, 36px);
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.enrol .lead { margin-top: 22px; max-width: 64ch; }
+.enrol .arrows { margin-top: 30px; }
 
 /* ============================================================
    ШКОЛА
@@ -575,6 +645,8 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
 
 @media (max-width: 460px) {
   body { font-size: 15px; }
+  .ticker { font-size: 10px; letter-spacing: 0.14em; gap: 4px 10px; }
+  .enrol { padding: 24px 20px; }
   .topbar .tel { font-size: 10.5px; letter-spacing: 0.12em; }
   .brand { font-size: 21px; }
   .cta { width: 100%; justify-content: center; padding: 0 20px; }
@@ -590,6 +662,16 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
 <body>
 
 <a class="sr-only" href="#top">Перейти к содержанию</a>
+
+<!-- ===== ПОЛОСА НАБОРА — снять или обновить даты, когда набор закроется ===== -->
+<a class="ticker" href="#shkola">
+  <span>Идёт набор в Школу портного</span>
+  <span class="sep" aria-hidden="true">·</span>
+  <span>Старт 17 сентября</span>
+  <span class="sep" aria-hidden="true">·</span>
+  <span>Бронь до 14 сентября</span>
+  <svg width="20" height="9" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4"/></svg>
+</a>
 
 <header class="topbar">
   <a class="brand" href="#top">Atelier</a>
@@ -616,7 +698,7 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
       </p>
       <div class="arrows">
         <a class="arrow" href="#shkola">
-          Открыт набор в школу
+          Набор — старт 17 сентября
           <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4"/></svg>
         </a>
         <a class="arrow" href="#kovorking">
@@ -640,7 +722,7 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
         <li>
           <h3>Школа портного</h3>
           <p>Курсы конструирования и технологии пошива — с нуля за 6 месяцев или 4 месяца для опытных.</p>
-          <span class="note">Идёт набор</span>
+          <span class="note">Бронь до 14 сентября</span>
         </li>
         <li>
           <h3>Коворкинг</h3>
@@ -662,6 +744,25 @@ h2.display { font-size: clamp(34px, 4.6vw, 62px); }
           вы строите лекала, разбираете узлы обработки изделий и осваиваете
           элементы моделирования.
         </p>
+      </div>
+
+      <div class="enrol">
+        <p class="tag">Осталось совсем немного мест — группы почти сформированы</p>
+        <ul class="facts">
+          <li><span class="k">Старт занятий</span><span class="v">17 сентября</span></li>
+          <li><span class="k">Забронировать до</span><span class="v">14 сентября</span></li>
+          <li><span class="k">Бронирование места</span><span class="v">1 000 ₽</span></li>
+        </ul>
+        <p class="lead">
+          Оплатить бронь можно наличными или картой у нас в ателье либо переводом
+          по номеру телефона. После оплаты место закрепляется за вами.
+        </p>
+        <div class="arrows">
+          <a class="arrow" href="tel:+79163324801">
+            Забронировать место
+            <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4"/></svg>
+          </a>
+        </div>
       </div>
 
       <div class="courses">

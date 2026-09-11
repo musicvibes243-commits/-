@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Atelier — ателье, школа портного и швейный коворкинг в Королёве</title>
-<meta name="description" content="Atelier в Королёве: пошив и ремонт одежды, Школа портного (курсы с нуля и для опытных) и швейный коворкинг за 300 ₽ в час. ТЦ «Статус», 4 этаж.">
+<meta name="description" content="Идёт набор в Школу портного: старт занятий 17 сентября, бронь места до 14 сентября. Atelier в Королёве — пошив, курсы кройки и шитья, швейный коворкинг 300 ₽ в час.">
 <meta name="theme-color" content="#4B0D63">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Atelier — ателье, школа портного и швейный коворкинг в Королёве">
-<meta property="og:description" content="Открыт набор в Школу портного. Пошив и ремонт, курсы кроя и шитья, швейный коворкинг за 300 ₽ в час. Королёв, ТЦ «Статус», 4 этаж.">
+<meta property="og:description" content="Осталось немного мест в новом наборе Школы портного. Старт 17 сентября, бронь до 14 сентября. Королёв, ТЦ «Статус», 4 этаж.">
 <meta property="og:locale" content="ru_RU">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -425,6 +425,92 @@ a { color: inherit; }
 }
 
 /* ============================================================
+   НАБОР
+   ============================================================ */
+.enrol-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 18px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 240ms var(--ease);
+}
+
+.enrol-bar:hover, .enrol-bar:focus-visible { background: var(--plum); }
+.enrol-bar b { font-weight: 700; }
+.enrol-bar svg { flex-shrink: 0; }
+
+.enrol-bar .pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.26);
+  flex-shrink: 0;
+}
+
+.enrol {
+  margin-top: 44px;
+  padding: clamp(28px, 3.4vw, 40px);
+  border: 1.5px solid rgba(139, 28, 168, 0.4);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(233, 213, 240, 0.55), rgba(233, 213, 240, 0.2));
+}
+
+.enrol-head {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(21px, 2.2vw, 27px);
+  line-height: 1.25;
+  color: var(--plum);
+}
+
+.enrol-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 20px clamp(20px, 3vw, 44px);
+  margin-top: 26px;
+  padding-block: 22px;
+  border-top: 1px solid rgba(75, 13, 99, 0.18);
+  border-bottom: 1px solid rgba(75, 13, 99, 0.18);
+}
+
+.enrol-facts .k {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.enrol-facts .v {
+  display: block;
+  margin-top: 7px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(23px, 2.4vw, 30px);
+  font-weight: 700;
+  color: var(--plum);
+  font-variant-numeric: tabular-nums;
+}
+
+.enrol-note {
+  margin-top: 22px;
+  max-width: 62ch;
+  color: rgba(42, 15, 53, 0.82);
+  font-size: 16px;
+}
+
+.enrol .btn { margin-top: 26px; }
+
+/* ============================================================
    ШКОЛА ПОРТНОГО
    ============================================================ */
 .announce {
@@ -753,6 +839,9 @@ a { color: inherit; }
   .course { padding: 26px 22px; }
   .schedule .time, .hours-row .time { font-size: 17px; }
   .announce { font-size: 15px; padding: 0 16px; }
+  .enrol-bar { font-size: 13.5px; gap: 9px; padding: 9px 14px; }
+  .enrol { padding: 24px 20px; }
+  .enrol .btn { width: 100%; }
 }
 
 @media (max-width: 420px) {
@@ -768,6 +857,13 @@ a { color: inherit; }
 <body>
 
 <a class="sr-only" href="#main">Перейти к содержанию</a>
+
+<!-- ===== ПОЛОСА НАБОРА — снять или обновить даты, когда набор закроется ===== -->
+<a class="enrol-bar" href="#shkola">
+  <span class="pulse" aria-hidden="true"></span>
+  <span>Идёт набор в Школу портного — старт <b>17 сентября</b>, бронь до <b>14 сентября</b></span>
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+</a>
 
 <!-- ===================== ШАПКА ===================== -->
 <header class="site-header">
@@ -827,7 +923,7 @@ a { color: inherit; }
 
           <a class="announce" href="#shkola">
             <span class="pulse" aria-hidden="true"></span>
-            Открыт набор в Школу портного
+            Осталось немного мест — старт 17 сентября
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -866,7 +962,7 @@ a { color: inherit; }
           </div>
           <h3>Школа портного</h3>
           <p>Курсы конструирования и технологии пошива: с нуля за 6 месяцев или 4 месяца для опытных.</p>
-          <p class="card-price">Идёт набор на учебный год</p>
+          <p class="card-price">Набор открыт — бронь до 14 сентября</p>
         </article>
 
         <article class="card">
@@ -892,6 +988,23 @@ a { color: inherit; }
           вы строите лекала, разбираете узлы обработки изделий и осваиваете
           элементы моделирования.
         </p>
+      </div>
+
+      <div class="enrol">
+        <p class="enrol-head">Осталось совсем немного мест — группы почти сформированы</p>
+        <div class="enrol-facts">
+          <div><span class="k">Старт занятий</span><span class="v">17 сентября</span></div>
+          <div><span class="k">Забронировать до</span><span class="v">14 сентября</span></div>
+          <div><span class="k">Бронирование места</span><span class="v">1 000 ₽</span></div>
+        </div>
+        <p class="enrol-note">
+          Оплатить бронь можно наличными или картой у нас в ателье либо переводом
+          по номеру телефона. После оплаты место закрепляется за вами.
+        </p>
+        <a class="btn btn-primary" href="tel:+79163324801">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+          Забронировать место
+        </a>
       </div>
 
       <div class="courses">
