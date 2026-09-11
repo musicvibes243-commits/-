@@ -24,7 +24,7 @@ const MAIN = [
   'deadline-akciya',  // акция до 30 сентября
   'zvezda-razrez',    // звезда разрезана пополам
   'etapy-raboty',     // четыре шага до запуска
-  'dzhinsy-nishi',    // сайт для магазина
+  'stili-dizayna',    // работаем в любом стиле
   'final-cta',        // цена, срок, консультация
 ];
 

@@ -729,3 +729,67 @@ p.small { font-size: 26px; line-height: 1.45; }
   color: var(--ink);
   box-shadow: 0 8px 18px rgba(150,100,20,.18);
 }
+
+/* --- стили дизайна: четыре мини-макета ------------------------------------ */
+.styles {
+  position: absolute;
+  top: 322px;
+  left: 62px; right: 62px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.style-card {
+  background: rgba(255,255,255,.92);
+  border-radius: 20px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 12px 26px rgba(150,100,20,.16);
+}
+.style-card b { display: block; margin-top: 14px; font-size: 25px; font-weight: 900; color: var(--ink); }
+.style-card span { display: block; margin-top: 3px; font-size: 19px; font-weight: 600; color: #6B5F4B; }
+
+/* миниатюра сайта */
+.mini { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.mini-bar { height: 22px; display: flex; align-items: center; gap: 4px; padding: 0 8px; }
+.mini-bar i { width: 5px; height: 5px; border-radius: 50%; background: rgba(0,0,0,.25); }
+.mini-bar span { margin-left: auto; width: 34px; height: 5px; border-radius: 3px; background: rgba(0,0,0,.2); }
+.mini-hero { padding: 16px 14px 14px; }
+.mini-title { height: 15px; width: 72%; border-radius: 4px; }
+.mini-line { height: 6px; border-radius: 3px; margin-top: 7px; opacity: .5; }
+.mini-line.l1 { width: 88%; }
+.mini-line.l2 { width: 64%; }
+.mini-btn { height: 16px; width: 76px; border-radius: 8px; margin-top: 12px; }
+.mini-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 14px 14px; }
+.mini-row div { height: 42px; border-radius: 7px; }
+
+/* палитры ниш */
+.st-clay   .mini-bar { background: #F0E3D8; }
+.st-clay   .mini-hero { background: #FBF3EC; }
+.st-clay   .mini-title, .st-clay .mini-btn { background: #9B3B22; }
+.st-clay   .mini-line { background: #9B3B22; }
+.st-clay   .mini-row { background: #FBF3EC; }
+.st-clay   .mini-row div { background: #D8B49B; }
+
+.st-retro  .mini-bar { background: #DCE9EE; }
+.st-retro  .mini-hero { background: #FCF8EC; }
+.st-retro  .mini-title, .st-retro .mini-btn { background: #B5472C; }
+.st-retro  .mini-line { background: #3E6E80; }
+.st-retro  .mini-row { background: #A9C6D2; }
+.st-retro  .mini-row div { background: #FCF8EC; }
+
+.st-wild   .mini-bar { background: #24302A; }
+.st-wild   .mini-hero { background: #2F3D35; }
+.st-wild   .mini-title { background: #EDF2EC; }
+.st-wild   .mini-btn { background: #8FA98B; }
+.st-wild   .mini-line { background: #C3D2BE; }
+.st-wild   .mini-row { background: #24302A; }
+.st-wild   .mini-row div { background: #5C7361; }
+
+.st-beauty .mini-bar { background: #F6F2F3; }
+.st-beauty .mini-hero { background: #fff; }
+.st-beauty .mini-title, .st-beauty .mini-btn { background: #9E1B34; }
+.st-beauty .mini-line { background: #9E1B34; }
+.st-beauty .mini-row { background: #fff; }
+.st-beauty .mini-row div { background: #EBD7DB; }
