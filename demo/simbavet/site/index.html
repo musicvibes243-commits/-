@@ -375,6 +375,49 @@
     .ic-btn{width:42px; height:42px}
   }
 
+
+  @media print{
+    @page{ size:A4; margin:8mm }
+    html,body{background:#fff}
+    .wrap{padding:0}
+    .top{position:static}
+    .lang,.tel,.top .btn,.menu{display:none}
+    .switch,.filters,.psearch,#price-count{display:none !important}
+    #prices{content-visibility:visible !important; contain-intrinsic-size:auto !important}
+    #p-goods{display:block !important}
+    #p-serv{display:block !important}
+    .acc-item{background:#fff !important; border-color:#E7E9F1 !important; color:var(--ink) !important}
+    .acc-item .acc-num{color:var(--muted) !important}
+    .acc-body{display:block !important}
+    .acc-ic{display:none}
+    .slides img{opacity:0 !important; animation:none !important}
+    .slides img:first-child{opacity:1 !important}
+    .slides-dots,.lb,.phone-sheet{display:none !important}
+    .map-box iframe{display:none !important}
+    .map-fallback{display:grid !important}
+    .hero-card{min-height:auto}
+    .hero-lion{animation:none !important; max-height:260px}
+    .paws{animation:none !important}
+    section,.block{padding-block:18px !important}
+    .acc-item,.good,.rev,.doc-lead,.cert,.gal figure,.stat,.pgroup,.prow,.shop,.map-grid{break-inside:avoid}
+    .h-sec{break-after:avoid}
+    .plist{display:block !important; column-count:3; column-gap:20px}
+    .pgroup{break-inside:avoid; margin-bottom:12px}
+    .hero-card{grid-template-columns:1.1fr .9fr !important}
+    .hero-lion{max-height:210px !important}
+    .gal{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+    .gal figure.wide{grid-column:1/-1}
+    .gal img{aspect-ratio:3/2 !important}
+    .revs{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+    .rev-grid{grid-template-columns:minmax(200px,260px) 1fr !important}
+    .doc-lead{grid-template-columns:minmax(180px,230px) 1fr !important}
+    .map-grid{grid-template-columns:1.2fr .8fr !important}
+    .shop{grid-template-columns:1fr 1fr !important}
+    .stats{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
+    .docs{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+    a{text-decoration:none; color:inherit}
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{transition-duration:.01ms !important; animation-duration:.01ms !important; scroll-behavior:auto !important}
     .slides img{animation:none !important; opacity:0}
