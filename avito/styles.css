@@ -551,3 +551,76 @@ p.small { font-size: 26px; line-height: 1.45; }
   background: #fff;
   color: var(--ink);
 }
+
+/* --- акция: крупный план слева, колонка справа --------------------------- */
+.poster.split { background: #F4F1EA; }
+
+.split-photo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 412px;
+  height: 1010px;
+  z-index: 1;
+  background: url(assets/tray-glove.jpg) 56% 58% / auto 132% no-repeat;
+}
+
+.split-col {
+  position: absolute;
+  top: 236px;
+  left: 456px;
+  right: 56px;
+  z-index: 2;
+}
+.split-note { font-size: 26px; line-height: 1.42; font-weight: 500; color: #4A4134; }
+
+.pill {
+  display: inline-block;
+  margin-top: 34px;
+  padding: 11px 26px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.split-title {
+  margin-top: 22px;
+  font-size: 96px;
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.split-title span {
+  display: block;
+  font-size: 40px;
+  letter-spacing: 2px;
+  color: #6B5F4B;
+  margin-bottom: 6px;
+}
+
+.split-price {
+  margin-top: 26px;
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--red);
+}
+.split-price i { display: block; font-style: normal; font-size: 24px; font-weight: 700; color: #6B5F4B; margin-top: 6px; }
+
+.split-foot {
+  position: absolute;
+  left: 62px; right: 62px; bottom: 58px;
+  z-index: 3;
+  border-top: 2px solid rgba(90,70,30,.22);
+  padding-top: 26px;
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+.split-foot b { display: block; font-size: 27px; font-weight: 900; color: var(--ink); }
+.split-foot span { display: block; font-size: 23px; font-weight: 600; color: var(--red); margin-top: 4px; }
+.split-foot-note { flex: 1; font-size: 19px; line-height: 1.4; font-weight: 500; color: #6B5F4B; text-align: right; }

@@ -17,12 +17,12 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 /** Порядок десяти слайдов объявления. */
 const MAIN = [
   'cover',            // обложка: акция, 2 дня, 15 000 ₽
+  'deadline-akciya',  // акция до 30 сентября
   'blyudo-klosh',     // оффер «подаём готовым»
   'uslugi',           // что делаем
   'kot-otdyhayte',    // отдыхайте — мы всё сделаем
   'zadachi-sayta',    // что нужно для создания сайта
   'struktura',        // структура и продвижение
-  'chto-podgotovit',  // что нужно от вас
   'etapy-raboty',     // четыре шага до запуска
   'zvezda-na-pyat',   // делаем на пять
   'final-cta',        // консультация бесплатна
