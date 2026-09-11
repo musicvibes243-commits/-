@@ -1,9 +1,11 @@
 /**
- * Рендер макетов объявления в PNG (1800×2400) для загрузки на Авито.
- * Обе темы: жёлтая (images/) и тёмная «люкс» (images-lux/).
+ * Рендер макетов объявления в PNG (1800×2400).
  *
- * Запуск: node avito/render.mjs            — обе темы
- *         node avito/render.mjs lux        — только тёмная
+ * Основные 10 слайдов (MAIN) попадают в images/ и images-lux/ с номерами 01–10
+ * в порядке показа в объявлении; остальные — в подпапку extra/.
+ *
+ * node avito/render.mjs        — обе темы
+ * node avito/render.mjs lux    — только тёмная
  */
 import { chromium } from 'playwright';
 import { fileURLToPath } from 'node:url';
@@ -12,21 +14,35 @@ import fs from 'node:fs';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 
+/** Порядок десяти слайдов объявления. */
+const MAIN = [
+  'cover',            // обложка: акция, 2 дня, 15 000 ₽
+  'blyudo-klosh',     // оффер «подаём готовым»
+  'uslugi',           // что делаем
+  'kot-otdyhayte',    // отдыхайте — мы всё сделаем
+  'zadachi-sayta',    // что нужно для создания сайта
+  'struktura',        // структура и продвижение
+  'chto-podgotovit',  // что нужно от вас
+  'etapy-raboty',     // четыре шага до запуска
+  'zvezda-na-pyat',   // делаем на пять
+  'final-cta',        // консультация бесплатна
+];
+
 const themes = [
   { name: 'жёлтая', out: 'images', css: null },
   { name: 'тёмная', out: 'images-lux', css: path.join(dir, 'styles-lux.css') },
 ];
 
 const only = process.argv[2];
-const selected = only
-  ? themes.filter((t) => t.out.includes(only) || t.name.includes(only))
-  : themes;
+const selected = only ? themes.filter((t) => t.out.includes(only) || t.name.includes(only)) : themes;
 
 const browser = await chromium.launch();
 
 for (const theme of selected) {
   const outDir = path.join(dir, theme.out);
-  fs.mkdirSync(outDir, { recursive: true });
+  const extraDir = path.join(outDir, 'extra');
+  fs.rmSync(outDir, { recursive: true, force: true });
+  fs.mkdirSync(extraDir, { recursive: true });
 
   const page = await browser.newPage({
     viewport: { width: 900, height: 1200 },
@@ -39,15 +55,25 @@ for (const theme of selected) {
 
   const posters = page.locator('.poster');
   const total = await posters.count();
+  const seen = [];
   console.log(`\n${theme.name} тема → ${theme.out}/`);
 
   for (let i = 0; i < total; i++) {
     const el = posters.nth(i);
-    const name = await el.getAttribute('data-name');
-    const file = path.join(outDir, `${name}.png`);
+    const slug = await el.getAttribute('data-name');
+    seen.push(slug);
+
+    const pos = MAIN.indexOf(slug);
+    const file = pos === -1
+      ? path.join(extraDir, `${slug}.png`)
+      : path.join(outDir, `${String(pos + 1).padStart(2, '0')}-${slug}.png`);
+
     await el.screenshot({ path: file });
-    console.log(`  ✓ ${name}.png — ${Math.round(fs.statSync(file).size / 1024)} KB`);
+    console.log(`  ${pos === -1 ? '·' : String(pos + 1).padStart(2, '0')} ${path.relative(outDir, file)}`);
   }
+
+  const missing = MAIN.filter((s) => !seen.includes(s));
+  if (missing.length) console.warn(`  ! в разметке нет слайдов: ${missing.join(', ')}`);
 
   await page.close();
 }

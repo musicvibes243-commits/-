@@ -8,11 +8,12 @@
   :root { color-scheme: light; --bg: #F4F1EA; --fg: #2A2520; --muted: #6B5F4B; --card: #fff; }
   body.lux { --bg: #0B0A09; --fg: #F3DFA8; --muted: #9A8F7A; --card: #141310; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); padding: 32px 16px 64px; transition: background .2s; }
+  body { font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); padding: 32px 16px 64px; }
   .wrap { max-width: 1180px; margin: 0 auto; }
   h1 { font-size: 32px; line-height: 1.15; margin-bottom: 8px; }
+  h2 { font-size: 20px; margin: 40px 0 14px; }
   .sub { color: var(--muted); margin-bottom: 20px; }
-  .tabs { display: flex; gap: 10px; margin-bottom: 28px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 8px; }
   button { font: inherit; font-weight: 600; padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(128,110,60,.45); background: transparent; color: var(--fg); cursor: pointer; }
   button[aria-pressed="true"] { background: #E8B21F; border-color: #E8B21F; color: #1B1608; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
@@ -25,37 +26,51 @@
 <body>
 <div class="wrap">
   <h1>Объявление на Авито: «Разработка сайтов»</h1>
-  <p class="sub">10 изображений для объявления + запасные слайды, 1800×2400 px. Две темы на выбор (фото-слайды 12–13 одинаковы в обеих).</p>
+  <p class="sub">Десять слайдов объявления в порядке показа + запасные. 1800×2400 px, две темы.</p>
   <div class="tabs">
     <button id="b-light" aria-pressed="true">Жёлтая</button>
     <button id="b-lux" aria-pressed="false">Тёмная</button>
   </div>
-  <div class="grid" id="g"></div>
+
+  <h2>Десять слайдов объявления</h2>
+  <div class="grid" id="main"></div>
+
+  <h2>Запасные</h2>
+  <div class="grid" id="extra"></div>
 </div>
 <script>
-const items = [
-  ["01-oblozhka-15-tys", "Обложка", "Сайт за 2 дня — за 15 тыс ₽"],
-  ["02-uslugi", "Услуги", "Что мы делаем"],
-  ["03-citata-bryus-li", "Опыт", "Цитата Брюса Ли"],
-  ["04-zadachi-sayta", "Задачи сайта", "Что нужно для создания сайта"],
-  ["05-struktura-i-prodvizhenie", "Структура", "И стратегия продвижения"],
-  ["06-chto-podgotovit", "Материалы", "Что нужно от вас"],
-  ["07-vy-ekspert", "Эксперт", "Вы — смысл, мы — упаковка"],
-  ["08-gotovye-sayty", "Готовые сайты", "Установка — 2 дня"],
-  ["09-etapy-raboty", "Этапы", "Четыре шага до запуска"],
-  ["10-konsultaciya-besplatna", "Финал", "Консультация бесплатна"],
-  ["11-citata-eynshteyn", "Запасной слайд", "Цитата Эйнштейна"],
-  ["12-sayt-pod-klyuch-blyudo", "Фото-слайд", "Сайт за 2 дня — под ключ"],
-  ["13-vash-sayt-na-blyude", "Фото-слайд", "Подаём готовый сайт"],
-  ["14-sochnyy-dizayn", "Фото-слайд", "Подтёки поверх текста"],
-  ["15-sayt-pod-klyuch-plakat", "Плакат", "Редакционный стиль"],
+const MAIN = [
+  ["01-cover", "Обложка", "Акция до 30 сентября, 2 дня, 15 000 ₽"],
+  ["02-blyudo-klosh", "Оффер", "Подаём готовым"],
+  ["03-uslugi", "Услуги", "Что мы делаем"],
+  ["04-kot-otdyhayte", "Кот", "Отдыхайте — мы всё сделаем"],
+  ["05-zadachi-sayta", "Задачи сайта", "Что нужно для создания сайта"],
+  ["06-struktura", "Структура", "И стратегия продвижения"],
+  ["07-chto-podgotovit", "Материалы", "Что нужно от вас"],
+  ["08-etapy-raboty", "Этапы", "Четыре шага до запуска"],
+  ["09-zvezda-na-pyat", "Звезда", "Делаем на пять"],
+  ["10-final-cta", "Финал", "Консультация бесплатна"],
+];
+const EXTRA = [
+  ["citata-bryus-li", "Цитата", "Брюс Ли"],
+  ["citata-eynshteyn", "Цитата", "Эйнштейн"],
+  ["vy-ekspert", "Эксперт", "Вы — смысл, мы — упаковка"],
+  ["gotovye-sayty", "Готовые сайты", "Установка — 2 дня"],
+  ["podnos-perchatka", "Фото", "Цена на подносе"],
+  ["podtyoki", "Фото", "Подтёки поверх текста"],
+  ["plakat", "Плакат", "Редакционный стиль"],
+  ["dzhinsy-nishi", "Ниши", "Сайт для магазина"],
 ];
 
-const grid = document.getElementById('g');
+const card = (dir, [f, t, d], n) =>
+  `<figure><img src="${dir}/${f}.png" alt="${t}" loading="lazy">
+   <figcaption><b>${n ? n + '. ' : ''}${t}</b>${d}</figcaption></figure>`;
+
 const render = (dir) => {
-  grid.innerHTML = items.map(([f, t, d], i) =>
-    `<figure><img src="${dir}/${f}.png" alt="${t}" loading="lazy">
-     <figcaption><b>${String(i + 1).padStart(2, '0')}. ${t}</b>${d}</figcaption></figure>`).join('');
+  document.getElementById('main').innerHTML =
+    MAIN.map((it, i) => card(dir, it, String(i + 1).padStart(2, '0'))).join('');
+  document.getElementById('extra').innerHTML =
+    EXTRA.map((it) => card(dir + '/extra', it, '')).join('');
 };
 
 const setTheme = (lux) => {

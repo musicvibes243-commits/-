@@ -150,11 +150,11 @@ p.small { font-size: 26px; line-height: 1.45; }
   flex: 0 0 auto;
   background: #E0301E;
   color: #fff;
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  padding: 11px 20px 11px 26px;
+  padding: 12px 22px 12px 26px;
   border-radius: 6px;
   box-shadow: 0 10px 24px rgba(170,30,12,.35);
 }
@@ -448,4 +448,78 @@ p.small { font-size: 26px; line-height: 1.45; }
   line-height: 1.48;
   text-align: center;
   color: #4A463D;
+}
+
+/* --- слайды с объёмными объектами --------------------------------------- */
+.poster.warm {
+  background:
+    radial-gradient(80% 50% at 50% 0%, #FFF8E2 0%, rgba(255,248,226,0) 60%),
+    linear-gradient(165deg, #FFF3CB 0%, #FFE08A 45%, #FBC53C 100%);
+}
+
+.over-text {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 2;
+  padding: 0 62px;
+  text-align: center;
+}
+.over-text .eyebrow { letter-spacing: 5px; }
+.over-text h1 { line-height: 1.02; }
+
+.price-line { margin-top: 30px; font-size: 31px; font-weight: 700; color: #4A4134; }
+.price-line b { font-weight: 900; color: var(--red); }
+
+/* кот лежит поверх заголовка */
+.cat {
+  position: absolute;
+  top: 446px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 790px;
+  filter: drop-shadow(0 26px 26px rgba(150,100,20,.3));
+}
+
+/* звезда подпирает текст снизу */
+.star {
+  position: absolute;
+  bottom: -46px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 540px;
+  filter: drop-shadow(0 24px 30px rgba(150,100,20,.35));
+}
+
+/* слайд про ниши */
+.poster.shop { background: #F3F1EC; color: #23211D; }
+.shop-photo {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 720px;
+  z-index: 1;
+  background: url(assets/jeans.jpg) center bottom / cover no-repeat;
+}
+.shop-price {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 54px;
+  z-index: 3;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 3px 16px rgba(0,0,0,.5);
+}
+.shop-price b { font-weight: 900; }
+
+/* срок акции */
+.deadline {
+  margin-top: 26px;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--red);
+  text-transform: uppercase;
 }
