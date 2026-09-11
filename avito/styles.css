@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Авито-объявление «Разработка сайтов» — визуальный стиль постеров
+   Жёлтая палитра, крупная типографика, красные акценты.
+   ========================================================================== */
+
+:root {
+  --ink:    #2A2520;
+  --ink-2:  #6B5F4B;
+  --red:    #E0301E;
+  --red-dk: #B92413;
+  --board:  #2E3338;
+  --white:  #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #E9E4DA;
+  font-family: 'Montserrat', 'Liberation Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+/* --- каркас постера ------------------------------------------------------ */
+.poster {
+  position: relative;
+  width: 900px;
+  height: 1200px;
+  overflow: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(120% 90% at 12% 4%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 45%),
+    linear-gradient(160deg, #FFF3CB 0%, #FFDD79 30%, #FDC63F 62%, #EFA615 100%);
+  isolation: isolate;
+}
+
+/* декоративные «лучи» в левом верхнем углу — как на референсе */
+.rays { position: absolute; inset: 0; z-index: 0; opacity: .5; }
+.rays polygon { fill: #fff; }
+
+/* треугольники в правом нижнем углу */
+.corner { position: absolute; right: 0; bottom: 0; width: 320px; height: 320px; z-index: 0; opacity: .55; }
+.corner polygon { fill: #fff; }
+
+/* гигантское «призрачное» слово на фоне */
+.ghost {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 230px;
+  line-height: .92;
+  letter-spacing: -6px;
+  white-space: nowrap;
+  color: rgba(255,255,255,.46);
+  text-transform: uppercase;
+}
+.ghost.sm { font-size: 180px; }
+.ghost.xs { font-size: 150px; }
+
+/* бейдж-кружок «2 дня» */
+.mark {
+  position: absolute;
+  right: 54px;
+  bottom: 54px;
+  z-index: 3;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 10px 26px rgba(120,80,0,.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--red);
+  text-align: center;
+}
+.mark b { font-size: 42px; }
+.mark span { font-size: 17px; letter-spacing: 1px; color: var(--ink); margin-top: 5px; }
+
+/* --- контент ------------------------------------------------------------- */
+.content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 72px 68px 66px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+h1 {
+  font-size: 82px;
+  font-weight: 900;
+  line-height: .96;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+h1.sm { font-size: 66px; }
+
+h2 {
+  font-family: 'Playfair Display', 'Liberation Serif', serif;
+  font-size: 62px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+p { font-size: 30px; line-height: 1.42; font-weight: 500; color: #3B342B; }
+p.lead { font-size: 34px; line-height: 1.38; font-weight: 600; }
+p.small { font-size: 26px; line-height: 1.45; }
+
+.hl { color: var(--red); }
+.u  { background: rgba(255,255,255,.72); padding: 0 8px; border-radius: 6px; }
+
+/* белая плашка с заголовком (как «САЙТ ЗА 2 ДНЯ!») */
+.band {
+  background: var(--white);
+  padding: 26px 34px;
+  box-shadow: 0 14px 34px rgba(140,95,0,.18);
+  text-align: center;
+}
+.band .t {
+  font-size: 76px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+/* огромная красная цена */
+.price {
+  font-weight: 900;
+  line-height: .86;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: -3px;
+  text-shadow: 0 8px 22px rgba(150,30,10,.18);
+}
+.price.xl  { font-size: 168px; }
+.price.one { white-space: nowrap; }
+.price.lg  { font-size: 132px; }
+.price.md  { font-size: 104px; }
+.price .cur { font-size: .52em; letter-spacing: 0; }
+
+/* карточки услуг */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.card {
+  background: rgba(255,255,255,.9);
+  border-radius: 20px;
+  padding: 26px 26px 28px;
+  box-shadow: 0 10px 26px rgba(140,95,0,.12);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 156px;
+}
+.card .ic { width: 54px; height: 54px; }
+.card .ic path, .card .ic circle, .card .ic rect, .card .ic line { stroke: var(--red); }
+.card b { font-size: 30px; font-weight: 900; line-height: 1.08; }
+.card span { font-size: 22px; font-weight: 500; color: #6A5D4A; line-height: 1.3; }
+
+/* список-чеклист */
+.list { display: flex; flex-direction: column; gap: 20px; }
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: rgba(255,255,255,.82);
+  border-radius: 18px;
+  padding: 22px 26px;
+  box-shadow: 0 8px 20px rgba(140,95,0,.1);
+}
+.item .n {
+  flex: 0 0 auto;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-weight: 900;
+  font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+}
+.item .tx b { display: block; font-size: 30px; font-weight: 900; line-height: 1.15; }
+.item .tx span { display: block; font-size: 24px; font-weight: 500; color: #5E5342; line-height: 1.34; margin-top: 5px; }
+
+/* меловая доска с цитатой */
+.board {
+  position: relative;
+  background: linear-gradient(150deg, #3A4047, #23272B);
+  border: 16px solid #C9973F;
+  border-radius: 12px;
+  box-shadow: 0 22px 46px rgba(90,60,0,.3);
+  padding: 54px 48px;
+  color: #F3F0E6;
+  transform: rotate(-1.2deg);
+}
+.board .q {
+  font-family: 'Bad Script', 'Montserrat', cursive;
+  font-size: 42px;
+  line-height: 1.42;
+}
+.board .a {
+  margin-top: 28px;
+  text-align: right;
+  font-family: 'Bad Script', cursive;
+  font-size: 36px;
+  color: #FFD764;
+}
+
+/* иллюстрация «окно браузера» */
+.win {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 22px 46px rgba(130,85,0,.26);
+  overflow: hidden;
+}
+.win .bar { height: 46px; background: #F0EDE6; display: flex; align-items: center; gap: 10px; padding: 0 18px; }
+.win .dot { width: 13px; height: 13px; border-radius: 50%; background: #CFC8BB; }
+.win .dot.r { background: var(--red); }
+.win .body { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 14px; }
+.sk { background: #EDE8DE; border-radius: 8px; height: 18px; }
+.sk.t { height: 30px; width: 62%; background: #2A2520; }
+.sk.w1 { width: 100%; } .sk.w2 { width: 84%; } .sk.w3 { width: 70%; }
+.sk.btn { height: 42px; width: 210px; background: var(--red); border-radius: 10px; }
+.thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 4px; }
+.thumbs div { height: 92px; border-radius: 10px; background: linear-gradient(140deg,#FFD764,#F6B32A); }
+
+.spacer { flex: 1; }
+.foot { font-size: 25px; line-height: 1.4; font-weight: 600; color: #4A4134; max-width: 618px; }

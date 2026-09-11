@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Авито — 10 изображений объявления «Разработка сайтов»</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #F4F1EA; color: #2A2520; padding: 32px 16px 64px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 32px; line-height: 1.15; margin-bottom: 8px; }
+  .sub { color: #6B5F4B; margin-bottom: 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  figure { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(120,90,20,.12); }
+  img { display: block; width: 100%; height: auto; }
+  figcaption { padding: 12px 14px; font-size: 14px; color: #6B5F4B; }
+  figcaption b { display: block; color: #2A2520; font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Объявление на Авито: «Разработка сайтов»</h1>
+  <p class="sub">10 изображений, 1800×2400 px. Порядок — как в галерее объявления.</p>
+  <div class="grid" id="g"></div>
+</div>
+<script>
+const items = [
+  ["01-oblozhka-15-tys", "Обложка", "Сайт за 2 дня — за 15 тыс ₽"],
+  ["02-uslugi", "Услуги", "Что мы делаем"],
+  ["03-citata-bryus-li", "Опыт", "Цитата Брюса Ли"],
+  ["04-zadachi-sayta", "Задачи сайта", "Что нужно для создания сайта"],
+  ["05-struktura-i-prodvizhenie", "Структура", "И стратегия продвижения"],
+  ["06-chto-podgotovit", "Материалы", "Что нужно от вас"],
+  ["07-vy-ekspert", "Эксперт", "Вы — смысл, мы — упаковка"],
+  ["08-gotovye-sayty", "Готовые сайты", "Установка — 2 дня"],
+  ["09-etapy-raboty", "Этапы", "Четыре шага до запуска"],
+  ["10-konsultaciya-besplatna", "Финал", "Консультация бесплатна"],
+];
+document.getElementById('g').innerHTML = items.map(([f, t, d], i) =>
+  `<figure><img src="images/${f}.png" alt="${t}" loading="lazy">
+   <figcaption><b>${String(i + 1).padStart(2, '0')}. ${t}</b>${d}</figcaption></figure>`).join('');
+</script>
+</body>
+</html>
