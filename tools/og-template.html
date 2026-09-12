@@ -4,7 +4,7 @@
 *{box-sizing:border-box;margin:0}
 body{width:1200px;height:630px;background:#241E1B;color:#F6F1EC;
   font-family:"Golos Text",sans-serif;display:flex;flex-direction:column;justify-content:space-between;
-  padding:64px 72px;overflow:hidden;position:relative}
+  padding:60px 72px 92px;overflow:hidden;position:relative}
 .strata{position:absolute;left:0;right:0;bottom:0;height:150px}
 .s1{position:absolute;left:0;right:0;bottom:110px;height:40px;background:#C9873A;opacity:.3}
 .s2{position:absolute;left:0;right:0;bottom:40px;height:70px;background:#8A6A46;opacity:.22}
@@ -14,15 +14,16 @@ body{width:1200px;height:630px;background:#241E1B;color:#F6F1EC;
 .name{font-family:"Playfair Display",Georgia,serif;font-size:36px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
 h1{font-family:"Playfair Display",Georgia,serif;font-size:70px;font-weight:700;line-height:1.08;letter-spacing:.5px;position:relative;max-width:15ch}
 h1 em{font-style:normal;color:#E3B872}
-.row{display:flex;gap:14px;position:relative}
-.chip{border:2px solid rgba(255,255,255,.28);border-radius:100px;padding:11px 22px;font-size:23px;color:#E4D8CE}
+.row{display:flex;flex-wrap:nowrap;gap:14px;position:relative}
+.chip{border:2px solid rgba(255,255,255,.28);border-radius:100px;padding:11px 22px;font-size:22px;
+  color:#E4D8CE;white-space:nowrap;line-height:1.2}
 .tel{font-family:"JetBrains Mono",monospace;font-size:30px;color:#EFAE44;letter-spacing:1px}
 </style></head><body>
 <div class="strata"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
 <div class="brand">
   <svg class="mark" viewBox="0 0 32 32" fill="none">
     <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="3" stroke="#F6F1EC" stroke-width="2"/>
-    <path d="M16 6c0 0 6 7.2 6 11a6 6 0 1 1-12 0c0-3.8 6-11 6-11z" fill="#D9992B"/>
+    <path d="M16 6c0 0 6 7.2 6 11a6 6 0 1 1-12 0c0-3.8 6-11 6-11z" fill="#F0A62E"/>
     <path d="M2 23h28M2 27h28" stroke="#F6F1EC" stroke-width="1.6" opacity=".55"/>
   </svg>
   <div class="name">СтройИнвест</div>
@@ -30,7 +31,7 @@ h1 em{font-style:normal;color:#E3B872}
 <h1>Септики, кессоны и дренаж <em>под ключ</em></h1>
 <div class="row">
   <span class="chip">Москва и область</span>
-  <span class="chip">Опыт 10+ лет</span>
+  <span class="chip">Опыт мастеров 10+ лет</span>
   <span class="chip tel" style="border-color:rgba(240,172,43,.5)">+7 (915) 346-97-28</span>
 </div>
 </body></html>
