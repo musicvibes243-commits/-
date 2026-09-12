@@ -323,6 +323,8 @@ a { color: inherit; }
   color: var(--plum);
   margin-top: 14px;
   letter-spacing: -0.02em;
+  /* иначе Playfair даёт старостильные цифры и «300» читается как «зоо» */
+  font-variant-numeric: lining-nums;
 }
 
 .price-card .per {
@@ -498,7 +500,7 @@ a { color: inherit; }
   font-size: clamp(23px, 2.4vw, 30px);
   font-weight: 700;
   color: var(--plum);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .enrol-note {
