@@ -1473,9 +1473,27 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       service: document.getElementById('fSvc').value,
       text:    document.getElementById('fText').value.trim(),
       _gotcha: document.getElementById('fSite').value,
-      _subject:'Заявка с сайта: ' + document.getElementById('fSvc').value,
+      _subject:'Заявка с сайта: ' + document.getElementById('fName').value.trim() +
+               ', ' + document.getElementById('fPhone').value.trim(),
       page:    location.href,
       sentAt:  new Date().toLocaleString('ru-RU')
+    };
+  }
+
+  /* Formspree подставляет в письмо имена полей как есть, поэтому для почты
+     ключи переводим на русский: письмо читается с телефона сразу, без
+     расшифровки. Воркеру Telegram и WhatsApp это не нужно — там свой формат. */
+  function forEmail(d){
+    return {
+      'Имя':               d.name,
+      'Телефон':           d.phone,
+      'Населённый пункт':  d.place || '—',
+      'Задача':            d.service,
+      'Подробности':       d.text || '—',
+      'Отправлено':        d.sentAt,
+      'Страница':          d.page,
+      _gotcha:  d._gotcha,
+      _subject: d._subject
     };
   }
 
@@ -1541,7 +1559,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 
     var data = payload();
     var jobs = [];
-    if (DELIVERY.formspree) jobs.push(sendTo(DELIVERY.formspree, data));
+    if (DELIVERY.formspree) jobs.push(sendTo(DELIVERY.formspree, forEmail(data)));
     if (DELIVERY.telegram)  jobs.push(sendTo(DELIVERY.telegram, data));
 
     if (!jobs.length) {                       // каналы ещё не настроены

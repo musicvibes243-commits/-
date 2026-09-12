@@ -17,8 +17,8 @@
  *   5. Settings → Variables and Secrets → Add:
  *        BOT_TOKEN       = токен из шага 1   (тип Secret)
  *        CHAT_ID         = число из шага 2   (тип Secret)
- *        ALLOWED_ORIGIN  = адрес вашего сайта, например
- *                          https://musicvibes243-commits.github.io   (тип Text)
+ *        ALLOWED_ORIGIN  = https://stroyinvest-mo.ru                 (тип Text)
+ *                          (адрес сайта без слеша на конце)
  *   6. Скопируйте адрес воркера (…workers.dev) и вставьте его
  *      в docs/index.html → DELIVERY.telegram
  */
