@@ -25,10 +25,12 @@ body {
 }
 
 /* --- каркас постера ------------------------------------------------------ */
+/* Основной формат — 4:3 горизонтальный (как требует галерея Авито).
+   Запасные слайды помечены .legacy и остаются вертикальными 3:4. */
 .poster {
   position: relative;
-  width: 900px;
-  height: 1200px;
+  width: 1200px;
+  height: 900px;
   overflow: hidden;
   color: var(--ink);
   background:
@@ -88,11 +90,13 @@ body {
 .mark span { font-size: 17px; letter-spacing: 1px; color: var(--ink); margin-top: 5px; }
 
 /* --- контент ------------------------------------------------------------- */
+.poster.legacy { width: 900px; height: 1200px; }
+
 .content {
   position: relative;
   z-index: 2;
   height: 100%;
-  padding: 72px 68px 66px;
+  padding: 56px 64px 52px;
   display: flex;
   flex-direction: column;
 }
@@ -835,3 +839,151 @@ p.small { font-size: 26px; line-height: 1.45; }
 .st-beauty .mini-line { background: #9E1B34; }
 .st-beauty .mini-row { background: #fff; }
 .st-beauty .mini-row div { background: #EBD7DB; }
+
+/* ==========================================================================
+   ГОРИЗОНТАЛЬНЫЙ ФОРМАТ 4:3 — раскладка десяти слайдов объявления.
+   Блок идёт последним и переопределяет вертикальные правила выше.
+   ========================================================================== */
+
+/* две колонки */
+.content.cover-h { flex-direction: row; align-items: stretch; gap: 42px; }
+.cover-left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.cover-right { flex: 1.08; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+
+.hero-num { font-size: 164px; letter-spacing: -4px; }
+.rule { margin-top: 26px; width: 150px; height: 8px; }
+.price.one { font-size: 68px !important; }
+.kicker { font-size: 25px; letter-spacing: 4px; }
+.ticks { gap: 13px; margin-top: 0; }
+.ticks div { font-size: 24px; }
+.ticks i { width: 28px; height: 28px; font-size: 15px; }
+.foot { max-width: none; font-size: 22px; }
+.sale { align-self: flex-start; font-size: 27px; }
+
+/* фото-колонка (клош) */
+.side-photo {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 55%;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+}
+.side-col {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 45%;
+  z-index: 2;
+  padding: 0 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* услуги по волне */
+.wave-head { top: 104px; left: 68px; width: 320px; }
+.wave-note { margin-top: 22px; font-size: 23px; line-height: 1.4; font-weight: 600; color: #4A4134; }
+.dishes {
+  position: absolute;
+  right: 60px; top: 150px;
+  width: 690px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px 18px;
+}
+.dish { position: static; width: auto; margin: 0; }
+.dish-plate { width: 124px; height: 124px; }
+.dish-plate svg { width: 54px; height: 54px; }
+.dish-label { font-size: 21px; }
+.brush { left: 26px; bottom: 56px; width: 300px; }
+
+/* кот */
+.cat { top: 126px; width: 664px; }
+.ribbon { font-size: 28px; padding: 12px 0; }
+.ribbon.r1 { top: 196px; transform: rotate(-7deg); }
+.ribbon.r2 { top: 108px; transform: rotate(5deg); }
+.over-text { padding: 0 70px; }
+
+/* подтёки */
+.drip-band {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 548px;
+  z-index: 3;
+  filter: drop-shadow(0 24px 28px rgba(0,0,0,.5));
+}
+/* две зеркальные копии — стык посередине почти не читается */
+.drip-band::before,
+.drip-band::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 616px;
+  height: 548px;
+  background: url(assets/drip.png) left top / auto 548px no-repeat;
+}
+.drip-band::before { left: -8px; }
+.drip-band::after { right: -8px; transform: scaleX(-1); }
+.drip-text { top: 540px; padding: 0 80px; }
+.drip-h { font-size: 84px; }
+.drip-sub { font-size: 27px; max-width: 720px; margin-top: 22px; }
+.drip-price { font-size: 29px; margin-top: 24px; }
+
+/* акция: фото слева, колонка справа */
+.split-photo { width: 44%; height: 100%; background-position: 56% 58%; background-size: cover; }
+.split-col { top: 108px; left: 50%; right: 60px; }
+.split-note { font-size: 25px; }
+.split-title { font-size: 84px; margin-top: 20px; }
+.split-title span { font-size: 34px; }
+.split-price { font-size: 46px; margin-top: 20px; }
+.split-foot { left: 50%; right: 60px; bottom: 52px; padding-top: 22px; }
+.split-foot-note { flex: 0 0 290px; font-size: 17px; }
+
+/* звезда, разрезанная по вертикали */
+.cut { width: 282px; height: 548px; margin-left: 0; }
+.cut img { width: 564px; top: 0; }
+.cut-left  { left: 118px; top: 214px; }
+.cut-left img  { left: 0; }
+.cut-right { right: 118px; top: 214px; left: auto; }
+.cut-right img { left: -282px; }
+
+.cut-threads {
+  top: 356px;
+  left: 396px;
+  margin-left: 0;
+  width: 408px;
+  opacity: .6;
+}
+.cut-mid {
+  top: 300px;
+  left: 384px; right: 384px;
+  gap: 14px;
+}
+.cut-mid div { font-size: 21px; padding: 9px 20px; }
+
+/* этапы */
+.item { padding: 16px 22px; gap: 16px; }
+.item .n { width: 44px; height: 44px; font-size: 22px; }
+.item .tx b { font-size: 26px; }
+.item .tx span { font-size: 20px; margin-top: 3px; }
+
+/* стили дизайна */
+.styles-head { position: absolute; left: 64px; top: 118px; width: 336px; z-index: 3; }
+.styles {
+  position: absolute;
+  left: 432px; right: 60px;
+  top: 92px; bottom: 92px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.style-card { height: auto; }
+.style-card b { font-size: 22px; bottom: 40px; }
+.style-card span { font-size: 17px; bottom: 16px; }
+.mini { top: 44px; width: 70%; }
+
+/* финал */
+.cover-right .shots { filter: drop-shadow(0 18px 30px rgba(140,95,20,.3)); }
+.deadline { font-size: 24px; margin-top: 14px; }

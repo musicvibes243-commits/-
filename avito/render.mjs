@@ -45,7 +45,7 @@ for (const theme of selected) {
   fs.mkdirSync(extraDir, { recursive: true });
 
   const page = await browser.newPage({
-    viewport: { width: 900, height: 1200 },
+    viewport: { width: 1200, height: 900 },
     deviceScaleFactor: 2,
   });
   await page.goto('file://' + path.join(dir, 'posters.html'));
