@@ -26,8 +26,10 @@
 
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
-| `radiator-montazh-01.jpg` | `otoplenie.html` | Радиатор с нижней подводкой |
-| `boiler-sanuzel-01.jpg` | `otoplenie.html` | Горячая вода в санузле |
+| `kollektor-tepliy-pol-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
+| `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
+| `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
+| `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка по санузлу |
 | `avtopoliv-gazon-01.jpg` | `avtopoliv.html` | Полив газона в работе |
 | `avtopoliv-klapany-01.jpg` | `avtopoliv.html` | Узел клапанов у теплицы |
 
