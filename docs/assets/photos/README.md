@@ -34,6 +34,8 @@
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
 | `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
+| `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
+| `avtopoliv-terrasa-01.jpg` | `avtopoliv.html` | Кромка у террасы |
 | `avtopoliv-gazon-01.jpg` | `avtopoliv.html` | Полив газона в работе |
 | `avtopoliv-klapany-01.jpg` | `avtopoliv.html` | Узел клапанов у теплицы |
 
