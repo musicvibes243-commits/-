@@ -13,6 +13,7 @@
 | `kotlovan-01.jpg` | Песчаная подушка |
 | `opalubka-yama-01.jpg` | Крепление стенок |
 | `septik-ustanovka-01.jpg` | Засыпка песком |
+| `septik-lyuki-otsypka-01.jpg` | Убрали за собой |
 | `septik-lyuk-01.jpg` | Горловина с люком |
 | `kesson-skvazhina-01.jpg` | Кессон над скважиной |
 | `kesson-oborudovanie-01.jpg` | Автоматика в кессоне |
