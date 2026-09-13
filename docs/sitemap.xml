@@ -6,6 +6,21 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://stroyinvest-mo.ru/otoplenie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stroyinvest-mo.ru/elektrika.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stroyinvest-mo.ru/avtopoliv.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://stroyinvest-mo.ru/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

@@ -1,0 +1,256 @@
+/* Стили страниц услуг: отопление, электрика, автополив.
+
+   Это выжимка из <style> главной страницы — только то, что нужно таким
+   страницам: шапка, кнопки, карточки, этапы, вопросы, форма, подвал.
+   Цвета берутся из tokens.css, шрифты — из fonts.css.
+
+   ВАЖНО: файл живёт отдельно от index.html. Поменяете оформление на
+   главной — при желании перенесите правки сюда, иначе страницы услуг
+   останутся в старом виде. Ничего не сломается, просто разойдётся вид. */
+
+
+
+/* ============================================================
+   БАЗА
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Golos Text","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size:17px; line-height:1.6; text-rendering:optimizeLegibility;
+}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-weight:600;line-height:1.14;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(32px,5.2vw,54px)}
+h2{font-size:clamp(26px,3.6vw,40px)}
+h3{font-size:clamp(19px,2.1vw,23px)}
+p{margin:0}
+a{color:inherit}
+ul,ol{margin:0;padding:0;list-style:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:2px}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+@media (max-width:600px){.wrap{width:min(1180px,100% - 32px)}}
+section{padding-block:clamp(52px,7vw,96px)}
+.eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--brand-text);margin-bottom:14px
+}
+.lead{font-size:clamp(17px,1.5vw,19px);color:var(--ink-2);max-width:62ch}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.head{display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(28px,4vw,48px);max-width:70ch}
+
+/* ============================================================
+   КНОПКИ
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 24px;border-radius:var(--r);border:2px solid transparent;
+  font-family:"Golos Text",system-ui,sans-serif;font-size:15px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;cursor:pointer;
+  transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+}
+.btn--accent{background:var(--accent);color:var(--on-accent)}
+.btn--accent:hover{background:var(--accent-strong)}
+.btn--outline{border-color:var(--line);color:var(--ink);background:transparent}
+.btn--outline:hover{border-color:var(--brand-text);color:var(--brand-text)}
+.btn--onband{border-color:rgba(255,255,255,.35);color:var(--on-band)}
+.btn--onband:hover{border-color:var(--accent);color:var(--accent)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.ico{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============================================================
+   ШАПКА
+   ============================================================ */
+.top{
+  position:sticky;top:0;z-index:50;background:var(--band);color:var(--on-band);
+  border-bottom:1px solid rgba(255,255,255,.1)
+}
+.top__in{display:flex;align-items:center;gap:22px;min-height:68px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--on-band);flex:none}
+.logo__mark{width:34px;height:34px;flex:none}
+.logo__name{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-size:23px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;line-height:1}
+.logo__sub{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;color:var(--on-band-muted);text-transform:uppercase;margin-top:3px}
+.nav{display:flex;gap:22px;margin-left:auto}
+.nav a{font-size:15px;white-space:nowrap;text-decoration:none;color:var(--on-band);padding:6px 0;border-bottom:2px solid transparent;transition:border-color .16s ease,color .16s ease}
+.nav a:hover{border-bottom-color:var(--accent);color:#fff}
+.top__phone{display:flex;flex-direction:column;line-height:1.15;text-decoration:none;flex:none}
+.top__phone b{font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:500;letter-spacing:.01em}
+.top__phone span{font-size:11.5px;color:var(--on-band-muted)}
+.top .btn{min-height:44px;font-size:14px;white-space:nowrap}
+/* Меню прячется раньше, чем шапка начнёт распирать окно: шесть пунктов
+   плюс телефон и кнопка перестают помещаться уже на 1280 px.
+   Страница одноэкранная, прокрутка заменяет меню; телефон и кнопка важнее. */
+@media (max-width:1279px){.nav{display:none}}
+@media (min-width:1280px) and (max-width:1420px){.nav{gap:16px}.nav a{font-size:14px}}
+@media (max-width:700px){.top__phone span{display:none}}
+@media (max-width:620px){.top .btn{display:none}}
+@media (max-width:520px){.top__in{gap:14px}.logo__sub{display:none}.logo__name{font-size:18px}.top__phone b{font-size:14.5px}}
+/* на узких экранах телефон в шапке не помещается рядом с названием —
+   звонок остаётся в нижней панели, которая видна всегда */
+@media (max-width:430px){.top__phone{display:none}}
+
+/* ============================================================
+   УСЛУГИ
+   ============================================================ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:18px}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 24px 24px;display:flex;flex-direction:column;gap:14px;
+  transition:border-color .16s ease
+}
+.card:hover{border-color:var(--brand-text)}
+.card__ico{width:40px;height:40px;stroke:var(--brand-text);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card p{color:var(--ink-2);font-size:15.5px}
+.spec{display:flex;flex-direction:column;gap:0;margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
+.spec div{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13.5px;border-bottom:1px dotted var(--line)}
+.spec div:last-child{border-bottom:0}
+.spec dt{color:var(--muted)}
+.spec dd{margin:0;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
+.card__price{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-size:26px;font-weight:600;color:var(--ink)}
+.card__price small{font-family:"Golos Text",sans-serif;font-size:13px;font-weight:400;color:var(--muted);display:block;letter-spacing:0}
+
+/* ============================================================
+   ЭТАПЫ
+   ============================================================ */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:20px;counter-reset:s}
+.step{position:relative;padding-top:20px;border-top:2px solid var(--line)}
+.step::before{
+  counter-increment:s;content:"0" counter(s);position:absolute;top:-15px;left:0;background:var(--ground);
+  padding-right:10px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--accent-strong);font-weight:500
+}
+.step h3{margin-bottom:8px;font-size:19px}
+.step p{font-size:15px;color:var(--ink-2)}
+.step__time{display:inline-block;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted)}
+
+/* ============================================================
+   ОБЪЕКТЫ (паспорт объекта)
+   ============================================================ */
+.cases{background:var(--surface-2)}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column}
+.case__top{padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+.case__tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--on-accent);background:var(--accent);padding:3px 9px;border-radius:2px;margin-bottom:11px}
+.case__top h3{font-size:20px}
+.case__top p{font-size:14.5px;color:var(--muted);margin-top:6px}
+.case dl{margin:0;padding:16px 22px 20px;display:flex;flex-direction:column;gap:0}
+.case dl div{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px dotted var(--line);font-size:14px}
+.case dl div:last-child{border-bottom:0}
+.case dt{color:var(--muted)}
+.case dd{margin:0;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ============================================================
+   ВОПРОСЫ
+   ============================================================ */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  cursor:pointer;list-style:none;padding:20px 44px 20px 0;position:relative;
+  font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-size:20px;font-weight:600;line-height:1.3
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";position:absolute;right:8px;top:26px;width:11px;height:11px;
+  border-right:2px solid var(--brand-text);border-bottom:2px solid var(--brand-text);
+  transform:rotate(45deg);transition:transform .18s ease
+}
+.faq details[open] summary::after{transform:rotate(225deg);top:30px}
+.faq summary:hover{color:var(--brand-text)}
+.faq p{padding:0 0 22px;color:var(--ink-2);font-size:15.5px;max-width:66ch}
+
+/* ============================================================
+   ФОРМА
+   ============================================================ */
+.form-sec{background:var(--band);color:var(--on-band)}
+.form-sec .eyebrow{color:var(--accent)}
+.form-sec .lead{color:var(--on-band-muted)}
+.form-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(28px,4vw,56px);align-items:start}
+@media (max-width:880px){.form-grid{grid-template-columns:1fr}}
+.contacts{display:flex;flex-direction:column;gap:18px;margin-top:26px}
+.contact{display:flex;gap:13px;align-items:flex-start}
+.contact .ico{stroke:var(--accent);margin-top:2px}
+.contact b{display:block;font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:500}
+.contact span{font-size:14px;color:var(--on-band-muted)}
+form{background:var(--surface);color:var(--ink);border-radius:var(--r);padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:18px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:520px){.f-row{grid-template-columns:1fr}}
+.field label{font-weight:500}
+.req{color:var(--danger)}
+input[type=text],input[type=tel],select,textarea{
+  width:100%;min-height:52px;padding:13px 15px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--ground);color:var(--ink);font:inherit;font-size:16px;
+  transition:border-color .16s ease
+}
+textarea{min-height:104px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
+  background-position:calc(100% - 21px) 24px,calc(100% - 15px) 24px;background-size:6px 6px;background-repeat:no-repeat}
+input:focus,select:focus,textarea:focus{border-color:var(--focus)}
+input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--danger);border-width:2px}
+.hint{font-size:13px;color:var(--muted);margin-top:7px}
+.err{display:block;font-size:13.5px;color:var(--danger);margin-top:7px;font-weight:500}
+.err:empty{display:none}
+.summary{border:2px solid var(--danger);border-radius:var(--r);padding:15px 17px;background:color-mix(in srgb,var(--danger) 8%,var(--surface))}
+.summary b{display:block;margin-bottom:7px;color:var(--danger)}
+.summary ul{list-style:disc;padding-left:20px;font-size:14.5px}
+.summary a{color:var(--danger)}
+.done{border:2px solid var(--ok);border-radius:var(--r);padding:22px;display:flex;gap:14px;align-items:flex-start}
+.done .ico{stroke:var(--ok);width:26px;height:26px;flex:none}
+.done.fail{border-color:var(--danger)}
+.done.fail .ico{stroke:var(--danger)}
+.done.fail h3{color:var(--danger)}
+.done h3{color:var(--ok);margin-bottom:6px}
+.done p{font-size:15px;color:var(--ink-2)}
+
+/* ============================================================
+   ФУТЕР + МОБИЛЬНАЯ ПАНЕЛЬ
+   ============================================================ */
+.foot{background:var(--band-2);color:var(--on-band);padding-block:44px 32px;font-size:14.5px}
+.foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+@media (max-width:760px){.foot__grid{grid-template-columns:1fr;gap:26px}}
+.foot h4{font-family:"Golos Text",system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--on-band-muted);margin-bottom:12px;font-weight:500}
+.foot li{margin-bottom:8px}
+.foot a{text-decoration:none;color:var(--on-band)}
+.foot a:hover{color:var(--accent)}
+.foot__bottom{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-wrap:wrap;gap:10px 26px;font-size:12.5px;color:var(--on-band-muted)}
+.demo-badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent);color:var(--accent);
+  padding:3px 10px;border-radius:100px;font-family:"JetBrains Mono",monospace;font-size:11px;
+  text-transform:uppercase;letter-spacing:.1em}
+.callbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;gap:1px;
+  background:var(--line);border-top:1px solid var(--line)
+}
+.callbar a{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-height:60px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:11.5px;
+  padding-bottom:env(safe-area-inset-bottom)
+}
+.callbar a.pr{background:var(--accent);color:var(--on-accent)}
+.callbar .ico{width:21px;height:21px}
+@media (max-width:760px){.callbar{display:flex}body{padding-bottom:62px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  section[id]{scroll-margin-top:84px}
+  [hidden]{display:none !important}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .form-sec{position:relative;overflow:hidden}
+  .form-sec::before{content:"";position:absolute;right:-10%;top:-30%;width:70%;height:160%;
+    pointer-events:none;background:radial-gradient(ellipse at center,rgba(240,166,46,.16),transparent 66%)}
+  .form-sec .wrap{position:relative}
+  .form-sec a{color:var(--accent)}
+  .foot__bottom a{color:var(--on-band-muted);text-decoration:underline}
+  .foot__bottom a:hover{color:var(--accent)}
+  .contact a{color:inherit}
+  .contact a:hover{color:var(--accent)}
+
+  /* карточка услуги: вместо цены — обещание подбора */
+
+/* --- блоки появляются при прокрутке --- */
+/* --- Фотографии и блоки появляются при прокрутке --- */
+  .rv{opacity:0;transform:translateY(26px);
+    transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+  .rv--in{opacity:1;transform:none}
+  .step{transition:transform .25s ease}
+  .step:hover{transform:translateY(-3px)}

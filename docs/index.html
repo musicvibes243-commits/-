@@ -338,10 +338,6 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 </head>
 <body>
 
-<!-- ОСТАЛОСЬ ОДНО ДЕЛО: в privacy.html есть пропуски вида __ТАК__ (ИНН, адрес,
-     срок хранения). Заполните их до того, как начнёте собирать заявки:
-     форма получает персональные данные, политика должна быть настоящей. -->
-
 <!-- ================= ШАПКА ================= -->
 <header class="top">
   <div class="wrap top__in">
@@ -609,6 +605,42 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
           <div><dt>Срок монтажа</dt><dd>1–3 дня</dd></div>
         </dl>
         <p class="card__cta">Разведём по дому<small>с греющим кабелем, если нужно</small></p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= ДРУГИЕ НАПРАВЛЕНИЯ =================
+     Отопление, электрика и автополив живут на отдельных страницах:
+     у каждой свой запрос в поиске и своя посадочная для рекламы. -->
+<section id="eshe" style="background:var(--surface-2)">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Ещё мы делаем</p>
+      <h2>Весь дом и участок — одной бригадой</h2>
+      <p class="lead">Пока техника на участке, выгоднее сделать всё сразу: одни траншеи, один заезд, один подрядчик и одна гарантия.</p>
+    </div>
+
+    <ul class="cards">
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 8h22v24H9z"/><path d="M14 14h12M14 20h12"/><path d="M20 32v6M14 38h12"/></svg>
+        <h3>Отопление и тёплые полы</h3>
+        <p>Котельная под ключ, радиаторы с разводкой по дому, тёплые полы водяные и электрические. Запуск и настройка автоматики.</p>
+        <p style="margin-top:18px"><a class="btn btn--outline" href="otoplenie.html">Подробнее об отоплении</a></p>
+      </li>
+
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 6h20v28H10z"/><path d="M14 12h5v6h-5zM21 12h5v6h-5zM14 22h5v6h-5zM21 22h5v6h-5z"/></svg>
+        <h3>Электрика в доме и на участке</h3>
+        <p>Щит с автоматами и УЗО, разводка по группам, ввод на участок, освещение дома и территории. Каждая линия подписана.</p>
+        <p style="margin-top:18px"><a class="btn btn--outline" href="elektrika.html">Подробнее об электрике</a></p>
+      </li>
+
+      <li class="card">
+        <svg class="ico card__ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 28h28"/><path d="M14 28V20h12v8"/><path d="M10 16c2-4 6-4 8 0M22 16c2-4 6-4 8 0"/></svg>
+        <h3>Автополив участка</h3>
+        <p>Зоны полива, дождеватели вровень с газоном, капельный полив грядок, контроллер с расписанием и консервация на зиму.</p>
+        <p style="margin-top:18px"><a class="btn btn--outline" href="avtopoliv.html">Подробнее об автополиве</a></p>
       </li>
     </ul>
   </div>
@@ -969,7 +1001,9 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
           <li><a href="#uslugi">Кессоны для скважин</a></li>
           <li><a href="#uslugi">Дренаж и ливнёвка</a></li>
           <li><a href="#uslugi">Водоснабжение дома</a></li>
-          <li><a href="#podbor">Подбор системы</a></li>
+          <li><a href="otoplenie.html">Отопление и тёплые полы</a></li>
+          <li><a href="elektrika.html">Электрика</a></li>
+          <li><a href="avtopoliv.html">Автополив участка</a></li>
         </ul>
       </div>
       <div>
@@ -1859,7 +1893,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж септика и автономной канализации" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж кессона для скважины" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Дренаж и ливневая канализация" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Водоснабжение дома от скважины" } }
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Водоснабжение дома от скважины" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж отопления и тёплых полов" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Электромонтажные работы в частном доме" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Монтаж системы автополива участка" } }
   ]
 }
 </script>
