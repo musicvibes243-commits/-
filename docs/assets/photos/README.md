@@ -36,7 +36,9 @@
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
 | `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
 | `avtopoliv-terrasa-01.jpg` | `avtopoliv.html` | Кромка у террасы |
-| `avtopoliv-gazon-01.jpg` | `avtopoliv.html` | Полив газона в работе |
+| `avtopoliv-forsunka-01.jpg` | `avtopoliv.html` | Форсунка в газоне |
+| `avtopoliv-pult-01.jpg` | `avtopoliv.html` | Пульт и запас воды |
+| `avtopoliv-klapany-boks-01.jpg` | `avtopoliv.html` | Клапаны в лючке |
 | `avtopoliv-klapany-01.jpg` | `avtopoliv.html` | Узел клапанов у теплицы |
 
 Подписи и список задаются не в самой странице, а в `tools/make-pages.py`,
