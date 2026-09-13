@@ -16,7 +16,9 @@
 | `septik-lyuk-01.jpg` | Горловина с люком |
 | `septik-lyuk-02.jpg` | Чугунный люк |
 | `drenazh-truba-01.jpg` | Труба в геотекстиле |
+| `drenazh-geotekstil-01.jpg` | Траншея под дренаж |
 | `transhea-01.jpg` | Уклон бьём нивелиром |
+| `shcheben-frakciya-01.jpg` | Щебень смотрим на месте |
 | `uchastok-rabota-01.jpg` | Своя бригада |
 | `septik-bytovka-01.jpg` | Работаем и зимой |
 
@@ -29,7 +31,7 @@
 | `kollektor-tepliy-pol-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
 | `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
-| `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка по санузлу |
+| `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
 | `avtopoliv-gazon-01.jpg` | `avtopoliv.html` | Полив газона в работе |
 | `avtopoliv-klapany-01.jpg` | `avtopoliv.html` | Узел клапанов у теплицы |
 
