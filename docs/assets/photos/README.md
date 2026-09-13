@@ -35,9 +35,9 @@
 | `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
 | `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
-| `avtopoliv-terrasa-01.jpg` | `avtopoliv.html` | Кромка у террасы |
 | `avtopoliv-forsunka-01.jpg` | `avtopoliv.html` | Форсунка в газоне |
 | `avtopoliv-nasosnaya-01.jpg` | `avtopoliv.html` | Насосная станция полива |
+| `avtopoliv-teplica-01.jpg` | `avtopoliv.html` | Своя ветка на теплицу |
 | `avtopoliv-pult-01.jpg` | `avtopoliv.html` | Пульт в закрытом боксе |
 | `avtopoliv-klapany-boks-01.jpg` | `avtopoliv.html` | Клапаны в лючке |
 
