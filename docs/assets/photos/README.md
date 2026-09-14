@@ -32,6 +32,8 @@
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
 | `kollektor-tepliy-pol-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
+| `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
+| `konvektor-v-polu-01.jpg` | `otoplenie.html` | Конвектор в полу |
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
 | `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
