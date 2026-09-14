@@ -17,6 +17,7 @@
 | `septik-lyuk-01.jpg` | Горловина с люком |
 | `kesson-skvazhina-01.jpg` | Кессон над скважиной |
 | `kesson-oborudovanie-01.jpg` | Автоматика в кессоне |
+| `vodosnabzhenie-uzel-01.jpg` | Вода от скважины в доме |
 | `septik-lyuk-02.jpg` | Чугунный люк |
 | `drenazh-truba-01.jpg` | Труба в геотекстиле |
 | `drenazh-geotekstil-01.jpg` | Траншея под дренаж |
