@@ -879,7 +879,7 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   gap: 14px;
   flex-wrap: wrap;
 }
-.builder__foot .btn { background: var(--clay); color: #241E14; }
+.builder__foot .btn:not(.btn-light) { background: var(--clay); color: #241E14; }
 .copied {
   font-family: var(--mono);
   font-size: 0.74rem;
@@ -896,12 +896,12 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
 
 /* Числа, диапазоны и цены всегда читаются слева направо — иначе в арабской
    версии двунаправленный алгоритм переворачивает «10–13 ﷼» в «13–10 ﷼». */
-.dish__price, .cup-sum, .chip small, .hours__row span:last-child, .status__text,
+.dish__price, .cup-sum, .chip small, .hours__row span:last-child,
 .offer__seal, a[href^="tel:"] {
   direction: ltr;
   unicode-bidi: isolate;
 }
-[dir="rtl"] .status__text { text-align: right; }
+
 
 /* --- 12. Галерея ------------------------------------------------------ */
 .gallery-grid {
@@ -1776,6 +1776,7 @@ footer {
               <span data-i18n="builder.copy">Скопировать заказ</span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
+            <button class="btn btn-light" type="button" id="shareCup" data-i18n="builder.share">Ссылка на чашку</button>
             <span class="copied" id="copied" role="status" data-i18n="builder.copied">скопировано</span>
           </div>
         </div>
@@ -2048,7 +2049,11 @@ footer {
       'foot.edu': 'учебный проект',
       'a11y.skip': 'Перейти к меню', 'a11y.theme': 'Переключить вечерний режим', 'a11y.menu': 'Меню',
       'a11y.hero': 'Кофейня SAVVA и её квартал',
-      'st.open': 'Сейчас открыто · до ', 'st.shut': 'Закрыто · откроемся в '
+      'st.open': 'Сейчас открыто · до ', 'st.shut': 'Закрыто · откроемся в ',
+      'st.inCity': ' в Медине', 'st.openFor': 'открыто ещё ', 'st.opensIn': 'откроем через ',
+      'unit.h': ' ч ', 'unit.m': ' мин',
+      'builder.share': 'Ссылка на чашку', 'builder.linkCopied': 'ссылка скопирована',
+      'builder.fromLink': 'чашка из ссылки'
     },
 
     en: {
@@ -2121,7 +2126,11 @@ footer {
       'foot.edu': 'student project',
       'a11y.skip': 'Skip to the menu', 'a11y.theme': 'Toggle evening mode', 'a11y.menu': 'Menu',
       'a11y.hero': 'SAVVA and the streets around it',
-      'st.open': 'Open now · until ', 'st.shut': 'Closed · opens at '
+      'st.open': 'Open now · until ', 'st.shut': 'Closed · opens at ',
+      'st.inCity': ' in Madinah', 'st.openFor': 'open for another ', 'st.opensIn': 'opens in ',
+      'unit.h': ' h ', 'unit.m': ' min',
+      'builder.share': 'Link to this cup', 'builder.linkCopied': 'link copied',
+      'builder.fromLink': 'cup from a link'
     },
 
     ar: {
@@ -2194,7 +2203,11 @@ footer {
       'foot.edu': 'مشروع دراسي',
       'a11y.skip': 'انتقل إلى القائمة', 'a11y.theme': 'تبديل الوضع المسائي', 'a11y.menu': 'القائمة',
       'a11y.hero': 'سافا وحيّها',
-      'st.open': 'مفتوح الآن · حتى ', 'st.shut': 'مغلق · يفتح '
+      'st.open': 'مفتوح الآن · حتى ', 'st.shut': 'مغلق · يفتح ',
+      'st.inCity': ' في المدينة', 'st.openFor': 'مفتوح لمدة ', 'st.opensIn': 'يفتح بعد ',
+      'unit.h': ' س ', 'unit.m': ' د',
+      'builder.share': 'رابط الكوب', 'builder.linkCopied': 'تم نسخ الرابط',
+      'builder.fromLink': 'كوب من رابط'
     }
   };
 
@@ -2403,6 +2416,51 @@ footer {
 
   var state = { base: 'esp', milk: 'reg', temp: 'hot', size: 'M' };
 
+  /* Собранная чашка кодируется в адрес страницы (?cup=esp-reg-hot-M),
+     поэтому ссылкой можно поделиться, а по ней чашка соберётся заново. */
+  var CUP_KEYS = ['base', 'milk', 'temp', 'size'];
+  var CUP_VALUES = {
+    base: ['esp', 'filter', 'matcha', 'hib'],
+    milk: ['none', 'reg', 'oat', 'cond'],
+    temp: ['hot', 'iced'],
+    size: ['S', 'M', 'L']
+  };
+
+  function cupCode() {
+    return CUP_KEYS.map(function (k) { return state[k]; }).join('-');
+  }
+
+  function applyCupCode(code) {
+    var parts = String(code || '').split('-');
+    if (parts.length !== CUP_KEYS.length) return false;
+    for (var i = 0; i < CUP_KEYS.length; i++) {
+      if (CUP_VALUES[CUP_KEYS[i]].indexOf(parts[i]) === -1) return false;   // чужой код игнорируем
+    }
+    CUP_KEYS.forEach(function (k, i) { state[k] = parts[i]; });
+    document.querySelectorAll('.opt__row').forEach(function (row) {
+      var group = row.dataset.group;
+      row.querySelectorAll('.chip').forEach(function (chip) {
+        chip.setAttribute('aria-pressed', String(chip.dataset.val === state[group]));
+      });
+    });
+    return true;
+  }
+
+  function cupUrl() {
+    try {
+      var u = new URL(window.location.href);
+      u.searchParams.set('cup', cupCode());
+      u.hash = '';
+      return u.toString();
+    } catch (e) {
+      return window.location.href;
+    }
+  }
+
+  function rememberCup() {
+    try { window.history.replaceState(null, '', cupUrl()); } catch (e) {}
+  }
+
   var lFoam = document.getElementById('lFoam');
   var lMilk = document.getElementById('lMilk');
   var lBase = document.getElementById('lBase');
@@ -2458,22 +2516,32 @@ footer {
       chip.setAttribute('aria-pressed', 'true');
       state[row.dataset.group] = chip.dataset.val;
       renderCup();
+      rememberCup();
     });
   });
 
   var copyBtn = document.getElementById('copyOrder');
+  var shareBtn = document.getElementById('shareCup');
   var copiedNote = document.getElementById('copied');
-  copyBtn.addEventListener('click', function () {
-    var text = 'SAVVA · ' + orderName() + ' · ' + cupPrice.textContent + ' ﷼';
-    function done() {
-      copiedNote.classList.add('show');
-      setTimeout(function () { copiedNote.classList.remove('show'); }, 2000);
-    }
+
+  function flash(key) {
+    copiedNote.textContent = t(key);
+    copiedNote.classList.add('show');
+    clearTimeout(flash.timer);
+    flash.timer = setTimeout(function () { copiedNote.classList.remove('show'); }, 2400);
+  }
+
+  function copyText(text, key) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, done);
+      navigator.clipboard.writeText(text).then(function () { flash(key); }, function () { flash(key); });
     } else {
-      done();
+      flash(key);
     }
+  }
+
+  shareBtn.addEventListener('click', function () { copyText(cupUrl(), 'builder.linkCopied'); });
+  copyBtn.addEventListener('click', function () {
+    copyText('SAVVA · ' + orderName() + ' · ' + cupPrice.textContent + ' ﷼', 'builder.copied');
   });
 
   /* ==================================================================
@@ -2552,6 +2620,12 @@ footer {
     return { day: days[get('weekday')] || 0, min: h * 60 + parseInt(get('minute'), 10) };
   }
 
+  // «4 ч 17 мин», а для короткого остатка просто «45 мин»
+  function human(mins) {
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return (h ? h + t('unit.h') : '') + m + t('unit.m');
+  }
+
   function renderStatus() {
     var now;
     try { now = madinahNow(); } catch (e) { statusEl.hidden = true; return; }
@@ -2559,9 +2633,15 @@ footer {
     var isOpen = now.min < CLOSE_MIN || now.min >= openMin(now.day);
     statusEl.classList.toggle('is-open', isOpen);
     statusEl.classList.toggle('is-shut', !isOpen);
-    statusText.textContent = isOpen
-      ? t('st.open') + hhmm(CLOSE_MIN)
-      : t('st.shut') + hhmm(openMin(now.day));
+
+    // до закрытия: ночью остаток в тех же сутках, днём — через полночь
+    var left = isOpen
+      ? (now.min < CLOSE_MIN ? CLOSE_MIN - now.min : 24 * 60 - now.min + CLOSE_MIN)
+      : openMin(now.day) - now.min;
+
+    // <bdi> держит часы и остаток единым числом в любой раскладке, включая арабскую
+    statusText.innerHTML = '<bdi>' + hhmm(now.min) + '</bdi>' + t('st.inCity') + ' \u00b7 '
+      + (isOpen ? t('st.openFor') : t('st.opensIn')) + '<bdi>' + human(left) + '</bdi>';
 
     // подсветка сегодняшней строки в расписании
     document.querySelectorAll('.hours__row').forEach(function (row) {
@@ -2569,7 +2649,7 @@ footer {
       row.classList.toggle('is-today', days.indexOf(String(now.day)) !== -1);
     });
   }
-  setInterval(renderStatus, 60000);
+  setInterval(renderStatus, 30000);
 
   /* ==================================================================
      12. Старт
@@ -2586,11 +2666,25 @@ footer {
     applyTheme(prefersDark ? 'night' : 'day');
   }
 
+  var sharedCup = false;
+  try {
+    sharedCup = applyCupCode(new URLSearchParams(window.location.search).get('cup'));
+  } catch (e) {}
+
   if (savedLang && DICT[savedLang]) {
     applyLang(savedLang);
   } else {
     var nav = (navigator.language || 'ru').slice(0, 2).toLowerCase();
     applyLang(DICT[nav] ? nav : 'ru');
+  }
+
+  // пришли по ссылке на чашку — показываем её и отмечаем, откуда она
+  if (sharedCup) {
+    setTimeout(function () {
+      var builder = document.getElementById('builder');
+      if (builder) builder.scrollIntoView({ block: 'start' });
+      flash('builder.fromLink');
+    }, 900);
   }
 })();
 </script>
