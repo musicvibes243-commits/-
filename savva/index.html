@@ -324,7 +324,7 @@ body.loaded .preloader { opacity: 0; visibility: hidden; }
 
 header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 70;
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(1.3);
@@ -2426,7 +2426,13 @@ footer {
   try { savedTheme = localStorage.getItem('savva-theme'); } catch (e) {}
   try { savedLang = localStorage.getItem('savva-lang'); } catch (e) {}
 
-  applyTheme(savedTheme === 'night' ? 'night' : 'day');
+  if (savedTheme === 'night' || savedTheme === 'day') {
+    applyTheme(savedTheme);
+  } else {
+    // выбора ещё не было — берём системную настройку
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'night' : 'day');
+  }
 
   if (savedLang && DICT[savedLang]) {
     applyLang(savedLang);
