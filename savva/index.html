@@ -767,16 +767,6 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   transition: transform 0.9s var(--ease);
 }
 .dish:hover .dish__ph img { transform: scale(1.07); }
-/* позиции без фото — заливка цветом напитка и подпись */
-.dish__ph--none {
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  text-align: center;
-  font-family: var(--display);
-  font-size: 1rem;
-  color: rgba(255, 248, 236, 0.92);
-}
 .dish__body {
   display: flex;
   align-items: baseline;
@@ -1399,8 +1389,8 @@ footer {
   <!-- БЕГУЩАЯ СТРОКА -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker__track">
-      <span>SAVVA MATCHA <i>·</i> ICED SPANISH LATTE <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
-      <span>SAVVA MATCHA <i>·</i> ICED SPANISH LATTE <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
+      <span>SAVVA MATCHA <i>·</i> SAVVA MELON <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
+      <span>SAVVA MATCHA <i>·</i> SAVVA MELON <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
     </div>
   </div>
 
@@ -1504,30 +1494,6 @@ footer {
           <div class="dish__body">
             <div><p class="dish__name">Turkish Coffee</p><p class="dish__desc" data-i18n="d.turk">по-турецки, на песке</p></div>
             <p class="dish__price">11 ﷼</p>
-          </div>
-        </article>
-
-        <article class="dish" data-cat="hot">
-          <div class="dish__ph dish__ph--none" style="background:linear-gradient(155deg,#9C6440,#3E2A1D)">Cortado</div>
-          <div class="dish__body">
-            <div><p class="dish__name">Cortado</p><p class="dish__desc" data-i18n="d.cort">эспрессо и капля молока</p></div>
-            <p class="dish__price">14 ﷼</p>
-          </div>
-        </article>
-
-        <article class="dish" data-cat="hot">
-          <div class="dish__ph dish__ph--none" style="background:linear-gradient(155deg,#C58F5F,#6B4A34)">Flat White</div>
-          <div class="dish__body">
-            <div><p class="dish__name">Flat White</p><p class="dish__desc" data-i18n="d.flat">плотный, тонкий слой пенки</p></div>
-            <p class="dish__price">15 ﷼</p>
-          </div>
-        </article>
-
-        <article class="dish" data-cat="hot">
-          <div class="dish__ph dish__ph--none" style="background:linear-gradient(155deg,#6B6F52,#2E3324)">Spanish Latte</div>
-          <div class="dish__body">
-            <div><p class="dish__name">Spanish Latte</p><p class="dish__desc" data-i18n="d.span">со сгущённым молоком</p></div>
-            <p class="dish__price">18 ﷼</p>
           </div>
         </article>
 
@@ -2042,9 +2008,7 @@ footer {
       'menu.note2': 'Не нашли своё? Соберите чашку сами — ниже.',
       'tab.all': 'Всё', 'tab.hot': 'Горячее', 'tab.cold': 'Холодное', 'tab.dessert': 'Десерты', 'tab.breakfast': 'Завтраки',
       'd.latte': 'эспрессо и молочная пенка', 'd.capp': 'эспрессо и плотная пенка',
-      'd.amer': 'эспрессо и горячая вода', 'd.turk': 'по-турецки, на песке',
-      'd.cort': 'эспрессо и капля молока', 'd.flat': 'плотный, тонкий слой пенки',
-      'd.span': 'со сгущённым молоком', 'd.day': 'сорт меняется каждую неделю',
+      'd.amer': 'эспрессо и горячая вода', 'd.turk': 'по-турецки, на песке', 'd.day': 'сорт меняется каждую неделю',
       'd.melon': 'освежающий дынный напиток', 'd.iamer': 'эспрессо, вода, лёд',
       'd.ilatte': 'эспрессо, молоко, лёд', 'd.matcha': 'матча на молоке, со льдом',
       'd.hib': 'каркаде, лёд, ягодная нота', 'd.cheese': 'чизкейк со свежими ягодами',
@@ -2117,9 +2081,7 @@ footer {
       'menu.note2': "Didn't find yours? Build it yourself below.",
       'tab.all': 'All', 'tab.hot': 'Hot', 'tab.cold': 'Cold', 'tab.dessert': 'Desserts', 'tab.breakfast': 'Breakfast',
       'd.latte': 'espresso and milk foam', 'd.capp': 'espresso and dense foam',
-      'd.amer': 'espresso and hot water', 'd.turk': 'Turkish style, brewed on sand',
-      'd.cort': 'espresso and a splash of milk', 'd.flat': 'strong, a thin layer of foam',
-      'd.span': 'with condensed milk', 'd.day': 'a different origin every week',
+      'd.amer': 'espresso and hot water', 'd.turk': 'Turkish style, brewed on sand', 'd.day': 'a different origin every week',
       'd.melon': 'a refreshing melon drink', 'd.iamer': 'espresso, water, ice',
       'd.ilatte': 'espresso, milk, ice', 'd.matcha': 'matcha with milk, over ice',
       'd.hib': 'hibiscus, ice, a berry note', 'd.cheese': 'cheesecake with fresh berries',
@@ -2192,9 +2154,7 @@ footer {
       'menu.note2': 'لم تجد ما تريد؟ اصنع كوبك بنفسك في الأسفل.',
       'tab.all': 'الكل', 'tab.hot': 'ساخن', 'tab.cold': 'بارد', 'tab.dessert': 'حلويات', 'tab.breakfast': 'فطور',
       'd.latte': 'إسبريسو ورغوة حليب', 'd.capp': 'إسبريسو ورغوة كثيفة',
-      'd.amer': 'إسبريسو وماء ساخن', 'd.turk': 'قهوة تركية على الرمل',
-      'd.cort': 'إسبريسو ورشة حليب', 'd.flat': 'مركّز بطبقة رغوة رقيقة',
-      'd.span': 'بالحليب المكثّف', 'd.day': 'أصل مختلف كل أسبوع',
+      'd.amer': 'إسبريسو وماء ساخن', 'd.turk': 'قهوة تركية على الرمل', 'd.day': 'أصل مختلف كل أسبوع',
       'd.melon': 'مشروب شمّام منعش', 'd.iamer': 'إسبريسو وماء وثلج',
       'd.ilatte': 'إسبريسو وحليب وثلج', 'd.matcha': 'ماتشا بالحليب مع الثلج',
       'd.hib': 'كركديه وثلج بلمسة توت', 'd.cheese': 'تشيز كيك بالتوت الطازج',
