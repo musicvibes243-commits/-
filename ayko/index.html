@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AYKO — сайт под ключ за 15 000 ₽</title>
+<meta name="description" content="Нарисую, соберу и запущу сайт для вашего бизнеса. Фиксированная цена 15 000 ₽, адаптив под телефон, форма заявки. Примеры работ и быстрая связь.">
+<meta property="og:title" content="AYKO — сайт под ключ за 15 000 ₽">
+<meta property="og:description" content="Красивый сайт для вашего бизнеса: дизайн, вёрстка, запуск. Цена фиксированная.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="AYKO">
+<meta property="og:image" content="img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="canonical" href="./">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0c'/%3E%3Ctext x='32' y='45' font-family='Arial Narrow,Arial' font-weight='700' font-size='38' text-anchor='middle' fill='%23c3b3ff'%3EA%3C/text%3E%3C/svg%3E">
+
+<!-- ===== НАСТРОЙКИ РЕКЛАМЫ И АНАЛИТИКИ: заполните перед запуском Яндекс.Директа ===== -->
+<script>
+window.AYKO = {
+  METRIKA_ID: "",   /* номер счётчика Яндекс.Метрики, например 98765432. Пусто — счётчик не грузится */
+  SITE_URL:   "",   /* адрес сайта, например "https://ayko-web.ru". Пусто — берётся текущий адрес */
+  PHONE:      "",   /* телефон для звонка, например "+7 977 556-76-01". Пусто — блок скрыт */
+  LEGAL:      ""    /* реквизиты в подвале, например "Самозанятый Иванов И. И., ИНН 500000000000" */
+};
+(function(){
+  /* canonical и og:url — по настоящему адресу страницы */
+  var base = (AYKO.SITE_URL || (location.origin + location.pathname)).replace(/index\.html$/,'');
+  if (base.slice(-1) !== '/') base += '/';
+  var c = document.querySelector('link[rel=canonical]'); if (c) c.href = base;
+  var og = document.createElement('meta'); og.setAttribute('property','og:url'); og.content = base;
+  document.head.appendChild(og);
+  var oi = document.querySelector('meta[property="og:image"]'); if (oi) oi.content = base + 'img/og.jpg';
+})();
+</script>
+
+<!-- Яндекс.Метрика — грузится, только если указан METRIKA_ID -->
+<script>
+(function(){
+  if (!window.AYKO || !AYKO.METRIKA_ID) return;
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+  ym(AYKO.METRIKA_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+  var n=document.createElement('noscript');
+  n.innerHTML='<div><img src="https://mc.yandex.ru/watch/'+AYKO.METRIKA_ID+'" style="position:absolute;left:-9999px" alt=""></div>';
+  document.head.appendChild(n);
+})();
+</script>
+
+<link rel="preconnect" href="https://mc.yandex.ru">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0c;
+  --bg-2:#131317;
+  --bg-3:#1a1a20;
+  --line:#26262d;
+  --text:#f4f3f0;
+  --muted:#a4a3ad;
+  --violet:#8b6cff;
+  --lilac:#c3b3ff;
+  --pink:#ee4fa6;
+  --head:'Oswald','Arial Narrow',Impact,sans-serif;
+  --body:'Manrope',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--lilac);outline-offset:3px}
+img{display:block;max-width:100%}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+[hidden]{display:none!important}
+
+/* ---------- header ---------- */
+header.top{position:fixed;inset:0 0 auto 0;z-index:30;padding:14px 0;backdrop-filter:blur(14px);background:rgba(10,10,12,.72);border-bottom:1px solid transparent;transition:border-color .3s}
+header.top.stuck{border-color:var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{font-family:var(--head);font-weight:700;font-size:30px;letter-spacing:.04em;line-height:1}
+header.top .top-cta{display:none}
+.nav-d{display:none;gap:28px;font-size:15px;color:var(--muted)}
+.nav-d a:hover{color:var(--text)}
+.burger{width:48px;height:48px;border-radius:50%;border:1px solid #3a3a44;background:transparent;display:grid;place-content:center;gap:6px;cursor:pointer}
+.burger span{display:block;width:20px;height:2px;background:var(--text)}
+@media (min-width:960px){
+  .nav-d{display:flex}
+  header.top .top-cta{display:inline-flex}
+  .burger{display:none}
+}
+
+/* ---------- menu ---------- */
+.menu{position:fixed;inset:0;z-index:50;background:var(--bg);padding:14px 0 26px;display:flex;flex-direction:column;visibility:hidden;opacity:0;transform:translateY(-16px);transition:opacity .3s,transform .3s,visibility 0s .3s}
+.menu.open{visibility:visible;opacity:1;transform:none;transition:opacity .3s,transform .3s}
+.menu .bar{display:flex;justify-content:space-between;align-items:center}
+.menu nav{margin:auto 0;display:grid}
+.menu nav a{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding:12px 0;font-family:var(--head);font-weight:700;text-transform:uppercase;font-size:clamp(36px,8.5vw,72px);line-height:1.05;transition:color .2s,padding .2s}
+.menu nav a:hover{color:var(--lilac);padding-left:12px}
+
+/* ---------- согласие на обработку данных ---------- */
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;color:var(--muted);line-height:1.45;margin:0;cursor:pointer}
+.agree input{flex:0 0 auto;width:17px;height:17px;margin-top:2px;accent-color:var(--violet);cursor:pointer}
+.agree a{color:var(--lilac);text-decoration:underline;text-underline-offset:2px}
+.legal{width:100%;text-align:center;color:#6f6e78;font-size:13px;line-height:1.5;border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.legal a{color:#8b8a95;text-decoration:underline;text-underline-offset:2px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:16px 30px;font-family:var(--head);font-weight:500;text-transform:uppercase;letter-spacing:.03em;font-size:17px;cursor:pointer;border:1px solid transparent;transition:transform .2s,background .2s,box-shadow .2s;min-height:52px}
+.btn:hover{transform:translateY(-2px)}
+.btn.solid{background:var(--text);color:#0a0a0c}
+.btn.hot{background:linear-gradient(120deg,var(--violet),var(--pink));color:#fff;box-shadow:0 12px 34px rgba(139,108,255,.35)}
+.btn.hot:hover{box-shadow:0 16px 44px rgba(238,79,166,.4)}
+.btn.ghost{border-color:#45454f;background:transparent;color:var(--text)}
+.btn.ghost:hover{background:rgba(255,255,255,.06)}
+.btn.sm{padding:10px 22px;min-height:44px;font-size:15px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:130px 0 80px;background:
+  radial-gradient(900px 560px at 88% 8%,rgba(139,108,255,.34),transparent 70%),
+  radial-gradient(700px 500px at 0% 100%,rgba(238,79,166,.2),transparent 70%),var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+.tag{display:inline-block;border:1px solid #3a3a44;border-radius:999px;padding:6px 16px;font-size:14px;color:var(--lilac);margin-bottom:24px}
+h1,h2,h3{font-family:var(--head);text-transform:uppercase;line-height:.98;font-weight:700}
+h1{font-size:clamp(44px,7.2vw,100px)}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+h1 .ln>span{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+h1 .ln:nth-child(2)>span{animation-delay:.12s}
+h1 .ln:nth-child(3)>span{animation-delay:.24s}
+h1 .price{background:linear-gradient(100deg,var(--lilac),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+.hero .lead{max-width:520px;color:#cdccd4;margin:26px 0 30px;font-size:19px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;color:var(--muted);font-size:15px}
+.trust span::before{content:"✓";color:var(--pink);margin-right:8px;font-weight:700}
+
+/* hero browser windows */
+.hv{position:relative;min-height:400px}
+.win{position:absolute;margin:0;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#111;box-shadow:0 36px 70px rgba(0,0,0,.55);transition:transform .5s}
+.win .bar{display:flex;gap:6px;padding:9px 12px;background:#1d1d23}
+.win .bar i{width:9px;height:9px;border-radius:50%;background:#43434d}
+.win img{width:100%;aspect-ratio:1000/687;object-fit:cover;background:#1a1a20}
+.win.w1{width:82%;left:0;top:0;transform:rotate(-3deg);z-index:1}
+.win.w2{width:74%;right:0;bottom:0;transform:rotate(3.5deg);z-index:2}
+.hv:hover .win.w1{transform:rotate(-5deg) translate(-6px,-4px)}
+.hv:hover .win.w2{transform:rotate(5deg) translate(6px,4px)}
+.hv .cap{position:absolute;left:4%;bottom:-4px;z-index:3;background:var(--bg);border:1px solid #3a3a44;border-radius:999px;padding:8px 16px;font-size:14px;color:var(--lilac)}
+
+/* ---------- blocks ---------- */
+section.blk{padding:100px 0}
+.eyebrow{color:var(--lilac);font-size:15px;font-weight:700;margin-bottom:14px}
+h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
+.intro{color:var(--muted);max-width:580px;margin-bottom:46px}
+
+/* why */
+.why{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
+.why h2{margin-bottom:0}
+.why-list{border-top:1px solid var(--line)}
+.why-list div{padding:26px 0;border-bottom:1px solid var(--line)}
+.why-list b{display:block;font-family:var(--head);text-transform:uppercase;font-size:28px;line-height:1.1;margin-bottom:6px;font-weight:700}
+.why-list p{color:var(--muted);max-width:520px}
+
+/* offer */
+.offer{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch}
+.deal{border-radius:30px;padding:40px;background:linear-gradient(155deg,#2a2160 0%,#5b3fe0 55%,#8f2bd6 100%);box-shadow:0 40px 90px rgba(80,50,200,.3);display:flex;flex-direction:column}
+.deal .k{font-size:15px;font-weight:700;opacity:.85}
+.deal .p{font-family:var(--head);font-weight:700;font-size:clamp(70px,11vw,132px);line-height:1;margin:6px 0 4px}
+.deal .p small{font-size:.4em;font-weight:500;margin-left:6px}
+.deal .fx{opacity:.9;margin-bottom:24px}
+.deal ul{list-style:none;display:grid;gap:12px;margin-bottom:32px}
+.deal li{padding-left:30px;position:relative}
+.deal li::before{content:"✓";position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-content:center;font-size:12px;top:4px}
+.deal .btn{margin-top:auto;align-self:flex-start}
+.more{border:1px solid var(--line);border-radius:30px;padding:36px;background:var(--bg-2);display:flex;flex-direction:column}
+.more h3{font-size:32px;margin-bottom:6px}
+.more>p{color:var(--muted);margin-bottom:20px}
+.more .r{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid var(--line);align-items:baseline}
+.more .r span{color:var(--muted);font-size:15px;display:block}
+.more .r em{font-style:normal;font-family:var(--head);font-size:22px;color:var(--lilac);white-space:nowrap}
+.more .link{margin-top:auto;padding-top:20px;color:var(--lilac);font-weight:700}
+
+/* works */
+.works{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:start}
+.plist{border-top:1px solid var(--line)}
+.plist button{display:flex;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:20px 0;cursor:pointer;justify-content:space-between;align-items:center;gap:14px;color:#6f6e78;transition:color .2s}
+.plist button b{font-family:var(--head);font-size:clamp(28px,4vw,46px);text-transform:uppercase;line-height:1;display:block;font-weight:700}
+.plist button span{font-size:15px;display:block;margin-top:4px}
+.plist button .ar{font-family:var(--head);font-size:26px;color:inherit}
+.plist button:hover,.plist button[aria-selected="true"]{color:var(--text)}
+.plist button[aria-selected="true"] .ar{color:var(--pink)}
+.view{position:sticky;top:96px;border-radius:26px;border:1px solid var(--line);background:var(--bg-2);padding:16px;overflow:hidden}
+.shot{border-radius:14px;overflow:hidden;aspect-ratio:1000/687;background:#1a1a20;position:relative}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot .fake{position:absolute;inset:0;padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between}
+.shot .nav{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
+.shot .big{font-family:var(--head);text-transform:uppercase;font-weight:700;font-size:clamp(28px,4.2vw,50px);line-height:1}
+.shot .pill{align-self:flex-start;padding:8px 16px;border-radius:999px;font-size:12px;font-weight:700}
+.vinfo{padding:18px 6px 6px}
+.vinfo h3{font-size:32px;margin-bottom:8px}
+.vinfo p{color:var(--muted);font-size:16px}
+.vlink{display:inline-block;margin-top:14px;border-bottom:1px solid var(--pink);padding-bottom:2px;font-weight:700}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.step{border-top:2px solid var(--pink);padding-top:18px}
+.step .n{font-family:var(--head);font-size:52px;color:var(--pink);line-height:1;font-weight:700}
+.step h3{font-size:24px;margin:10px 0 8px}
+.step p{color:var(--muted);font-size:15px;line-height:1.5}
+.step .t{display:inline-block;margin-top:12px;font-size:13px;color:var(--lilac);border:1px solid #3a3a44;border-radius:999px;padding:3px 12px}
+
+/* reviews (показываются, если заполнить REVIEWS) */
+.rev{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.rev blockquote{border:1px solid var(--line);border-radius:24px;padding:28px;background:var(--bg-2)}
+.rev blockquote p{margin-bottom:16px}
+.rev cite{font-style:normal;color:var(--lilac);font-weight:700;font-size:15px}
+
+/* faq */
+.faq{max-width:860px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;font-family:var(--head);text-transform:uppercase;font-size:clamp(20px,2.6vw,28px);line-height:1.15;position:relative;font-weight:500}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:32px;color:var(--pink);transition:transform .25s}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details p{color:var(--muted);padding:0 44px 24px 0;max-width:680px}
+
+/* about */
+.about{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
+.card{border-radius:30px;padding:32px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(155deg,#2a2160 0%,#5b3fe0 55%,#8f2bd6 100%);transform:rotate(-3deg);box-shadow:0 30px 70px rgba(80,50,200,.28)}
+.card .big{font-family:var(--head);font-weight:700;font-size:clamp(70px,11vw,120px);line-height:.9}
+.card .role{border-top:1px solid rgba(255,255,255,.3);padding-top:14px;font-family:var(--head);font-size:24px;text-transform:uppercase}
+.card .role small{display:block;font-family:var(--body);font-size:15px;text-transform:none;opacity:.8;margin-top:4px}
+.about p{color:#cdccd4;margin-bottom:16px;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chips span{border:1px solid #3a3a44;border-radius:999px;padding:8px 18px;font-size:15px}
+
+/* contact */
+.contact{background:radial-gradient(800px 500px at 50% 115%,rgba(139,108,255,.35),transparent 70%),var(--bg)}
+.contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.contact h2{margin-bottom:16px}
+.direct{display:grid;gap:12px;margin-top:26px}
+.direct a{display:flex;justify-content:space-between;align-items:center;border:1px solid #3a3a44;border-radius:18px;padding:16px 20px;transition:border-color .2s,background .2s}
+.direct a:hover{border-color:var(--violet);background:rgba(139,108,255,.08)}
+.direct a span{color:var(--muted);font-size:14px}
+form{display:grid;gap:18px}
+label{display:block;color:var(--lilac);font-weight:700;font-size:14px;margin-bottom:8px}
+input:not([type=checkbox]),textarea{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:16px 20px;outline:none;transition:border-color .2s}
+input::placeholder,textarea::placeholder{color:#6f6e78}
+input:focus,textarea:focus{border-color:var(--violet)}
+textarea{min-height:120px;resize:vertical}
+.ok{display:none;color:var(--lilac);font-size:15px}
+.ok.show{display:block}
+.fine{color:#7c7b85;font-size:13px}
+footer{border-top:1px solid var(--line);padding:28px 0 96px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* sticky mobile CTA */
+.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:25;transform:translateY(140%);transition:transform .35s}
+.sticky.show{transform:none}
+.sticky .btn{width:100%}
+@media (min-width:960px){.sticky{display:none}}
+
+@media (max-width:959px){
+  .hero{padding:110px 0 60px}
+  .hero .wrap,.why,.offer,.works,.about,.contact .wrap{grid-template-columns:1fr}
+  .hv{min-height:0;height:calc(72vw + 30px);max-height:400px;margin-top:12px}
+  .view{position:static}
+  .steps{grid-template-columns:1fr 1fr}
+  section.blk{padding:72px 0}
+  .card{transform:none;min-height:240px}
+  .why{gap:30px}
+  .deal,.more{padding:28px}
+}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.btn{width:100%}.hero .cta{display:grid}}
+@media (prefers-reduced-motion:reduce){
+  h1 .ln>span{animation:none}
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+
+/* ---------- AI-помощник ---------- */
+.chat-fab{position:fixed;right:16px;bottom:16px;z-index:40;display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 20px;background:linear-gradient(120deg,var(--violet),var(--pink));color:#fff;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 12px 34px rgba(139,108,255,.4);transition:bottom .3s,transform .2s}
+.chat-fab:hover{transform:translateY(-2px)}
+body.has-sticky .chat-fab{bottom:82px}
+.chat{position:fixed;z-index:60;right:24px;bottom:24px;width:380px;max-width:calc(100vw - 24px);height:min(600px,calc(100svh - 48px));display:flex;flex-direction:column;background:var(--bg-2);border:1px solid #33333d;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+.chat[hidden]{display:none}
+.chat header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:linear-gradient(120deg,#2a2160,#5b3fe0);gap:12px}
+.chat header b{display:block;font-family:var(--head);text-transform:uppercase;font-size:20px;letter-spacing:.03em}
+.chat header small{opacity:.85;font-size:13px}
+.chat header button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:transparent;cursor:pointer;font-size:16px}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:86%;padding:11px 15px;border-radius:18px;font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.m.bot{background:var(--bg-3);border-bottom-left-radius:6px;align-self:flex-start}
+.m.me{background:var(--violet);color:#fff;border-bottom-right-radius:6px;align-self:flex-end}
+.m.typing{color:var(--muted)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
+.quick button{border:1px solid #3a3a44;background:transparent;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.quick button:hover{background:rgba(255,255,255,.07)}
+.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.composer input{flex:1;padding:12px 16px;border-radius:999px;font-size:15px}
+.composer button{width:46px;height:46px;border-radius:50%;border:0;background:var(--text);color:#0a0a0c;font-size:20px;cursor:pointer;flex:none}
+.composer button:disabled{opacity:.4;cursor:default}
+.leadbox{align-self:stretch;background:var(--bg-3);border:1px solid #3a3a44;border-radius:18px;padding:14px;display:grid;gap:10px}
+.leadbox input:not([type=checkbox]){padding:12px 14px;border-radius:12px;font-size:15px}
+.leadbox .btn{min-height:44px;padding:10px 20px;font-size:15px}
+@media (max-width:959px){
+  .chat{right:12px;left:12px;bottom:12px;width:auto;max-width:none;height:min(78svh,620px)}
+  .chat-fab .tx{display:none}
+  .chat-fab{padding:16px 18px}
+}
+@media (max-width:520px){.chat-fab{width:auto}.composer button{width:46px}}
+
+/* сравнение с шаблоном */
+.own{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 16px;font-size:15px;font-weight:700;margin:-10px 0 24px;align-self:flex-start}
+.cmp-wrap{margin-top:70px}
+.cmp-wrap h3{font-size:clamp(30px,4.4vw,52px);margin-bottom:24px}
+.cmp{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg)}
+.cmp-h,.cmp-r{display:grid;grid-template-columns:.8fr 1fr 1fr;gap:0}
+.cmp-h span{padding:16px 22px;font-family:var(--head);text-transform:uppercase;font-size:18px;color:var(--muted);background:var(--bg-3)}
+.cmp-h span.us{color:#fff;background:linear-gradient(120deg,#3b2a88,#6a3fd6)}
+.cmp-r{border-top:1px solid var(--line)}
+.cmp-r>*{padding:18px 22px}
+.cmp-r b{font-weight:700}
+.cmp-r span{color:var(--muted)}
+.cmp-r span.us{color:var(--text);background:rgba(139,108,255,.1)}
+.cmp-note{margin-top:20px;color:var(--muted);max-width:760px}
+@media (max-width:700px){
+  .cmp-h{display:none}
+  .cmp-r{grid-template-columns:1fr}
+  .cmp-r>*{padding:8px 20px}
+  .cmp-r b{padding-top:18px}
+  .cmp-r span:last-child{padding-bottom:18px}
+  .cmp-r span::before{content:attr(data-l) ": ";font-weight:700;color:var(--lilac)}
+}
+.socials{display:flex;flex-wrap:wrap;gap:8px 20px}
+.socials a{color:var(--muted)}
+.socials a:hover{color:var(--text)}
+
+.shot .phonewrap{position:absolute;inset:0;display:flex;justify-content:center;align-items:center}
+.shot .phonewrap img{width:auto;height:92%;border-radius:22px;border:5px solid #0c0c10;box-shadow:0 22px 50px rgba(0,0,0,.5);object-fit:cover;object-position:top}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a href="#home" class="logo">AYKO</a>
+    <nav class="nav-d" aria-label="Разделы">
+      <a href="#works">Работы</a><a href="#offer">Цена</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
+    </nav>
+    <a class="btn hot sm top-cta" href="#contact">Обсудить сайт</a>
+    <button class="burger" id="open" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-label="Меню">
+  <div class="wrap" style="display:flex;flex-direction:column;height:100%">
+    <div class="bar">
+      <span class="logo">AYKO</span>
+      <button class="burger" id="close" aria-label="Закрыть меню" style="font-size:24px;line-height:1">✕</button>
+    </div>
+    <nav>
+      <a href="#home">Главная</a>
+      <a href="#works">Работы</a>
+      <a href="#offer">Цена</a>
+      <a href="#process">Как работаю</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#contact">Связаться</a>
+    </nav>
+    <a class="btn hot" href="#contact">Обсудить сайт</a>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <span class="tag">Сайты под ключ для малого бизнеса</span>
+      <h1>
+        <span class="ln"><span>Сайт под ключ</span></span>
+        <span class="ln"><span class="price">за 15 000 ₽</span></span>
+        <span class="ln"><span>без хлопот</span></span>
+      </h1>
+      <p class="lead">Нарисую, соберу и запущу сайт для вашего бизнеса. Клиенты увидят красивую страницу, поймут, чем вы полезны, и оставят заявку прямо с телефона.</p>
+      <div class="cta">
+        <a class="btn hot" href="#contact">Хочу такой сайт</a>
+        <a class="btn ghost" href="#works">Смотреть работы</a>
+      </div>
+      <div class="trust">
+        <span>Цена фиксированная</span>
+        <span>Отвечаю в течение дня</span>
+        <span>Покажу дизайн до сборки</span>
+      </div>
+    </div>
+    <div class="hv" aria-label="Примеры моих сайтов">
+      <figure class="win w1"><div class="bar"><i></i><i></i><i></i></div><img data-shot="anikor" width="1000" height="687" decoding="async" alt="Сайт студии йоги «Аникор»"></figure>
+      <figure class="win w2"><div class="bar"><i></i><i></i><i></i></div><img data-shot="atelier" width="1000" height="687" decoding="async" alt="Сайт швейного ателье Atelier"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="why" style="background:var(--bg-2)">
+  <div class="wrap why">
+    <div>
+      <div class="eyebrow">Почему у меня</div>
+      <h2>Вы занимаетесь бизнесом. Сайт беру на себя</h2>
+    </div>
+    <div class="why-list">
+      <div><b>Красивый дизайн</b><p>Рисую под ваш бизнес, а не беру шаблон. Студия йоги и ветклиника выглядят по-разному, и сайты тоже.</p></div>
+      <div><b>Быстро и недорого</b><p>15 000 ₽ за сайт, цену называю до начала работы. Обычно это 5–10 дней, если материалы приходят вовремя.</p></div>
+      <div><b>Под ключ</b><p>Дизайн, вёрстка, форма заявки, публикация в интернете. Вам не нужно разбираться в технической части.</p></div>
+      <div><b>Удобно с телефона</b><p>Сайт одинаково хорошо читается на телефоне и на компьютере, а кнопки связи всегда под рукой.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="works">
+  <div class="wrap">
+    <div class="eyebrow">Примеры работ</div>
+    <h2>Что я уже сделала</h2>
+    <p class="intro">Выберите проект, чтобы посмотреть, как выглядит главный экран.</p>
+    <div class="works">
+      <div class="plist" role="tablist" aria-label="Проекты" id="plist"></div>
+      <div class="view" aria-live="polite">
+        <div class="shot" id="shot">
+          <img id="sImg" alt="" loading="lazy" decoding="async" hidden>
+          <div class="phonewrap" id="phoneWrap" hidden><img id="phoneImg" loading="lazy" decoding="async" alt=""></div>
+          <div class="fake" id="fake">
+            <div class="nav"><span id="sNav1"></span><span id="sNav2"></span></div>
+            <div class="big" id="sBig"></div>
+            <span class="pill" id="sPill"></span>
+          </div>
+        </div>
+        <div class="vinfo"><h3 id="vTitle"></h3><p id="vText"></p><a class="vlink" id="vLink" href="#" target="_blank" rel="noopener" hidden>Открыть сайт ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="reviews" hidden style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="eyebrow">Отзывы</div>
+    <h2>Что говорят клиенты</h2>
+    <div class="rev" id="revList"></div>
+  </div>
+</section>
+
+<section class="blk" id="offer" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="eyebrow">Цена</div>
+    <h2>Один сайт. Одна цена</h2>
+    <p class="intro">Стоимость называю до начала работы и не меняю по ходу. Никаких доплат за «мелочи».</p>
+    <div class="offer">
+      <div class="deal">
+        <div class="k">Сайт под ключ</div>
+        <div class="p">15 000<small>₽</small></div>
+        <div class="fx">Срок: 5–10 дней</div>
+        <div class="own">Не шаблон: дизайн рисуется под ваш бизнес</div>
+        <ul>
+          <li>Дизайн под ваш бизнес</li>
+          <li>Вёрстка под телефон и компьютер</li>
+          <li>Форма заявки и кнопки связи</li>
+          <li>Публикация сайта в интернете</li>
+          <li>Правки по ходу работы</li>
+        </ul>
+        <a class="btn solid" href="#contact">Заказать сайт</a>
+      </div>
+      <div class="more">
+        <h3>Нужно больше?</h3>
+        <p>Если задача сложнее, обсудим и назовём точную цену.</p>
+        <div class="r"><div>Многостраничный сайт<span>услуги, каталог, блог</span></div><em>от 35 000 ₽</em></div>
+        <div class="r"><div>Telegram-бот<span>заявки, запись, каталог</span></div><em>от 10 000 ₽</em></div>
+        <div class="r"><div>Редизайн<span>обновлю старый сайт</span></div><em>от 12 000 ₽</em></div>
+        <a class="link" href="#contact">Обсудить задачу →</a>
+      </div>
+    </div>
+
+    <div class="cmp-wrap">
+      <h3>Шаблон или сайт под ключ?</h3>
+      <div class="cmp" role="table" aria-label="Сравнение шаблона и сайта от AYKO">
+        <div class="cmp-h" role="row"><span role="columnheader"></span><span role="columnheader">Готовый шаблон</span><span class="us" role="columnheader">Сайт от AYKO</span></div>
+        <div class="cmp-r" role="row"><b role="rowheader">Внешний вид</b><span role="cell" data-l="Шаблон">Как у других, кто взял тот же шаблон</span><span class="us" role="cell" data-l="AYKO">Свой, под ваш бизнес</span></div>
+        <div class="cmp-r" role="row"><b role="rowheader">Кто делает работу</b><span role="cell" data-l="Шаблон">Вы сами: наполняете и настраиваете</span><span class="us" role="cell" data-l="AYKO">Я: от дизайна до запуска</span></div>
+        <div class="cmp-r" role="row"><b role="rowheader">Форма заявки и связь</b><span role="cell" data-l="Шаблон">Подключаете сами</span><span class="us" role="cell" data-l="AYKO">Уже настроены</span></div>
+        <div class="cmp-r" role="row"><b role="rowheader">Цена</b><span role="cell" data-l="Шаблон">Обычно ниже</span><span class="us" role="cell" data-l="AYKO">15 000 ₽, фиксированно</span></div>
+      </div>
+      <p class="cmp-note">Шаблон подойдёт, если бюджет совсем небольшой и вы готовы разбираться сами. Если важно выделиться среди конкурентов и не тратить время на настройку, лучше сайт под ваш бизнес.</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="process">
+  <div class="wrap">
+    <div class="eyebrow">Как работаю</div>
+    <h2>Четыре простых шага</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Разговор</h3><p>Вы пишете, чем занимаетесь и кого хотите привлечь. Я задаю несколько вопросов.</p><span class="t">1 день</span></div>
+      <div class="step"><div class="n">02</div><h3>Дизайн</h3><p>Рисую главный экран и показываю вам. Правим, пока не понравится.</p><span class="t">2–3 дня</span></div>
+      <div class="step"><div class="n">03</div><h3>Сборка</h3><p>Собираю весь сайт, проверяю на телефоне и компьютере, присылаю на просмотр.</p><span class="t">2–5 дней</span></div>
+      <div class="step"><div class="n">04</div><h3>Запуск</h3><p>Публикую сайт и показываю, как всё работает. Заявки идут к вам.</p><span class="t">1 день</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="faq" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="eyebrow">Вопросы</div>
+    <h2>Частые вопросы</h2>
+    <div class="faq">
+            <details><summary>Чем это отличается от шаблона или конструктора?</summary><p>Шаблон один на многих, а вы настраиваете его сами. Я рисую дизайн под ваш бизнес и довожу сайт до запуска. Шаблоны обычно дешевле, а здесь вы платите за уникальный вид и за то, что не нужно разбираться самому.</p></details>
+      <details><summary>Что нужно от меня?</summary><p>Рассказать о бизнесе, прислать логотип и фотографии, если они есть. С текстами помогу: напишу их вместе с вами.</p></details>
+      <details><summary>Сколько всё это стоит?</summary><p>Сайт под ключ стоит 15 000 ₽. Цена фиксированная, я называю её до начала работы. Для сложных задач считаем отдельно, но тоже заранее.</p></details>
+      <details><summary>За сколько будет готов сайт?</summary><p>Обычно за 5–10 дней. Срок зависит от того, как быстро вы присылаете материалы и отвечаете на вопросы.</p></details>
+      <details><summary>А если дизайн не понравится?</summary><p>Сначала я показываю главный экран и только потом собираю остальное. Если что-то не так, исправляем на этом этапе.</p></details>
+      <details><summary>Сайт будет нормально выглядеть на телефоне?</summary><p>Да. Я проверяю каждый сайт на телефоне и на компьютере до того, как показать вам.</p></details>
+      <details><summary>Можно посмотреть, что вы уже делали?</summary><p>Да, примеры выше. Если нужна работа из вашей сферы, напишите, покажу похожие.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="about">
+  <div class="wrap about">
+    <div class="card" aria-hidden="true">
+      <div class="big">AYKO</div>
+      <div class="role">Веб-разработчик<small>сайты · боты · дизайн</small></div>
+    </div>
+    <div>
+      <div class="eyebrow">Обо мне</div>
+      <h2>Кто стоит за AYKO</h2>
+      <p>Я делаю сайты и Telegram-ботов для тех, кому нужен понятный результат. Сначала разбираюсь, чем живёт ваш бизнес, потом проектирую страницы так, чтобы клиенту было легко с вами связаться.</p>
+      <p>Показываю промежуточные версии и всегда на связи.</p>
+      <div class="chips"><span>Figma</span><span>Адаптивная вёрстка</span><span>Telegram-боты</span><span>Лендинги</span><span>Редизайн</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk contact" id="contact">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Заявка</div>
+      <h2>Расскажите, какой сайт нужен</h2>
+      <p class="intro" style="margin-bottom:0">Достаточно пары слов о бизнесе. Отвечу в течение дня и предложу, с чего начать.</p>
+      <div class="direct" id="direct"></div>
+    </div>
+    <form id="form">
+      <div><label for="f-name">Имя</label><input id="f-name" name="name" placeholder="Как к вам обращаться" required autocomplete="name"></div>
+      <div><label for="f-contact">Telegram, телефон или email</label><input id="f-contact" name="contact" placeholder="@username, +7… или mail@example.com" required autocomplete="off"></div>
+      <div><label for="f-text">Чем занимаетесь и какой сайт нужен</label><textarea id="f-text" name="text" placeholder="Например: студия маникюра, нужен сайт с ценами и записью"></textarea></div>
+      <button class="btn hot" type="submit">Отправить заявку</button>
+      <p class="ok" id="ok">Спасибо! Откроется письмо с вашей заявкой, останется нажать «Отправить».</p>
+      <label class="agree" for="f-agree"><input type="checkbox" id="f-agree" name="agree" required>
+        <span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>. Данные нужны только для ответа на заявку.</span></label>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="y"></span> AYKO</span><div class="socials" id="socials"></div><a href="privacy.html">Политика конфиденциальности</a><a href="#home">Наверх ↑</a>
+    <p class="legal" id="legal" hidden></p></div>
+</footer>
+
+<button class="chat-fab" id="chatFab" aria-label="Открыть чат с помощником" aria-expanded="false"><span aria-hidden="true">✦</span><span class="tx">Спросить помощника</span></button>
+<section class="chat" id="chat" role="dialog" aria-label="Помощник AYKO" hidden>
+  <header><div><b>Помощник AYKO</b><small>Отвечает сразу. Это ИИ</small></div><button id="chatClose" aria-label="Закрыть чат">✕</button></header>
+  <div class="msgs" id="msgs" aria-live="polite"></div>
+  <div class="quick" id="quick"></div>
+  <form class="composer" id="chatForm"><label for="chatInput" style="position:absolute;left:-9999px">Ваш вопрос</label><input id="chatInput" placeholder="Напишите вопрос" maxlength="600" autocomplete="off"><button id="chatSend" aria-label="Отправить" type="submit">↑</button></form>
+</section>
+
+<div class="sticky" id="sticky"><a class="btn hot" id="stickyBtn" href="#contact">Обсудить сайт</a></div>
+
+<script>
+/* ===== НАСТРОЙКИ: поменяйте на свои ===== */
+var EMAIL = "damka9093@gmail.com";   // куда придут заявки из формы
+var TELEGRAM = "AYKO_MO";               // ник в Telegram, например "ayko_web" (можно и с @)
+var WHATSAPP = "79775567601";               // номер для WhatsApp цифрами, например "79001234567"
+var MAXLINK = "";                // ссылка на ваш профиль в MAX, например "https://max.ru/…"
+var VK = "";                     // ссылка или короткое имя, например "vk.com/ayko" или "ayko"
+var INSTAGRAM = "";              // ник без @, например "ayko.web"
+var REVIEWS = [];                // отзывы: [{text:"…", who:"Имя, бизнес"}]. Пока пусто — блок скрыт
+
+/* ===== скриншоты ===== */
+var IMG = {
+  anikor: "img/anikor.jpg",
+  atelier: "img/atelier.jpg",
+  septic: "img/septic.jpg",
+  simba: "img/simba.jpg",
+  savva: "img/savva.jpg"
+};
+
+/* ===== PROJECTS ===== */
+var PROJECTS = [
+  {name:"Аникор", kind:"Студия йоги", title:"Аникор", text:"Сайт студии йоги в спокойном редакционном стиле: практики с ценами, отзывы и как дойти.", shot:"anikor"},
+  {name:"Atelier", kind:"Ателье и школа портного", title:"Atelier Королёв", text:"Сайт швейного ателье с тремя направлениями: пошив и подгонка, школа портного и почасовой коворкинг.", shot:"atelier"},
+  {name:"Симба", kind:"Ветклиника · демо-концепт", title:"Симба", text:"Демо-концепт сайта ветклиники: услуги, врачи, полный прайс из 164 позиций с фильтрами, отзывы и запись на приём.", phone:"simba", bg:"linear-gradient(140deg,#9cc4f0,#e3ecfb)", url:"https://vetsimba.netlify.app/"},
+  {name:"SAVVA", kind:"Кофейня", title:"SAVVA", text:"Сайт кофейни: меню, конструктор своей чашки, три языка и переключатель светлой и тёмной темы.", phone:"savva", bg:"linear-gradient(140deg,#2a211a,#7a5238)", url:"https://savva-kafe.site"},
+  {name:"Стройинвест", kind:"Септики и дренаж", title:"Стройинвест", text:"Сайт компании по монтажу септиков, кессонов и дренажа: услуги, подбор системы, заявка и быстрая связь в один тап.", phone:"septic", bg:"linear-gradient(140deg,#1e1a16,#6a5230)", url:"https://stroyinvest-mo.ru"}
+];
+/* ===== конец настроек ===== */
+
+/* ===== цели Яндекс.Метрики ===== */
+function goal(name){
+  try{ if(window.ym && AYKO.METRIKA_ID) ym(AYKO.METRIKA_ID,'reachGoal',name); }catch(e){}
+  try{ (window.dataLayer=window.dataLayer||[]).push({event:name}); }catch(e){}
+}
+
+/* ===== откуда пришёл посетитель: utm-метки и yclid из Директа ===== */
+var TRAFFIC=(function(){
+  var saved={};
+  try{ saved=JSON.parse(sessionStorage.getItem('ayko_src')||'{}') }catch(e){}
+  var q=new URLSearchParams(location.search), got={};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid'].forEach(function(k){
+    var v=q.get(k); if(v) got[k]=v.slice(0,120);
+  });
+  if(Object.keys(got).length){
+    got.ref=(document.referrer||'').slice(0,120);
+    saved=got;
+    try{ sessionStorage.setItem('ayko_src',JSON.stringify(saved)) }catch(e){}
+  }
+  return saved;
+})();
+function trafficNote(){
+  var keys=Object.keys(TRAFFIC);
+  if(!keys.length) return '';
+  return '\n\n— источник: '+keys.map(function(k){return k+'='+TRAFFIC[k]}).join(', ');
+}
+
+document.querySelectorAll('img[data-shot]').forEach(function(im){im.src=IMG[im.dataset.shot]});
+
+var list=document.getElementById('plist');
+function show(i){
+  var p=PROJECTS[i], s=document.getElementById('shot'), im=document.getElementById('sImg'), fk=document.getElementById('fake');
+  var pw=document.getElementById('phoneWrap'), pi=document.getElementById('phoneImg');
+  pw.hidden=!p.phone;
+  if(p.phone){
+    s.style.background=p.bg; pi.src=IMG[p.phone]; pi.alt='Главный экран сайта «'+p.title+'» на телефоне';
+    im.hidden=true; fk.hidden=true;
+  }else if(p.shot){
+    im.src=IMG[p.shot]; im.alt='Главный экран сайта: '+p.title; im.hidden=false; fk.hidden=true;
+  }else{
+    im.hidden=true; fk.hidden=false;
+    s.style.background=p.bg; fk.style.color=p.fg;
+    document.getElementById('sNav1').textContent=p.nav[0];
+    document.getElementById('sNav2').textContent=p.nav[1];
+    document.getElementById('sBig').innerHTML=p.big;
+    var pill=document.getElementById('sPill'); pill.textContent=p.pill; pill.style.background=p.pbg; pill.style.color=p.pfg;
+  }
+  document.getElementById('vTitle').textContent=p.title;
+  document.getElementById('vText').textContent=p.text;
+  var lk=document.getElementById('vLink');
+  if(p.url){lk.href=p.url;lk.hidden=false}else{lk.hidden=true}
+  [].forEach.call(list.children,function(b,j){b.setAttribute('aria-selected',j===i)});
+}
+PROJECTS.forEach(function(p,i){
+  var b=document.createElement('button');
+  b.setAttribute('role','tab');
+  b.innerHTML='<div><b>'+p.name+'</b><span>'+p.kind+'</span></div><span class="ar">↗</span>';
+  b.addEventListener('click',function(){show(i)});
+  b.addEventListener('mouseenter',function(){show(i)});
+  list.appendChild(b);
+});
+show(0);
+
+/* отзывы */
+if(REVIEWS.length){
+  var rl=document.getElementById('revList');
+  REVIEWS.forEach(function(r){
+    var q=document.createElement('blockquote');
+    var p=document.createElement('p'); p.textContent=r.text;
+    var c=document.createElement('cite'); c.textContent=r.who;
+    q.appendChild(p); q.appendChild(c); rl.appendChild(q);
+  });
+  document.getElementById('reviews').hidden=false;
+}
+
+/* контакты и соцсети */
+function linkOf(v,base){ v=(v||'').trim(); if(!v) return ''; return /^https?:\/\//i.test(v) ? v : base+v.replace(/^@/,''); }
+var CONTACTS=[
+  {t:'Телефон',   sub:'звонок или сообщение',  href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', label:AYKO.PHONE, goal:'click_phone'},
+  {t:'Telegram',  sub:'обычно отвечаю быстро', href:linkOf(TELEGRAM,'https://t.me/'), goal:'click_telegram'},
+  {t:'WhatsApp',  sub:'обычно отвечаю быстро', href:WHATSAPP?('https://wa.me/'+WHATSAPP.replace(/\D/g,'').replace(/^8(?=\d{10}$)/,'7')):'', goal:'click_whatsapp'},
+  {t:'MAX',       sub:'написать в мессенджер', href:linkOf(MAXLINK,'https://max.ru/')},
+  {t:'ВКонтакте', sub:'страница и сообщения',  href:linkOf(VK,'https://vk.com/')},
+  {t:'Instagram', sub:'примеры и новости',     href:linkOf(INSTAGRAM,'https://instagram.com/')},
+  {t:'Почта',     sub:EMAIL,                   href:'mailto:'+EMAIL, goal:'click_email'}
+];
+var direct=document.getElementById('direct'), socials=document.getElementById('socials');
+CONTACTS.forEach(function(c){
+  if(!c.href) return;
+  var ext=/^https?:/i.test(c.href);
+  var hit=function(){ if(c.goal) goal(c.goal); };
+  var a=document.createElement('a'); a.href=c.href; if(ext){a.target='_blank';a.rel='noopener'}
+  a.addEventListener('click',hit);
+  var b=document.createElement('b'); b.textContent=c.label||c.t;
+  var s=document.createElement('span'); s.textContent=c.sub;
+  a.appendChild(b); a.appendChild(s); direct.appendChild(a);
+  var f=document.createElement('a'); f.href=c.href; f.textContent=c.t; if(ext){f.target='_blank';f.rel='noopener'}
+  f.addEventListener('click',hit);
+  socials.appendChild(f);
+});
+
+/* реквизиты в подвале — показываем, только если заполнены */
+if(AYKO.LEGAL){ var lg=document.getElementById('legal'); lg.textContent=AYKO.LEGAL; lg.hidden=false; }
+var sb=document.getElementById('stickyBtn'), tg=linkOf(TELEGRAM,'https://t.me/');
+if(tg){sb.href=tg;sb.target='_blank';sb.rel='noopener';sb.textContent='Написать в Telegram';sb.addEventListener('click',function(){goal('click_telegram')})}
+
+/* меню */
+var menu=document.getElementById('menu'), openB=document.getElementById('open');
+function setMenu(o){menu.classList.toggle('open',o);openB.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
+openB.addEventListener('click',function(){setMenu(true)});
+document.getElementById('close').addEventListener('click',function(){setMenu(false)});
+menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+
+/* шапка и липкая кнопка */
+var top_=document.getElementById('top'), sticky=document.getElementById('sticky');
+var hero=document.getElementById('home'), contact=document.getElementById('contact');
+function onScroll(){
+  top_.classList.toggle('stuck',window.scrollY>10);
+  var h=hero.getBoundingClientRect(), c=contact.getBoundingClientRect(), vh=window.innerHeight;
+  sticky.classList.toggle('show', h.bottom<0 && c.top>vh*0.8);
+  document.body.classList.toggle('has-sticky',sticky.classList.contains('show'));
+}
+window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+document.getElementById('y').textContent=new Date().getFullYear();
+
+/* ===== отправка заявок и чат ===== */
+var CHAT_ENDPOINT='/.netlify/functions/chat';
+var LEAD_ENDPOINT='/.netlify/functions/lead';
+
+function sendLead(data){
+  data.note=(data.note||'')+trafficNote();
+  goal('lead');
+  /* сначала пробуем Telegram через функцию, если не настроена — письмо на почту */
+  return fetch(LEAD_ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)})
+    .then(function(r){ if(!r.ok) throw new Error('lead'); goal('lead_sent'); return 'sent'; })
+    .catch(function(){
+      goal('lead_mailto');
+      var body='Имя: '+data.name+'\nКонтакт: '+data.contact+'\n\n'+(data.note||'');
+      window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent('Заявка на сайт')+'&body='+encodeURIComponent(body);
+      return 'mailto';
+    });
+}
+
+document.getElementById('form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var f=e.target, ok=document.getElementById('ok');
+  sendLead({name:f.name.value,contact:f.contact.value,note:f.text.value}).then(function(how){
+    ok.textContent = how==='sent' ? 'Спасибо! Заявка отправлена, отвечу в течение дня.' : 'Спасибо! Откроется письмо с вашей заявкой, останется нажать «Отправить».';
+    ok.classList.add('show');
+    if(how==='sent') f.reset();
+  });
+});
+
+var chat=document.getElementById('chat'), fab=document.getElementById('chatFab'), msgs=document.getElementById('msgs');
+var quick=document.getElementById('quick'), cform=document.getElementById('chatForm'), cinput=document.getElementById('chatInput'), csend=document.getElementById('chatSend');
+var history_=[], busy=false, greeted=false, leadShown=false;
+
+function addMsg(role,text){
+  var d=document.createElement('div'); d.className='m '+role; d.textContent=text;
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d;
+}
+function openChat(){
+  chat.hidden=false; fab.hidden=true; fab.setAttribute('aria-expanded','true');
+  if(!greeted) goal('chat_open');
+  if(!greeted){
+    greeted=true;
+    addMsg('bot','Здравствуйте! Я ИИ-помощник AYKO. Подскажу по ценам, срокам и работе, а если захотите, помогу оставить заявку.');
+    ['Сколько стоит сайт?','Как быстро сделаете?','Что нужно от меня?'].forEach(function(q){
+      var b=document.createElement('button'); b.type='button'; b.textContent=q;
+      b.addEventListener('click',function(){send(q)}); quick.appendChild(b);
+    });
+  }
+  cinput.focus();
+}
+function closeChat(){ chat.hidden=true; fab.hidden=false; fab.setAttribute('aria-expanded','false'); fab.focus(); }
+fab.addEventListener('click',openChat);
+document.getElementById('chatClose').addEventListener('click',closeChat);
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!chat.hidden) closeChat(); });
+
+function showLeadForm(){
+  if(leadShown) return; leadShown=true;
+  var box=document.createElement('form'); box.className='leadbox';
+  box.innerHTML='<input name="name" placeholder="Ваше имя" required autocomplete="name" aria-label="Ваше имя"><input name="contact" placeholder="Telegram, телефон или email" required aria-label="Контакт"><label class="agree"><input type="checkbox" name="agree" required><span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span></label><button class="btn hot" type="submit">Отправить заявку</button>';
+  box.addEventListener('submit',function(e){
+    e.preventDefault();
+    goal('lead_chat');
+    var note='Заявка из чата.\n\n'+history_.slice(-8).map(function(m){return (m.role==='user'?'Клиент: ':'Помощник: ')+m.content}).join('\n');
+    sendLead({name:box.name.value,contact:box.contact.value,note:note}).then(function(how){
+      box.remove();
+      addMsg('bot', how==='sent' ? 'Готово, заявка передана. С вами свяжутся в течение дня.' : 'Откроется письмо с вашей заявкой, останется нажать «Отправить».');
+    });
+  });
+  msgs.appendChild(box); msgs.scrollTop=msgs.scrollHeight;
+  box.name.focus();
+}
+
+function send(text){
+  text=(text||'').trim(); if(!text||busy) return;
+  busy=true; csend.disabled=true; quick.hidden=true;
+  goal('chat_message');
+  addMsg('me',text); history_.push({role:'user',content:text});
+  var typing=addMsg('bot typing','Печатает…');
+  fetch(CHAT_ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history_})})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){
+      typing.remove();
+      var reply=String(d.reply||''), wantsLead=reply.indexOf('[[LEAD]]')>-1;
+      reply=reply.replace('[[LEAD]]','').trim();
+      history_.push({role:'assistant',content:reply}); addMsg('bot',reply);
+      if(wantsLead) showLeadForm();
+    })
+    .catch(function(){
+      typing.remove(); history_.pop();
+      goal('chat_error');
+      addMsg('bot','Не получилось ответить. Напишите в Telegram '+(TELEGRAM?('@'+TELEGRAM.replace(/^@/,'')):'')+' или оставьте заявку в форме внизу страницы — отвечу в течение дня.');
+    })
+    .then(function(){ busy=false; csend.disabled=false; cinput.focus(); });
+}
+cform.addEventListener('submit',function(e){ e.preventDefault(); var t=cinput.value; cinput.value=''; send(t); });
+</script>
+</body>
+</html>
