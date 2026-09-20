@@ -23,10 +23,13 @@ GRADE = ("eq=contrast=1.10:saturation=1.14:gamma=1.02,"
 
 # (файл, ландшафтный?, crop_y для портрета, подпись)
 SLIDES = [
-    ("279570f4-image.jpg", True,  0, None),
-    ("86cfda5a-image.jpg", True,  0, "Канализация и отводы по периметру"),
+    ("d5ed15be-image.jpg", True,  0, None),                              # общий план
+    ("6b02ef47-image.jpg", False, 80, "Труба ложится на песчаную подсыпку"),
+    ("279570f4-image.jpg", True,  0, "Канализация Ø110 по периметру"),
+    ("9084ba7c-image.jpg", True,  0, "Отводы на каждую точку"),
     ("aa229446-image.jpg", True,  0, "Выводы заглушены до бетона"),
-    ("0b339a6d-image.jpg", False, 60, "Ввод воды с улицы"),
+    ("9c7df5f2-image.jpg", True,  0, "Ввод воды — отдельной ниткой"),
+    ("0b339a6d-image.jpg", False, 60, "Заводим с улицы"),
 ]
 N = len(SLIDES)
 
