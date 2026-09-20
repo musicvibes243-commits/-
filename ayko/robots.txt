@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /.netlify/
 
-# После подключения домена раскомментируйте и подставьте свой адрес:
-# Sitemap: https://ваш-домен.ру/sitemap.xml
+
+Sitemap: https://ayko.com.ru/sitemap.xml
