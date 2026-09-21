@@ -845,6 +845,26 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 </section>
 
 <!-- ================= СРОК СЛУЖБЫ ================= -->
+<!-- ================= ОТЗЫВ ================= -->
+<section class="otzyv" id="otzyv">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Отзыв с объекта</p>
+      <h2>Хозяин дома о нашей работе</h2>
+    </div>
+    <div class="otzyv__in">
+      <div>
+        <blockquote>«Провели монтаж котельной, обустроили фильтр, воду, расширительный бак, давление и под радиаторы. Всё вовремя сделали. Огромное спасибо, всё отлично — обращайтесь».</blockquote>
+        <p class="otzyv__who">Хозяин дома, где мы собирали котельную и тёплые полы.
+          Ролик снят на сдаче объекта и выложен с его разрешения. Со звуком — включите.</p>
+      </div>
+      <video src="assets/video/otzyv-kotelnaya.mp4"
+             poster="assets/video/otzyv-kotelnaya-poster.jpg"
+             controls playsinline preload="none"></video>
+    </div>
+  </div>
+</section>
+
 <section id="srok">
   <div class="wrap">
     <div class="head">
@@ -1164,6 +1184,19 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .calc__spec div:last-child{border-bottom:0}
   .calc__spec dt{color:var(--on-band-muted)}
   .calc__spec dd{margin:0;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+
+  /* Видеоотзыв. Вертикальный кадр с телефона, поэтому ширину ограничиваем.
+     Грузится только по нажатию: ролик со звуком весит 2,5 МБ, а половина
+     посетителей приходит с мобильного интернета. */
+  .otzyv{background:var(--surface-2)}
+  .otzyv__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);
+    gap:clamp(24px,4vw,48px);align-items:center}
+  @media (max-width:820px){.otzyv__in{grid-template-columns:1fr}}
+  .otzyv video{display:block;width:100%;border-radius:var(--r);
+    aspect-ratio:540/960;background:var(--surface);border:1px solid var(--line)}
+  .otzyv blockquote{margin:0 0 18px;font-family:"Playfair Display",Georgia,serif;
+    font-size:clamp(21px,2.4vw,28px);line-height:1.35;color:var(--ink)}
+  .otzyv__who{margin:0;font-size:14px;color:var(--muted)}
 
   /* галерея работ — ВНИМАНИЕ: почти всё отсюда перекрыто блоком
      «Галерея: две колонки, подпись прямо на фотографии» ниже в этом же файле.
