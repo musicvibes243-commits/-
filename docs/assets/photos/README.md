@@ -36,6 +36,7 @@
 | `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
 | `shchit-avtomaty-01.jpg` | `elektrika.html` | Щит в готовом доме |
+| `shchit-uzo-01.jpg` | `elektrika.html` | Защита на каждую группу |
 | `konvektor-v-polu-01.jpg` | `otoplenie.html` | Конвектор в полу |
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
 | `razvodka-karkas-01.jpg` | `otoplenie.html` | Разводка по каркасу |
