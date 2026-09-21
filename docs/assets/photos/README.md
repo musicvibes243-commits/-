@@ -32,11 +32,13 @@
 
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
-| `kollektor-tepliy-pol-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
+| `kotelnaya-obshchiy-01.jpg` | `otoplenie.html` | Котельная целиком |
+| `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
 | `shchit-avtomaty-01.jpg` | `elektrika.html` | Щит в готовом доме |
 | `konvektor-v-polu-01.jpg` | `otoplenie.html` | Конвектор в полу |
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
+| `razvodka-karkas-01.jpg` | `otoplenie.html` | Разводка по каркасу |
 | `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
 | `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
