@@ -7,12 +7,14 @@
 <meta name="description" content="Как AYKO собирает, использует и хранит персональные данные посетителей сайта.">
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0c'/%3E%3Ctext x='32' y='45' font-family='Arial Narrow,Arial' font-weight='700' font-size='38' text-anchor='middle' fill='%23c3b3ff'%3EA%3C/text%3E%3C/svg%3E">
+<!-- Шрифты Google подключены необязательно: если их сервер не ответит (а из России это бывает),
+     страница всё равно нарисуется сразу системными шрифтами, а не останется белой. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" media="print" onload="this.media='all';this.onload=null">
 <style>
 :root{--bg:#0a0a0c;--bg-2:#131317;--line:#26262d;--text:#f4f3f0;--muted:#a4a3ad;--violet:#8b6cff;--lilac:#c3b3ff;
-  --head:'Oswald','Arial Narrow',Impact,sans-serif;--body:'Manrope',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+  --head:'Oswald','Arial Narrow','Helvetica Neue Condensed',Impact,'Segoe UI',sans-serif;--body:'Manrope',system-ui,-apple-system,'Segoe UI Variable','Segoe UI',Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
 a{color:var(--lilac)}

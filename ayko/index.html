@@ -52,9 +52,11 @@ window.AYKO = {
 </script>
 
 <link rel="preconnect" href="https://mc.yandex.ru">
+<!-- Шрифты Google подключены необязательно: если их сервер не ответит (а из России это бывает),
+     страница всё равно нарисуется сразу системными шрифтами, а не останется белой. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" media="print" onload="this.media='all';this.onload=null">
 <style>
 :root{
   --bg:#0a0a0c;
@@ -66,8 +68,8 @@ window.AYKO = {
   --violet:#8b6cff;
   --lilac:#c3b3ff;
   --pink:#ee4fa6;
-  --head:'Oswald','Arial Narrow',Impact,sans-serif;
-  --body:'Manrope',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --head:'Oswald','Arial Narrow','Helvetica Neue Condensed',Impact,'Segoe UI',sans-serif;
+  --body:'Manrope',system-ui,-apple-system,'Segoe UI Variable','Segoe UI',Roboto,Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
