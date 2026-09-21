@@ -256,6 +256,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .step:hover{transform:translateY(-3px)}
 
 /* --- галерея: две колонки, подпись прямо на фотографии (как на главной) --- */
+/* Ролик с объекта. Вертикальный кадр с телефона, поэтому ограничиваем
+   ширину — иначе на компьютере он растянется во весь экран. */
+.clip-sec{background:var(--surface-2)}
+.objvideo{display:block;width:min(340px,100%);margin:0 auto;border-radius:var(--r);
+  aspect-ratio:464/848;background:var(--surface);border:1px solid var(--line)}
+
 .works{background:var(--surface-2)}
 .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0}
 @media (max-width:700px){.gallery{grid-template-columns:1fr}}
