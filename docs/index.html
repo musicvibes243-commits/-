@@ -857,6 +857,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
         <blockquote>«Провели монтаж котельной, обустроили фильтр, воду, расширительный бак, давление и под радиаторы. Всё вовремя сделали. Огромное спасибо, всё отлично — обращайтесь».</blockquote>
         <p class="otzyv__who">Хозяин дома, где мы собирали котельную и тёплые полы.
           Ролик снят на сдаче объекта и выложен с его разрешения. Со звуком — включите.</p>
+        <p class="otzyv__more">
+          <a href="https://yandex.ru/profile/56729157328?tab=reviews" target="_blank" rel="noopener nofollow">
+            Отзывы о нас в Яндекс Картах
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+        </p>
       </div>
       <video src="assets/video/otzyv-kotelnaya.mp4"
              poster="assets/video/otzyv-kotelnaya-poster.jpg"
@@ -1197,6 +1203,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .otzyv blockquote{margin:0 0 18px;font-family:"Playfair Display",Georgia,serif;
     font-size:clamp(21px,2.4vw,28px);line-height:1.35;color:var(--ink)}
   .otzyv__who{margin:0;font-size:14px;color:var(--muted)}
+  .otzyv__more{margin:18px 0 0}
+  .otzyv__more a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;
+    color:var(--brand-text);text-decoration:none;border-bottom:1px solid transparent;
+    transition:border-color .16s ease}
+  .otzyv__more a:hover{border-bottom-color:var(--brand-text)}
+  .otzyv__more svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round}
 
   /* галерея работ — ВНИМАНИЕ: почти всё отсюда перекрыто блоком
      «Галерея: две колонки, подпись прямо на фотографии» ниже в этом же файле.
@@ -1976,6 +1989,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   "url": "https://stroyinvest-mo.ru/",
   "image": "https://stroyinvest-mo.ru/og.png",
   "telephone": "+7 (915) 346-97-28",
+  "sameAs": ["https://yandex.ru/profile/56729157328"],
   "paymentAccepted": "Наличные, перевод на расчётный счёт",
   "currenciesAccepted": "RUB",
   "areaServed": [
