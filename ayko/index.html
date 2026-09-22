@@ -23,7 +23,8 @@ window.AYKO = {
   METRIKA_ID: "112847545",   /* номер счётчика Яндекс.Метрики. Пусто — счётчик не грузится */
   SITE_URL:   "https://aykoweb.ru",   /* адрес сайта. Пусто — берётся текущий адрес */
   PHONE:      "",   /* телефон для звонка, например "+7 977 556-76-01". Пусто — блок скрыт */
-  LEGAL:      "Кузовкина Орозайым Талипжановна, ИНН 502990764858"    /* реквизиты в подвале сайта */
+  LEGAL:      "Кузовкина Орозайым Талипжановна, ИНН 502990764858",   /* реквизиты в подвале сайта */
+  CHAT:       false   /* кнопка ИИ-помощника. false — кнопки нет. Включать, когда на Netlify задан ANTHROPIC_API_KEY */
 };
 (function(){
   /* canonical и og:url — по настоящему адресу страницы */
@@ -760,6 +761,10 @@ document.getElementById('form').addEventListener('submit',function(e){
   });
 });
 
+if (!AYKO.CHAT) {
+  /* Помощник выключен: убираем кнопку и окно со страницы, чтобы никто не нажал вхолостую. */
+  ['chatFab','chat'].forEach(function(id){ var el=document.getElementById(id); if(el) el.remove(); });
+} else {
 var chat=document.getElementById('chat'), fab=document.getElementById('chatFab'), msgs=document.getElementById('msgs');
 var quick=document.getElementById('quick'), cform=document.getElementById('chatForm'), cinput=document.getElementById('chatInput'), csend=document.getElementById('chatSend');
 var history_=[], busy=false, greeted=false, leadShown=false;
@@ -826,6 +831,7 @@ function send(text){
     .then(function(){ busy=false; csend.disabled=false; cinput.focus(); });
 }
 cform.addEventListener('submit',function(e){ e.preventDefault(); var t=cinput.value; cinput.value=''; send(t); });
+}
 </script>
 </body>
 </html>
