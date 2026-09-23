@@ -88,6 +88,13 @@ header.top.stuck{border-color:var(--line)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .logo{font-family:var(--head);font-weight:700;font-size:30px;letter-spacing:.04em;line-height:1}
 header.top .top-cta{display:none}
+/* кнопка звонка: на телефоне кружок у бургера, на компьютере — номер текстом */
+.callbtn{display:none;align-items:center;justify-content:center;gap:9px;width:48px;height:48px;flex:none;border-radius:50%;border:1px solid #3a3a44;color:var(--text);text-decoration:none}
+.callbtn.on{display:inline-flex}
+.callbtn:hover{background:rgba(255,255,255,.06)}
+.callbtn svg{width:20px;height:20px;fill:currentColor;flex:none}
+.callbtn .tx{display:none;font-weight:700;font-size:15px;white-space:nowrap}
+@media (max-width:959px){.callbtn{margin-left:auto}}
 .nav-d{display:none;gap:28px;font-size:15px;color:var(--muted)}
 .nav-d a:hover{color:var(--text)}
 .burger{width:48px;height:48px;border-radius:50%;border:1px solid #3a3a44;background:transparent;display:grid;place-content:center;gap:6px;cursor:pointer}
@@ -96,6 +103,8 @@ header.top .top-cta{display:none}
   .nav-d{display:flex}
   header.top .top-cta{display:inline-flex}
   .burger{display:none}
+  .callbtn{width:auto;height:auto;min-height:44px;padding:10px 20px;border-radius:999px}
+  .callbtn .tx{display:inline}
 }
 
 /* ---------- menu ---------- */
@@ -262,9 +271,14 @@ footer{border-top:1px solid var(--line);padding:28px 0 96px;color:var(--muted);f
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 /* sticky mobile CTA */
-.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:25;transform:translateY(140%);transition:transform .35s}
+.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:25;display:flex;gap:10px;transform:translateY(140%);transition:transform .35s}
 .sticky.show{transform:none}
-.sticky .btn{width:100%}
+.sticky .btn{flex:1 1 0;min-width:0;width:auto;padding:16px 14px;font-size:15px;gap:8px}
+.sticky .btn svg{width:18px;height:18px;fill:currentColor;flex:none}
+.sticky .btn[hidden]{display:none}
+/* в липкой панели фон обязателен: под ней едет текст страницы */
+.sticky .btn.ghost{background:rgba(14,14,18,.92);backdrop-filter:blur(10px);border-color:#4a4a56}
+.sticky .btn.ghost:hover{background:rgba(30,30,38,.95)}
 @media (min-width:960px){.sticky{display:none}}
 
 @media (max-width:959px){
@@ -355,6 +369,7 @@ body.has-sticky .chat-fab{bottom:82px}
     <nav class="nav-d" aria-label="Разделы">
       <a href="#works">Работы</a><a href="#offer">Цена</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
     </nav>
+    <a class="callbtn" id="callTop" href="#" aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg><span class="tx"></span></a>
     <a class="btn hot sm top-cta" href="#contact">Обсудить сайт</a>
     <button class="burger" id="open" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
   </div>
@@ -575,7 +590,10 @@ body.has-sticky .chat-fab{bottom:82px}
   <form class="composer" id="chatForm"><label for="chatInput" style="position:absolute;left:-9999px">Ваш вопрос</label><input id="chatInput" placeholder="Напишите вопрос" maxlength="600" autocomplete="off"><button id="chatSend" aria-label="Отправить" type="submit">↑</button></form>
 </section>
 
-<div class="sticky" id="sticky"><a class="btn hot" id="stickyBtn" href="#contact">Обсудить сайт</a></div>
+<div class="sticky" id="sticky">
+  <a class="btn hot" id="callSticky" href="#" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg>Позвонить</a>
+  <a class="btn ghost" id="stickyBtn" href="#contact">Обсудить сайт</a>
+</div>
 
 <script>
 /* ===== НАСТРОЙКИ: поменяйте на свои ===== */
@@ -710,7 +728,18 @@ CONTACTS.forEach(function(c){
 /* реквизиты в подвале — показываем, только если заполнены */
 if(AYKO.LEGAL){ var lg=document.getElementById('legal'); lg.textContent=AYKO.LEGAL; lg.hidden=false; }
 var sb=document.getElementById('stickyBtn'), tg=linkOf(TELEGRAM,'https://t.me/');
-if(tg){sb.href=tg;sb.target='_blank';sb.rel='noopener';sb.textContent='Написать в Telegram';sb.addEventListener('click',function(){goal('click_telegram')})}
+if(tg){sb.href=tg;sb.target='_blank';sb.rel='noopener';sb.textContent='Telegram';sb.addEventListener('click',function(){goal('click_telegram')})}
+
+/* кнопки «Позвонить» — появляются, только если заполнен AYKO.PHONE */
+(function(){
+  var tel = AYKO.PHONE ? 'tel:' + AYKO.PHONE.replace(/[^\d+]/g,'') : '';
+  var top_call = document.getElementById('callTop'), st_call = document.getElementById('callSticky');
+  if(!tel){ top_call.remove(); st_call.remove(); return; }
+  top_call.href = tel; top_call.classList.add('on');
+  top_call.querySelector('.tx').textContent = AYKO.PHONE;
+  st_call.href = tel; st_call.hidden = false;
+  [top_call, st_call].forEach(function(el){ el.addEventListener('click', function(){ goal('click_phone') }); });
+})();
 
 /* меню */
 var menu=document.getElementById('menu'), openB=document.getElementById('open');
