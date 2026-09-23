@@ -358,7 +358,18 @@ body.has-sticky .chat-fab{bottom:82px}
 .socials a:hover{color:var(--text)}
 
 .shot .phonewrap{position:absolute;inset:0;display:flex;justify-content:center;align-items:center}
-.shot .phonewrap img{width:auto;height:92%;border-radius:22px;border:5px solid #0c0c10;box-shadow:0 22px 50px rgba(0,0,0,.5);object-fit:cover;object-position:top}
+/* Телефон, внутри которого страница листается: рамка фиксированной высоты, картинка во всю ширину. */
+.shot .screen{position:relative;height:92%;aspect-ratio:9/16;max-width:100%;border-radius:22px;border:5px solid #0c0c10;background:#0c0c10;box-shadow:0 22px 50px rgba(0,0,0,.5);overflow:hidden}
+.shot .scroll{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.shot .scroll::-webkit-scrollbar{width:0;height:0}
+.shot .scroll img{display:block;width:100%;height:auto;min-height:100%;object-fit:cover;object-position:top center}
+/* подсказка появляется, только если внутри рамки правда есть что листать */
+.scrollhint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;pointer-events:none;
+  padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;
+  background:rgba(10,10,12,.82);backdrop-filter:blur(8px);border:1px solid #3a3a44;color:var(--text);
+  transition:opacity .3s}
+.scrollhint[hidden]{display:none}
+.scrollhint.gone{opacity:0}
 </style>
 </head>
 <body>
@@ -446,7 +457,12 @@ body.has-sticky .chat-fab{bottom:82px}
       <div class="view" aria-live="polite">
         <div class="shot" id="shot">
           <img id="sImg" alt="" loading="lazy" decoding="async" hidden>
-          <div class="phonewrap" id="phoneWrap" hidden><img id="phoneImg" loading="lazy" decoding="async" alt=""></div>
+          <div class="phonewrap" id="phoneWrap" hidden>
+            <div class="screen">
+              <div class="scroll" id="phoneScroll" tabindex="0"><img id="phoneImg" loading="lazy" decoding="async" alt=""></div>
+              <span class="scrollhint" id="scrollHint" hidden>Листайте ↕</span>
+            </div>
+          </div>
           <div class="fake" id="fake">
             <div class="nav"><span id="sNav1"></span><span id="sNav2"></span></div>
             <div class="big" id="sBig"></div>
@@ -654,13 +670,25 @@ function trafficNote(){
 document.querySelectorAll('img[data-shot]').forEach(function(im){im.src=IMG[im.dataset.shot]});
 
 var list=document.getElementById('plist');
+
+/* Подсказка «Листайте» — показываем, только если картинка выше рамки. */
+var scrollBox=document.getElementById('phoneScroll'), hint=document.getElementById('scrollHint');
+function setHint(){
+  scrollBox.scrollTop=0; hint.classList.remove('gone');
+  var img=document.getElementById('phoneImg');
+  var check=function(){ hint.hidden = scrollBox.scrollHeight - scrollBox.clientHeight < 40; };
+  if(img.complete) check(); else img.addEventListener('load',check,{once:true});
+}
+scrollBox.addEventListener('scroll',function(){ if(scrollBox.scrollTop>20) hint.classList.add('gone'); },{passive:true});
+
 function show(i){
   var p=PROJECTS[i], s=document.getElementById('shot'), im=document.getElementById('sImg'), fk=document.getElementById('fake');
   var pw=document.getElementById('phoneWrap'), pi=document.getElementById('phoneImg');
   pw.hidden=!p.phone;
   if(p.phone){
-    s.style.background=p.bg; pi.src=IMG[p.phone]; pi.alt='Главный экран сайта «'+p.title+'» на телефоне';
+    s.style.background=p.bg; pi.src=IMG[p.phone]; pi.alt='Сайт «'+p.title+'» на телефоне';
     im.hidden=true; fk.hidden=true;
+    setHint();
   }else if(p.shot){
     im.src=IMG[p.shot]; im.alt='Главный экран сайта: '+p.title; im.hidden=false; fk.hidden=true;
   }else{
