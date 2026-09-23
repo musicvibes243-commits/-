@@ -22,7 +22,7 @@
 window.AYKO = {
   METRIKA_ID: "112847545",   /* номер счётчика Яндекс.Метрики. Пусто — счётчик не грузится */
   SITE_URL:   "https://aykoweb.ru",   /* адрес сайта. Пусто — берётся текущий адрес */
-  PHONE:      "",   /* телефон для звонка, например "+7 977 556-76-01". Пусто — блок скрыт */
+  PHONE:      "+7 977 556-76-01",   /* телефон для звонка. Пусто — блок скрыт */
   LEGAL:      "Кузовкина Орозайым Талипжановна, ИНН 502990764858",   /* реквизиты в подвале сайта */
   CHAT:       false   /* кнопка ИИ-помощника. false — кнопки нет. Включать, когда на Netlify задан ANTHROPIC_API_KEY */
 };
@@ -684,7 +684,7 @@ if(REVIEWS.length){
 /* контакты и соцсети */
 function linkOf(v,base){ v=(v||'').trim(); if(!v) return ''; return /^https?:\/\//i.test(v) ? v : base+v.replace(/^@/,''); }
 var CONTACTS=[
-  {t:'Телефон',   sub:'звонок или сообщение',  href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', label:AYKO.PHONE, goal:'click_phone'},
+  {t:'Телефон',   sub:AYKO.PHONE,              href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', goal:'click_phone'},
   {t:'Telegram',  sub:'обычно отвечаю быстро', href:linkOf(TELEGRAM,'https://t.me/'), goal:'click_telegram'},
   {t:'WhatsApp',  sub:'обычно отвечаю быстро', href:WHATSAPP?('https://wa.me/'+WHATSAPP.replace(/\D/g,'').replace(/^8(?=\d{10}$)/,'7')):'', goal:'click_whatsapp'},
   {t:'MAX',       sub:'написать в мессенджер', href:linkOf(MAXLINK,'https://max.ru/')},
