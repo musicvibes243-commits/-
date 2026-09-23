@@ -600,7 +600,7 @@ body.has-sticky .chat-fab{bottom:82px}
 var EMAIL = "damka9093@gmail.com";   // куда придут заявки из формы
 var TELEGRAM = "AYKO_MO";               // ник в Telegram, например "ayko_web" (можно и с @)
 var WHATSAPP = "79775567601";               // номер для WhatsApp цифрами, например "79001234567"
-var MAXLINK = "";                // ссылка на ваш профиль в MAX, например "https://max.ru/…"
+var MAXLINK = "https://max.ru/u/f9LHodD0cOLliiFN_RBjwiS8U_p0_-CeF-5g1fUSFq-XmHV_quYYhTjVNoc";   // ссылка на профиль в MAX
 var VK = "";                     // ссылка или короткое имя, например "vk.com/ayko" или "ayko"
 var INSTAGRAM = "";              // ник без @, например "ayko.web"
 var REVIEWS = [];                // отзывы: [{text:"…", who:"Имя, бизнес"}]. Пока пусто — блок скрыт
@@ -705,7 +705,7 @@ var CONTACTS=[
   {t:'Телефон',   sub:AYKO.PHONE,              href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', goal:'click_phone'},
   {t:'Telegram',  sub:'обычно отвечаю быстро', href:linkOf(TELEGRAM,'https://t.me/'), goal:'click_telegram'},
   {t:'WhatsApp',  sub:'обычно отвечаю быстро', href:WHATSAPP?('https://wa.me/'+WHATSAPP.replace(/\D/g,'').replace(/^8(?=\d{10}$)/,'7')):'', goal:'click_whatsapp'},
-  {t:'MAX',       sub:'написать в мессенджер', href:linkOf(MAXLINK,'https://max.ru/')},
+  {t:'MAX',       sub:'написать в мессенджер', href:linkOf(MAXLINK,'https://max.ru/'), goal:'click_max'},
   {t:'ВКонтакте', sub:'страница и сообщения',  href:linkOf(VK,'https://vk.com/')},
   {t:'Instagram', sub:'примеры и новости',     href:linkOf(INSTAGRAM,'https://instagram.com/')},
   {t:'Почта',     sub:EMAIL,                   href:'mailto:'+EMAIL, goal:'click_email'}
