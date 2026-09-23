@@ -28,10 +28,15 @@
 
 ### Фотографии для страниц услуг
 
-Эти снимки стоят не на главной, а на отдельных страницах направлений:
+Эти снимки стоят на отдельных страницах направлений. Часть из них
+показывается ещё и на главной — так и помечено в таблице: одна и та же
+работа уместна и там, и там.
 
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
+| `kesson-skvazhina-01.jpg` | `vodosnabzhenie.html` + главная | Кессон над скважиной |
+| `kesson-oborudovanie-01.jpg` | `vodosnabzhenie.html` + главная | Автоматика в кессоне |
+| `vodosnabzhenie-uzel-01.jpg` | `vodosnabzhenie.html` + главная | Узел ввода в доме |
 | `kotelnaya-obshchiy-01.jpg` | `otoplenie.html` | Котельная целиком |
 | `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
@@ -40,9 +45,9 @@
 | `razvodka-komnata-01.jpg` | `elektrika.html` | Всё разведено до стяжки |
 | `konvektor-v-polu-01.jpg` | `otoplenie.html` | Конвектор в полу |
 | `radiator-montazh-02.jpg` | `otoplenie.html` | Радиатор с подводкой из пола |
-| `razvodka-karkas-01.jpg` | `otoplenie.html` | Разводка по каркасу |
-| `boiler-ariston-01.jpg` | `otoplenie.html` | Водонагреватель с обвязкой |
-| `razvodka-sanuzel-01.jpg` | `otoplenie.html` | Разводка в санузле |
+| `razvodka-karkas-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Разводка по каркасу |
+| `boiler-ariston-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Водонагреватель с обвязкой |
+| `razvodka-sanuzel-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Разводка в санузле |
 | `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
 | `avtopoliv-forsunka-01.jpg` | `avtopoliv.html` | Форсунка в газоне |
 | `avtopoliv-nasosnaya-01.jpg` | `avtopoliv.html` | Насосная станция полива |
