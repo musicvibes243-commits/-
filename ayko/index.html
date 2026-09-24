@@ -294,6 +294,41 @@ textarea{min-height:120px;resize:vertical}
 footer{border-top:1px solid var(--line);padding:28px 0 96px;color:var(--muted);font-size:15px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
+/* ---------- Telegram-боты ---------- */
+.bots{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.bots>*{min-width:0}
+.bots h2{font-size:clamp(40px,5vw,66px)}
+.bot-feats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:30px}
+.bot-feats div{border:1px solid var(--line);border-radius:20px;padding:20px 22px;background:var(--bg-2)}
+.bot-feats b{display:block;font-family:var(--head);text-transform:uppercase;font-size:19px;line-height:1.15;margin-bottom:6px;font-weight:700}
+.bot-feats p{color:var(--muted);font-size:15px;line-height:1.5}
+.bot-price{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+.bot-price .p{font-family:var(--head);font-size:34px;font-weight:700;line-height:1}
+.bot-price .p small{display:block;font-family:var(--body);font-size:14px;font-weight:400;color:var(--muted);margin-top:6px}
+.tg{border:1px solid var(--line);border-radius:26px;background:#141419;overflow:hidden;position:sticky;top:96px}
+.tg-h{display:flex;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:#1a1a21}
+.tg-av{width:40px;height:40px;flex:none;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--pink));display:grid;place-content:center;font-family:var(--head);font-weight:700;font-size:18px}
+.tg-h b{display:block;font-size:15px;line-height:1.3}
+.tg-h span{font-size:12px;color:var(--lilac)}
+.tg-b{padding:18px 16px;display:flex;flex-direction:column;gap:8px}
+.tg-m{max-width:84%;padding:9px 13px;border-radius:16px;font-size:14.5px;line-height:1.4}
+.tg-m.bot{background:#25252e;border-bottom-left-radius:6px;align-self:flex-start}
+.tg-m.me{background:linear-gradient(120deg,#6f55e6,#b8479a);border-bottom-right-radius:6px;align-self:flex-end}
+.tg-k{display:flex;flex-wrap:wrap;gap:6px;max-width:94%}
+.tg-k span{padding:7px 12px;border-radius:10px;background:rgba(139,108,255,.13);border:1px solid rgba(139,108,255,.35);font-size:13px;color:var(--lilac)}
+.tg-arrow{text-align:center;color:var(--lilac);font-size:13px;font-weight:700;padding:12px 10px;border-top:1px dashed #33333c}
+.sheet{margin:0 14px 14px;border-radius:14px;background:#f6f7f9;color:#1f2328;overflow:hidden;font-size:12.5px}
+.sheet-h{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;background:#e3f2e7;color:#137333;font-weight:700}
+.sheet table{width:100%;border-collapse:collapse}
+.sheet th,.sheet td{padding:6px 10px;border-top:1px solid #dde1e6;text-align:left;white-space:nowrap;vertical-align:middle}
+.sheet th{color:#5f6368;font-weight:600;background:#eef0f3}
+.sheet tr.new td{background:#fff1c7;font-weight:600}
+.sheet .tag{display:inline-block;margin-left:4px;padding:0 6px;border-radius:6px;background:#f4b400;color:#fff;font-size:10.5px;line-height:17px;font-weight:700;vertical-align:middle}
+.tg-note{font-size:12px;color:var(--muted);text-align:center;padding:0 14px 14px}
+@media (max-width:959px){.bots{grid-template-columns:1fr;gap:36px}.tg{position:static}}
+@media (max-width:600px){.bot-feats{grid-template-columns:1fr}}
+@media (max-width:400px){.sheet th,.sheet td{padding:6px 7px}.sheet{font-size:11.5px}}
+
 /* sticky mobile CTA */
 .sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:25;display:flex;gap:10px;transform:translateY(140%);transition:transform .35s}
 .sticky.show{transform:none}
@@ -402,7 +437,7 @@ body.has-sticky .chat-fab{bottom:82px}
   <div class="wrap">
     <a href="#home" class="logo">AYKO</a>
     <nav class="nav-d" aria-label="Разделы">
-      <a href="#works">Работы</a><a href="#offer">Цена</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
+      <a href="#works">Работы</a><a href="#offer">Цена</a><a href="#bots">Боты</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
     </nav>
     <a class="callbtn" id="callTop" href="#" aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg><span class="tx"></span></a>
     <a class="btn hot sm top-cta" href="#contact"><span class="cta-d">Обсудить сайт</span><span class="cta-m">Заявка</span></a>
@@ -420,6 +455,7 @@ body.has-sticky .chat-fab{bottom:82px}
       <a href="#home">Главная</a>
       <a href="#works">Работы</a>
       <a href="#offer">Цена</a>
+      <a href="#bots">Telegram-боты</a>
       <a href="#process">Как работаю</a>
       <a href="#faq">Вопросы</a>
       <a href="#contact">Связаться</a>
@@ -562,6 +598,51 @@ body.has-sticky .chat-fab{bottom:82px}
         <div class="cmp-r" role="row"><b role="rowheader">Цена</b><span role="cell" data-l="Шаблон">Обычно ниже</span><span class="us" role="cell" data-l="AYKO">15 000 ₽, фиксированно</span></div>
       </div>
       <p class="cmp-note">Шаблон подойдёт, если бюджет совсем небольшой и вы готовы разбираться сами. Если важно выделиться среди конкурентов и не тратить время на настройку, лучше сайт под ваш бизнес.</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="bots">
+  <div class="wrap bots">
+    <div>
+      <div class="eyebrow">Telegram-боты</div>
+      <h2>Бот, который берёт рутину на себя</h2>
+      <p class="intro">Клиент пишет в Telegram, и бот сам принимает заявку, записывает и отвечает на вопросы. Администратору не нужно переписывать заявки вручную.</p>
+      <div class="bot-feats">
+        <div><b>Заявка без анкеты</b><p>Клиенту не нужно ничего заполнять: бот задаёт вопросы по одному, а ответ выбирается кнопкой.</p></div>
+        <div><b>Сразу в таблицу</b><p>Каждая заявка сама появляется строкой в Google Таблице: имя, телефон, услуга, дата. Ничего не нужно переносить руками.</p></div>
+        <div><b>Уведомление вам</b><p>О новой заявке бот сразу пишет вам или администратору, чтобы вы успели перезвонить.</p></div>
+        <div><b>Запись на время</b><p>Клиент выбирает услугу, день и свободное время, а бот заносит запись в таблицу.</p></div>
+        <div><b>Ответы на частые вопросы</b><p>Цены, адрес, график работы: бот отвечает сам, в любое время суток.</p></div>
+        <div><b>Под ваши задачи</b><p>Нужна другая функция? Расскажите, какую работу администратор делает руками, и подумаем, что можно поручить боту.</p></div>
+      </div>
+      <div class="bot-price">
+        <div class="p">от 10 000 ₽<small>точную цену назову после разговора</small></div>
+        <a class="btn hot" href="#contact" data-topic="Нужен Telegram-бот: ">Обсудить бота</a>
+      </div>
+    </div>
+    <div class="tg" aria-hidden="true">
+      <div class="tg-h"><div class="tg-av">A</div><div><b>Запись в студию</b><span>бот</span></div></div>
+      <div class="tg-b">
+        <div class="tg-m bot">Здравствуйте! На какую услугу вас записать?</div>
+        <div class="tg-k"><span>Стрижка</span><span>Окрашивание</span><span>Маникюр</span></div>
+        <div class="tg-m me">Маникюр</div>
+        <div class="tg-m bot">Выберите удобное время в субботу</div>
+        <div class="tg-k"><span>10:00</span><span>12:00</span><span>15:30</span></div>
+        <div class="tg-m me">12:00</div>
+        <div class="tg-m bot">Готово! Вы записаны на субботу, 12:00. Администратор подтвердит запись.</div>
+      </div>
+      <div class="tg-arrow">↓ заявка сама попадает в таблицу</div>
+      <div class="sheet">
+        <div class="sheet-h"><span>Заявки <span class="tag">+1 новая</span></span><span>Google Таблица</span></div>
+        <table>
+          <tr><th>Имя</th><th>Услуга</th><th>Когда</th></tr>
+          <tr><td>Анна</td><td>Стрижка</td><td>пт, 17:00</td></tr>
+          <tr><td>Ольга</td><td>Окрашивание</td><td>сб, 10:00</td></tr>
+          <tr class="new"><td>Мария</td><td>Маникюр</td><td>сб, 12:00</td></tr>
+        </table>
+      </div>
+      <div class="tg-note">Пример: так бот может работать у студии красоты</div>
     </div>
   </div>
 </section>
@@ -849,6 +930,11 @@ function sendLead(data){
       return 'mailto';
     });
 }
+
+/* кнопки с темой (например, «Обсудить бота») подставляют её в пустое поле формы */
+document.querySelectorAll('[data-topic]').forEach(function(a){
+  a.addEventListener('click',function(){ var t=document.getElementById('f-text'); if(t && !t.value.trim()) t.value=a.dataset.topic; goal('click_bot'); });
+});
 
 document.getElementById('form').addEventListener('submit',function(e){
   e.preventDefault();
