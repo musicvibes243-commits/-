@@ -285,3 +285,24 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   font-size:clamp(19px,2vw,26px);font-weight:700;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.5)}
 .shot__cap i{display:block;font-style:normal;font-size:13.5px;line-height:1.4;
   color:rgba(255,255,255,.82);margin-top:5px}
+
+/* Акция: крупная цена со скидкой на странице направления.
+   Красный здесь сознательно вне палитры сайта — так просил владелец,
+   и для скидки это привычный людям цвет. Оттенок подобран так, чтобы
+   на тёмном фоне контраст крупного текста проходил по доступности. */
+.promo-sec{background:var(--surface-2);--sale:#F2604A}
+.promo{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;
+  border:1px solid var(--line);border-radius:var(--r);
+  background:var(--surface);padding:22px}
+.promo__badge{margin:0;flex:none;font-weight:700;font-size:20px;line-height:1;
+  color:#2A1B02;background:var(--sale);border-radius:100px;padding:10px 16px}
+.promo__prices{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.promo__old{color:var(--muted);font-size:20px;text-decoration-thickness:2px}
+.promo__new{color:var(--sale);font-size:40px;line-height:1;font-weight:700}
+.promo__unit{color:var(--ink-2);font-size:16px}
+.promo__note{margin:0;flex:1 1 320px;color:var(--muted);font-size:14px;line-height:1.5}
+@media (max-width:700px){
+  .promo{padding:18px}
+  .promo__new{font-size:34px}
+  .promo__note{flex-basis:100%}
+}
