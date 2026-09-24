@@ -21,7 +21,7 @@
 <script>
 window.AYKO = {
   METRIKA_ID: "112847545",   /* номер счётчика Яндекс.Метрики. Пусто — счётчик не грузится */
-  SITE_URL:   "https://www.aykoweb.ru",   /* адрес сайта. Пусто — берётся текущий адрес */
+  SITE_URL:   "https://aykoweb.ru",   /* адрес сайта. Пусто — берётся текущий адрес */
   PHONE:      "+7 977 556-76-01",   /* телефон для звонка. Пусто — блок скрыт */
   LEGAL:      "Кузовкина Орозайым Талипжановна, ИНН 502990764858",   /* реквизиты в подвале сайта */
   CHAT:       false   /* кнопка ИИ-помощника. false — кнопки нет. Включать, когда на Netlify задан ANTHROPIC_API_KEY */
@@ -814,7 +814,9 @@ document.getElementById('y').textContent=new Date().getFullYear();
 
 /* ===== отправка заявок и чат ===== */
 var CHAT_ENDPOINT='/.netlify/functions/chat';
-var LEAD_ENDPOINT='/.netlify/functions/lead';
+/* Сайт лежит на российском хостинге, а форма по-прежнему работает через Netlify:
+   адрес *.netlify.app мобильные операторы пропускают. */
+var LEAD_ENDPOINT='https://brilliant-daifuku-363686.netlify.app/.netlify/functions/lead';
 
 function sendLead(data){
   data.note=(data.note||'')+trafficNote();

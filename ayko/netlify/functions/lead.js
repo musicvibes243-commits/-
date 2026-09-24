@@ -2,13 +2,24 @@
 // Нужны переменные окружения TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.
 // Без них функция отвечает 501, и сайт откроет письмо на вашу почту.
 
+// Сам сайт живёт на aykoweb.ru (российский хостинг), а эта функция — на Netlify,
+// поэтому разрешаем запросы только с этих адресов.
+const ALLOWED = ['https://aykoweb.ru', 'https://www.aykoweb.ru', 'https://brilliant-daifuku-363686.netlify.app'];
+
+let cors = {};
 const json = (statusCode, obj) => ({
   statusCode,
-  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  headers: { 'Content-Type': 'application/json; charset=utf-8', ...cors },
   body: JSON.stringify(obj),
 });
 
 exports.handler = async (event) => {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  cors = ALLOWED.includes(origin)
+    ? { 'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'content-type', 'Vary': 'Origin' }
+    : {};
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: cors, body: '' };
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chat = process.env.TELEGRAM_CHAT_ID;

@@ -102,7 +102,7 @@
 
 1. Получите ключ на `console.anthropic.com`, поставьте там лимит расходов.
 2. На Netlify: **Project configuration → Environment variables** → добавьте `ANTHROPIC_API_KEY` со значением ключа
-   и `ALLOWED_ORIGIN` = `https://www.aykoweb.ru` — без второй переменной чужой сайт сможет тратить ваш баланс.
+   и `ALLOWED_ORIGIN` = `https://aykoweb.ru` — без второй переменной чужой сайт сможет тратить ваш баланс.
 3. В `index.html` поменяйте `CHAT: false` на `CHAT: true`.
 4. Верните в `privacy.html` упоминания чата — что именно, написано в комментарии в начале того файла.
 5. Опубликуйте сайт заново и проверьте: откройте чат и задайте вопрос про цену.
