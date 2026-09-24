@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Всегда https и без www. Делаем здесь, а не в .htaccess: за прокси хостинга правило в .htaccess легко зацикливается. -->
+<script>if(/(^|\.)aykoweb\.ru$/.test(location.hostname)&&(location.protocol==='http:'||location.hostname!=='aykoweb.ru'))location.replace('https://aykoweb.ru'+location.pathname+location.search+location.hash)</script>
 <title>Политика конфиденциальности — AYKO</title>
 <meta name="description" content="Как AYKO собирает, использует и хранит персональные данные посетителей сайта.">
 <meta name="robots" content="noindex, follow">

@@ -103,8 +103,10 @@ IP-адреса у www и у netlify.app одни и те же, значит, Т
 - форма шлёт заявку на `https://brilliant-daifuku-363686.netlify.app/.netlify/functions/lead`
   (netlify.app у Теле2 открывается), в `lead.js` добавлен CORS только для
   aykoweb.ru, www и самого netlify.app;
-- `ayko/.htaccess`: www → без www, кеш картинок. Переход на https
-  там специально не делаем — включать в панели хостинга;
+- `ayko/.htaccess`: www → без www, кеш картинок. Переход на https —
+  скриптом в начале index.html и privacy.html (только для *.aykoweb.ru),
+  не в .htaccess (риск петли за прокси) и не платной услугой Timeweb
+  «Настройка защищённого соединения» за 99 ₽/мес — от неё отказались;
 - два архива: `ayko-dlya-timeweb.zip` (сайт без netlify/, netlify.toml,
   INSTRUKCIYA.md) и `ayko-dlya-netlify.zip` (ради функции lead.js).
 
