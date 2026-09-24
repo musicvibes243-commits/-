@@ -11,6 +11,6 @@ for n in ['simba', 'savva', 'septic']:
     for p in parts: im.paste(p, (0, y)); y += p.height
     # 360 px хватает: экран телефона в рамке — 112–250 px по ширине
     r = im.resize((360, round(H * 360 / W)), Image.LANCZOS)
-    path = os.path.join(OUT, n + '.jpg')
+    path = os.path.join(OUT, n + '-full.jpg')
     r.save(path, 'JPEG', quality=45, optimize=True, progressive=True)
     print(n, r.size, os.path.getsize(path) // 1024, 'KB')

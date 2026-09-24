@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 (async()=>{const b=await chromium.launch(); let ok=true; const t=(c,m)=>{console.log((c?'OK  ':'FAIL')+' '+m); if(!c) ok=false;};
 for (const [w,h] of [[1440,900],[390,844]]){
  const p=await b.newPage({viewport:{width:w,height:h}}); const loaded=[];
- p.on('response',r=>{if(/img\/(simba|savva|septic)\.jpg/.test(r.url())) loaded.push(r.url())});
+ p.on('response',r=>{if(/img\/(simba|savva|septic)-full\.jpg/.test(r.url())) loaded.push(r.url())});
  await p.goto('http://localhost:8099/ayko/',{waitUntil:'networkidle'});
  t(loaded.length===0, `${w}: снимки сайтов не грузятся при открытии страницы`);
  const btns=await p.$$('#plist > *');
