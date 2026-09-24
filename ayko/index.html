@@ -89,7 +89,18 @@ header.top{position:fixed;inset:0 0 auto 0;z-index:30;padding:14px 0;backdrop-fi
 header.top.stuck{border-color:var(--line)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .logo{font-family:var(--head);font-weight:700;font-size:30px;letter-spacing:.04em;line-height:1}
-header.top .top-cta{display:none}
+/* кнопка заявки в шапке: на телефоне короткая «Заявка» рядом с кружком звонка */
+header.top .top-cta .cta-d{display:none}
+@media (max-width:959px){
+  header.top .wrap{gap:10px}
+  header.top .top-cta{width:auto;flex:none;padding:10px 18px;min-height:48px;white-space:nowrap}
+}
+@media (max-width:359px){
+  header.top .wrap{gap:8px}
+  .logo{font-size:24px}
+  header.top .top-cta{padding:10px 12px}
+}
+.burger{flex:none}
 /* кнопка звонка: на телефоне кружок у бургера, на компьютере — номер текстом */
 .callbtn{display:none;align-items:center;justify-content:center;gap:9px;width:48px;height:48px;flex:none;border-radius:50%;border:1px solid #3a3a44;color:var(--text);text-decoration:none}
 .callbtn.on{display:inline-flex}
@@ -103,7 +114,8 @@ header.top .top-cta{display:none}
 .burger span{display:block;width:20px;height:2px;background:var(--text)}
 @media (min-width:960px){
   .nav-d{display:flex}
-  header.top .top-cta{display:inline-flex}
+  header.top .top-cta .cta-d{display:inline}
+  header.top .top-cta .cta-m{display:none}
   .burger{display:none}
   .callbtn{width:auto;height:auto;min-height:44px;padding:10px 20px;border-radius:999px}
   .callbtn .tx{display:inline}
@@ -188,6 +200,9 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 
 /* offer */
 .offer{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch}
+.offer>*,.why>*,.works>*,.about>*,.hero .wrap>*,.contact .wrap>*{min-width:0}
+/* на узком телефоне карточки цены не должны вылезать за край экрана */
+@media (max-width:400px){.deal,.more{padding:28px 22px}.deal .p{font-size:60px}.more .r{gap:4px 10px;flex-wrap:wrap}.more .r em{font-size:19px}}
 .deal{border-radius:30px;padding:40px;background:linear-gradient(155deg,#2a2160 0%,#5b3fe0 55%,#8f2bd6 100%);box-shadow:0 40px 90px rgba(80,50,200,.3);display:flex;flex-direction:column}
 .deal .k{font-size:15px;font-weight:700;opacity:.85}
 .deal .p{font-family:var(--head);font-weight:700;font-size:clamp(70px,11vw,132px);line-height:1;margin:6px 0 4px}
@@ -390,7 +405,7 @@ body.has-sticky .chat-fab{bottom:82px}
       <a href="#works">Работы</a><a href="#offer">Цена</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
     </nav>
     <a class="callbtn" id="callTop" href="#" aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg><span class="tx"></span></a>
-    <a class="btn hot sm top-cta" href="#contact">Обсудить сайт</a>
+    <a class="btn hot sm top-cta" href="#contact"><span class="cta-d">Обсудить сайт</span><span class="cta-m">Заявка</span></a>
     <button class="burger" id="open" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
   </div>
 </header>
