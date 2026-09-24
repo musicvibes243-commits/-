@@ -3,4 +3,4 @@ Allow: /
 Disallow: /.netlify/
 
 
-Sitemap: https://aykoweb.ru/sitemap.xml
+Sitemap: https://www.aykoweb.ru/sitemap.xml
