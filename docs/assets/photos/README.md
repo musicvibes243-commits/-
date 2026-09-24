@@ -34,6 +34,10 @@
 
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
+| `drenazh-geotekstil-01.jpg` | `drenazh.html` + главная | Траншея под дренаж |
+| `transhea-01.jpg` | `drenazh.html` + главная | Уклон бьём нивелиром |
+| `drenazh-truba-01.jpg` | `drenazh.html` + главная | Труба в геотекстиле |
+| `shcheben-frakciya-01.jpg` | `drenazh.html` + главная | Щебень смотрим на месте |
 | `kesson-skvazhina-01.jpg` | `vodosnabzhenie.html` + главная | Кессон над скважиной |
 | `kesson-oborudovanie-01.jpg` | `vodosnabzhenie.html` + главная | Автоматика в кессоне |
 | `vodosnabzhenie-uzel-01.jpg` | `vodosnabzhenie.html` + главная | Узел ввода в доме |
