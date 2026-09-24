@@ -170,6 +170,13 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 .intro{color:var(--muted);max-width:580px;margin-bottom:46px}
 
 /* why */
+/* «Это для вас, если» — узнавание ситуации, а не описание услуги */
+.forwho{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0 26px}
+.forwho div{border:1px solid var(--line);border-radius:20px;padding:22px 24px;background:var(--bg-2)}
+.forwho b{display:block;font-family:var(--head);text-transform:uppercase;font-size:20px;line-height:1.15;margin-bottom:8px;font-weight:700}
+.forwho p{color:var(--muted);font-size:16px}
+.fwnote{color:#dcdbe2;max-width:760px}
+@media (max-width:719px){.forwho{grid-template-columns:1fr;gap:12px}}
 .why{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
 .why h2{margin-bottom:0}
 .why-list{border-top:1px solid var(--line)}
@@ -429,6 +436,20 @@ body.has-sticky .chat-fab{bottom:82px}
       <figure class="win w1"><div class="bar"><i></i><i></i><i></i></div><img data-shot="anikor" width="1000" height="687" decoding="async" alt="Сайт студии йоги «Аникор»"></figure>
       <figure class="win w2"><div class="bar"><i></i><i></i><i></i></div><img data-shot="atelier" width="1000" height="687" decoding="async" alt="Сайт швейного ателье Atelier"></figure>
     </div>
+  </div>
+</section>
+
+<section class="blk" id="forwho">
+  <div class="wrap">
+    <div class="eyebrow">Для кого</div>
+    <h2>Это для вас, если</h2>
+    <div class="forwho">
+      <div><b>Сайта нет совсем</b><p>Людей приходится уводить в переписку и там объяснять всё заново. И в рекламу не выйти: Директу нужен сайт, без него объявление не запустят.</p></div>
+      <div><b>Сайт есть, но им не пользуются</b><p>Шаблон или старая страница, которую неудобно читать с телефона. Человек закрывает её быстрее, чем находит цену.</p></div>
+      <div><b>Вы отвечаете на одно и то же</b><p>Сколько стоит, что входит, как добраться, во сколько открыто. Каждый день, руками, одними и теми же словами.</p></div>
+      <div><b>Вас сравнивают с соседом</b><p>И выбирают не того, кто лучше работает, а того, у кого понятнее написано, сколько это стоит.</p></div>
+    </div>
+    <p class="fwnote">Честно про результат: сайт не приводит клиентов сам — их приводят реклама, карты и сарафанное радио. Его работа в другом: за несколько секунд ответить, чем вы занимаетесь, сколько это стоит и как с вами связаться. Человек, который не нашёл ответа, уходит к тому, кто его написал.</p>
   </div>
 </section>
 
