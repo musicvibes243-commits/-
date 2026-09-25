@@ -142,6 +142,28 @@ section{padding-block:clamp(52px,7vw,96px)}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .hero__note{margin-top:16px;font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
 
+/* Акция на первом экране. Красный здесь сознательно вне палитры сайта:
+   так просил владелец, и для скидки это привычный людям цвет. Оттенок
+   подобран так, чтобы крупный текст проходил по контрасту на тёмном фоне. */
+.sale{--sale:#F2604A;display:none;align-items:center;flex-wrap:wrap;gap:10px 16px;
+  margin-top:20px;padding:14px 18px;text-decoration:none;
+  border:1px solid var(--sale);border-radius:var(--r);
+  background:rgba(242,96,74,.10)}
+.sale:hover{background:rgba(242,96,74,.18)}
+.sale--on{display:flex}
+.sale__badge{flex:none;font-weight:700;font-size:17px;line-height:1;color:#2A1B02;
+  background:var(--sale);border-radius:100px;padding:8px 12px}
+.sale__text{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.sale__price{color:var(--sale);font-size:26px;line-height:1.1;font-weight:700}
+.sale__unit{color:var(--ink-2);font-size:15px}
+.sale__timer{margin-left:auto;color:var(--ink-2);font-size:14px;white-space:nowrap}
+.sale__timer b{color:var(--sale);font-variant-numeric:tabular-nums}
+@media (max-width:700px){
+  .sale{padding:12px 14px}
+  .sale__price{font-size:22px}
+  .sale__timer{margin-left:0;flex-basis:100%}
+}
+
 /* схема-разрез */
 .scheme{background:var(--ground);border:1px solid var(--line);border-radius:var(--r);padding:12px}
 .scheme svg{display:block;width:100%;height:auto}
@@ -405,6 +427,20 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
       <a class="btn btn--outline" href="#podbor">Подобрать систему</a>
     </div>
+
+    <!-- Акция на дренаж. Дата окончания задаётся один раз, в data-until:
+         по ней же считается счётчик. Когда срок выйдет, блок скроется сам —
+         скидка, которой уже нет, это недостоверная реклама.
+         Текст с датой написан словами и виден без JavaScript: если счётчик
+         не отработает, человек всё равно прочитает, до какого числа. -->
+    <a class="sale" href="drenazh.html" data-until="2026-10-15T23:59:59+03:00">
+      <span class="sale__badge">−33%</span>
+      <span class="sale__text">
+        <b class="sale__price">Дренаж 2&nbsp;680&nbsp;₽</b>
+        <span class="sale__unit">за погонный метр вместо 4&nbsp;000&nbsp;₽ — до 15 октября</span>
+      </span>
+      <span class="sale__timer" id="saleTimer" aria-live="polite"></span>
+    </a>
 
     <!-- Направления. Раньше здесь висели четыре плашки — «Опыт 10+ лет»,
          «Служит 50+ лет», «Доставка 0 ₽», «Москва и область». Они слово
@@ -1925,6 +1961,42 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       });
     }, { threshold: 0.4 });
     io.observe(band);
+  })();
+
+  /* Счётчик до конца акции.
+     Блок в разметке скрыт (display:none) и показывается только если срок
+     ещё не вышел: так скидка исчезает сама, без правки сайта, и на странице
+     не остаётся предложения, которого больше нет.
+     Единственный источник даты — атрибут data-until, менять её надо там. */
+  (function(){
+    var box = document.querySelector('.sale');
+    if (!box) return;
+    var until = Date.parse(box.getAttribute('data-until'));
+    var out = document.getElementById('saleTimer');
+    if (!until) return;
+
+    function plural(n, one, few, many){
+      var n10 = n % 10, n100 = n % 100;
+      if (n10 === 1 && n100 !== 11) return one;
+      if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return few;
+      return many;
+    }
+
+    function tick(){
+      var left = until - Date.now();
+      if (left <= 0) { box.classList.remove('sale--on'); return; }
+      box.classList.add('sale--on');
+      if (!out) return;
+      var d = Math.floor(left / 86400000);
+      var h = Math.floor(left / 3600000) % 24;
+      var m = Math.floor(left / 60000) % 60;
+      out.innerHTML = d > 0
+        ? 'осталось <b>' + d + '</b> ' + plural(d, 'день', 'дня', 'дней') +
+          ' <b>' + h + '</b> ч'
+        : 'осталось <b>' + h + '</b> ч <b>' + m + '</b> мин';
+    }
+    tick();
+    setInterval(tick, 60000);
   })();
 
   var y = document.getElementById('year');
