@@ -25,6 +25,8 @@
 | `shcheben-frakciya-01.jpg` | Щебень смотрим на месте |
 | `uchastok-rabota-01.jpg` | Своя бригада |
 | `septik-bytovka-01.jpg` | Работаем и зимой |
+| `kotlovan-vruchnuyu-01.jpg` | Копаем вручную |
+| `kotlovan-razmer-01.jpg` | Дно выбрали в размер |
 
 ### Фотографии для страниц услуг
 
@@ -41,7 +43,9 @@
 | `kesson-skvazhina-01.jpg` | `vodosnabzhenie.html` + главная | Кессон над скважиной |
 | `kesson-oborudovanie-01.jpg` | `vodosnabzhenie.html` + главная | Автоматика в кессоне |
 | `vodosnabzhenie-uzel-01.jpg` | `vodosnabzhenie.html` + главная | Узел ввода в доме |
+| `vodosnabzhenie-gidroak-01.jpg` | `vodosnabzhenie.html` | Гидроаккумулятор и бойлер |
 | `kotelnaya-obshchiy-01.jpg` | `otoplenie.html` | Котельная целиком |
+| `kotelnaya-elektrokotel-01.jpg` | `otoplenie.html` | Электрокотёл с обвязкой |
 | `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
 | `shchit-avtomaty-01.jpg` | `elektrika.html` | Щит в готовом доме |
