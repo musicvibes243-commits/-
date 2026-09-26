@@ -27,6 +27,7 @@
 | `septik-bytovka-01.jpg` | Работаем и зимой |
 | `kotlovan-vruchnuyu-01.jpg` | Копаем вручную |
 | `kotlovan-razmer-01.jpg` | Дно выбрали в размер |
+| `emkost-vnutri-01.jpg` | Обслуживать можно изнутри |
 
 ### Фотографии для страниц услуг
 
