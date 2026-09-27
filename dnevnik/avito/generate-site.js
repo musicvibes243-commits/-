@@ -52,7 +52,7 @@ body{width:${W}px;height:${H}px;background:${k.bg};color:${k.text};overflow:hidd
     ${hasList ? `<div class="list">${c.list.map(l=>`<div><i></i><span>${esc(l)}</span></div>`).join('')}</div>` : ''}
     ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ''}
   </div>
-  ${SITE ? "" : `<div class="foot"><div class="logo">AYKO</div><div class="url">Москва и область</div></div>`}
+  ${SITE ? "" : `<div class="foot"><div class="logo">AYKO</div><div class="url">По всей России</div></div>`}
 </div></body></html>`; };
 
 (async()=>{

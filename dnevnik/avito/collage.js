@@ -29,7 +29,7 @@ h1{font-size:64px;font-weight:700;text-transform:uppercase;letter-spacing:-.015e
 <h1>Сайты, которые я сделала</h1>
 <div class="sub">Одна страница, куда вести людей из объявления: работы, отзывы, кнопка связи.</div>
 <div class="row">${shots.map(s=>`<div class="c"><div class="ph${s.cropTop?' crop':''}"><img src="${b64(s.f)}"${s.cropTop?` style="top:-${s.cropTop}%;height:${100+s.cropTop}%;object-fit:cover"`:''}></div><div class="cap">${s.t}</div></div>`).join('')}</div>
-<div class="foot"><div class="logo">AYKO</div><div class="url">Москва и область</div></div>
+<div class="foot"><div class="logo">AYKO</div><div class="url">По всей России</div></div>
 </body></html>`;
 (async()=>{
   const br = await chromium.launch();

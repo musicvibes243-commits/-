@@ -50,7 +50,7 @@ body{width:1200px;height:900px;background:${k.bg};color:${k.text};overflow:hidde
     ${hasList ? `<div class="list">${c.list.map(l=>`<div><i></i><span>${esc(l)}</span></div>`).join('')}</div>` : ''}
     ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ''}
   </div>
-  <div class="foot"><div class="logo">AYKO</div><div class="url">Москва и область</div></div>
+  <div class="foot"><div class="logo">AYKO</div><div class="url">По всей России</div></div>
 </div></body></html>`; };
 
 (async()=>{
