@@ -667,14 +667,14 @@ body.has-sticky .chat-fab{bottom:82px}
   <div class="wrap">
     <div>
       <div class="eyebrow">Заявка</div>
-      <h2>Расскажите, какой сайт нужен</h2>
-      <p class="intro" style="margin-bottom:0">Достаточно пары слов о бизнесе. Отвечу в течение дня и предложу, с чего начать.</p>
+      <h2>Расскажите, что нужно</h2>
+      <p class="intro" style="margin-bottom:0">Достаточно пары слов о том, чем занимаетесь. Отвечу в течение дня и скажу, с чего начать.</p>
       <div class="direct" id="direct"></div>
     </div>
     <form id="form">
       <div><label for="f-name">Имя</label><input id="f-name" name="name" placeholder="Как к вам обращаться" required autocomplete="name"></div>
-      <div><label for="f-contact">Telegram, телефон или email</label><input id="f-contact" name="contact" placeholder="@username, +7… или mail@example.com" required autocomplete="off"></div>
-      <div><label for="f-text">Чем занимаетесь и какой сайт нужен</label><textarea id="f-text" name="text" placeholder="Например: студия маникюра, нужен сайт с ценами и записью"></textarea></div>
+      <div><label for="f-contact">Телефон или почта</label><input id="f-contact" name="contact" placeholder="+7… или mail@example.com" required autocomplete="off"></div>
+      <div><label for="f-text">Чем занимаетесь и что нужно</label><textarea id="f-text" name="text" placeholder="Например: монтаж септиков, объявление на Авито не открывают"></textarea></div>
       <button class="btn hot" type="submit">Отправить заявку</button>
       <p class="ok" id="ok">Спасибо! Откроется письмо с вашей заявкой, останется нажать «Отправить».</p>
       <label class="agree" for="f-agree"><input type="checkbox" id="f-agree" name="agree" required>
@@ -699,15 +699,19 @@ body.has-sticky .chat-fab{bottom:82px}
 
 <div class="sticky" id="sticky">
   <a class="btn hot" id="callSticky" href="#" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg>Позвонить</a>
-  <a class="btn ghost" id="stickyBtn" href="#contact">Обсудить сайт</a>
+  <a class="btn ghost" id="stickyBtn" href="#contact">Оставить заявку</a>
 </div>
 
 <script>
 /* ===== НАСТРОЙКИ: поменяйте на свои ===== */
 var EMAIL = "damka9093@gmail.com";   // куда придут заявки из формы
-var TELEGRAM = "AYKO_MO";               // ник в Telegram, например "ayko_web" (можно и с @)
-var WHATSAPP = "79775567601";               // номер для WhatsApp цифрами, например "79001234567"
-var MAXLINK = "https://max.ru/u/f9LHodD0cOLliiFN_RBjwiS8U_p0_-CeF-5g1fUSFq-XmHV_quYYhTjVNoc";   // ссылка на профиль в MAX
+/* Мессенджеры и соцсети убраны: на сайте остались только заявка и телефон.
+   Чтобы вернуть любой из них — впишите значение обратно, остальное само появится.
+   Было: TELEGRAM "AYKO_MO", WHATSAPP "79775567601",
+         MAXLINK "https://max.ru/u/f9LHodD0cOLliiFN_RBjwiS8U_p0_-CeF-5g1fUSFq-XmHV_quYYhTjVNoc" */
+var TELEGRAM = "";               // ник в Telegram, например "ayko_web" (можно и с @)
+var WHATSAPP = "";               // номер для WhatsApp цифрами, например "79001234567"
+var MAXLINK = "";                // ссылка на профиль в MAX
 var VK = "";                     // ссылка или короткое имя, например "vk.com/ayko" или "ayko"
 var INSTAGRAM = "";              // ник без @, например "ayko.web"
 var REVIEWS = [];                // отзывы: [{text:"…", who:"Имя, бизнес"}]. Пока пусто — блок скрыт
@@ -821,13 +825,17 @@ if(REVIEWS.length){
 /* контакты и соцсети */
 function linkOf(v,base){ v=(v||'').trim(); if(!v) return ''; return /^https?:\/\//i.test(v) ? v : base+v.replace(/^@/,''); }
 var CONTACTS=[
-  {t:'Телефон',   sub:AYKO.PHONE,              href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', goal:'click_phone'},
+  /* foot:false — телефон не дублируем ещё и в подвале, он уже в шапке,
+     в липкой панели и в блоке заявки */
+  {t:'Телефон',   sub:AYKO.PHONE,              href:AYKO.PHONE?('tel:'+AYKO.PHONE.replace(/[^\d+]/g,'')):'', goal:'click_phone', foot:false},
   {t:'Telegram',  sub:'обычно отвечаю быстро', href:linkOf(TELEGRAM,'https://t.me/'), goal:'click_telegram'},
   {t:'WhatsApp',  sub:'обычно отвечаю быстро', href:WHATSAPP?('https://wa.me/'+WHATSAPP.replace(/\D/g,'').replace(/^8(?=\d{10}$)/,'7')):'', goal:'click_whatsapp'},
   {t:'MAX',       sub:'написать в мессенджер', href:linkOf(MAXLINK,'https://max.ru/'), goal:'click_max'},
   {t:'ВКонтакте', sub:'страница и сообщения',  href:linkOf(VK,'https://vk.com/')},
   {t:'Instagram', sub:'примеры и новости',     href:linkOf(INSTAGRAM,'https://instagram.com/')},
-  {t:'Почта',     sub:EMAIL,                   href:'mailto:'+EMAIL, goal:'click_email'}
+  /* Почта осталась адресом, куда приходят заявки, но отдельной ссылкой
+     на странице её нет — по просьбе: только заявка и телефон.
+     Чтобы вернуть: {t:'Почта', sub:EMAIL, href:'mailto:'+EMAIL, goal:'click_email'} */
 ];
 var direct=document.getElementById('direct'), socials=document.getElementById('socials');
 CONTACTS.forEach(function(c){
@@ -839,10 +847,13 @@ CONTACTS.forEach(function(c){
   var b=document.createElement('b'); b.textContent=c.label||c.t;
   var s=document.createElement('span'); s.textContent=c.sub;
   a.appendChild(b); a.appendChild(s); direct.appendChild(a);
+  if(c.foot===false) return;
   var f=document.createElement('a'); f.href=c.href; f.textContent=c.t; if(ext){f.target='_blank';f.rel='noopener'}
   f.addEventListener('click',hit);
   socials.appendChild(f);
 });
+
+if(!socials.children.length) socials.hidden=true;
 
 /* реквизиты в подвале — показываем, только если заполнены */
 if(AYKO.LEGAL){ var lg=document.getElementById('legal'); lg.textContent=AYKO.LEGAL; lg.hidden=false; }
