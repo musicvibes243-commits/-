@@ -349,7 +349,15 @@ header.top{z-index:30}
 /* ---------- blocks ---------- */
 section.blk{padding:100px 0}
 .eyebrow{color:var(--accent-dim);font-size:15px;font-weight:700;margin-bottom:14px}
-h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
+/* Крупные заголовки приглушены — «почти сливаются с фоном».
+   Приём работает только на большом кегле: мелкий текст таким цветом
+   стал бы нечитаемым, поэтому абзацы и подписи не трогаем.
+   Хотите ярче — поднимите цвета к #8b90a4. */
+h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px;color:#5c6072}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  h2{background:linear-gradient(175deg,#6c7186 0%,#343846 100%);
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+}
 .intro{color:var(--muted);max-width:580px;margin-bottom:46px}
 
 /* why */
@@ -889,16 +897,16 @@ body.has-sticky .chat-fab{bottom:82px}
 <section class="blk contact" id="contact">
   <div class="wrap">
     <div>
-      <div class="eyebrow">Заявка</div>
-      <h2>Расскажите, что нужно</h2>
-      <p class="intro" style="margin-bottom:0">Достаточно пары слов о том, чем занимаетесь. Отвечу в течение дня и скажу, с чего начать.</p>
+      <div class="eyebrow">Разбор</div>
+      <h2>Давайте обсудим, что у вас не так</h2>
+      <p class="intro" style="margin-bottom:0">Напишите, что сейчас не работает: объявление висит без звонков, звонят не те, некуда вести людей. Отвечу в течение дня и напишу решение.</p>
       <div class="direct" id="direct"></div>
     </div>
     <form id="form">
       <div><label for="f-name">Имя</label><input id="f-name" name="name" placeholder="Как к вам обращаться" required autocomplete="name"></div>
       <div><label for="f-contact">Телефон или почта</label><input id="f-contact" name="contact" placeholder="+7… или mail@example.com" required autocomplete="off"></div>
       <div><label for="f-text">Чем занимаетесь и что нужно</label><textarea id="f-text" name="text" placeholder="Например: монтаж септиков, объявление на Авито не открывают"></textarea></div>
-      <button class="btn hot" type="submit">Отправить заявку</button>
+      <button class="btn hot" type="submit">Получить решение</button>
       <p class="ok" id="ok">Спасибо! Откроется письмо с вашей заявкой, останется нажать «Отправить».</p>
       <label class="agree" for="f-agree"><input type="checkbox" id="f-agree" name="agree" required>
         <span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>. Данные нужны только для ответа на заявку.</span></label>
@@ -1276,7 +1284,7 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!chat.hidd
 function showLeadForm(){
   if(leadShown) return; leadShown=true;
   var box=document.createElement('form'); box.className='leadbox';
-  box.innerHTML='<input name="name" placeholder="Ваше имя" required autocomplete="name" aria-label="Ваше имя"><input name="contact" placeholder="Telegram, телефон или email" required aria-label="Контакт"><label class="agree"><input type="checkbox" name="agree" required><span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span></label><button class="btn hot" type="submit">Отправить заявку</button>';
+  box.innerHTML='<input name="name" placeholder="Ваше имя" required autocomplete="name" aria-label="Ваше имя"><input name="contact" placeholder="Telegram, телефон или email" required aria-label="Контакт"><label class="agree"><input type="checkbox" name="agree" required><span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span></label><button class="btn hot" type="submit">Получить решение</button>';
   box.addEventListener('submit',function(e){
     e.preventDefault();
     goal('lead_chat');
