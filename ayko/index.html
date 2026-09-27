@@ -217,6 +217,66 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 .hv:hover .win.w2{transform:rotate(5deg) translate(6px,4px)}
 .hv .cap{position:absolute;left:4%;bottom:-4px;z-index:3;background:var(--bg);border:1px solid #cfcabe;border-radius:999px;padding:8px 16px;font-size:14px;color:var(--accent-dim)}
 
+/* ---------- бегущая строка под первым экраном ---------- */
+.marq{background:var(--ink);color:#fff;overflow:hidden;padding:17px 0}
+.marq .row{display:flex;width:max-content;animation:marq 40s linear infinite}
+.marq .row>span{display:flex;align-items:center;gap:28px;padding-right:28px;white-space:nowrap;
+  font-family:var(--head);text-transform:uppercase;font-weight:700;letter-spacing:.02em;
+  font-size:clamp(17px,2.2vw,27px)}
+.marq i{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marq .row{animation:none}}
+
+/* ---------- плитки: текст и картинки вперемешку ---------- */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:38px}
+.tile{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;
+  background:var(--bg-2);min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:26px;transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .45s}
+.tile:hover{transform:translateY(-4px);border-color:#cfcabe;box-shadow:0 22px 44px rgba(20,21,26,.10)}
+.tile b{display:block;font-family:var(--head);text-transform:uppercase;font-weight:700;
+  font-size:clamp(19px,2vw,26px);line-height:1.1;margin-bottom:11px}
+.tile p{color:var(--muted);font-size:16px;line-height:1.5}
+.tile .lab{position:absolute;top:26px;left:26px;right:26px;font-size:13px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dim)}
+.tile.dark .lab,.tile.hot .lab{color:rgba(255,255,255,.62)}
+@media (max-width:560px){.tile .lab{position:static;margin-bottom:14px}}
+.tile.pic{padding:0;min-height:0;background:var(--bg-3)}
+.tile.pic{aspect-ratio:8/5}
+.tile.pic img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.tile.pic:hover img{transform:scale(1.045)}
+.tile.dark{background:var(--ink);border-color:#2b2c33;color:#fff}
+.tile.dark p{color:#c6c2b9}
+.tile.dark b{color:#fff}
+.tile.hot{background:var(--accent);border-color:var(--accent);color:#fff}
+.tile.hot p{color:#f9e0da}
+.tile.hot b{color:#fff}
+.tile.wide{min-height:0;padding:34px}
+.tile.wide .lab{position:static;margin-bottom:16px}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}
+.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+@media (max-width:900px){
+  .bento{grid-template-columns:repeat(6,1fr);gap:13px}
+  .s3,.s4,.s5{grid-column:span 3}.s6,.s7,.s8,.s12{grid-column:span 6}
+}
+@media (max-width:560px){
+  .bento{grid-template-columns:1fr;gap:12px}
+  .s3,.s4,.s5,.s6,.s7,.s8,.s12{grid-column:span 1}
+  .tile{min-height:0;padding:22px}
+}
+
+/* ---------- цифры ---------- */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.nums div{border-top:2px solid var(--accent);padding-top:18px}
+.nums b{display:block;font-family:var(--head);font-weight:700;line-height:.95;
+  font-size:clamp(42px,6vw,74px)}
+.nums span{display:block;color:var(--muted);font-size:15px;margin-top:9px;line-height:1.45}
+@media (max-width:560px){.nums{grid-template-columns:1fr;gap:24px}}
+
+/* картинки чуть плывут при прокрутке — скрипт двигает их по data-par */
+[data-par]{will-change:transform}
+@media (prefers-reduced-motion:reduce){[data-par]{transform:none!important}}
+
 /* ---------- blocks ---------- */
 section.blk{padding:100px 0}
 .eyebrow{color:var(--accent-dim);font-size:15px;font-weight:700;margin-bottom:14px}
@@ -503,32 +563,60 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
+<div class="marq" aria-hidden="true">
+  <div class="row" id="marqRow"></div>
+</div>
+
 <section class="blk" id="forwho">
   <div class="wrap">
     <div class="eyebrow">Для кого</div>
     <h2>Это для вас, если</h2>
-    <div class="forwho">
-      <div><b>Объявление висит, а звонков нет</b><p>Показы идут, а открывают редко. Значит, дело в заголовке и первой фотографии — их видно в ленте, остальное человек даже не разворачивает.</p></div>
-      <div><b>Платите за продвижение впустую</b><p>Подняли объявление в поиске, деньги списались, звонков столько же. Продвижение поднимает слабое объявление — слабым оно от этого быть не перестаёт.</p></div>
-      <div><b>Звонят не те</b><p>Спрашивают то, чего вы не делаете, или торгуются до бессмысленного. Обычно это значит, что в тексте не написано, с кем вы работаете и с кем нет.</p></div>
-      <div><b>Некуда вести людей</b><p>Человек хочет посмотреть работы и отзывы, а смотреть негде. На Авито помещается не всё, и тут нужен сайт — одна страница, куда ведёт ссылка.</p></div>
+    <div class="bento">
+      <div class="tile s7"><span class="lab">Самое частое</span><b>Объявление висит, а звонков нет</b><p>Показы идут, а открывают редко. Значит, дело в заголовке и первой фотографии — их видно в ленте, остальное человек даже не разворачивает.</p></div>
+      <div class="tile pic s5"><img src="img/k/chto-proveryu.jpg" alt="С чего начну: заголовок, первая фотография, категория, продвижение" loading="lazy" decoding="async" width="1200" height="750" data-par="14"></div>
+
+      <div class="tile s4"><b>Платите за продвижение впустую</b><p>Подняли объявление, деньги списались, звонков столько же. Продвижение поднимает слабое объявление — слабым оно от этого быть не перестаёт.</p></div>
+      <div class="tile s4"><b>Звонят не те</b><p>Спрашивают то, чего вы не делаете, или торгуются до бессмысленного. Обычно это значит, что в тексте не написано, с кем вы работаете и с кем нет.</p></div>
+      <div class="tile s4"><b>Некуда вести людей</b><p>Человек хочет посмотреть работы и отзывы, а смотреть негде. На Авито помещается не всё, и тут нужен сайт — одна страница, куда ведёт ссылка.</p></div>
+
+      <div class="tile dark wide s12"><span class="lab">Без обещаний</span><b>Честно про результат</b><p>Я не могу обещать вам количество звонков — оно зависит от сезона, вашей цены и того, как вы разговариваете по телефону. Что я могу — сделать так, чтобы ваше объявление открывали чаще, чем сейчас. Это видно в статистике Авито, и через неделю мы посмотрим её вместе.</p></div>
     </div>
-    <p class="fwnote">Честно про результат: я не могу обещать вам количество звонков — оно зависит от сезона, цены и того, как вы разговариваете по телефону. Что я могу — сделать так, чтобы ваше объявление открывали чаще, чем сейчас. Это видно в статистике Авито, и через неделю мы посмотрим её вместе.</p>
+
+    <div class="nums">
+      <div><b>2 года</b><span>веду объявления инженера: септики, дренаж, отопление, электрика</span></div>
+      <div><b>5–6</b><span>заявок в день приходит ему сейчас с этих объявлений</span></div>
+      <div><b>0 ₽</b><span>предоплата — платите, когда увидите готовую работу</span></div>
+    </div>
   </div>
 </section>
 
 <section class="blk" id="why" style="background:var(--bg-2)">
-  <div class="wrap why">
-    <div>
-      <div class="eyebrow">Почему у меня</div>
-      <h2>Вы занимаетесь бизнесом. Сайт беру на себя</h2>
+  <div class="wrap">
+    <div class="eyebrow">Почему у меня</div>
+    <h2>Вы занимаетесь работой. Рекламу беру на себя</h2>
+    <div class="bento">
+      <div class="tile pic s5"><img src="img/k/opyt.jpg" alt="Два года в вашей сфере: септики, дренаж, отопление, водоотведение, электрика" loading="lazy" decoding="async" width="1200" height="750" data-par="16"></div>
+      <div class="tile s7"><span class="lab">Не по статьям</span><b>Я знаю вашу работу, а не только рекламу</b><p>Два года веду объявления инженера по септикам, дренажу и отоплению. Знаю, чем кессон отличается от колодца, почему в мае звонят, а в январе нет, и что люди спрашивают первым делом.</p></div>
+
+      <div class="tile s6"><b>Вас не спутают с соседним объявлением</b><p>У большинства заголовок одинаковый: «Септик под ключ. Недорого». Человек листает ленту и не видит разницы, поэтому выбирает по цене. Разницу надо написать.</p></div>
+      <div class="tile s6"><b>Фотографии решают больше текста</b><p>Первая фотография — это всё, что видно в ленте. Отберу из ваших те, что работают, и подскажу, что доснять на ближайшем объекте.</p></div>
+
+      <div class="tile s7"><span class="lab">Где утекают деньги</span><b>Скажу, за какое продвижение платить не надо</b><p>Авито продаёт несколько способов поднять объявление. Часть из них на вашу категорию почти не влияет. Покажу, что берёт, а что просто списывает деньги.</p></div>
+      <div class="tile pic s5"><img src="img/k/publikaciya.jpg" alt="Реклама кончается вместе с деньгами, публикация остаётся" loading="lazy" decoding="async" width="1200" height="750" data-par="-14"></div>
+
+      <div class="tile hot wide s12"><span class="lab">Деньги</span><b>Цена известна до начала работы</b><p>Называю её после короткого разговора — и дальше не меняю. Правки входят в эту сумму, доплат за «мелочи» не будет.</p></div>
     </div>
-    <div class="why-list">
-      <div><b>Я знаю вашу работу, а не только рекламу</b><p>Два года веду объявления инженера по септикам, дренажу и отоплению. Знаю, чем кессон отличается от колодца, почему в мае звонят, а в январе нет, и что люди спрашивают первым делом.</p></div>
-      <div><b>Вас не спутают с соседним объявлением</b><p>У большинства заголовок одинаковый: «Септик под ключ. Недорого». Человек листает ленту и не видит разницы, поэтому выбирает по цене. Разницу надо написать.</p></div>
-      <div><b>Фотографии решают больше текста</b><p>Первая фотография — это всё, что видно в ленте. Отберу из ваших те, что работают, и подскажу, что доснять на ближайшем объекте.</p></div>
-      <div><b>Скажу, за какое продвижение платить не надо</b><p>Авито продаёт несколько способов поднять объявление. Часть из них на вашу категорию почти не влияет. Покажу, что берёт, а что просто списывает деньги.</p></div>
-      <div><b>Цена известна до начала работы</b><p>Называю её после короткого разговора — и дальше не меняю. Правки входят в эту сумму, доплат за «мелочи» не будет.</p></div>
+  </div>
+</section>
+
+<section class="blk" id="own">
+  <div class="wrap">
+    <div class="eyebrow">Себе — в первую очередь</div>
+    <h2>Своё объявление я написала первым</h2>
+    <p class="intro">Прежде чем продавать это другим, я собрала объявление себе: заголовок, карточки, текст без обещаний. Вот как оно выглядит.</p>
+    <div class="bento">
+      <div class="tile pic s6"><img src="img/k/oblozhka.jpg" alt="Обложка объявления: объявление, которое открывают" loading="lazy" decoding="async" width="1200" height="750" data-par="12"></div>
+      <div class="tile pic s6"><img src="img/k/raboty.jpg" alt="Сайты, которые я сделала: септики и дренаж, ветклиника, кофейня" loading="lazy" decoding="async" width="1200" height="750" data-par="-12"></div>
     </div>
   </div>
 </section>
@@ -884,7 +972,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(fals
    просто показываем всё сразу, ничего не ломается. */
 (function(){
   var targets = [];
-  document.querySelectorAll('.blk .wrap > *, .forwho > div, .why-list > div, .plist button, .steps > div, .faq details, .direct a')
+  document.querySelectorAll('.blk .wrap > *, .bento > .tile, .nums > div, .plist button, .steps > div, .faq details, .direct a')
     .forEach(function(el){ targets.push(el); });
   if(!('IntersectionObserver' in window) || !targets.length){ return; }
   targets.forEach(function(el, i){
@@ -931,6 +1019,51 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(fals
   }
   if(document.readyState === 'complete'){ setTimeout(start, 400); }
   else { window.addEventListener('load', function(){ setTimeout(start, 400); }); }
+})();
+
+/* Бегущая строка. Собираем её скриптом: нужен ровно один дубль,
+   чтобы лента замыкалась без рывка. Правьте только список WORDS. */
+(function(){
+  var row = document.getElementById('marqRow');
+  if(!row) return;
+  var WORDS = ['Без предоплаты','Цена до начала работы','Два года в этой сфере',
+               'Авито · Яндекс · соцсети · сайт','Москва и область'];
+  function half(){
+    var span = document.createElement('span');
+    WORDS.forEach(function(w){
+      var i = document.createElement('i');
+      span.appendChild(i);
+      span.appendChild(document.createTextNode(w));
+    });
+    return span;
+  }
+  row.appendChild(half());
+  row.appendChild(half());
+})();
+
+/* Мягкий параллакс. Картинка с data-par="14" сдвигается на 14 пикселей
+   за полный проход по экрану — этого хватает, чтобы страница ожила,
+   и не хватает, чтобы закружилась голова. Минус — в другую сторону. */
+(function(){
+  var els = [].slice.call(document.querySelectorAll('[data-par]'));
+  if(!els.length) return;
+  var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(mq && mq.matches) return;
+  var tick = false;
+  function draw(){
+    tick = false;
+    var vh = window.innerHeight;
+    els.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.bottom < -200 || r.top > vh + 200) return;
+      var mid = (r.top + r.height / 2 - vh / 2) / vh;   /* -1 … 1 */
+      el.style.transform = 'translate3d(0,' + (mid * Number(el.dataset.par)).toFixed(1) + 'px,0)';
+    });
+  }
+  function onScroll(){ if(!tick){ tick = true; requestAnimationFrame(draw); } }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  draw();
 })();
 
 /* шапка и липкая кнопка */
