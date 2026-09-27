@@ -37,6 +37,10 @@
 
 | Файл | Где стоит | Подпись |
 | --- | --- | --- |
+| `septik-montazh-01.jpg` | `septiki.html` + главная | Станция идёт в котлован |
+| `kotlovan-01.jpg` | `septiki.html` + главная | Песчаная подушка |
+| `opalubka-yama-01.jpg` | `septiki.html` + главная | Крепление стенок |
+| `septik-lyuk-01.jpg` | `septiki.html` + главная | Горловина с люком |
 | `drenazh-geotekstil-01.jpg` | `drenazh.html` + главная | Траншея под дренаж |
 | `transhea-01.jpg` | `drenazh.html` + главная | Уклон бьём нивелиром |
 | `drenazh-truba-01.jpg` | `drenazh.html` + главная | Труба в геотекстиле |
