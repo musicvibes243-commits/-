@@ -65,6 +65,24 @@ a{color:inherit;text-decoration:none}
 .hero{position:relative;min-height:88vh;display:flex;align-items:center;
   padding:150px 0 90px;overflow:hidden}
 #vortex{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.85}
+/* Медуза. Режим screen убирает чёрный фон ролика начисто: остаётся
+   только свет, который складывается с чернотой страницы. Поэтому она
+   не «лежит картинкой», а светится. Лежит поверх маски — иначе маска
+   съела бы всё свечение. */
+.medusa{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.medusa video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:screen;opacity:0;transition:opacity 1.6s ease;
+  filter:brightness(1.15) saturate(1.35) contrast(1.05)}
+.medusa video.on{opacity:1}
+/* ореол — статичный слой, дешевле второго видео */
+.medusa::before{content:"";position:absolute;left:50%;top:44%;
+  width:min(1000px,125vw);aspect-ratio:1.5/1;transform:translate(-50%,-50%);
+  filter:blur(100px);opacity:.34;
+  background:radial-gradient(ellipse,rgba(127,217,255,.6) 0%,rgba(167,139,250,.32) 45%,transparent 72%)}
+/* текст поверх свечения — тень вместо затемнения, чтобы не гасить медузу */
+.hero .name,.hero .role{text-shadow:0 2px 40px rgba(0,0,0,.7)}
+.hero .sub{text-shadow:0 1px 24px rgba(0,0,0,.65)}
+
 /* мягкая маска: к краям свечение гаснет, в центре читается текст */
 .mask{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -212,6 +230,8 @@ h2 em{font-family:var(--serif);font-style:italic}
   <div class="core" aria-hidden="true"></div>
   <canvas id="vortex" aria-hidden="true"></canvas>
   <div class="mask" aria-hidden="true"></div>
+  <div class="medusa" aria-hidden="true"><video id="medusa" muted loop playsinline preload="none"
+      disableremoteplayback x5-playsinline webkit-playsinline data-src="video/medusa2.mp4"></video></div>
   <div class="wrap">
     <p class="eyebrow rv">Авито · Яндекс · соцсети · сайты</p>
     <h1 class="name rv">AYKO</h1>
@@ -370,6 +390,30 @@ var MARQ  = ['Без предоплаты','Цена до начала рабо�
   document.querySelectorAll('.hero .rv').forEach(function(e,n){
     setTimeout(function(){ e.classList.add('seen'); }, 120 + n * 110);
   });
+})();
+
+/* ---------- медуза ----------
+   Грузится после полной загрузки страницы и не грузится вовсе при
+   экономии трафика, на 2G/3G, при отключённых анимациях и если
+   первый экран уже пролистали. Без неё остаётся вихрь — тоже красиво. */
+(function(){
+  var v = document.getElementById('medusa');
+  if (!v) return;
+  var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq && mq.matches) { v.parentNode.remove(); return; }
+  var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType) || c.effectiveType === '3g')) {
+    v.parentNode.remove(); return;
+  }
+  function start(){
+    if (window.scrollY > window.innerHeight) return;
+    v.src = v.getAttribute('data-src');
+    v.addEventListener('playing', function(){ v.classList.add('on'); }, { once:true });
+    var pr = v.play();
+    if (pr && pr.catch) pr.catch(function(){});
+  }
+  if (document.readyState === 'complete') setTimeout(start, 500);
+  else window.addEventListener('load', function(){ setTimeout(start, 500); });
 })();
 
 /* ---------- космический вихрь ----------
