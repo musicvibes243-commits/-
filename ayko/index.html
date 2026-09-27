@@ -145,6 +145,13 @@ h1 .ln:nth-child(3)>span{animation-delay:.24s}
 h1 .ln>span.price{display:inline-block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
 h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 @keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+/* Появление при прокрутке. Пока скрипт не отметил блок как видимый,
+   он чуть ниже и прозрачнее. Класс .seen ставит его на место. */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.rv.seen{opacity:1;transform:none}
+.rv-d1{transition-delay:.07s}.rv-d2{transition-delay:.14s}.rv-d3{transition-delay:.21s}.rv-d4{transition-delay:.28s}
+/* Если скрипт не сработал, содержимое всё равно должно быть видно. */
+.no-js .rv{opacity:1;transform:none}
 .hero .lead{max-width:520px;color:#4a4842;margin:26px 0 30px;font-size:19px}
 .hero .cta{display:flex;flex-wrap:wrap;gap:14px}
 .nopay{margin-top:22px;padding:14px 20px;border:1px solid var(--line);border-radius:16px;
@@ -173,7 +180,8 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 /* why */
 /* «Это для вас, если» — узнавание ситуации, а не описание услуги */
 .forwho{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0 26px}
-.forwho div{border:1px solid var(--line);border-radius:20px;padding:22px 24px;background:var(--bg-2)}
+.forwho div{border:1px solid var(--line);border-radius:20px;padding:22px 24px;background:var(--bg-2);transition:transform .25s,border-color .25s}
+.forwho div:hover{transform:translateY(-3px);border-color:#cfcabe}
 .forwho b{display:block;font-family:var(--head);text-transform:uppercase;font-size:20px;line-height:1.15;margin-bottom:8px;font-weight:700}
 .forwho p{color:var(--muted);font-size:16px}
 .fwnote{color:#3b3a36;max-width:760px}
@@ -246,6 +254,7 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:32px;color:var(--accent);transition:transform .25s}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
 .faq details p{color:var(--muted);padding:0 44px 24px 0;max-width:680px}
 
 /* about */
@@ -263,7 +272,8 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 .contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 .contact h2{margin-bottom:16px}
 .direct{display:grid;gap:12px;margin-top:26px}
-.direct a{display:flex;justify-content:space-between;align-items:center;border:1px solid #cfcabe;border-radius:18px;padding:16px 20px;transition:border-color .2s,background .2s}
+.direct a{display:flex;justify-content:space-between;align-items:center;border:1px solid #cfcabe;border-radius:18px;padding:16px 20px;transition:border-color .2s,background .2s,transform .2s}
+.direct a:hover{transform:translateX(4px)}
 .direct a:hover{border-color:#cfcabe;background:rgba(20,21,26,.04)}
 .direct a span{color:var(--muted);font-size:14px}
 form{display:grid;gap:18px}
@@ -305,6 +315,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   h1 .ln>span{animation:none}
   html{scroll-behavior:auto}
   *{transition:none!important}
+  .rv{opacity:1!important;transform:none!important}
 }
 
 /* ---------- AI-помощник ---------- */
@@ -805,6 +816,31 @@ openB.addEventListener('click',function(){setMenu(true)});
 document.getElementById('close').addEventListener('click',function(){setMenu(false)});
 menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+
+/* Появление блоков при прокрутке.
+   Работает без библиотек. Если браузер старый и не знает IntersectionObserver —
+   просто показываем всё сразу, ничего не ломается. */
+(function(){
+  var targets = [];
+  document.querySelectorAll('.blk .wrap > *, .forwho > div, .why-list > div, .plist button, .steps > div, .faq details, .direct a')
+    .forEach(function(el){ targets.push(el); });
+  if(!('IntersectionObserver' in window) || !targets.length){ return; }
+  targets.forEach(function(el, i){
+    el.classList.add('rv');
+    var d = i % 4;  /* лёгкая лесенка внутри группы */
+    if(d) el.classList.add('rv-d' + d);
+  });
+  var io_ = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('seen'); io_.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  targets.forEach(function(el){ io_.observe(el); });
+  /* Первый экран не прячем: он виден сразу. */
+  document.querySelectorAll('.hero .rv').forEach(function(el){
+    el.classList.remove('rv'); el.classList.add('seen');
+  });
+})();
 
 /* шапка и липкая кнопка */
 var top_=document.getElementById('top'), sticky=document.getElementById('sticky');
