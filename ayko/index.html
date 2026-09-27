@@ -272,6 +272,7 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
   font-size:clamp(42px,6vw,74px)}
 .nums span{display:block;color:var(--muted);font-size:15px;margin-top:9px;line-height:1.45}
 @media (max-width:560px){.nums{grid-template-columns:1fr;gap:24px}}
+.nums + .fwnote{margin-top:42px}
 
 /* картинки чуть плывут при прокрутке — скрипт двигает их по data-par */
 [data-par]{will-change:transform}
@@ -621,6 +622,20 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
+<section class="blk" id="soc" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="eyebrow">Соцсети</div>
+    <h2>Не только объявления. Ещё и ролики</h2>
+    <p class="intro">Веду Instagram* и YouTube инженера по септикам и дренажу. Он снимает объект на телефон между делом — монтирую, подписываю и выкладываю я. Вот что это даёт.</p>
+    <div class="nums">
+      <div><b>3 400</b><span>просмотров в Instagram* за последние 30 дней</span></div>
+      <div><b>4 500</b><span>просмотров у четырёх роликов на YouTube</span></div>
+      <div><b>2 074</b><span>у лучшего ролика — «Септик под ключ»</span></div>
+    </div>
+    <p class="fwnote">Тут и разница с рекламой. За эти просмотры уже никто не платит: ролики выложены один раз и продолжают приводить людей. Реклама так не умеет — она кончается вместе с деньгами.</p>
+  </div>
+</section>
+
 <section class="blk" id="works">
   <div class="wrap">
     <div class="eyebrow">Примеры работ</div>
@@ -774,6 +789,7 @@ body.has-sticky .chat-fab{bottom:82px}
 
 <footer>
   <div class="wrap"><span>© <span id="y"></span> AYKO</span><div class="socials" id="socials"></div><a href="privacy.html">Политика конфиденциальности</a><a href="#home">Наверх ↑</a>
+    <p class="legal">* Instagram принадлежит компании Meta, признанной в РФ экстремистской и запрещённой.</p>
     <p class="legal" id="legal" hidden></p></div>
 </footer>
 
