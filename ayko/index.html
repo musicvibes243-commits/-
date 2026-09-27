@@ -145,8 +145,14 @@ header.top .top-cta{display:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:16px 30px;font-family:var(--head);font-weight:500;text-transform:uppercase;letter-spacing:.03em;font-size:17px;cursor:pointer;border:1px solid transparent;transition:transform .2s,background .2s,box-shadow .2s;min-height:52px}
 .btn:hover{transform:translateY(-2px)}
 .btn.solid{background:var(--text);color:var(--bg)}
+/* Кружок со стрелкой у главных кнопок */
+.btn .arr{display:inline-grid;place-content:center;width:26px;height:26px;flex:none;
+  border-radius:50%;background:rgba(255,255,255,.22);font-size:13px;line-height:1;
+  transition:transform .3s,background .3s}
+.btn:hover .arr{transform:translateX(3px);background:rgba(255,255,255,.34)}
+.btn.solid .arr{background:rgba(10,11,15,.14)}
 .btn.hot{background:var(--accent);color:#fff;box-shadow:none}
-.btn.hot:hover{background:#a63a22}
+.btn.hot:hover{background:#e8663f}   /* на тёмном осветляем, а не затемняем */
 .btn.ghost{border-color:var(--line-2);background:transparent;color:var(--text)}
 .btn.ghost:hover{background:rgba(255,255,255,.07)}
 .btn.sm{padding:10px 22px;min-height:44px;font-size:15px}
@@ -236,6 +242,24 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 .hv:hover .win.w1{transform:rotate(-5deg) translate(-6px,-4px)}
 .hv:hover .win.w2{transform:rotate(5deg) translate(6px,4px)}
 .hv .cap{position:absolute;left:4%;bottom:-4px;z-index:3;background:var(--bg);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--accent-dim)}
+
+/* ---------- мягкие свечения ----------
+   Три размытых пятна в фирменных цветах. Лежат под содержимым вместе
+   с водой и очень медленно дышат. Самый дешёвый способ добавить
+   странице глубины: ни картинок, ни скриптов — один слой с градиентами. */
+.glows{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.glows i{position:absolute;display:block;border-radius:50%;filter:blur(120px)}
+.glows i:nth-child(1){width:min(780px,90vw);aspect-ratio:1.25/1;right:-16%;top:-12%;
+  background:radial-gradient(circle,rgba(217,79,48,.55) 0%,transparent 68%);opacity:.5;
+  animation:breathe 26s ease-in-out infinite alternate}
+.glows i:nth-child(2){width:min(640px,80vw);aspect-ratio:1/1;left:-14%;top:38%;
+  background:radial-gradient(circle,rgba(150,60,120,.40) 0%,transparent 68%);opacity:.42;
+  animation:breathe 34s ease-in-out infinite alternate-reverse}
+.glows i:nth-child(3){width:min(700px,88vw);aspect-ratio:1.4/1;right:-10%;bottom:-14%;
+  background:radial-gradient(circle,rgba(240,164,143,.32) 0%,transparent 70%);opacity:.38;
+  animation:breathe 30s ease-in-out infinite alternate}
+@keyframes breathe{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(2%,-3%,0) scale(1.14)}}
+@media (prefers-reduced-motion:reduce){.glows i{animation:none}}
 
 /* ---------- красная вода фоном ----------
    Слой лежит под всем содержимым и медленно плывёт. Картинка одна,
@@ -417,9 +441,27 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px;color:#5c6072}
 .vlink{display:inline-block;margin-top:14px;border-bottom:1px solid var(--accent);padding-bottom:2px;font-weight:700}
 
 /* process */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.step{border-top:2px solid var(--accent);padding-top:18px}
-.step .n{font-family:var(--head);font-size:52px;color:var(--accent);line-height:1;font-weight:700}
+/* Лента шагов: общая линия, на ней точки. Линию рисует псевдоэлемент
+   у .steps — так она непрерывна и не рвётся между колонками. */
+.steps{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-top:34px}
+.steps::before{content:"";position:absolute;left:6%;right:6%;top:7px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent) 12%,var(--accent) 88%,transparent);opacity:.55}
+.step{position:relative;padding-top:24px;text-align:center}
+.step::before{content:"";position:absolute;left:50%;top:0;width:15px;height:15px;margin-left:-7.5px;
+  border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 5px rgba(217,79,48,.16),0 0 18px rgba(217,79,48,.55)}
+.step p{max-width:24ch;margin-inline:auto}
+@media (max-width:820px){
+  .steps{grid-template-columns:1fr 1fr;gap:30px 20px}
+  .steps::before{display:none}
+}
+@media (max-width:520px){
+  .steps{grid-template-columns:1fr;gap:26px}
+  .step{text-align:left;padding-top:0;padding-left:30px}
+  .step::before{left:0;top:9px;margin-left:0;width:12px;height:12px}
+  .step p{max-width:none;margin-inline:0}
+}
+.step .n{font-family:var(--head);font-size:40px;color:var(--accent);line-height:1;font-weight:700;opacity:.55}
 .step h3{font-size:24px;margin:10px 0 8px}
 .step p{color:var(--muted);font-size:15px;line-height:1.5}
 .step .t{display:inline-block;margin-top:12px;font-size:13px;color:var(--accent-dim);border:1px solid var(--line-2);border-radius:999px;padding:3px 12px}
@@ -576,6 +618,7 @@ body.has-sticky .chat-fab{bottom:82px}
 </head>
 <body>
 <div class="waves" aria-hidden="true"></div>
+<div class="glows" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <header class="top" id="top">
   <div class="wrap">
@@ -625,7 +668,7 @@ body.has-sticky .chat-fab{bottom:82px}
       </h1>
       <p class="lead">Два года веду объявления инженера по септикам, отоплению и водоснабжению. Перепишу ваше так, чтобы Авито показывал его чаще, а люди открывали и звонили. Дальше — по желанию: реклама в Яндексе, ваши страницы во ВКонтакте, Telegram, Instagram*, TikTok, на YouTube и Rutube, сайт. Цену называю после разговора о задаче.</p>
       <div class="cta">
-        <a class="btn hot" href="#contact">Посмотреть моё объявление</a>
+        <a class="btn hot" href="#contact">Посмотреть моё объявление<span class="arr" aria-hidden="true">→</span></a>
         <a class="btn ghost" href="#works">Смотреть работы</a>
       </div>
       <p class="nopay">Без предоплаты. Платите, когда увидите готовую работу.</p>
@@ -819,7 +862,7 @@ body.has-sticky .chat-fab{bottom:82px}
           <li>Через неделю смотрим статистику и правим</li>
           <li>Оплата после того, как увидите готовую работу</li>
         </ul>
-        <a class="btn solid" href="#contact">Заказать сайт</a>
+        <a class="btn solid" href="#contact">Заказать сайт<span class="arr" aria-hidden="true">→</span></a>
       </div>
       <div class="more">
         <h3>Что ещё делаю</h3>
@@ -906,7 +949,7 @@ body.has-sticky .chat-fab{bottom:82px}
       <div><label for="f-name">Имя</label><input id="f-name" name="name" placeholder="Как к вам обращаться" required autocomplete="name"></div>
       <div><label for="f-contact">Телефон или почта</label><input id="f-contact" name="contact" placeholder="+7… или mail@example.com" required autocomplete="off"></div>
       <div><label for="f-text">Чем занимаетесь и что нужно</label><textarea id="f-text" name="text" placeholder="Например: монтаж септиков, объявление на Авито не открывают"></textarea></div>
-      <button class="btn hot" type="submit">Получить решение</button>
+      <button class="btn hot" type="submit">Получить решение<span class="arr" aria-hidden="true">→</span></button>
       <p class="ok" id="ok">Спасибо! Откроется письмо с вашей заявкой, останется нажать «Отправить».</p>
       <label class="agree" for="f-agree"><input type="checkbox" id="f-agree" name="agree" required>
         <span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>. Данные нужны только для ответа на заявку.</span></label>
@@ -1284,7 +1327,7 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!chat.hidd
 function showLeadForm(){
   if(leadShown) return; leadShown=true;
   var box=document.createElement('form'); box.className='leadbox';
-  box.innerHTML='<input name="name" placeholder="Ваше имя" required autocomplete="name" aria-label="Ваше имя"><input name="contact" placeholder="Telegram, телефон или email" required aria-label="Контакт"><label class="agree"><input type="checkbox" name="agree" required><span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span></label><button class="btn hot" type="submit">Получить решение</button>';
+  box.innerHTML='<input name="name" placeholder="Ваше имя" required autocomplete="name" aria-label="Ваше имя"><input name="contact" placeholder="Telegram, телефон или email" required aria-label="Контакт"><label class="agree"><input type="checkbox" name="agree" required><span>Согласен на обработку персональных данных и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span></label><button class="btn hot" type="submit">Получить решение<span class="arr" aria-hidden="true">→</span></button>';
   box.addEventListener('submit',function(e){
     e.preventDefault();
     goal('lead_chat');
