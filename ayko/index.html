@@ -76,6 +76,7 @@ window.AYKO = {
   --accent:#d94f30;      /* кирпичный, поднят по яркости: на чёрном он гаснет */
   --accent-dim:#f0a48f;  /* приглушённый: подписи, надзаголовки */
   --ink:#1a1d26;         /* контрастная плашка — на тёмном она светлее фона */
+  --glass-2:rgba(18,20,27,.66);  /* полупрозрачная полоса: сквозь неё видно воду */
   --head:'Oswald','Arial Narrow','Helvetica Neue Condensed',Impact,'Segoe UI',sans-serif;
   --body:'Manrope',system-ui,-apple-system,'Segoe UI Variable','Segoe UI',Roboto,Arial,sans-serif;
 }
@@ -236,8 +237,29 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 .hv:hover .win.w2{transform:rotate(5deg) translate(6px,4px)}
 .hv .cap{position:absolute;left:4%;bottom:-4px;z-index:3;background:var(--bg);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--accent-dim)}
 
+/* ---------- красная вода фоном ----------
+   Слой лежит под всем содержимым и медленно плывёт. Картинка одна,
+   85 КБ; она не размножается плиткой — слой больше экрана со всех
+   сторон, поэтому при сдвиге не видно стыков.
+   Яркость держим низкой: это фон, а не иллюстрация. Сделаете opacity
+   больше .22 — текст начнёт теряться. */
+.waves{position:fixed;inset:-9%;z-index:0;pointer-events:none;
+  background:url(img/waves.jpg) center/cover no-repeat;
+  opacity:.17;filter:saturate(1.05) brightness(.92);
+  animation:drift 52s ease-in-out infinite alternate;will-change:transform}
+@keyframes drift{
+  from{transform:translate3d(-2.2%,-1.6%,0) scale(1.02)}
+  to  {transform:translate3d(2.2%,1.6%,0)  scale(1.07)}
+}
+@media (prefers-reduced-motion:reduce){.waves{animation:none}}
+/* содержимое — поверх воды */
+header.top,main,footer,.sticky,.menu{position:relative;z-index:1}
+header.top{z-index:30}
+.sticky{z-index:35}
+.menu{z-index:50}
+
 /* ---------- бегущая строка под первым экраном ---------- */
-.marq{background:var(--bg-2);color:var(--text);overflow:hidden;padding:17px 0;
+.marq{background:var(--glass-2);color:var(--text);overflow:hidden;padding:17px 0;
   border-block:1px solid var(--line)}
 .marq .row{display:flex;width:max-content;animation:marq 40s linear infinite}
 .marq .row>span{display:flex;align-items:center;gap:28px;padding-right:28px;white-space:nowrap;
@@ -251,7 +273,7 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 /* Значки нарисованы вручную одним цветом: у настоящих логотипов
    разные фоны и цвета, и на светлой странице они выглядят как
    наклейки. Одинаковые силуэты читаются как часть сайта. */
-.plat{border-block:1px solid var(--line);background:var(--bg-2);padding:34px 0}
+.plat{border-block:1px solid var(--line);background:var(--glass-2);padding:34px 0}
 .plat .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:26px 34px}
 .plat .lab{font-size:15px;color:var(--muted);flex:0 1 210px;line-height:1.45}
 .plat .lab b{display:block;color:var(--text);font-family:var(--head);text-transform:uppercase;
@@ -276,7 +298,7 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 /* ---------- плитки: текст и картинки вперемешку ---------- */
 .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:38px}
 .tile{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;
-  background:var(--bg-2);min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;
+  background:rgba(18,20,27,.86);min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;
   padding:26px;transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .45s}
 .tile:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 22px 44px rgba(0,0,0,.45)}
 .tile b{display:block;font-family:var(--head);text-transform:uppercase;font-weight:700;
@@ -291,7 +313,7 @@ h1 .price{color:var(--text);box-shadow:inset 0 -.09em 0 var(--accent)}
 .tile.pic img{width:100%;height:100%;object-fit:cover;display:block;
   transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .tile.pic:hover img{transform:scale(1.045)}
-.tile.dark{background:var(--bg-3);border-color:var(--line-2);color:var(--text)}
+.tile.dark{background:rgba(26,29,38,.88);border-color:var(--line-2);color:var(--text)}
 .tile.dark p{color:#c6c2b9}
 .tile.dark b{color:#fff}
 .tile.hot{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -348,7 +370,7 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 
 /* offer */
 .offer{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:stretch}
-.deal{border-radius:30px;padding:40px;background:var(--bg-2);border:1px solid var(--line);display:flex;flex-direction:column}
+.deal{border-radius:30px;padding:40px;background:rgba(18,20,27,.86);border:1px solid var(--line);display:flex;flex-direction:column}
 .deal .k{font-size:15px;font-weight:700;opacity:.85}
 .deal .p{font-family:var(--head);font-weight:700;text-transform:uppercase;font-size:clamp(34px,4.6vw,56px);line-height:1.02;margin:10px 0 8px}
 .deal .p small{font-size:.4em;font-weight:500;margin-left:6px}
@@ -357,7 +379,7 @@ h2{font-size:clamp(40px,6.4vw,84px);margin-bottom:22px}
 .deal li{padding-left:30px;position:relative}
 .deal li::before{content:"✓";position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-content:center;font-size:12px;top:4px}
 .deal .btn{margin-top:auto;align-self:flex-start}
-.more{border:1px solid var(--line);border-radius:30px;padding:36px;background:var(--bg-2);display:flex;flex-direction:column}
+.more{border:1px solid var(--line);border-radius:30px;padding:36px;background:rgba(18,20,27,.86);display:flex;flex-direction:column}
 .more h3{font-size:32px;margin-bottom:6px}
 .more>p{color:var(--muted);margin-bottom:20px}
 .more .r{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid var(--line);align-items:baseline}
@@ -545,6 +567,7 @@ body.has-sticky .chat-fab{bottom:82px}
 </style>
 </head>
 <body>
+<div class="waves" aria-hidden="true"></div>
 
 <header class="top" id="top">
   <div class="wrap">
@@ -687,7 +710,7 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
-<section class="blk" id="why" style="background:var(--bg-2)">
+<section class="blk" id="why" style="background:var(--glass-2)">
   <div class="wrap">
     <div class="eyebrow">Почему у меня</div>
     <h2>Вы занимаетесь работой. Рекламу беру на себя</h2>
@@ -718,7 +741,7 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
-<section class="blk" id="soc" style="background:var(--bg-2)">
+<section class="blk" id="soc" style="background:var(--glass-2)">
   <div class="wrap">
     <div class="eyebrow">Соцсети</div>
     <h2>Не только объявления. Ещё и ролики</h2>
@@ -760,7 +783,7 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
-<section class="blk" id="reviews" hidden style="background:var(--bg-2)">
+<section class="blk" id="reviews" hidden style="background:var(--glass-2)">
   <div class="wrap">
     <div class="eyebrow">Отзывы</div>
     <h2>Что говорят клиенты</h2>
@@ -768,7 +791,7 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
-<section class="blk" id="offer" style="background:var(--bg-2)">
+<section class="blk" id="offer" style="background:var(--glass-2)">
   <div class="wrap">
     <div class="eyebrow">Услуги</div>
     <h2>Что я делаю</h2>
@@ -829,7 +852,7 @@ body.has-sticky .chat-fab{bottom:82px}
   </div>
 </section>
 
-<section class="blk" id="faq" style="background:var(--bg-2)">
+<section class="blk" id="faq" style="background:var(--glass-2)">
   <div class="wrap">
     <div class="eyebrow">Вопросы</div>
     <h2>Частые вопросы</h2>
