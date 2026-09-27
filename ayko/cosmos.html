@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AYKO — объявления на Авито для строителей</title>
+<meta name="description" content="Веду объявления на Авито, рекламу в Яндексе и соцсети для строителей и монтажников. Без предоплаты.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050505'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-style='italic' font-size='40' text-anchor='middle' fill='%23ffffff'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
+<style>
+/* ===================================================================
+   Тёмная версия сайта. Лежит отдельным файлом, чтобы её можно было
+   посмотреть и сравнить, ничего не ломая: рабочая страница — index.html.
+   Понравится — переименуем этот файл в index.html, и всё.
+   =================================================================== */
+:root{
+  --bg:#050505;          /* почти чёрный, не абсолютный: так мягче для глаз */
+  --text:#ffffff;
+  --muted:#8e8e93;
+  --line:rgba(255,255,255,.10);
+  --glass:rgba(255,255,255,.03);
+  --cyan:#7fd9ff;        /* холодное свечение */
+  --violet:#a78bfa;      /* тёплое свечение */
+  --brick:#c0452a;       /* фирменный кирпичный — связь со светлой версией */
+  color-scheme:dark;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;
+  line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1200px,100% - 40px);margin-inline:auto}
+.ital{font-family:var(--serif);font-style:italic;font-weight:400}
+.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+
+/* ---------- плавающая шапка ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;justify-content:center;
+  padding:calc(16px + env(safe-area-inset-top,0px)) 16px 0}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:7px;
+  border:1px solid var(--line);background:rgba(10,10,12,.62);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);transition:box-shadow .3s,border-color .3s}
+.pill.stuck{box-shadow:0 14px 40px rgba(0,0,0,.6);border-color:rgba(255,255,255,.18)}
+.mark{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-content:center;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));position:relative}
+.mark::after{content:"";position:absolute;inset:1.5px;border-radius:50%;background:#0a0a0c}
+.mark span{position:relative;z-index:1;font-family:var(--serif);font-style:italic;font-size:15px}
+.sep{width:1px;height:20px;background:var(--line);margin:0 4px}
+.pill a.lnk{font-size:14px;color:var(--muted);padding:9px 15px;border-radius:999px;
+  transition:color .25s,background .25s;white-space:nowrap}
+.pill a.lnk:hover{color:#fff;background:rgba(255,255,255,.07)}
+.say{position:relative;padding:2px;border-radius:999px;background:transparent;transition:background .3s}
+.say:hover{background:linear-gradient(120deg,var(--cyan),var(--violet))}
+.say b{display:block;font-size:14px;font-weight:500;padding:8px 16px;border-radius:999px;
+  background:#0a0a0c;white-space:nowrap}
+@media (max-width:640px){ .pill a.lnk{padding:9px 11px;font-size:13px} .sep{display:none} }
+@media (max-width:420px){ .pill a.lnk.hide-xs{display:none} }
+
+/* ---------- первый экран ---------- */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;
+  padding:150px 0 90px;overflow:hidden}
+#vortex{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.85}
+/* мягкая маска: к краям свечение гаснет, в центре читается текст */
+.mask{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 46%, rgba(5,5,5,.55) 0%, rgba(5,5,5,.22) 55%, transparent 80%),
+    radial-gradient(ellipse 130% 85% at 50% 48%, transparent 46%, var(--bg) 96%)}
+/* светящееся ядро воронки — без него точки висят в пустоте */
+.core{position:absolute;left:50%;top:44%;width:min(1000px,120vw);aspect-ratio:1.7/1;
+  transform:translate(-50%,-50%);z-index:0;pointer-events:none;filter:blur(90px);opacity:.42;
+  background:radial-gradient(ellipse,rgba(167,139,250,.55) 0%,rgba(127,217,255,.30) 38%,transparent 70%)}
+.hero .wrap{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero .eyebrow{margin-bottom:26px}
+.name{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;
+  font-size:clamp(66px,12vw,168px);line-height:.9;margin-bottom:14px}
+.role{font-size:clamp(20px,3.1vw,34px);font-weight:300;color:#d6d6da;margin-bottom:22px}
+.role em{font-family:var(--serif);font-style:italic;font-weight:400;color:#fff;
+  display:inline-block;min-width:4.5ch}
+.role em.go{animation:rolein .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rolein{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.sub{color:var(--muted);max-width:46ch;font-size:clamp(15px,1.5vw,17px);margin-bottom:40px}
+.acts{display:flex;flex-wrap:wrap;gap:13px;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:14px 28px;
+  font-size:15px;font-weight:500;min-height:50px;transition:transform .3s,background .3s,color .3s;
+  border:1px solid transparent;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}
+.btn.solid{background:#fff;color:#050505}
+.btn.solid:hover{background:linear-gradient(120deg,var(--cyan),var(--violet));color:#050505}
+.btn.line{border-color:rgba(255,255,255,.22);color:#fff;background:rgba(255,255,255,.02)}
+.btn.line:hover{border-color:transparent;background:rgba(255,255,255,.10)}
+@media (max-width:520px){.acts{display:grid}.btn{justify-content:center}}
+
+/* ---------- бегущая строка ---------- */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:20px 0;background:#070708}
+.marq .row{display:flex;width:max-content;animation:marq 46s linear infinite}
+.marq .row>span{display:flex;align-items:center;gap:30px;padding-right:30px;white-space:nowrap;
+  font-size:clamp(15px,2vw,22px);letter-spacing:.06em;text-transform:uppercase;color:#cfcfd4}
+.marq i{width:6px;height:6px;border-radius:50%;flex:none;
+  background:linear-gradient(120deg,var(--cyan),var(--violet))}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- секции ---------- */
+section.blk{padding:96px 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;
+  margin-bottom:46px}
+.head .rule{display:inline-block;width:30px;height:1px;background:var(--line);
+  vertical-align:middle;margin-right:12px}
+h2{font-size:clamp(38px,5.6vw,68px);line-height:1.02;font-weight:400;letter-spacing:-.02em;
+  margin:16px 0 14px}
+h2 em{font-family:var(--serif);font-style:italic}
+.head p{color:var(--muted);max-width:52ch}
+
+/* ---------- бенто работ ---------- */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{position:relative;grid-column:span 6;border:1px solid var(--line);border-radius:26px;
+  overflow:hidden;background:var(--glass);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  aspect-ratio:16/11;display:block;transition:border-color .35s,transform .45s}
+.card:nth-child(4n+1),.card:nth-child(4n+4){grid-column:span 7}
+.card:nth-child(4n+2),.card:nth-child(4n+3){grid-column:span 5}
+.card:hover{border-color:rgba(255,255,255,.25);transform:translateY(-3px)}
+.card img{width:100%;height:100%;object-fit:cover;object-position:top center;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.card:hover img{transform:scale(1.05)}
+/* точечная сетка поверх картинки — та самая «полутоновая» текстура */
+.card .dots{position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+  background-image:radial-gradient(circle,#000 1px,transparent 1px);background-size:4px 4px}
+.card .veil{position:absolute;inset:0;display:grid;place-content:center;opacity:0;
+  background:rgba(5,5,5,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:opacity .4s}
+.card:hover .veil,.card:focus-visible .veil{opacity:1}
+.card .tag{padding:2px;border-radius:999px;background:linear-gradient(120deg,var(--cyan),var(--violet))}
+.card .tag span{display:block;background:#fff;color:#050505;border-radius:999px;
+  padding:11px 22px;font-size:14px;font-weight:500}
+.card .tag em{font-family:var(--serif);font-style:italic}
+@media (max-width:820px){
+  .bento{gap:14px}
+  .card,.card:nth-child(4n+1),.card:nth-child(4n+2),.card:nth-child(4n+3),.card:nth-child(4n+4){grid-column:span 12}
+  .card .veil{opacity:1;background:linear-gradient(transparent 45%,rgba(5,5,5,.8));
+    backdrop-filter:none;-webkit-backdrop-filter:none;place-content:end center;padding-bottom:20px}
+}
+
+/* ---------- лента записей ---------- */
+.feed{display:grid;gap:12px}
+.item{display:flex;align-items:center;gap:22px;padding:18px 22px;border-radius:24px;
+  border:1px solid var(--line);background:rgba(255,255,255,.015);transition:background .3s,border-color .3s}
+.item:hover{background:var(--glass);border-color:rgba(255,255,255,.2)}
+.item .th{width:84px;height:62px;flex:none;border-radius:14px;overflow:hidden;background:#111}
+.item .th img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.item .tx{flex:1;min-width:0}
+.item b{display:block;font-weight:500;font-size:clamp(16px,2vw,21px);line-height:1.25}
+.item b em{font-family:var(--serif);font-style:italic}
+.item small{color:var(--muted);font-size:13px}
+.item .rd{flex:none;font-size:12px;color:var(--muted);border:1px solid var(--line);
+  border-radius:999px;padding:6px 13px;white-space:nowrap}
+@media (max-width:600px){.item{gap:15px;padding:14px}.item .th{width:60px;height:52px}.item .rd{display:none}}
+
+/* ---------- цифры ---------- */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.nums div{border-top:1px solid var(--line);padding-top:20px}
+.nums b{display:block;font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(44px,6.4vw,82px);line-height:1}
+.nums span{display:block;color:var(--muted);font-size:14px;margin-top:10px}
+@media (max-width:620px){.nums{grid-template-columns:1fr;gap:26px}}
+
+/* ---------- контакты ---------- */
+.foot{position:relative;padding:96px 0 40px;overflow:hidden;border-top:1px solid var(--line)}
+.foot .glow{position:absolute;left:50%;top:-120px;width:760px;height:460px;transform:translateX(-50%);
+  filter:blur(120px);opacity:.30;pointer-events:none;
+  background:radial-gradient(ellipse,var(--violet) 0%,var(--cyan) 45%,transparent 72%)}
+.foot .wrap{position:relative;z-index:1}
+.big{font-size:clamp(38px,6vw,78px);line-height:1.02;font-weight:400;letter-spacing:-.02em;
+  max-width:16ch;margin-bottom:34px}
+.big em{font-family:var(--serif);font-style:italic}
+.fbar{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  border-top:1px solid var(--line);margin-top:64px;padding-top:24px;color:var(--muted);font-size:13px}
+.dot{display:inline-flex;align-items:center;gap:9px}
+.dot i{width:8px;height:8px;border-radius:50%;background:#43d17a;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+
+/* появление при прокрутке */
+.rv{opacity:0;transform:translateY(24px);
+  transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.seen{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important}
+  .marq .row{animation:none}
+  .dot i{animation:none}
+  .role em.go{animation:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="pill" id="pill">
+    <span class="mark" aria-hidden="true"><span>A</span></span>
+    <span class="sep"></span>
+    <a class="lnk" href="#home">Начало</a>
+    <a class="lnk" href="#works">Работы</a>
+    <a class="lnk hide-xs" href="#feed">Что делаю</a>
+    <span class="sep"></span>
+    <a class="say" href="#contact"><b>Написать ↗</b></a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="core" aria-hidden="true"></div>
+  <canvas id="vortex" aria-hidden="true"></canvas>
+  <div class="mask" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow rv">Авито · Яндекс · соцсети · сайты</p>
+    <h1 class="name rv">AYKO</h1>
+    <p class="role rv">Веду <em id="role">объявления</em> для монтажников.</p>
+    <p class="sub rv">Два года веду объявления инженера по септикам, дренажу и отоплению.
+      Перепишу ваше так, чтобы Авито показывал его чаще, а люди открывали и звонили.</p>
+    <div class="acts rv">
+      <a class="btn solid" href="#works">Смотреть работы</a>
+      <a class="btn line" href="#contact">Написать мне ↗</a>
+    </div>
+  </div>
+</header>
+
+<div class="marq" aria-hidden="true"><div class="row" id="marqRow"></div></div>
+
+<section class="blk" id="works">
+  <div class="wrap">
+    <div class="head rv">
+      <div>
+        <p class="eyebrow"><span class="rule"></span>Работы</p>
+        <h2>Сайты, которые я <em>сделала</em></h2>
+        <p>Одна страница, куда вести людей из объявления: работы, отзывы, кнопка связи.</p>
+      </div>
+    </div>
+    <div class="bento" id="bento"></div>
+  </div>
+</section>
+
+<section class="blk" id="feed">
+  <div class="wrap">
+    <div class="head rv">
+      <div>
+        <p class="eyebrow"><span class="rule"></span>Что делаю</p>
+        <h2>Четыре места, где вас <em>находят</em></h2>
+        <p>Начинаем с Авито. Дальше — по желанию и по деньгам.</p>
+      </div>
+    </div>
+    <div class="feed" id="feed-list"></div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="nums">
+      <div class="rv"><b>2 года</b><span>веду объявления инженера: септики, дренаж, отопление, электрика</span></div>
+      <div class="rv"><b>5–6</b><span>заявок в день приходит ему сейчас с этих объявлений</span></div>
+      <div class="rv"><b>0 ₽</b><span>предоплата — платите, когда увидите готовую работу</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot" id="contact">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow rv" style="margin-bottom:22px">Связаться</p>
+    <h2 class="big rv">Расскажите, что у вас <em>не открывают</em></h2>
+    <div class="acts rv" style="justify-content:flex-start">
+      <a class="btn solid" href="tel:+79775567601">+7 977 556-76-01</a>
+      <a class="btn line" href="https://aykoweb.ru">Светлая версия сайта ↗</a>
+    </div>
+    <div class="fbar">
+      <span class="dot"><i></i>Свободна для новых заказов</span>
+      <span>© <span id="y"></span> AYKO · Москва и область</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- данные страницы: правьте здесь, разметку трогать не надо ---------- */
+var WORKS = [
+  { img:'img/septic.jpg',  t:'Септики и дренаж' },
+  { img:'img/simba.jpg',   t:'Ветклиника' },
+  { img:'img/savva.jpg',   t:'Кофейня' },
+  { img:'img/anikor.jpg',  t:'Студия йоги' },
+  { img:'img/atelier.jpg', t:'Швейное ателье' }
+];
+var FEED = [
+  { img:'img/k/chto-proveryu.jpg', t:'Объявление на <em>Авито</em>',       s:'Заголовок, текст, фотографии, категория', r:'с этого начинаем' },
+  { img:'img/k/opyt.jpg',          t:'Реклама в <em>Яндексе</em>',          s:'Когда Авито уже мало и нужен поток пошире', r:'по желанию' },
+  { img:'img/k/publikaciya.jpg',   t:'Instagram, TikTok, <em>YouTube</em>', s:'Реклама кончается с деньгами, публикация остаётся', r:'ведение' },
+  { img:'img/k/raboty.jpg',        t:'<em>Сайт</em> на одну страницу',      s:'Работы, отзывы, кнопка связи — куда вести людей', r:'по желанию' }
+];
+var ROLES = ['объявления','рекламу','соцсети','сайты'];
+var MARQ  = ['Без предоплаты','Цена до начала работы','Два года в этой сфере','Москва и область'];
+
+/* ---------- работы ---------- */
+(function(){
+  var b = document.getElementById('bento');
+  WORKS.forEach(function(w){
+    var a = document.createElement('a');
+    a.className = 'card rv'; a.href = '#contact';
+    a.innerHTML = '<img src="' + w.img + '" alt="' + w.t + '" loading="lazy" decoding="async">' +
+      '<span class="dots"></span>' +
+      '<span class="veil"><span class="tag"><span>Смотреть — <em>' + w.t + '</em></span></span></span>';
+    b.appendChild(a);
+  });
+})();
+
+/* ---------- лента ---------- */
+(function(){
+  var f = document.getElementById('feed-list');
+  FEED.forEach(function(x){
+    var d = document.createElement('a');
+    d.className = 'item rv'; d.href = '#contact';
+    d.innerHTML = '<span class="th"><img src="' + x.img + '" alt="" loading="lazy" decoding="async"></span>' +
+      '<span class="tx"><b>' + x.t + '</b><small>' + x.s + '</small></span>' +
+      '<span class="rd">' + x.r + '</span>';
+    f.appendChild(d);
+  });
+})();
+
+/* ---------- бегущая строка ---------- */
+(function(){
+  var row = document.getElementById('marqRow');
+  function half(){
+    var s = document.createElement('span');
+    MARQ.forEach(function(w){
+      s.appendChild(document.createElement('i'));
+      s.appendChild(document.createTextNode(w));
+    });
+    return s;
+  }
+  row.appendChild(half()); row.appendChild(half());
+})();
+
+/* ---------- слово, которое меняется ---------- */
+(function(){
+  var el = document.getElementById('role'), i = 0;
+  var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq && mq.matches) return;
+  setInterval(function(){
+    i = (i + 1) % ROLES.length;
+    el.textContent = ROLES[i];
+    el.classList.remove('go'); void el.offsetWidth; el.classList.add('go');
+  }, 2200);
+})();
+
+/* ---------- шапка отрывается от края ---------- */
+(function(){
+  var pill = document.getElementById('pill');
+  function s(){ pill.classList.toggle('stuck', window.scrollY > 80); }
+  window.addEventListener('scroll', s, { passive:true }); s();
+})();
+
+/* ---------- появление при прокрутке ---------- */
+(function(){
+  var t = [].slice.call(document.querySelectorAll('.rv'));
+  if (!('IntersectionObserver' in window)) {
+    t.forEach(function(e){ e.classList.add('seen'); }); return;
+  }
+  var io = new IntersectionObserver(function(en){
+    en.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+  }, { rootMargin:'0px 0px -10% 0px', threshold:.08 });
+  t.forEach(function(e){ io.observe(e); });
+  document.querySelectorAll('.hero .rv').forEach(function(e,n){
+    setTimeout(function(){ e.classList.add('seen'); }, 120 + n * 110);
+  });
+})();
+
+/* ---------- космический вихрь ----------
+   Рисуем сами, без библиотек и без видео: точки летят по спирали
+   из глубины к краям. Весит ноль, работает на любом телефоне.
+   Скорость — SPEED, плотность — DENS (точек на миллион пикселей). */
+(function(){
+  var c = document.getElementById('vortex');
+  if (!c || !c.getContext) return;
+  var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mq && mq.matches) { c.remove(); return; }
+
+  var ctx = c.getContext('2d'), W = 0, H = 0, dots = [], raf = 0, live = true;
+  var SPEED = 0.0016, DENS = 165, DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  function make(z){
+    return { a: Math.random() * Math.PI * 2,          /* угол */
+             r: Math.random() * 0.06 + 0.002,          /* радиус, доля экрана */
+             z: z === undefined ? Math.random() : z,   /* «глубина» для яркости */
+             w: (Math.random() * 0.5 + 0.75) };        /* своя скорость */
+  }
+  function size(){
+    var r = c.getBoundingClientRect();
+    W = Math.max(1, r.width); H = Math.max(1, r.height);
+    c.width = W * DPR; c.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    var n = Math.round(DENS * (W * H) / 1000000);
+    n = Math.max(80, Math.min(380, n));
+    dots = []; for (var i = 0; i < n; i++) dots.push(make());
+  }
+  function frame(){
+    if (!live) return;
+    ctx.clearRect(0, 0, W, H);
+    var cx = W / 2, cy = H * 0.46, m = Math.max(W, H);
+    for (var i = 0; i < dots.length; i++){
+      var d = dots[i];
+      d.r += SPEED * d.w * (0.35 + d.r * 2.6);   /* чем дальше, тем быстрее */
+      d.a += 0.0042 * d.w;                        /* закрутка */
+      if (d.r > 0.82) dots[i] = make(Math.random());
+      var x = cx + Math.cos(d.a) * d.r * m,
+          y = cy + Math.sin(d.a) * d.r * m * 0.62;
+      var fade = d.r < 0.08 ? d.r / 0.08 : (d.r > 0.6 ? (0.82 - d.r) / 0.22 : 1);
+      var al = Math.max(0, Math.min(1, fade)) * (0.38 + d.z * 0.62);
+      var rad = 0.5 + d.r * 3.1;
+      ctx.beginPath();
+      ctx.arc(x, y, rad, 0, Math.PI * 2);
+      ctx.fillStyle = d.z > 0.62
+        ? 'rgba(167,139,250,' + al.toFixed(3) + ')'   /* фиолетовые */
+        : 'rgba(127,217,255,' + al.toFixed(3) + ')';  /* голубые */
+      ctx.fill();
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (!raf){ live = true; raf = requestAnimationFrame(frame); } }
+  function stop(){ live = false; cancelAnimationFrame(raf); raf = 0; }
+
+  size(); start();
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(size, 200); });
+  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+  /* вихрь не крутится, когда первый экран ушёл — незачем греть телефон */
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ e[0].isIntersecting ? start() : stop(); }, { threshold:0 })
+      .observe(document.getElementById('home'));
+  }
+})();
+
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
