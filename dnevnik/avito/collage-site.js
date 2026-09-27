@@ -11,17 +11,17 @@ const shots = [
 ];
 const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{width:1200px;height:750px;background:#f7f5f1;color:#14151a;overflow:hidden;
+body{width:1200px;height:750px;background:#12141b;color:#f3f2ef;overflow:hidden;
   font-family:'DejaVu Sans','Liberation Sans',sans-serif;padding:44px 56px 40px;display:flex;flex-direction:column}
 h1{font-size:54px;font-weight:700;text-transform:uppercase;letter-spacing:-.015em;line-height:1}
-.sub{margin-top:11px;font-size:26px;color:#5f5c56}
+.sub{margin-top:11px;font-size:26px;color:#9b9aa3}
 .row{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px;flex:1;min-height:0}
 .c{display:flex;flex-direction:column;min-height:0}
-.ph{flex:1;min-height:0;border-radius:14px;overflow:hidden;border:1px solid #ddd8ce;background:#fff}
+.ph{flex:1;min-height:0;border-radius:14px;overflow:hidden;border:1px solid #39404f;background:#0a0b0f}
 .ph img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 .ph.crop{position:relative}
 .ph.crop img{position:absolute;left:0;top:0;width:100%;height:auto}
-.cap{margin-top:10px;font-size:22px;color:#5f5c56;font-weight:600}
+.cap{margin-top:10px;font-size:22px;color:#9b9aa3;font-weight:600}
 
 .logo{font-size:44px;font-weight:700;letter-spacing:.16em}
 .url{font-size:27px;color:#5f5c56}

@@ -26,7 +26,9 @@ function bigSize(t, hasList){
   return s;
 }
 
-const html = c => { const k = SKIN[c.skin] || SKIN.paper; const hasList = !!(c.list && c.list.length); return `
+const html = c => { /* на тёмном сайте бумажные карточки светятся белыми пятнами */
+  const skin = SITE && c.skin === 'paper' ? 'ink' : c.skin;
+  const k = SKIN[skin] || SKIN.paper; const hasList = !!(c.list && c.list.length); return `
 <!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{width:${W}px;height:${H}px;background:${k.bg};color:${k.text};overflow:hidden;position:relative;
