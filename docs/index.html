@@ -1682,6 +1682,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       _subject:'Заявка с сайта: ' + document.getElementById('fName').value.trim() +
                ', ' + document.getElementById('fPhone').value.trim(),
       page:    location.href,
+      source:  istochnik(),
       sentAt:  new Date().toLocaleString('ru-RU')
     };
   }
@@ -1698,9 +1699,29 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       'Подробности':       d.text || '—',
       'Отправлено':        d.sentAt,
       'Страница':          d.page,
+      'Источник':          d.source,
       _gotcha:  d._gotcha,
       _subject: d._subject
     };
+  }
+
+  /* Откуда пришёл человек. Директ дописывает к адресу yclid, Авито и поиск
+     видны по referrer. Нужно, чтобы в телеграме было сразу написано, какая
+     реклама привела заявку, а не длинный адрес, в котором это надо искать. */
+  function istochnik(){
+    try {
+      var p = new URLSearchParams(location.search);
+      if (p.get('yclid'))      return 'Яндекс Директ';
+      if (p.get('utm_source')) return 'Метка ' + p.get('utm_source');
+      var r = document.referrer;
+      if (!r) return 'Прямой заход или закладка';
+      var h = new URL(r).hostname.replace(/^www\./, '');
+      if (h === location.hostname) return 'Переход внутри сайта';
+      if (h.indexOf('yandex') > -1) return 'Поиск Яндекса';
+      if (h.indexOf('google') > -1) return 'Поиск Гугла';
+      if (h.indexOf('avito')  > -1) return 'Авито';
+      return h;
+    } catch(e){ return 'Не определился'; }
   }
 
   function sendTo(url, data){
