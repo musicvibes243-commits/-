@@ -748,6 +748,7 @@ def build(p):
 
     <div class="hero__cta" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
       <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
+      <a class="btn btn--outline" href="{WA}" target="_blank" rel="noopener">Написать в WhatsApp</a>
       <a class="btn btn--outline" href="{PHONE_HREF}">Позвонить</a>
     </div>
 
@@ -940,10 +941,10 @@ def build(p):
 
 <!-- ================= МОБИЛЬНАЯ ПАНЕЛЬ ================= -->
 <nav class="callbar" aria-label="Быстрая связь">
+  <a class="pr" href="{WA}" target="_blank" rel="noopener">{ICO_WA}WhatsApp</a>
   <a href="{PHONE_HREF}">{ICO_PHONE}Позвонить</a>
-  <a href="{WA}" target="_blank" rel="noopener">{ICO_WA}WhatsApp</a>
   <a href="{TG}" target="_blank" rel="noopener">{ICO_TG}Telegram</a>
-  <a class="pr" href="#zayavka">{ICO_MAIL}Заявка</a>
+  <a href="#zayavka">{ICO_MAIL}Заявка</a>
 </nav>
 
 <script src="assets/site.js" defer></script>
