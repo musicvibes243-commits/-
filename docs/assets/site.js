@@ -188,13 +188,16 @@
     );
   }
 
-  /* Заявка не должна теряться: если отправка не прошла — даём прямые способы связи */
+  /* Заявка не должна теряться: если отправка не прошла — даём прямые способы связи.
+     И отдельная цель form_error: без неё неудачная заявка нигде не видна —
+     цель form_submit просто молчит, и понять, была попытка или нет, нельзя. */
   function showFail(data){
+    if (window.reachGoal) window.reachGoal('form_error');
     replaceForm(
       '<div class="done fail">' +
         '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' +
         '<div><h3>Заявка не ушла</h3>' +
-          '<p>Связь с сервером прервалась — скорее всего, пропал интернет. Позвоните или напишите, примем заявку сразу:</p>' +
+          '<p>Отправка не прошла — связь с сервером не установилась. Позвоните или напишите, примем заявку сразу:</p>' +
           '<p style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">' +
             '<a class="btn btn--accent" href="tel:+79153469728">Позвонить</a>' +
             '<a class="btn btn--outline" href="' + waLink(data) + '" target="_blank" rel="noopener">Написать в WhatsApp</a>' +
