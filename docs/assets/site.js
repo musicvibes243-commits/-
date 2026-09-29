@@ -212,7 +212,11 @@
     tried = true;
     var bad = validate();
     renderSummary(bad);
-    if (bad.length) { box.focus(); return; }
+    /* Человек нажал «Отправить», а заявка не ушла — он споткнулся о проверку
+       полей. Со стороны это неотличимо от «никто не писал»: автоцели Метрики
+       такое нажатие считают, наша form_submit молчит. Отмечаем той же целью,
+       что и сорвавшуюся отправку: для нас обе значат одно — не дошло. */
+    if (bad.length) { if (window.reachGoal) window.reachGoal('form_error'); box.focus(); return; }
 
     var data = payload();
     var jobs = [];
