@@ -837,18 +837,12 @@ def build(p):
     <div>
       <p class="eyebrow">Заявка на выезд</p>
       <h2>Приедем, посмотрим и назовём точную цену</h2>
-      <p class="lead" style="margin-top:14px">Отвечаем круглосуточно: звоните в любое время или пишите в мессенджер — ответим там же.</p>
+      <p class="lead" style="margin-top:14px">Отвечаем круглосуточно: звоните в любое время или оставьте заявку — перезвоним в течение 15 минут.</p>
 
       <div class="contacts">
         <div class="contact">
           {ICO_PHONE}
           <div><b><a href="{PHONE_HREF}" style="text-decoration:none">{PHONE_TEXT}</a></b><span>круглосуточно, без выходных</span></div>
-        </div>
-        <div class="contact">
-          {ICO_WA}
-        </div>
-        <div class="contact">
-          {ICO_TG}
         </div>
         <div class="contact">
           {ICO_PIN}
