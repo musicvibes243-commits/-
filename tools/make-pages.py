@@ -768,7 +768,6 @@ def build(p):
 
     <div class="hero__cta" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
       <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
-      <a class="btn btn--outline" href="{wa_link(p['slug'])}" target="_blank" rel="noopener">Написать в WhatsApp</a>
       <a class="btn btn--outline" href="{PHONE_HREF}">Позвонить</a>
     </div>
 
@@ -847,11 +846,9 @@ def build(p):
         </div>
         <div class="contact">
           {ICO_WA}
-          <div><b><a href="{wa_link(p['slug'])}" target="_blank" rel="noopener" style="text-decoration:none">Написать в WhatsApp</a></b><span>пришлите фото — сориентируем быстрее</span></div>
         </div>
         <div class="contact">
           {ICO_TG}
-          <div><b><a href="{TG}" target="_blank" rel="noopener" style="text-decoration:none">Написать в Telegram</a></b><span>удобно скинуть фото и схему</span></div>
         </div>
         <div class="contact">
           {ICO_PIN}
@@ -944,8 +941,6 @@ def build(p):
         <h4>Контакты</h4>
         <ul>
           <li><a href="{PHONE_HREF}">{PHONE_TEXT}</a></li>
-          <li><a href="{wa_link(p['slug'])}" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><a href="{TG}" target="_blank" rel="noopener">Telegram</a></li>
           <li>Круглосуточно, без выходных</li>
           <li>Москва и Московская область</li>
         </ul>
@@ -961,10 +956,8 @@ def build(p):
 
 <!-- ================= МОБИЛЬНАЯ ПАНЕЛЬ ================= -->
 <nav class="callbar" aria-label="Быстрая связь">
-  <a class="pr" href="{wa_link(p['slug'])}" target="_blank" rel="noopener">{ICO_WA}WhatsApp</a>
   <a href="{PHONE_HREF}">{ICO_PHONE}Позвонить</a>
-  <a href="{TG}" target="_blank" rel="noopener">{ICO_TG}Telegram</a>
-  <a href="#zayavka">{ICO_MAIL}Заявка</a>
+  <a class="pr" href="#zayavka">{ICO_MAIL}Оставить заявку</a>
 </nav>
 
 <script src="assets/site.js" defer></script>
