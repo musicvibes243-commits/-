@@ -61,6 +61,11 @@
 | `razvodka-karkas-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Разводка по каркасу |
 | `boiler-ariston-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Разводка в санузле |
+| `kotelnaya-obvyazka-01.jpg` | `otoplenie.html` | Котёл и обвязка |
+| `kollektory-tepliy-pol-01.jpg` | `otoplenie.html` | Два коллектора на стене |
+| `kotelnaya-kotel-01.jpg` | `otoplenie.html` | Котёл и расширительный бак |
+| `vodosnabzhenie-uzel-02.jpg` | `vodosnabzhenie.html` | Узел ввода с фильтром |
+| `boiler-obvyazka-01.jpg` | `vodosnabzhenie.html` | Бойлер с насосом |
 | `avtopoliv-uchastok-01.jpg` | `avtopoliv.html` | Участок целиком |
 | `avtopoliv-forsunka-01.jpg` | `avtopoliv.html` | Форсунка в газоне |
 | `avtopoliv-nasosnaya-01.jpg` | `avtopoliv.html` | Насосная станция полива |
@@ -94,3 +99,19 @@
   верх и низ — иногда вместе с тем, ради чего снимали.
 - Только собственные снимки. Чужие фото из интернета — это претензии
   по авторским правам и потеря доверия.
+
+## Пять снимков котельной: откуда они и что с ними не так
+
+29 сентября 2026 добавлены `kotelnaya-obvyazka-01`, `kollektory-tepliy-pol-01`,
+`kotelnaya-kotel-01`, `vodosnabzhenie-uzel-02`, `boiler-obvyazka-01` — одна
+котельная, снятая с пяти точек.
+
+**Это не оригиналы.** Они вырезаны из скриншотов объявления на Авито:
+у исходного кадра было 573 px по ширине вместо обычных 720, снизу пришлось
+срезать водяной знак «Avito», и при подгонке под карточку 4:3 кадр растянут
+до 720×540. Поэтому они мягче соседних снимков.
+
+**Если оригиналы найдутся в галерее телефона — пришлите, я заменю.** Файлы
+называются так же, менять больше ничего не придётся: подписи, страницы
+и разметка уже на месте. Выигрыш будет заметный — в оригинале около
+3000 px по ширине против нынешних 573.
