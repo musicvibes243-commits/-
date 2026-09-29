@@ -9,7 +9,27 @@ import pathlib, json, html
 SITE = "https://stroyinvest-mo.ru"
 PHONE_HREF = "tel:+79153469728"
 PHONE_TEXT = "+7 (915) 346-97-28"
-WA = "https://wa.me/79153469728"
+WA_NUM = "79153469728"
+
+# Текст, который уже написан в окне WhatsApp, когда человек нажимает кнопку.
+# Без него надо придумывать первую фразу — а на этом половина закрывает
+# мессенджер и уходит. 29 сентября 2026: пять нажатий на кнопки связи
+# за день, ноль обращений; всё остальное к тому моменту проверили.
+WA_TEXT = {
+  "septiki":        "Здравствуйте! Пишу с сайта, интересует септик под ключ.",
+  "drenazh":        "Здравствуйте! Пишу с сайта, интересует дренаж участка.",
+  "vodosnabzhenie": "Здравствуйте! Пишу с сайта, интересует водоснабжение дома.",
+  "otoplenie":      "Здравствуйте! Пишу с сайта, интересует монтаж отопления.",
+  "elektrika":      "Здравствуйте! Пишу с сайта, интересует электрика в доме.",
+  "avtopoliv":      "Здравствуйте! Пишу с сайта, интересует автополив участка.",
+}
+
+def wa_link(slug):
+    import urllib.parse
+    txt = WA_TEXT.get(slug, "Здравствуйте! Пишу с сайта stroyinvest-mo.ru.")
+    return "https://wa.me/" + WA_NUM + "?text=" + urllib.parse.quote(txt)
+
+WA = "https://wa.me/79153469728"   # общий, без текста — на случай, если slug неизвестен
 TG = "https://t.me/+79153469728"
 
 LOGO = '''<svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none">
@@ -748,7 +768,7 @@ def build(p):
 
     <div class="hero__cta" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
       <a class="btn btn--accent" href="#zayavka">Оставить заявку</a>
-      <a class="btn btn--outline" href="{WA}" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      <a class="btn btn--outline" href="{wa_link(p['slug'])}" target="_blank" rel="noopener">Написать в WhatsApp</a>
       <a class="btn btn--outline" href="{PHONE_HREF}">Позвонить</a>
     </div>
 
@@ -827,7 +847,7 @@ def build(p):
         </div>
         <div class="contact">
           {ICO_WA}
-          <div><b><a href="{WA}" target="_blank" rel="noopener" style="text-decoration:none">Написать в WhatsApp</a></b><span>пришлите фото — сориентируем быстрее</span></div>
+          <div><b><a href="{wa_link(p['slug'])}" target="_blank" rel="noopener" style="text-decoration:none">Написать в WhatsApp</a></b><span>пришлите фото — сориентируем быстрее</span></div>
         </div>
         <div class="contact">
           {ICO_TG}
@@ -924,7 +944,7 @@ def build(p):
         <h4>Контакты</h4>
         <ul>
           <li><a href="{PHONE_HREF}">{PHONE_TEXT}</a></li>
-          <li><a href="{WA}" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="{wa_link(p['slug'])}" target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href="{TG}" target="_blank" rel="noopener">Telegram</a></li>
           <li>Круглосуточно, без выходных</li>
           <li>Москва и Московская область</li>
@@ -941,7 +961,7 @@ def build(p):
 
 <!-- ================= МОБИЛЬНАЯ ПАНЕЛЬ ================= -->
 <nav class="callbar" aria-label="Быстрая связь">
-  <a class="pr" href="{WA}" target="_blank" rel="noopener">{ICO_WA}WhatsApp</a>
+  <a class="pr" href="{wa_link(p['slug'])}" target="_blank" rel="noopener">{ICO_WA}WhatsApp</a>
   <a href="{PHONE_HREF}">{ICO_PHONE}Позвонить</a>
   <a href="{TG}" target="_blank" rel="noopener">{ICO_TG}Telegram</a>
   <a href="#zayavka">{ICO_MAIL}Заявка</a>
