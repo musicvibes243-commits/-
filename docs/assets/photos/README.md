@@ -49,8 +49,8 @@
 | `kesson-oborudovanie-01.jpg` | `vodosnabzhenie.html` + главная | Автоматика в кессоне |
 | `vodosnabzhenie-uzel-01.jpg` | `vodosnabzhenie.html` + главная | Узел ввода в доме |
 | `vodosnabzhenie-gidroak-01.jpg` | `vodosnabzhenie.html` | Гидроаккумулятор и бойлер |
-| `kotelnaya-obshchiy-01.jpg` | `otoplenie.html` | Котельная целиком |
-| `kotelnaya-elektrokotel-01.jpg` | `otoplenie.html` | Электрокотёл с обвязкой |
+| `kotelnaya-obshchiy-01.jpg` | только реклама | Котельная целиком |
+| `kotelnaya-elektrokotel-01.jpg` | только реклама | Электрокотёл с обвязкой |
 | `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
 | `shchit-schneider-01.jpg` | `elektrika.html` | Щит с автоматикой |
@@ -63,6 +63,10 @@
 | `boiler-ariston-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Водонагреватель с обвязкой |
 | `razvodka-sanuzel-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Разводка в санузле |
 | `kotelnaya-dva-kotla-01.jpg` | `otoplenie.html` | Котельная на двух котлах |
+| `kotelnaya-viessmann-med-01.jpg` | `otoplenie.html` | Котельная на медных трубах |
+| `gidrostrelka-gruppy-01.jpg` | `otoplenie.html` | Гидрострелка и насосные группы |
+| `kollektory-chetyre-01.jpg` | `vodosnabzhenie.html` | Четыре коллектора с бирками |
+| `kollektory-voda-01.jpg` | `vodosnabzhenie.html` | Коллекторная разводка воды |
 | `kotelnaya-vodopodgotovka-01.jpg` | `otoplenie.html` + `vodosnabzhenie.html` | Котельная с водоподготовкой |
 | `kotelnaya-podpisi-01.jpg` | `otoplenie.html` | Каждая линия подписана |
 | `nasosnye-gruppy-01.jpg` | `otoplenie.html` | Насосные группы котельной |
@@ -211,3 +215,22 @@
 **Не ставим, пока не подтвердят, что это их работа.** Чужая фотография
 на своём сайте — это заявление о своей работе, которого не было.
 Подтвердят — поставим, кадр отличный.
+
+## Пятый заход: галерея отопления собрана заново
+
+| Ушло из галереи | Пришло вместо |
+| --- | --- |
+| `kotelnaya-obshchiy-01.jpg` | `kotelnaya-viessmann-med-01.jpg` — два котла и обвязка медью |
+| `kotelnaya-elektrokotel-01.jpg` | `gidrostrelka-gruppy-01.jpg` — гидрострелка и три насосные группы |
+
+**Файлы не удалены.** Оба снимка используются в объявлениях на Авито
+и в рекламных картинках Директа — `tools/avito-obyavleniya.md`
+и `tools/direct-otoplenie.md` ссылаются на них по имени. Они просто
+больше не стоят в галерее на сайте, а на диске лежат.
+
+На водоснабжение добавлены `kollektory-chetyre-01.jpg` и
+`kollektory-voda-01.jpg` — четыре коллектора с бирками в деревянном доме
+и коллекторная разводка воды с инсталляцией.
+
+Квадратный кадр с гидрострелкой владелица прислала второй раз после
+вопроса об авторстве. Принято как подтверждение, снимок поставлен.
