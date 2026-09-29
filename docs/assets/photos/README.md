@@ -50,6 +50,7 @@
 | `vodosnabzhenie-uzel-01.jpg` | `vodosnabzhenie.html` + главная | Узел ввода в доме |
 | `vodosnabzhenie-gidroak-01.jpg` | `vodosnabzhenie.html` | Гидроаккумулятор и бойлер |
 | `kotelnaya-obshchiy-01.jpg` | только реклама | Котельная целиком |
+| `radiator-montazh-02-avito.jpg` | только реклама | Радиатор, кадр 4:3 под карточку Авито |
 | `kotelnaya-elektrokotel-01.jpg` | только реклама | Электрокотёл с обвязкой |
 | `kollektor-rashodomery-01.jpg` | `otoplenie.html` | Коллектор тёплого пола |
 | `tepliy-pol-kontury-01.jpg` | `otoplenie.html` | Контуры тёплого пола |
