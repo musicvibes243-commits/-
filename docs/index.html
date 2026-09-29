@@ -1410,6 +1410,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   @media (max-width:700px){
     .hero__media img{display:none}
     .hero__video{display:block;width:100%;height:100%;object-fit:cover}
+    /* Ролик светлее фотографии: песок и небо съедают заголовок и оранжевую
+       кнопку. На телефонах затемняем сильнее — читаемость важнее картинки. */
+    .hero__media::after{background:
+      linear-gradient(180deg,rgba(22,17,14,.74) 0%,rgba(22,17,14,.62) 40%,rgba(30,24,21,.95) 100%)}
   }
   @media (prefers-reduced-motion:reduce){
     .hero__video{display:none !important}
