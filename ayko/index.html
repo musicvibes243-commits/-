@@ -392,7 +392,8 @@ main,footer{position:relative;z-index:1}
 .tile.opt{justify-content:flex-start;min-height:0;padding:30px}
 .tile.opt .lab{position:static;margin-bottom:18px}
 .tile.opt .tlist{margin-bottom:0}
-@media (max-width:760px){.tile.opt{padding:24px}}
+.tile.opt.wide .tlist{grid-template-columns:1fr 1fr;gap:11px 34px}
+@media (max-width:760px){.tile.opt{padding:24px}.tile.opt.wide .tlist{grid-template-columns:1fr}}
 @media (max-width:760px){.tile.tarif{padding:24px}.tlist li{font-size:15px}}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}
 .s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
@@ -1007,6 +1008,17 @@ body.has-sticky .chat-fab{bottom:82px}
           <li><strong>Подарочные сертификаты.</strong> Покупаются на сайте и отправляются получателю.</li>
           <li><strong>Пакеты услуг.</strong> Несколько занятий или выездов одной покупкой.</li>
           <li><strong>Сбор отзывов.</strong> После услуги человеку приходит просьба оставить отзыв. На сайте он появляется только с его согласия.</li>
+        </ul>
+      </div>
+
+      <div class="tile opt wide has-lab s12">
+        <span class="lab">Учёт и развитие</span>
+        <b>Видно, что работает, а что нет</b>
+        <ul class="tlist">
+          <li><strong>Учёт заявок и клиентов.</strong> Каждое обращение попадает в общую таблицу: видно, кому ответили, кто записался и кому пора написать ещё раз.</li>
+          <li><strong>Статистика источников.</strong> Видно, откуда пришла заявка: из объявления на Авито, из рекламы, из соцсетей или из поиска. Дальше понятно, что окупается.</li>
+          <li><strong>Вторая языковая версия.</strong> Человек читает об услугах и оставляет заявку на своём языке.</li>
+          <li><strong>Отдельные страницы услуг.</strong> Своя страница для генеральной уборки, своя — для мытья окон, своя — для уборки после ремонта.</li>
         </ul>
       </div>
 
