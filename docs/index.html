@@ -322,6 +322,8 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
   background-position:calc(100% - 21px) 24px,calc(100% - 15px) 24px;background-size:6px 6px;background-repeat:no-repeat}
 input:focus,select:focus,textarea:focus{border-color:var(--focus)}
 input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--danger);border-width:2px}
+.opt--bad{color:var(--danger)}
+.opt--bad input{outline:2px solid var(--danger);outline-offset:3px}
 .hint{font-size:13px;color:var(--muted);margin-top:7px}
 .err{display:block;font-size:13.5px;color:var(--danger);margin-top:7px;font-weight:500}
 .err:empty{display:none}
@@ -1641,6 +1643,9 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       var good = r.ok(el);
       document.getElementById(r.err).textContent = good ? '' : r.msg;
       if (el.type !== 'checkbox') el.setAttribute('aria-invalid', good ? 'false' : 'true');
+      /* Галочку согласия браузер красной рамкой не подсвечивает, а именно
+         на ней люди и спотыкаются — подсвечиваем саму строку. */
+      else { var wrap = el.closest('.opt'); if (wrap) wrap.classList.toggle('opt--bad', !good); }
       if (!good) bad.push(r);
     });
     return bad;
@@ -1784,7 +1789,15 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
        полей. Со стороны это неотличимо от «никто не писал»: автоцели Метрики
        такое нажатие считают, наша form_submit молчит. Отмечаем той же целью,
        что и сорвавшуюся отправку: для нас обе значат одно — не дошло. */
-    if (bad.length) { if (window.reachGoal) window.reachGoal('form_error'); box.focus(); return; }
+    if (bad.length) {
+      if (window.reachGoal) window.reachGoal('form_error');
+      /* Ведём к самому полю, а не к списку ошибок наверху формы: человек
+         стоит у кнопки, и прыжок вверх уводит его от галочки, которую
+         он забыл нажать. */
+      var first = document.getElementById(bad[0].id);
+      if (first) first.focus(); else box.focus();
+      return;
+    }
 
     var data = payload();
     var jobs = [];

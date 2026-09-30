@@ -73,6 +73,9 @@
       var good = r.ok(el);
       document.getElementById(r.err).textContent = good ? '' : r.msg;
       if (el.type !== 'checkbox') el.setAttribute('aria-invalid', good ? 'false' : 'true');
+      /* Галочку согласия браузер красной рамкой не подсвечивает, а именно
+         на ней люди и спотыкаются — подсвечиваем саму строку. */
+      else { var wrap = el.closest('.opt'); if (wrap) wrap.classList.toggle('opt--bad', !good); }
       if (!good) bad.push(r);
     });
     return bad;
@@ -216,7 +219,15 @@
        полей. Со стороны это неотличимо от «никто не писал»: автоцели Метрики
        такое нажатие считают, наша form_submit молчит. Отмечаем той же целью,
        что и сорвавшуюся отправку: для нас обе значат одно — не дошло. */
-    if (bad.length) { if (window.reachGoal) window.reachGoal('form_error'); box.focus(); return; }
+    if (bad.length) {
+      if (window.reachGoal) window.reachGoal('form_error');
+      /* Ведём к самому полю, а не к списку ошибок наверху формы: человек
+         стоит у кнопки, и прыжок вверх уводит его от галочки, которую
+         он забыл нажать. */
+      var first = document.getElementById(bad[0].id);
+      if (first) first.focus(); else box.focus();
+      return;
+    }
 
     var data = payload();
     var jobs = [];
