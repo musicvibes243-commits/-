@@ -368,6 +368,26 @@ main,footer{position:relative;z-index:1}
 .tile.hot b{color:#fff}
 .tile.wide{min-height:0;padding:34px}
 .tile.wide .lab{position:static;margin-bottom:16px}
+
+/* Тарифы на сайт. Подписка — заливная карточка: это вариант для тех,
+   кому покупка не по деньгам, его и надо заметить первым.
+   Ярлык делаю статичным, как в .wide: абсолютный .lab наезжает на цену. */
+.tile.tarif{justify-content:flex-start;min-height:0;padding:30px}
+.tile.tarif .lab{position:static;margin-bottom:18px}
+.cena{font-family:var(--head);font-weight:700;font-size:clamp(38px,5.4vw,58px);
+  line-height:1;letter-spacing:-.02em;margin-top:4px}
+.cena span{font-size:.54em;font-weight:500;margin-left:4px}
+.cena-p{color:var(--muted);font-size:15px;margin-top:9px}
+.tile.fill .cena-p{color:rgba(255,255,255,.82)}
+.tlist{list-style:none;margin:22px 0 26px;display:grid;gap:11px}
+.tlist li{position:relative;padding-left:26px;color:var(--muted);font-size:16px;line-height:1.45}
+.tlist li::before{content:"";position:absolute;left:0;top:.5em;width:11px;height:7px;
+  border-left:2px solid var(--accent-dim);border-bottom:2px solid var(--accent-dim);
+  transform:rotate(-45deg)}
+.tile.fill .tlist li{color:rgba(255,255,255,.9)}
+.tile.fill .tlist li::before{border-color:#fff}
+.tile.tarif .btn{margin-top:auto;align-self:flex-start}
+@media (max-width:760px){.tile.tarif{padding:24px}.tlist li{font-size:15px}}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}
 .s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
 @media (max-width:900px){
@@ -647,7 +667,7 @@ body.has-sticky .chat-fab{bottom:82px}
   <div class="wrap">
     <a href="#home" class="logo">AYKO</a>
     <nav class="nav-d" aria-label="Разделы">
-      <a href="#works">Работы</a><a href="#offer">Что делаю</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
+      <a href="#works">Работы</a><a href="#offer">Что делаю</a><a href="#tarif">Сайт</a><a href="#process">Как работаю</a><a href="#faq">Вопросы</a>
     </nav>
     <a class="callbtn" id="callTop" href="#" aria-label="Позвонить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.7 21 3 13.3 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .7-.2 1l-2.2 2.2z"/></svg><span class="tx"></span></a>
     <a class="btn hot sm top-cta" href="#contact">Написать мне</a>
@@ -665,6 +685,7 @@ body.has-sticky .chat-fab{bottom:82px}
       <a href="#home">Главная</a>
       <a href="#works">Работы</a>
       <a href="#offer">Что делаю</a>
+      <a href="#tarif">Сайт</a>
       <a href="#process">Как работаю</a>
       <a href="#faq">Вопросы</a>
       <a href="#contact">Связаться</a>
@@ -887,7 +908,7 @@ body.has-sticky .chat-fab{bottom:82px}
         <div class="r"><div>Профиль на Profi.ru<span>там ищут мастера, а не товар — анкета работает иначе</span></div><em>обсудим</em></div>
         <div class="r"><div>Реклама в Яндексе<span>когда Авито уже мало</span></div><em>обсудим</em></div>
         <div class="r"><div>Соцсети под ключ<span>ВКонтакте, Telegram, YouTube, Rutube, TikTok, Instagram* — веду за вас</span></div><em>обсудим</em></div>
-        <div class="r"><div>Сайт под ключ<span>куда вести людей из объявлений</span></div><em>обсудим</em></div>
+        <div class="r"><div>Сайт под ключ<span>куда вести людей из объявлений — 40 000 ₽ или 2 000 ₽ в месяц</span></div><em>два варианта</em></div>
         <div class="r"><div>Ведение каждый месяц<span>слежу за цифрами и правлю</span></div><em>обсудим</em></div>
         <a class="link" href="#contact">Обсудить задачу →</a>
       </div>
@@ -903,6 +924,53 @@ body.has-sticky .chat-fab{bottom:82px}
         <div class="cmp-r" role="row"><b role="rowheader">Проверка</b><span role="cell" data-l="Как обычно">Никакой: висит и висит</span><span class="us" role="cell" data-l="Со мной">Через неделю смотрим статистику и правим</span></div>
       </div>
       <p class="cmp-note">Сделать самому можно, и многие делают. Вопрос в том, сколько вечеров уйдёт на то, чтобы разобраться, какая фотография работает и за какое продвижение не стоит платить, — и сколько сезона вы потеряете, пока разбираетесь.</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="tarif">
+  <div class="wrap">
+    <div class="eyebrow">Сайт</div>
+    <h2>Два варианта оплаты</h2>
+    <p class="intro">Сайт нужен не всем и не сразу. Если сорок тысяч сейчас не ко времени — есть помесячный вариант. Работает он по-другому, и разницу я объясняю здесь же, чтобы потом не было неожиданностей.</p>
+    <div class="bento">
+
+      <div class="tile tarif has-lab s6">
+        <span class="lab">Покупка</span>
+        <b>Сайт становится вашим</b>
+        <div class="cena">40 000 <span>₽</span></div>
+        <div class="cena-p">один раз</div>
+        <ul class="tlist">
+          <li>Сайт ваш — со всеми исходными файлами</li>
+          <li>Домен и все аккаунты оформлены на ваше имя</li>
+          <li>В любой момент можете передать его другому исполнителю</li>
+          <li>Домен, хостинг и обслуживание оплачиваются отдельно и дальше лежат на вас</li>
+        </ul>
+        <a class="btn solid" href="#contact">Обсудить покупку<span class="arr" aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="tile tarif fill has-lab s6">
+        <span class="lab">Подписка</span>
+        <b>Сайт работает, пока идёт подписка</b>
+        <div class="cena">2 000 <span>₽</span></div>
+        <div class="cena-p">в месяц, больше ничего доплачивать не нужно</div>
+        <ul class="tlist">
+          <li>Полноценный сайт, а не шаблонная визитка</li>
+          <li>Бот для заявок — они приходят вам в Telegram</li>
+          <li>Домен и хостинг оплачиваю я</li>
+          <li>Обслуживание и мелкие правки входят в эту сумму</li>
+          <li>Первый платёж — только когда увидите готовый сайт</li>
+        </ul>
+        <a class="btn solid" href="#contact">Обсудить подписку<span class="arr" aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="tile dark wide s12">
+        <span class="lab">Важное отличие</span>
+        <b>Подписка — это не рассрочка</b>
+        <p>Посчитать «две тысячи на двадцать месяцев — и сайт мой» не получится: так это не устроено. В подписке вы платите не за сайт, а за то, что он работает: за домен, хостинг, обслуживание и за то, что есть к кому обратиться. Сайт при этом остаётся моим.</p>
+        <p style="margin-top:14px">Зато и входить не страшно. Нет крупного платежа, нет долга, нет обязательств на год: перестали платить — сайт отключается, и вы никому ничего не должны. Захотите позже выкупить его насовсем — скажите, посчитаем отдельно.</p>
+      </div>
+
     </div>
   </div>
 </section>
