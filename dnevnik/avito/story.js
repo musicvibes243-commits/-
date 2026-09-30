@@ -10,7 +10,35 @@ fs.mkdirSync(out,{recursive:true});
 const TEL = '+7 977 556-76-01';
 const TOP = 240, BOT = 280;
 
-const html = k => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
+/* Листы. Первый бьёт в боль, второй перечисляет преимущества.
+   Цену покупки сайта не пишем намеренно: крупная сумма в сторис
+   отпугивает раньше, чем человек дочитает. Подписку 2 000 ₽
+   показываем — она наоборот притягивает. */
+const SLIDES = [
+ { file:'story-stroitelyam.jpg',
+   eyebrow:'Строителям и монтажникам',
+   big:'Объявление<br>висит,<br>а звонков <em>нет</em>',
+   sub:'Значит, его просто не открывают. В ленте видно заголовок и первую фотографию — остальное человек даже не разворачивает.',
+   list:['Перепишу ваше объявление на Авито',
+         'Два года веду рекламу инженеру: септики, дренаж, отопление',
+         'Оплата после работы. Без предоплаты'],
+   ctaL:'Разбор бесплатно', ctaT:TEL, ctaN:'Позвоните или напишите в WhatsApp' },
+
+ { file:'story-preimushchestva.jpg',
+   eyebrow:'Строителям · по всей России',
+   big:'Вы работаете.<br>Рекламу беру <em>на себя</em>',
+   sub:'',
+   list:['Без предоплаты — платите, когда увидите готовое',
+         'Цена известна до начала работы и не меняется',
+         'Два года веду рекламу инженеру: септики, дренаж, отопление',
+         'Не только Авито: Яндекс, соцсети, сайт',
+         'Веду соцсети за вас — 4 500 просмотров за первый день',
+         'Звонков не обещаю. Отвечаю за то, что объявление станут открывать чаще'],
+   ctaL:'Сайт по подписке', ctaT:'2 000 ₽ в месяц',
+   ctaN:'Сайт, бот для заявок, домен, хостинг и обслуживание — всё включено',
+   ctaP:TEL } ];
+
+const html = (c,k) => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{width:1080px;height:1920px;background:#0a0b0f;color:#fff;overflow:hidden;position:relative;
   font-family:'DejaVu Sans','Liberation Sans',sans-serif}
@@ -38,24 +66,23 @@ body::after{content:"";position:absolute;right:-24%;bottom:2%;width:86%;height:4
   border:1px solid rgba(255,255,255,.22)}
 .cta .l{font-size:${27*k}px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.84)}
 .cta .t{margin-top:${14*k}px;font-size:${74*k}px;font-weight:700;letter-spacing:-.01em;line-height:1;white-space:nowrap}
+.cta .n{line-height:1.3}
 .cta .n{margin-top:${16*k}px;font-size:${30*k}px;color:rgba(255,255,255,.92);font-weight:600}
+.cta .p{margin-top:${14*k}px;font-size:${44*k}px;font-weight:700;white-space:nowrap;letter-spacing:-.01em}
 
 .foot{margin-top:${26*k}px;display:flex;align-items:baseline;justify-content:space-between}
 .foot b{font-size:${38*k}px;font-weight:700;letter-spacing:.24em}
 .foot span{font-size:${29*k}px;color:#9b9aa3;font-weight:600}
 </style></head><body><div class="in">
-  <div class="eyebrow">Строителям и монтажникам</div>
-  <div class="big">Объявление<br>висит,<br>а звонков <em>нет</em></div>
-  <div class="sub">Значит, его просто не открывают. В ленте видно заголовок и первую фотографию — остальное человек даже не разворачивает.</div>
-  <div class="list">
-    <div><i></i><span>Перепишу ваше объявление на Авито</span></div>
-    <div><i></i><span>Два года веду рекламу инженеру: септики, дренаж, отопление</span></div>
-    <div><i></i><span>Оплата после работы. Без предоплаты</span></div>
-  </div>
+  <div class="eyebrow">${c.eyebrow}</div>
+  <div class="big">${c.big}</div>
+  ${c.sub ? `<div class="sub">${c.sub}</div>` : ''}
+  <div class="list">${c.list.map(t=>`<div><i></i><span>${t}</span></div>`).join('')}</div>
   <div class="cta">
-    <div class="l">Разбор бесплатно</div>
-    <div class="t">${TEL}</div>
-    <div class="n">Позвоните или напишите в WhatsApp</div>
+    <div class="l">${c.ctaL}</div>
+    <div class="t">${c.ctaT}</div>
+    <div class="n">${c.ctaN}</div>
+    ${c.ctaP ? `<div class="p">${c.ctaP}</div>` : ''}
   </div>
   <div class="foot"><b>AYKO</b><span>aykoweb.ru</span></div>
 </div></body></html>`;
@@ -64,16 +91,28 @@ body::after{content:"";position:absolute;right:-24%;bottom:2%;width:86%;height:4
    именно это и случилось в первой версии */
 const check = () => {
   const bad=[];
-  const q=s=>document.querySelector(s).getBoundingClientRect();
-  const pairs=[['.eyebrow','.big'],['.big','.sub'],['.sub','.list'],['.list','.cta'],['.cta','.foot']];
-  for(const [a,b] of pairs){
-    if(q(a).bottom > q(b).top + 0.5) bad.push(`«${a}» наезжает на «${b}»`);
+  const el=s=>document.querySelector(s);
+  const q=s=>el(s).getBoundingClientRect();
+  /* .sub есть не на всех листах — пропускаем то, чего нет,
+     и сравниваем соседей по факту, а не по жёсткому списку */
+  const order=['.eyebrow','.big','.sub','.list','.cta','.foot'].filter(el);
+  for(let i=0;i<order.length-1;i++){
+    const a=order[i], b=order[i+1];
+    /* мало «не наложилось» — нужен зазор, иначе карточка липнет
+       к последнему пункту и выглядит как накладка */
+    const need = (a==='.list'&&b==='.cta') ? 28 : 0.5;
+    if(q(a).bottom + need > q(b).top) bad.push(`«${a}» липнет к «${b}»`);
   }
   if(q('.foot').bottom > 1920-280+1) bad.push('подвал заходит в зону интерфейса');
   if(q('.eyebrow').top < 240-1) bad.push('шапка заходит в зону интерфейса');
+  /* сравниваем с полями блока, а не с краем картинки: текст,
+     доехавший вплотную до края, формально «в кадре», но выглядит
+     обрезанным. Именно на этом я один раз уже прошла мимо. */
+  const box=q('.in'), L=box.left+80, R=box.right-80;
   document.querySelectorAll('.in *').forEach(e=>{
     const r=e.getBoundingClientRect();
-    if(r.right>1080.5||r.left<-0.5) bad.push('вылезает за край: '+e.textContent.slice(0,26));
+    if(r.width===0) return;
+    if(r.right>R+0.5||r.left<L-0.5) bad.push('заходит на поля: '+e.textContent.slice(0,26));
   });
   return bad;
 };
@@ -81,20 +120,21 @@ const check = () => {
 (async()=>{
   const b = await chromium.launch();
   const p = await b.newPage({viewport:{width:1080,height:1920}, deviceScaleFactor:1});
+ for (const c of SLIDES) {
   /* иду сверху вниз: беру самый крупный размер, при котором ещё нет
      наложений. В сторис текст читают на вытянутой руке — чем крупнее,
      тем лучше, а пустая дыра посередине выглядит как недоделка. */
   let k=1.34, bad=null;
   for(; k>=0.7; k-=0.02){
-    await p.setContent(html(k),{waitUntil:'load'});
+    await p.setContent(html(c,k),{waitUntil:'load'});
     await p.waitForTimeout(120);
     bad = await p.evaluate(check);
     if(!bad.length) break;
   }
-  if(bad.length){ console.log('!! не уместилось даже при уменьшении:\n!! '+bad.join('\n!! ')); await b.close(); process.exit(1); }
-  const file = path.join(out,'story-stroitelyam.jpg');
+  if(bad.length){ console.log('!! '+c.file+' не уместился:\n!! '+bad.join('\n!! ')); await b.close(); process.exit(1); }
+  const file = path.join(out,c.file);
   await p.screenshot({path:file, type:'jpeg', quality:92});
-  console.log(`всё уместилось при масштабе ${k.toFixed(2)}, наложений нет`);
-  console.log('файл:', file);
+  console.log(`${c.file} — масштаб ${k.toFixed(2)}, наложений нет`);
+ }
   await b.close();
 })();
