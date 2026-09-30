@@ -23,7 +23,7 @@ const FRAMES = [
  ['Сайт по подписке','b'], ['2 000 ₽ в месяц','r'], ['всё включено','w'],
  ['Звонков не обещаю','b'], ['отвечаю за то','w'], ['что объявление','b'],
  ['станут открывать чаще','r'],
- ['+7 977 556-76-01','b'], ['AYKO · aykoweb.ru','b'],
+ ['+7 977<br>556-76-01','b'], ['AYKO<br>aykoweb.ru','b'],
 ];
 
 const SKIN = {
@@ -38,7 +38,8 @@ body{width:1080px;height:1920px;background:${SKIN[s].bg};color:${SKIN[s].fg};
   display:flex;align-items:center;justify-content:center;padding:0 70px;
   font-family:'DejaVu Sans','Liberation Sans',sans-serif;overflow:hidden}
 p{font-size:${size}px;font-weight:700;text-transform:uppercase;letter-spacing:-.015em;
-  line-height:1.02;text-align:center;max-width:940px}
+  line-height:1.06;text-align:center;max-width:940px;
+  white-space:${t.includes('<br>')?'nowrap':'normal'}}
 </style></head><body><p id="t">${t}</p></body></html>`;
 
 (async()=>{
