@@ -1,13 +1,25 @@
 # -*- coding: utf-8 -*-
 """Склейка кадров в mp4 для сторис.
-Длительность кадра зависит от числа слов: одно слово читается мгновенно,
-фразу из трёх надо успеть прочесть. Запуск: python3 video.py"""
-import os, subprocess, imageio_ffmpeg, json
 
-FF  = imageio_ffmpeg.get_ffmpeg_exe()
+Длительность каждого кадра — целое число долей выбранного темпа,
+поэтому склейки попадают на биты и ролик «щёлкает» под музыку.
+Короткое слово — одна доля, фраза из трёх слов — две, финал — четыре.
+Общая длина добивается до целого числа тактов (8 долей), иначе трек
+обрывается на середине такта.
+
+Запуск:  python3 video.py [BPM] [имя_файла]
+Пример:  python3 video.py 128 ayko-rolik-128.mp4
+"""
+import os, sys, subprocess, imageio_ffmpeg
+
+BPM  = float(sys.argv[1]) if len(sys.argv) > 1 else 120.0
+NAME = sys.argv[2] if len(sys.argv) > 2 else 'ayko-rolik.mp4'
+BEAT = 60.0 / BPM
+
+FF   = imageio_ffmpeg.get_ffmpeg_exe()
 HERE = os.path.dirname(os.path.abspath(__file__))
 KADR = os.path.join(HERE, '..', 'foto', 'kadry')
-OUT  = os.path.join(HERE, '..', 'foto', 'ayko-rolik.mp4')
+OUT  = os.path.join(HERE, '..', 'foto', NAME)
 
 TEXTS = ['Объявление','висит','а звонков','нет','Значит','его просто','не открывают',
  'В ленте видно','заголовок','и первое фото','остальное','не читают','Перепишу',
@@ -15,39 +27,35 @@ TEXTS = ['Объявление','висит','а звонков','нет','Зн�
  'увидите готовое','Два года','септики','дренаж','отопление','знаю вашу работу',
  'Сайт по подписке','2 000 ₽ в месяц','всё включено','Звонков не обещаю',
  'отвечаю за то','что объявление','станут открывать чаще',
- '+7 977 556-76-01','AYKO · aykoweb.ru']
+ '+7 977 556-76-01','AYKO aykoweb.ru']
 
 files = sorted(f for f in os.listdir(KADR) if f.endswith('.jpg'))
 assert len(files) == len(TEXTS), f'кадров {len(files)}, текстов {len(TEXTS)}'
 
-def dur(i, t):
-    if i >= len(TEXTS) - 2:      # телефон и адрес держим дольше
-        return 2.0
-    w = len(t.split())
-    return 0.40 if w == 1 else 0.58 if w == 2 else 0.74
+def beats(i, t):
+    if i >= len(TEXTS) - 2: return 4        # телефон и адрес — по такту
+    return 1 if len(t.split()) <= 2 else 2  # длинную фразу надо успеть прочесть
 
-durs = [dur(i, t) for i, t in enumerate(TEXTS)]
+b = [beats(i, t) for i, t in enumerate(TEXTS)]
+pad = (-sum(b)) % 8                          # добиваем до целого числа тактов
+b[-1] += pad
+durs = [n * BEAT for n in b]
 
 lst = os.path.join(HERE, 'concat.txt')
 with open(lst, 'w', encoding='utf-8') as f:
     for name, d in zip(files, durs):
-        f.write(f"file '{os.path.join(KADR,name)}'\nduration {d}\n")
-    f.write(f"file '{os.path.join(KADR,files[-1])}'\n")   # последний кадр дублируем,
-                                                          # иначе его длительность теряется
+        f.write(f"file '{os.path.join(KADR,name)}'\nduration {d:.4f}\n")
+    f.write(f"file '{os.path.join(KADR,files[-1])}'\n")
 
-cmd = [FF, '-y', '-f','concat','-safe','0','-i',lst,
-       # беззвучная дорожка: некоторые приложения капризничают на видео совсем без звука
-       '-f','lavfi','-i','anullsrc=channel_layout=stereo:sample_rate=44100',
-       '-vf','fps=30,format=yuv420p,scale=1080:1920',
-       '-c:v','libx264','-preset','slow','-crf','20',
-       '-c:a','aac','-b:a','64k','-shortest',
-       '-movflags','+faststart', OUT]
-subprocess.run(cmd, check=True, capture_output=True)
+subprocess.run([FF,'-y','-f','concat','-safe','0','-i',lst,
+    '-f','lavfi','-i','anullsrc=channel_layout=stereo:sample_rate=44100',
+    '-vf','fps=30,format=yuv420p,scale=1080:1920',
+    '-c:v','libx264','-preset','slow','-crf','20',
+    '-c:a','aac','-b:a','64k','-shortest','-movflags','+faststart', OUT],
+    check=True, capture_output=True)
+os.remove(lst)
 
-probe = subprocess.run([FF,'-i',OUT], capture_output=True, text=True).stderr
-print('итого кадров:', len(files))
-print('расчётная длительность: %.1f c' % sum(durs))
-for line in probe.splitlines():
-    if 'Duration' in line or 'Stream #' in line:
-        print(' ', line.strip())
-print('файл:', OUT, '%.1f МБ' % (os.path.getsize(OUT)/1048576))
+print(f'темп {BPM:g} BPM, доля {BEAT:.3f} c')
+print(f'долей всего {sum(b)} = {sum(b)//8} тактов ровно')
+print('длительность: %.2f c' % sum(durs))
+print('файл:', os.path.basename(OUT), '%.1f МБ' % (os.path.getsize(OUT)/1048576))
