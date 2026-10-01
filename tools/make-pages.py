@@ -759,6 +759,22 @@ for _page in PAGES:
     _page["photos"] = [_have[n] for n in _keep]
 
 
+# ---------- Версия файлов стилей и скрипта ----------
+# Без метки версии браузер держит старую копию site.js и page.css в кеше,
+# и вернувшийся посетитель неделями ходит по сайту со вчерашним кодом.
+# 1 октября 2026 из-за этого случилось вот что: автоцели Метрики записали
+# отправку формы, а обе наши цели промолчали — похоже, у человека был
+# старый site.js, в котором цели ещё не ставились.
+# Метка считается от содержимого: файл не менялся — адрес тот же,
+# кеш работает; изменился — адрес новый, браузер скачивает заново.
+
+def asset(path):
+    import hashlib
+    data = pathlib.Path("docs") / path
+    ver = hashlib.sha1(data.read_bytes()).hexdigest()[:8]
+    return f"{path}?v={ver}"
+
+
 def cards_html(cards):
     out = []
     for name, text, path in cards:
@@ -917,7 +933,7 @@ def build(p):
 <link rel="preload" href="assets/fonts/playfair-display-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/page.css">
+<link rel="stylesheet" href="assets/{asset("assets/page.css").split("assets/")[1]}">
 <style>
 /* первый экран страницы услуги: без фотографии, только текст */
 .lead-hero{{background:var(--band);padding-block:clamp(46px,7vw,86px);border-bottom:1px solid var(--line)}}
@@ -1165,7 +1181,7 @@ def build(p):
   <a class="pr" href="#zayavka">{ICO_MAIL}Оставить заявку</a>
 </nav>
 
-<script src="assets/site.js" defer></script>
+<script src="assets/{asset("assets/site.js").split("assets/")[1]}" defer></script>
 
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=2)}
