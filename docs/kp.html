@@ -259,6 +259,27 @@
     ["Доставка материала",           "1", "усл.", "7000"]
   ];
 
+  /* Номер версии заготовки. Браузер держит черновик бланка у себя,
+     и правка списка выше сама по себе до него не доходит: при открытии
+     страницы восстанавливается то, что лежит в браузере. Номер нужен,
+     чтобы отличить черновик, собранный из старой заготовки, от нового. */
+  var SEED_V = 2;
+
+  /* Заготовка версии 1 — та, что была до 1 октября 2026, когда отверстия
+     стояли одной строкой «2 шт» за 19 000 вместо двух штук по 9 500.
+     Если в браузере лежит ровно она, ни разу не правленная, — заменяем
+     новой: своего в ней ничего нет. Черновик, где хоть что-то поменяли,
+     не трогаем никогда: там работа владельца. */
+  var SEED_1 = [
+    ["Котёл",                        "1", "шт",    "49950"],
+    ["Монтаж",                       "1", "усл.",  "49000"],
+    ["Расходный материал для котла", "1", "компл.","13000"],
+    ["Отверстия, 2 шт",              "1", "компл.","19000"],
+    ["Монтаж воздуховодов",          "1", "усл.",  "16000"],
+    ["Материал",                     "1", "компл.","18000"],
+    ["Доставка материала",           "1", "усл.",  "7000"]
+  ];
+
   var $ = function(id){ return document.getElementById(id); };
   var POLYA = ["bank","bik","ks","rs","poluch","inn","num","date","client","obj","base","valid"];
   var KLYUCH = "kp-stroyinvest";
@@ -360,8 +381,18 @@
   }
 
   /* ---------- Черновик ---------- */
+  /* Совпадает ли список позиций с заготовкой слово в слово. */
+  function kakZagotovka(rows, seed){
+    if (!rows || rows.length !== seed.length) return false;
+    return rows.every(function(r, i){
+      return seed[i].every(function(v, j){
+        return String(r[j] == null ? "" : r[j]).trim() === v;
+      });
+    });
+  }
+
   function sobrat(){
-    var d = {polya:{}, rows:[]};
+    var d = {seedv: SEED_V, polya:{}, rows:[]};
     POLYA.forEach(function(id){ d.polya[id] = $(id).value; });
     Array.prototype.forEach.call($("tb").rows, function(tr){
       var i = tr.querySelectorAll("input");
@@ -374,8 +405,11 @@
     var d; try{ d = JSON.parse(localStorage.getItem(KLYUCH) || "null"); }catch(e){ d = null; }
     if (!d) return false;
     POLYA.forEach(function(id){ if (d.polya && d.polya[id] != null) $(id).value = d.polya[id]; });
+    /* Реквизиты и номер оставляем в любом случае — это заполняли руками.
+       А вот нетронутую старую заготовку позиций подменяем новой. */
+    var rows = (!d.seedv && kakZagotovka(d.rows, SEED_1)) ? NACHALO : (d.rows || []);
     $("tb").innerHTML = "";
-    (d.rows || []).forEach(function(r){ addRow(r[0], r[1], r[2], r[3]); });
+    rows.forEach(function(r){ addRow(r[0], r[1], r[2], r[3]); });
     return true;
   }
 
