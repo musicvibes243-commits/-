@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Смета — СтройИнвест</title>
+<!--
+  БЛАНК СМЕТЫ ДЛЯ ЗАКАЗЧИКА.
+
+  Открывается по адресу stroyinvest-mo.ru/smeta.html с телефона
+  или с ноутбука. Заполняется прямо в браузере, суммы считаются сами,
+  кнопка «Распечатать» сохраняет в PDF.
+
+  Страница намеренно НЕ связана с сайтом: её нет ни в меню, ни в карте
+  сайта, в шапке стоит noindex, а в robots.txt — запрет. Это рабочий
+  инструмент мастера, а не страница для посетителей. На сайте цен нет
+  и не будет — так решил владелец, и смета этого не меняет: цифры
+  появляются здесь только после выезда и только для одного заказчика.
+
+  Цены в бланк НЕ зашиты намеренно. Мастер ставит их сам на объекте:
+  один и тот же септик на глине и на песке стоит по-разному, и готовый
+  прайс в такой работе врёт.
+
+  Черновик сохраняется в браузере: закрыли вкладку, открыли снова —
+  всё на месте. Никуда не отправляется, лежит только на этом устройстве.
+-->
+<style>
+  :root{
+    --ink:#23303A;
+    --ink-2:#4A5A64;
+    --muted:#7A8792;
+    --line:#D8D2C7;
+    --line-2:#ECE7DE;
+    --paper:#FFFFFF;
+    --tint:#F6F3ED;
+    --accent:#C97A09;
+    --accent-soft:#FDF3E2;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;padding:18px 14px 90px;
+    background:var(--tint);color:var(--ink);
+    font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  .sheet{
+    max-width:820px;margin:0 auto;background:var(--paper);
+    border:1px solid var(--line);border-radius:12px;padding:22px 18px 26px;
+  }
+
+  /* ---------- Шапка ---------- */
+  .top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;
+    border-bottom:2px solid var(--ink);padding-bottom:14px}
+  .brand{flex:1 1 220px;min-width:0}
+  .brand b{display:block;font-size:22px;letter-spacing:.02em}
+  .brand span{display:block;font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:3px}
+  .doc{text-align:right;flex:0 0 auto}
+  .doc h1{margin:0;font-size:20px;letter-spacing:.04em;text-transform:uppercase}
+  .doc .row{margin-top:6px;font-size:13.5px;color:var(--ink-2);
+    display:flex;gap:6px;align-items:baseline;justify-content:flex-end}
+
+  /* ---------- Поля ---------- */
+  input,select,textarea{
+    font:inherit;color:var(--ink);background:transparent;
+    border:0;border-bottom:1px dashed var(--line);
+    padding:3px 2px;border-radius:0;min-width:0;max-width:100%;
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:2px;background:var(--accent-soft)}
+  textarea{width:100%;border:1px dashed var(--line);border-radius:8px;padding:9px 10px;resize:vertical;min-height:78px}
+  select{border-bottom:1px solid var(--line)}
+  input::placeholder,textarea::placeholder{color:#B3BCC3}
+  .w-sm{width:78px}
+  .w-md{width:120px}
+  .w-lg{width:100%}
+
+  /* ---------- Заказчик ---------- */
+  .party{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+  @media (max-width:620px){.party{grid-template-columns:1fr}}
+  .party label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+  .party .f input{width:100%}
+
+  /* ---------- Таблицы ---------- */
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);
+    margin:26px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line-2)}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+    text-align:left;font-weight:600;padding:0 6px 6px}
+  th.num,td.num{text-align:right}
+  td{padding:4px 6px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  td.name input{width:100%}
+  .sum{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .del{border:0;background:transparent;color:#C0392B;font-size:19px;line-height:1;
+    cursor:pointer;padding:0 4px;opacity:.5}
+  .del:hover{opacity:1}
+
+  /* ---------- Кнопки ---------- */
+  .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  button.b{
+    font:inherit;font-size:14px;cursor:pointer;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:8px;padding:8px 14px;
+  }
+  button.b:hover{border-color:var(--accent);color:var(--accent)}
+  button.b--accent{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button.b--accent:hover{color:#fff;filter:brightness(1.07)}
+
+  /* ---------- Итоги ---------- */
+  .totals{margin-top:22px;margin-left:auto;max-width:360px}
+  .totals .r{display:flex;justify-content:space-between;gap:16px;padding:7px 0;
+    border-bottom:1px solid var(--line-2);font-size:15px}
+  .totals .r b{font-variant-numeric:tabular-nums}
+  .totals .grand{border-bottom:0;border-top:2px solid var(--ink);margin-top:4px;
+    padding-top:11px;font-size:19px;font-weight:700}
+
+  /* ---------- Низ ---------- */
+  .note{font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+  .sign{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media (max-width:620px){.sign{grid-template-columns:1fr;gap:18px}}
+  .sign div{font-size:13px;color:var(--ink-2)}
+  .sign .line{border-bottom:1px solid var(--ink);height:30px;margin-bottom:5px}
+
+  /* ---------- Панель управления ---------- */
+  .bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:5;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:10px 14px;
+    display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  }
+  .hint{font-size:12.5px;color:var(--muted);text-align:center;max-width:820px;
+    margin:12px auto 0;line-height:1.5}
+
+
+  /* ---------- Узкий экран: строка таблицы становится карточкой ----------
+     Шесть колонок в 390 пикселей не помещаются: таблица уезжает вбок,
+     и названия работ не видно. На телефоне разворачиваем строку
+     в карточку — название сверху во всю ширину, числа втроём под ним.
+     Только screen: при печати с телефона раскладка должна остаться
+     табличной, иначе смета на листе развалится. */
+  @media screen and (max-width:620px){
+    thead{display:none}
+    table{display:block}
+    tbody{display:block}
+    tbody tr{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:9px 10px;
+      border:1px solid var(--line-2);border-radius:10px;
+      padding:11px 34px 11px 11px;margin-bottom:9px;position:relative;
+    }
+    tbody tr td{border:0;padding:0}
+    td.name{grid-column:1/-1}
+    td.name input{width:100%;font-weight:600}
+    td[data-l]::before{
+      content:attr(data-l);display:block;
+      font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;
+      color:var(--muted);margin-bottom:1px;
+    }
+    td[data-l] input{width:100%}
+    td.sum{grid-column:1/-1;text-align:right;font-weight:700;
+      border-top:1px solid var(--line-2);padding-top:7px}
+    td.sum::before{float:left;font-weight:400;padding-top:3px}
+    td.no-print{position:absolute;top:6px;right:4px;padding:0}
+    .w-sm,.w-md{width:100%}
+  }
+  /* ---------- Печать ---------- */
+  @media print{
+    @page{size:A4;margin:14mm 12mm}
+    body{background:#fff;padding:0;font-size:12pt}
+    .sheet{border:0;border-radius:0;max-width:none;padding:0}
+    .bar,.act,.del,.hint,.no-print{display:none !important}
+    input,select,textarea{border:0;background:transparent;color:#000}
+    textarea{padding:0}
+    th{color:#444}
+    tr,td,th{page-break-inside:avoid}
+    h2{page-break-after:avoid}
+    /* Подсказки в полях нужны при заполнении, а на бумаге это мусор:
+       заказчик прочтёт «Например: выезд и замер…» как часть сметы. */
+    input::placeholder,textarea::placeholder{color:transparent !important}
+    textarea{resize:none}
+    input[type=date]::-webkit-calendar-picker-indicator{display:none}
+    /* Незаполненные строки на печать не идут — но только если в таблице
+       есть хоть одна заполненная. Пустой бланк печатается целиком:
+       его иногда нужно заполнить ручкой на объекте. */
+    tr.pusto{display:none}
+    /* Поле, на котором стоял курсор, печаталось с оранжевой рамкой
+       и заливкой — на бумаге это выглядит как ошибка в документе. */
+    input:focus,select:focus,textarea:focus{outline:0 !important;background:transparent !important}
+    .r.bez-skidki{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <div class="top">
+    <div class="brand">
+      <b>СтройИнвест</b>
+      <span>
+        ООО «ИнженерИнвест» · ИНН 2100032923<br>
+        +7 (915) 346-97-28 · stroyinvest-mo.ru<br>
+        Инженерные системы дома и участка
+      </span>
+    </div>
+    <div class="doc">
+      <h1>Смета</h1>
+      <div class="row">№&nbsp;<input class="w-sm" id="num" placeholder="001"></div>
+      <div class="row">от&nbsp;<input class="w-md" id="date" type="date"></div>
+    </div>
+  </div>
+
+  <div class="party">
+    <div class="f"><label for="client">Заказчик</label><input id="client" placeholder="Имя"></div>
+    <div class="f"><label for="phone">Телефон</label><input id="phone" placeholder="+7"></div>
+    <div class="f"><label for="addr">Адрес объекта</label><input id="addr" placeholder="Населённый пункт, улица"></div>
+    <div class="f"><label for="obj">Объект</label><input id="obj" placeholder="Дом 120 м², участок 12 соток"></div>
+  </div>
+
+  <!-- Быстрое заполнение -->
+  <div class="act no-print" style="margin-top:18px">
+    <select id="dir" aria-label="Направление работ">
+      <option value="">Направление — выберите…</option>
+      <option value="septik">Септик и канализация</option>
+      <option value="voda">Водоснабжение</option>
+      <option value="teplo">Отопление и тёплый пол</option>
+      <option value="svet">Электрика</option>
+      <option value="drenazh">Дренаж и ливнёвка</option>
+      <option value="poliv">Автополив</option>
+    </select>
+    <button class="b" id="fill">Подставить типовые работы</button>
+  </div>
+
+  <h2>Работы</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:48%">Наименование</th>
+        <th style="width:12%">Ед.</th>
+        <th class="num" style="width:11%">Кол-во</th>
+        <th class="num" style="width:14%">Цена, ₽</th>
+        <th class="num" style="width:15%">Сумма, ₽</th>
+        <th class="no-print" style="width:24px"></th>
+      </tr>
+    </thead>
+    <tbody id="rab"></tbody>
+  </table>
+  <div class="act no-print"><button class="b" data-add="rab">+ строка работ</button></div>
+
+  <h2>Материалы и оборудование</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:48%">Наименование</th>
+        <th style="width:12%">Ед.</th>
+        <th class="num" style="width:11%">Кол-во</th>
+        <th class="num" style="width:14%">Цена, ₽</th>
+        <th class="num" style="width:15%">Сумма, ₽</th>
+        <th class="no-print" style="width:24px"></th>
+      </tr>
+    </thead>
+    <tbody id="mat"></tbody>
+  </table>
+  <div class="act no-print"><button class="b" data-add="mat">+ строка материалов</button></div>
+
+  <div class="totals">
+    <div class="r"><span>Работы</span><b class="sum" id="tRab">0 ₽</b></div>
+    <div class="r"><span>Материалы и оборудование</span><b class="sum" id="tMat">0 ₽</b></div>
+    <div class="r" id="rDisc"><span>Скидка&nbsp;<input class="w-sm" id="disc" inputmode="decimal" placeholder="0"> ₽</span><b class="sum" id="tDisc">0 ₽</b></div>
+    <div class="r grand"><span>Итого</span><b class="sum" id="tAll">0 ₽</b></div>
+  </div>
+
+  <h2>Сроки</h2>
+  <div class="note">
+    Начало работ: <input class="w-md" id="start" placeholder="по согласованию"> ·
+    Продолжительность: <input class="w-md" id="days" placeholder="3–5 дней">
+  </div>
+
+  <h2>Что входит в стоимость</h2>
+  <textarea id="inc" placeholder="Например: выезд и замер, доставка материалов на объект, работа бригады, пусконаладка и запуск системы, уборка после работ."></textarea>
+
+  <h2>Что в стоимость не входит</h2>
+  <textarea id="exc" placeholder="Например: отделочные работы после монтажа, электропитание до объекта, вывоз грунта, работы, не перечисленные выше."></textarea>
+
+  <div class="note" style="margin-top:22px">
+    Смета действительна <input class="w-sm" id="valid" value="14"> дней с даты составления.
+    Окончательная стоимость фиксируется договором. Объём работ может измениться,
+    если на объекте откроются обстоятельства, которые не были видны при осмотре, —
+    в этом случае изменения согласуются с заказчиком до начала работ.
+  </div>
+
+  <div class="sign">
+    <div><div class="line"></div>Исполнитель — ООО «ИнженерИнвест»</div>
+    <div><div class="line"></div>Заказчик</div>
+  </div>
+
+</div>
+
+<p class="hint no-print">
+  Черновик сохраняется в этом браузере сам. «Распечатать» в телефоне открывает
+  окно печати — там можно выбрать «Сохранить в PDF» и отправить заказчику.
+</p>
+
+<div class="bar no-print">
+  <button class="b b--accent" id="print">Распечатать или в PDF</button>
+  <button class="b" id="clear">Очистить бланк</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Типовые работы по направлениям. Цены не проставлены намеренно:
+     их ставит мастер на объекте. Единицы подсказаны, чтобы не гадать. */
+  var TIPOVIE = {
+    septik: {
+      rab: [
+        ["Выезд, осмотр участка и замер", "усл.", "1"],
+        ["Разработка котлована", "м³", ""],
+        ["Песчаная подушка под корпус", "м³", ""],
+        ["Монтаж станции очистки или ёмкости", "шт", "1"],
+        ["Крепление стенок котлована щитами", "усл.", ""],
+        ["Подводка канализации от дома", "м.п.", ""],
+        ["Прокладка кабеля питания к станции", "м.п.", ""],
+        ["Обратная засыпка и планировка", "м³", ""],
+        ["Пусконаладка и инструктаж хозяев", "усл.", "1"]
+      ],
+      mat: [
+        ["Станция биологической очистки / ёмкость", "шт", "1"],
+        ["Труба канализационная наружная", "м.п.", ""],
+        ["Песок", "м³", ""],
+        ["Щебень", "м³", ""],
+        ["Кабель питания", "м.п.", ""]
+      ]
+    },
+    voda: {
+      rab: [
+        ["Выезд, осмотр и замер", "усл.", "1"],
+        ["Монтаж кессона на скважину", "шт", "1"],
+        ["Обвязка оголовка скважины", "усл.", "1"],
+        ["Траншея и прокладка трубы до дома", "м.п.", ""],
+        ["Монтаж насоса и гидроаккумулятора", "компл.", "1"],
+        ["Узел ввода воды в дом, фильтры", "компл.", "1"],
+        ["Монтаж водоподготовки", "компл.", ""],
+        ["Разводка воды по точкам", "точка", ""],
+        ["Монтаж водонагревателя с обвязкой", "шт", ""],
+        ["Опрессовка, пусконаладка", "усл.", "1"]
+      ],
+      mat: [
+        ["Кессон", "шт", "1"],
+        ["Насос скважинный", "шт", "1"],
+        ["Гидроаккумулятор с автоматикой", "компл.", "1"],
+        ["Труба водопроводная, фитинги", "м.п.", ""],
+        ["Фильтр механической очистки", "шт", ""],
+        ["Умягчитель с солевым баком", "компл.", ""],
+        ["Водонагреватель", "шт", ""]
+      ]
+    },
+    teplo: {
+      rab: [
+        ["Выезд, осмотр и расчёт мощности", "усл.", "1"],
+        ["Монтаж котла", "шт", ""],
+        ["Обвязка котельной", "компл.", "1"],
+        ["Монтаж бойлера косвенного нагрева", "шт", ""],
+        ["Монтаж насосных групп, гидрострелки", "компл.", ""],
+        ["Монтаж коллекторного шкафа", "шт", ""],
+        ["Монтаж радиаторов с подводкой", "шт", ""],
+        ["Укладка контуров тёплого пола", "м²", ""],
+        ["Опрессовка системы", "усл.", "1"],
+        ["Пусконаладка, настройка режимов", "усл.", "1"]
+      ],
+      mat: [
+        ["Котёл", "шт", ""],
+        ["Бойлер косвенного нагрева", "шт", ""],
+        ["Насосная группа", "шт", ""],
+        ["Коллектор с расходомерами", "компл.", ""],
+        ["Труба отопления, фитинги", "м.п.", ""],
+        ["Труба тёплого пола", "м.п.", ""],
+        ["Радиаторы", "шт", ""],
+        ["Расширительный бак, группа безопасности", "компл.", "1"]
+      ]
+    },
+    svet: {
+      rab: [
+        ["Выезд, осмотр и расчёт нагрузки", "усл.", "1"],
+        ["Составление схемы групп", "усл.", "1"],
+        ["Сборка щита", "шт", "1"],
+        ["Монтаж щита на месте", "шт", "1"],
+        ["Штробление стен", "м.п.", ""],
+        ["Монтаж подрозетников", "шт", ""],
+        ["Прокладка кабеля", "м.п.", ""],
+        ["Установка розеток и выключателей", "шт", ""],
+        ["Монтаж светильников", "шт", ""],
+        ["Ввод на участок, заземление", "компл.", ""],
+        ["Проверка линий под нагрузкой", "усл.", "1"]
+      ],
+      mat: [
+        ["Щит с автоматами и УЗО", "компл.", "1"],
+        ["Кабель медный", "м.п.", ""],
+        ["Гофра, крепёж", "м.п.", ""],
+        ["Подрозетники", "шт", ""],
+        ["Розетки, выключатели", "шт", ""],
+        ["Светильники", "шт", ""]
+      ]
+    },
+    drenazh: {
+      rab: [
+        ["Выезд, осмотр участка, нивелирование", "усл.", "1"],
+        ["Разработка траншеи с уклоном", "м.п.", ""],
+        ["Песчано-щебёночное основание", "м.п.", ""],
+        ["Укладка геотекстиля", "м²", ""],
+        ["Укладка дренажной трубы", "м.п.", ""],
+        ["Монтаж смотровых колодцев", "шт", ""],
+        ["Монтаж водоприёмного колодца", "шт", ""],
+        ["Монтаж лотков и дождеприёмников", "м.п.", ""],
+        ["Обратная засыпка и планировка", "м³", ""]
+      ],
+      mat: [
+        ["Труба дренажная в фильтре", "м.п.", ""],
+        ["Геотекстиль", "м²", ""],
+        ["Щебень фракции по расчёту", "м³", ""],
+        ["Песок", "м³", ""],
+        ["Колодец смотровой", "шт", ""],
+        ["Лотки, дождеприёмники", "шт", ""]
+      ]
+    },
+    poliv: {
+      rab: [
+        ["Выезд, обмер участка, схема зон", "усл.", "1"],
+        ["Траншеи под магистрали", "м.п.", ""],
+        ["Монтаж магистральных труб", "м.п.", ""],
+        ["Монтаж дождевателей", "шт", ""],
+        ["Монтаж капельного полива", "м.п.", ""],
+        ["Монтаж клапанного бокса", "шт", ""],
+        ["Монтаж насосной станции", "компл.", ""],
+        ["Монтаж контроллера и датчика дождя", "компл.", "1"],
+        ["Пусконаладка, настройка программ", "усл.", "1"]
+      ],
+      mat: [
+        ["Дождеватели", "шт", ""],
+        ["Клапаны электромагнитные", "шт", ""],
+        ["Труба ПНД, фитинги", "м.п.", ""],
+        ["Контроллер полива", "шт", "1"],
+        ["Насосная станция", "компл.", ""],
+        ["Капельная линия", "м.п.", ""]
+      ]
+    }
+  };
+
+  var $ = function(id){ return document.getElementById(id); };
+  var POLYA = ["num","date","client","phone","addr","obj","disc","start","days","inc","exc","valid"];
+
+  /* ---------- Строки таблиц ---------- */
+  function addRow(tbody, naim, ed, kol, cena){
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td class="name"><input placeholder="Наименование"></td>' +
+      '<td data-l="Ед."><input class="w-sm" placeholder="шт"></td>' +
+      '<td class="num" data-l="Кол-во"><input class="w-sm num" inputmode="decimal" placeholder="0" style="text-align:right"></td>' +
+      '<td class="num" data-l="Цена, ₽"><input class="w-md num" inputmode="decimal" placeholder="0" style="text-align:right"></td>' +
+      '<td class="num sum" data-l="Сумма">0 ₽</td>' +
+      '<td class="no-print"><button class="del" title="Убрать строку">×</button></td>';
+    var inp = tr.querySelectorAll("input");
+    inp[0].value = naim || "";
+    inp[1].value = ed   || "";
+    inp[2].value = kol  || "";
+    inp[3].value = cena || "";
+    tbody.appendChild(tr);
+    return tr;
+  }
+
+  function chislo(v){
+    var n = parseFloat(String(v).replace(/\s/g,"").replace(",","."));
+    return isFinite(n) ? n : 0;
+  }
+  function rub(n){
+    return n.toLocaleString("ru-RU", {maximumFractionDigits:0}) + " ₽";
+  }
+
+  function schitat(){
+    var itog = {rab:0, mat:0};
+    ["rab","mat"].forEach(function(key){
+      Array.prototype.forEach.call($(key).rows, function(tr){
+        var i = tr.querySelectorAll("input");
+        var s = chislo(i[2].value) * chislo(i[3].value);
+        tr.querySelector(".sum").textContent = rub(s);
+        itog[key] += s;
+      });
+    });
+    var disc = chislo($("disc").value);
+    $("tRab").textContent  = rub(itog.rab);
+    $("tMat").textContent  = rub(itog.mat);
+    $("tDisc").textContent = disc ? "− " + rub(disc) : "0 ₽";
+    $("tAll").textContent  = rub(Math.max(0, itog.rab + itog.mat - disc));
+    sohranit();
+  }
+
+  /* ---------- Черновик в браузере ---------- */
+  var KLYUCH = "smeta-stroyinvest";
+
+  function sobrat(){
+    var d = {polya:{}, rab:[], mat:[], dir:$("dir").value};
+    POLYA.forEach(function(id){ d.polya[id] = $(id).value; });
+    ["rab","mat"].forEach(function(key){
+      Array.prototype.forEach.call($(key).rows, function(tr){
+        var i = tr.querySelectorAll("input");
+        d[key].push([i[0].value, i[1].value, i[2].value, i[3].value]);
+      });
+    });
+    return d;
+  }
+
+  function sohranit(){
+    try { localStorage.setItem(KLYUCH, JSON.stringify(sobrat())); } catch(e){}
+  }
+
+  function vosstanovit(){
+    var d;
+    try { d = JSON.parse(localStorage.getItem(KLYUCH) || "null"); } catch(e){ d = null; }
+    if (!d) return false;
+    POLYA.forEach(function(id){ if (d.polya && d.polya[id] != null) $(id).value = d.polya[id]; });
+    if (d.dir) $("dir").value = d.dir;
+    ["rab","mat"].forEach(function(key){
+      $(key).innerHTML = "";
+      (d[key] || []).forEach(function(r){ addRow($(key), r[0], r[1], r[2], r[3]); });
+    });
+    return true;
+  }
+
+  /* ---------- Запуск ---------- */
+  document.addEventListener("input", function(e){
+    if (e.target.closest("#rab, #mat") || e.target.id === "disc") schitat();
+    else sohranit();
+  });
+
+  document.addEventListener("click", function(e){
+    var add = e.target.closest("[data-add]");
+    if (add){ addRow($(add.dataset.add)).querySelector("input").focus(); schitat(); return; }
+    if (e.target.classList.contains("del")){ e.target.closest("tr").remove(); schitat(); }
+  });
+
+  $("fill").addEventListener("click", function(){
+    var t = TIPOVIE[$("dir").value];
+    if (!t){ alert("Сначала выберите направление в списке слева."); return; }
+    /* Пустые строки убираем, заполненные не трогаем: можно собрать смету
+       сразу по двум направлениям, нажав подстановку дважды. */
+    ["rab","mat"].forEach(function(key){
+      Array.prototype.slice.call($(key).rows).forEach(function(tr){
+        var i = tr.querySelectorAll("input");
+        if (!i[0].value.trim() && !chislo(i[3].value)) tr.remove();
+      });
+      t[key].forEach(function(r){ addRow($(key), r[0], r[1], r[2], ""); });
+    });
+    schitat();
+  });
+
+  /* Перед печатью помечаем пустые строки, после — снимаем пометку.
+     Браузер зовёт эти события и сам, когда печать запускают из меню. */
+  function pometit(){
+    $("rDisc").classList.toggle("bez-skidki", !chislo($("disc").value));
+    ["rab","mat"].forEach(function(key){
+      var rows = Array.prototype.slice.call($(key).rows);
+      var est = rows.some(function(tr){
+        var i = tr.querySelectorAll("input");
+        return i[0].value.trim() || chislo(i[2].value) || chislo(i[3].value);
+      });
+      rows.forEach(function(tr){
+        var i = tr.querySelectorAll("input");
+        var pusto = !i[0].value.trim() && !chislo(i[2].value) && !chislo(i[3].value);
+        tr.classList.toggle("pusto", est && pusto);
+      });
+    });
+  }
+  function snyat(){
+    ["rab","mat"].forEach(function(key){
+      Array.prototype.forEach.call($(key).rows, function(tr){ tr.classList.remove("pusto"); });
+    });
+  }
+  window.addEventListener("beforeprint", pometit);
+  window.addEventListener("afterprint", snyat);
+
+  $("print").addEventListener("click", function(){ pometit(); window.print(); });
+
+  $("clear").addEventListener("click", function(){
+    if (!confirm("Очистить бланк целиком? Всё заполненное пропадёт.")) return;
+    try { localStorage.removeItem(KLYUCH); } catch(e){}
+    location.reload();
+  });
+
+  if (!vosstanovit()){
+    for (var i = 0; i < 3; i++){ addRow($("rab")); addRow($("mat")); }
+    $("date").value = new Date().toISOString().slice(0,10);
+  }
+  schitat();
+})();
+</script>
+
+</body>
+</html>
