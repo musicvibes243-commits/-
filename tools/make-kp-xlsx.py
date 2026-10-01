@@ -24,6 +24,8 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.page import PageMargins
 
+from xlsx_formuly import dopisat_rezultaty
+
 OUT = pathlib.Path("docs/kp.xlsx")
 
 INK = "FF23303A"
@@ -102,10 +104,20 @@ def propisyu(summa):
     return f"{t} {sklon(rub, 'рубль', 'рубля', 'рублей')} {kop:02d} копеек"
 
 
+def rubli(n):
+    """171950 → «171 950,00» — как это пишет Excel с русскими настройками."""
+    return f"{n:,.2f}".replace(",", " ").replace(".", ",")
+
+
 def main():
     wb = Workbook()
     ws = wb.active
     ws.title = "Предложение"
+
+    # Готовые ответы формул: кладутся в файл рядом с самими формулами,
+    # иначе быстрый просмотр на телефоне показывает нули. Подробности —
+    # в tools/xlsx_formuly.py.
+    otvety = {}
 
     for col, w in {"A": 5, "B": 44, "C": 9, "D": 10, "E": 14, "F": 16, "H": 60}.items():
         ws.column_dimensions[col].width = w
@@ -191,6 +203,8 @@ def main():
         ws.cell(row=r, column=5, value=poz[3]).number_format = DENGI
         s = ws.cell(row=r, column=6, value=f'=IF(OR(C{r}="",E{r}=""),"",C{r}*E{r})')
         s.number_format = DENGI
+        # Пустая строка даёт пустой ответ, заполненная — произведение.
+        otvety[f"F{r}"] = poz[1] * poz[3] if i < len(POZICII) else ""
         for col in range(1, 7):
             ws.cell(row=r, column=col).border = ramka
         ws.row_dimensions[r].height = 19
@@ -203,6 +217,7 @@ def main():
     c.font = Font(bold=True, size=13, color=INK)
     c.alignment = Alignment(horizontal="right")
     c.border = Border(top=Side(style="medium", color=INK))
+    otvety[f"F{ITOG}"] = sum(k * c for _, k, _, c in POZICII)
     it = ws.cell(row=ITOG, column=6, value=f"=SUM(F{pervaya}:F{poslednya})")
     it.font = Font(bold=True, size=13, color=INK)
     it.number_format = DENGI
@@ -218,6 +233,8 @@ def main():
     sliyanie(SLOV, f'="Всего наименований "&COUNTA(B{pervaya}:B{poslednya})'
                    f'&", на сумму "&TEXT(F{ITOG},"#,##0.00")&" ₽"',
              size=10, bold=True, color=INK)
+    otvety[f"A{SLOV}"] = (f"Всего наименований {len(POZICII)}, "
+                          f"на сумму {rubli(itogo_summa)} ₽")
     sl = sliyanie(SLOV + 1, propisyu(itogo_summa), size=10, color=INK)
     sl.font = Font(size=10, color=INK, underline="single")
 
@@ -251,10 +268,17 @@ def main():
     ws.sheet_properties.pageSetUpPr.fitToPage = True
     ws.page_margins = PageMargins(left=0.4, right=0.4, top=0.5, bottom=0.5)
 
+    # Excel всё равно пересчитает формулы при открытии — записанные ответы
+    # нужны только тем, кто файл не считает, а просто показывает.
+    wb.calculation.fullCalcOnLoad = True
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     wb.save(OUT)
-    print(f"написано {OUT}: позиций {len(POZICII)}, итог {itogo_summa:,.2f} ₽".replace(",", " "))
+    naydeno = dopisat_rezultaty(OUT, otvety)
+
+    print(f"написано {OUT}: позиций {len(POZICII)}, итог {rubli(itogo_summa)} ₽")
     print(f"прописью: {propisyu(itogo_summa)}")
+    print(f"ответы дописаны к {len(naydeno)} формулам")
 
 
 if __name__ == "__main__":

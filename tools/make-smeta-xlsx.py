@@ -18,6 +18,8 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.page import PageMargins
 
+from xlsx_formuly import dopisat_rezultaty
+
 OUT = pathlib.Path("docs/smeta.xlsx")
 
 # Цвета взяты из бланка smeta.html, чтобы бумаги выглядели одной семьёй.
@@ -49,6 +51,10 @@ def main():
     wb = Workbook()
     ws = wb.active
     ws.title = "Смета"
+
+    # Готовые ответы формул — иначе быстрый просмотр на телефоне и в почте
+    # показывает нули вместо сумм. Подробности в tools/xlsx_formuly.py.
+    otvety = {}
 
     shirina = {"A": 5, "B": 46, "C": 9, "D": 10, "E": 14, "F": 16}
     for col, w in shirina.items():
@@ -110,6 +116,7 @@ def main():
         # Живая формула: поправили цену — сумма и итог пересчитались сами.
         s = ws.cell(row=r, column=6, value=f"=IF(OR(C{r}=\"\",E{r}=\"\"),\"\",C{r}*E{r})")
         s.number_format = DENGI
+        otvety[f"F{r}"] = poz[1] * poz[3] if i < len(POZICII) else ""
         for col in range(1, 7):
             cell = ws.cell(row=r, column=col)
             cell.border = ramka
@@ -125,6 +132,7 @@ def main():
     c = ws.cell(row=ITOG, column=1, value="ИТОГО")
     c.font = Font(bold=True, size=13, color=INK)
     c.alignment = Alignment(horizontal="right")
+    otvety[f"F{ITOG}"] = sum(k * c for _, k, _, c in POZICII)
     it = ws.cell(row=ITOG, column=6, value=f"=SUM(F{pervaya}:F{poslednya})")
     it.font = Font(bold=True, size=13, color=INK)
     it.number_format = DENGI
@@ -179,9 +187,13 @@ def main():
     ws.page_margins = PageMargins(left=0.4, right=0.4, top=0.5, bottom=0.5)
     ws.freeze_panes = f"A{pervaya}"
 
+    wb.calculation.fullCalcOnLoad = True
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     wb.save(OUT)
+    naydeno = dopisat_rezultaty(OUT, otvety)
     print(f"написано {OUT}: строк под позиции {vsego}, итог в F{ITOG}")
+    print(f"ответы дописаны к {len(naydeno)} формулам")
 
 
 if __name__ == "__main__":
