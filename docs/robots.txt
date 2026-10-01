@@ -4,5 +4,6 @@ Allow: /
 # Бланк сметы — рабочий инструмент мастера, а не страница для посетителей.
 Disallow: /smeta.html
 Disallow: /kp.html
+Disallow: /smeta.xlsx
 
 Sitemap: https://stroyinvest-mo.ru/sitemap.xml
