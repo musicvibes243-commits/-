@@ -31,6 +31,7 @@
     --accent:#C97A09; --accent-soft:#FDF3E2;
   }
   *{box-sizing:border-box}
+  .v{display:none}
   html{-webkit-text-size-adjust:100%}
   body{margin:0;padding:18px 14px 90px;background:var(--tint);color:var(--ink);
     font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -137,6 +138,18 @@
     tr,td,th{page-break-inside:avoid}
     h2{page-break-after:avoid}
     tr.pusto,.skryt{display:none}
+    /* ---------- Длинные названия на бумаге ----------
+       Поле ввода не переносит текст: «Расходный материал для котла»
+       печаталось как «Расходный ма», остальное срезалось. Поэтому
+       у каждого поля есть невидимый двойник — обычный span с тем же
+       текстом. На экране виден только ввод, на бумаге только двойник,
+       а текст в нём переносится по-человечески.
+       Двойники создаются при загрузке, а не в момент печати: сорвись
+       печать на полпути, бланк всё равно останется целым. */
+    input.mz,textarea.mz{display:none !important}
+    .v{display:inline !important;white-space:pre-wrap;word-break:break-word}
+    td.name .v{display:block !important}
+
     input[type=date]::-webkit-calendar-picker-indicator{display:none}
   }
 </style>
@@ -342,6 +355,7 @@
     $("tAll2").textContent = rub(itog);
     $("cnt").textContent = n;
     $("slovami").textContent = propisyu(itog);
+    zerkalaVse();
     sohranit();
   }
 
@@ -366,7 +380,35 @@
   }
 
   /* ---------- Печать ---------- */
+
+  /* У каждого поля заводим двойник-span с тем же текстом: на бумаге
+     печатается он, потому что текст в нём переносится, а в поле ввода —
+     нет. Двойники ставятся при загрузке и после добавления строк. */
+  function obnovit(el){
+    var s = el.nextElementSibling;
+    if (!s || s.className !== "v") return;
+    var v = el.value || "";
+    if (el.type === "date" && v) v = v.split("-").reverse().join(".");
+    s.textContent = v;
+  }
+  function zerkalaVse(){
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".sheet input, .sheet textarea"), function(el){
+        if (!el.nextElementSibling || el.nextElementSibling.className !== "v"){
+          var s = document.createElement("span");
+          s.className = "v";
+          el.classList.add("mz");
+          el.insertAdjacentElement("afterend", s);
+        }
+        obnovit(el);
+      });
+  }
+  document.addEventListener("input", function(e){
+    if (e.target.matches(".sheet input, .sheet textarea")) obnovit(e.target);
+  });
+
   function pometit(){
+    zerkalaVse();
     var rows = Array.prototype.slice.call($("tb").rows);
     var est = rows.some(function(tr){
       var i = tr.querySelectorAll("input");

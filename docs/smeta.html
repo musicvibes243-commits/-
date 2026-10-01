@@ -38,6 +38,7 @@
     --accent-soft:#FDF3E2;
   }
   *{box-sizing:border-box}
+  .v{display:none}
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0;padding:18px 14px 90px;
@@ -182,6 +183,18 @@
        есть хоть одна заполненная. Пустой бланк печатается целиком:
        его иногда нужно заполнить ручкой на объекте. */
     tr.pusto{display:none}
+    /* ---------- Длинные названия на бумаге ----------
+       Поле ввода не переносит текст: «Расходный материал для котла»
+       печаталось как «Расходный ма», остальное срезалось. Поэтому
+       у каждого поля есть невидимый двойник — обычный span с тем же
+       текстом. На экране виден только ввод, на бумаге только двойник,
+       а текст в нём переносится по-человечески.
+       Двойники создаются при загрузке, а не в момент печати: сорвись
+       печать на полпути, бланк всё равно останется целым. */
+    input.mz,textarea.mz{display:none !important}
+    .v{display:inline !important;white-space:pre-wrap;word-break:break-word}
+    td.name .v{display:block !important}
+
     /* Поле, на котором стоял курсор, печаталось с оранжевой рамкой
        и заливкой — на бумаге это выглядит как ошибка в документе. */
     input:focus,select:focus,textarea:focus{outline:0 !important;background:transparent !important}
@@ -491,6 +504,7 @@
     $("tMat").textContent  = rub(itog.mat);
     $("tDisc").textContent = disc ? "− " + rub(disc) : "0 ₽";
     $("tAll").textContent  = rub(Math.max(0, itog.rab + itog.mat - disc));
+    zerkalaVse();
     sohranit();
   }
 
@@ -555,7 +569,35 @@
 
   /* Перед печатью помечаем пустые строки, после — снимаем пометку.
      Браузер зовёт эти события и сам, когда печать запускают из меню. */
+
+  /* У каждого поля заводим двойник-span с тем же текстом: на бумаге
+     печатается он, потому что текст в нём переносится, а в поле ввода —
+     нет. Двойники ставятся при загрузке и после добавления строк. */
+  function obnovit(el){
+    var s = el.nextElementSibling;
+    if (!s || s.className !== "v") return;
+    var v = el.value || "";
+    if (el.type === "date" && v) v = v.split("-").reverse().join(".");
+    s.textContent = v;
+  }
+  function zerkalaVse(){
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".sheet input, .sheet textarea"), function(el){
+        if (!el.nextElementSibling || el.nextElementSibling.className !== "v"){
+          var s = document.createElement("span");
+          s.className = "v";
+          el.classList.add("mz");
+          el.insertAdjacentElement("afterend", s);
+        }
+        obnovit(el);
+      });
+  }
+  document.addEventListener("input", function(e){
+    if (e.target.matches(".sheet input, .sheet textarea")) obnovit(e.target);
+  });
+
   function pometit(){
+    zerkalaVse();
     $("rDisc").classList.toggle("bez-skidki", !chislo($("disc").value));
     ["rab","mat"].forEach(function(key){
       var rows = Array.prototype.slice.call($(key).rows);
