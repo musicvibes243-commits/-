@@ -302,7 +302,14 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
 .promo__old{color:var(--muted);font-size:20px;text-decoration-thickness:2px}
 .promo__new{color:var(--sale);font-size:40px;line-height:1;font-weight:700}
 .promo__unit{color:var(--ink-2);font-size:16px}
-.promo__note{margin:0;flex:1 1 320px;color:var(--muted);font-size:14px;line-height:1.5}
+/* «В цену метра входит всё» — ответ на возражение, из-за которого
+   люди уходили, не спросив: цифра за метр выглядит дорого, пока
+   не сказано, что в неё уже вложены выезд, доставка и работа.
+   Поэтому строка крупнее и темнее примечания про сроки скидки. */
+.promo__vhodit{margin:0;flex:1 1 100%;order:3;color:var(--ink-2);
+  font-size:16px;line-height:1.5}
+.promo__vhodit b{color:var(--ink)}
+.promo__note{margin:0;flex:1 1 320px;order:4;color:var(--muted);font-size:14px;line-height:1.5}
 @media (max-width:700px){
   .promo{padding:18px}
   .promo__new{font-size:34px}
