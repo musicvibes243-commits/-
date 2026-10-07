@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подбор септика и цена за 1 минуту — СтройИнвест</title>
+<meta name="description" content="Ответьте на несколько вопросов о доме и участке — подберём септик и покажем цену под ключ. Москва и Московская область.">
+<meta name="theme-color" content="#241E1B">
+<meta property="og:title" content="Септик под ключ: подбор и цена за 1 минуту">
+<meta property="og:image" content="https://stroyinvest-mo.ru/og.png">
+<link rel="canonical" href="https://stroyinvest-mo.ru/kviz.html">
+<style>
+  :root {
+    --bg: #241E1B;
+    --card: #2F2824;
+    --line: #463C36;
+    --text: #F4EEE9;
+    --muted: #B9ADA4;
+    --accent: #E8833A;
+    --accent-dark: #C96C26;
+    --ok: #7BC47F;
+    --err: #F08A7E;
+    --r: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 16px 16px 40px; }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 4px 0 18px;
+  }
+  .logo { font-weight: 800; letter-spacing: .02em; color: var(--text); text-decoration: none; font-size: 18px; }
+  .logo span { color: var(--accent); }
+  .tel { color: var(--text); text-decoration: none; font-weight: 600; white-space: nowrap; font-size: 15px; }
+
+  h1 { font-size: clamp(24px, 6.5vw, 34px); line-height: 1.15; margin: 4px 0 10px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { color: var(--muted); margin: 0 0 18px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
+  .facts li {
+    font-size: 14px; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+  }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 20px 18px;
+  }
+  .progress { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s; }
+  .step-n { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .q { font-size: 20px; font-weight: 700; margin: 0 0 14px; line-height: 1.3; }
+
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    display: block; width: 100%; text-align: left;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; font: inherit; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .opt:hover, .opt:focus-visible { border-color: var(--accent); outline: none; }
+  .opt[aria-pressed="true"] { border-color: var(--accent); background: rgba(232,131,58,.12); }
+
+  .back {
+    margin-top: 14px; background: none; border: 0; color: var(--muted);
+    font: inherit; font-size: 14px; cursor: pointer; padding: 6px 0;
+  }
+  .back:hover { color: var(--text); }
+
+  label.f { display: block; font-size: 14px; color: var(--muted); margin: 12px 0 6px; }
+  input[type=text], input[type=tel] {
+    width: 100%; font: inherit; color: var(--text);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+    padding: 13px 14px;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); margin: 14px 0 4px; }
+  .consent input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .btn {
+    display: block; width: 100%; margin-top: 16px;
+    background: var(--accent); color: #1B1512; border: 0; border-radius: 12px;
+    padding: 15px 16px; font: inherit; font-weight: 700; font-size: 17px; cursor: pointer;
+    text-align: center; text-decoration: none;
+  }
+  .btn:hover { background: var(--accent-dark); }
+  .btn[disabled] { opacity: .6; cursor: wait; }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); font-weight: 600; }
+  .err { color: var(--err); font-size: 14px; min-height: 20px; margin-top: 8px; }
+
+  .result img { width: 100%; border-radius: 12px; display: block; margin: 4px 0 14px; aspect-ratio: 4/3; object-fit: cover; }
+  .result .cap { font-size: 13px; color: var(--muted); margin: -8px 0 14px; }
+  .price { font-size: 26px; font-weight: 800; margin: 6px 0 2px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  .notes { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+  .done { color: var(--ok); font-weight: 600; margin-top: 12px; }
+
+  footer { color: var(--muted); font-size: 13px; margin-top: 26px; line-height: 1.6; }
+  footer a { color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="logo" href="https://stroyinvest-mo.ru/">Строй<span>Инвест</span></a>
+    <a class="tel" href="tel:+79153469728">+7 915 346-97-28</a>
+  </header>
+
+  <h1>Септик под ключ в Москве и области. <em>Цена за 1 минуту</em></h1>
+  <p class="lead">Ответьте на несколько вопросов про дом и участок. Подберём систему и покажем цену вместе с установкой.</p>
+  <ul class="facts">
+    <li>Выезд по Москве и МО</li>
+    <li>Замер бесплатно</li>
+    <li>Своя бригада</li>
+  </ul>
+
+  <main class="card" id="app" aria-live="polite">
+    <noscript>Включите JavaScript или позвоните нам: <a href="tel:+79153469728">+7 915 346-97-28</a></noscript>
+  </main>
+
+  <footer>
+    ООО «ИнженерИнвест». Работаем круглосуточно.<br>
+    <a href="https://stroyinvest-mo.ru/privacy.html">Политика конфиденциальности</a> ·
+    <a href="https://stroyinvest-mo.ru/">Все услуги</a>
+  </footer>
+</div>
+
+<script>
+/* ===== Настройки ===== */
+// Адрес бота на Amvera (раздел «Домены» в проекте). Без слэша в конце.
+var API = "https://septik-bot-musicvibes243.amvera.io";
+// Номер счётчика Яндекс Метрики, если он стоит на этой странице. Иначе оставить null.
+var METRIKA_ID = null;
+var PHONE = "+79153469728";
+var BOT_LINK = "https://t.me/septik_drenazh_bot";
+
+/* Вопросы те же, что в боте (bot.py, QUESTIONS). Менять в обоих местах. */
+var Q = {
+  need:   ["Что нужно сделать?", [["new","Септик под ключ"],["replace","Заменить старый"],["drain","Дренаж участка"],["calc","Пока просто считаю"]]],
+  people: ["Сколько человек живёт в доме?", [["1-2","1–2"],["3-4","3–4"],["5-7","5–7"],["8+","Больше 7"]]],
+  living: ["Как живёте в доме?", [["permanent","Постоянно"],["summer","Только летом"],["weekend","По выходным"]]],
+  water:  ["Какая вода на участке?", [["dry","Сухо"],["spring","Весной подтапливает"],["high","Высокие грунтовые воды"],["unknown","Не знаю"]]],
+  power:  ["Есть электричество рядом с местом установки?", [["yes","Да"],["no","Нет"],["unknown","Не знаю"]]],
+  access: ["Как далеко от места установки до места, куда подъедет машина?", [["10","До 10 м"],["30","10–30 м"],["far","Дальше 30 м"]]],
+  when:   ["Когда планируете установку?", [["urgent","Срочно"],["season","В этом сезоне"],["spring","Весной"],["look","Просто смотрю"]]]
+};
+var SEPTIC = ["need","people","living","water","power","access","when"];
+var DRAIN  = ["need","water","access","when"];
+
+/* ===== Состояние ===== */
+var app = document.getElementById("app");
+var answers = {};
+var step = 0;
+var started = false;
+
+function order() { return answers.need === "drain" ? DRAIN : SEPTIC; }
+function goal(name) { try { if (METRIKA_ID && window.ym) ym(METRIKA_ID, "reachGoal", name); } catch (e) {} }
+function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function money(n) { return n.toLocaleString("ru-RU").replace(/ /g, " ") + " ₽"; }
+
+function source() {
+  var p = new URLSearchParams(location.search);
+  var parts = ["utm_source","utm_campaign","utm_content"].map(function (k) { return p.get(k); }).filter(Boolean);
+  if (parts.length) return parts.join(" / ");
+  try { return document.referrer ? new URL(document.referrer).hostname : "прямой заход"; } catch (e) { return ""; }
+}
+
+/* ===== Экраны ===== */
+function renderQuestion() {
+  var keys = order();
+  var key = keys[step];
+  var q = Q[key];
+  var pct = Math.round(step / (keys.length + 1) * 100);
+  var html =
+    '<div class="progress" aria-hidden="true"><i style="width:' + pct + '%"></i></div>' +
+    '<div class="step-n">Вопрос ' + (step + 1) + ' из ' + keys.length + '</div>' +
+    '<h2 class="q">' + q[0] + '</h2><div class="opts">';
+  q[1].forEach(function (o) {
+    html += '<button type="button" class="opt" data-v="' + o[0] + '" aria-pressed="' + (answers[key] === o[0]) + '">' + o[1] + '</button>';
+  });
+  html += '</div>';
+  if (step > 0) html += '<button type="button" class="back" id="back">← Назад</button>';
+  app.innerHTML = html;
+
+  app.querySelectorAll(".opt").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!started) { started = true; goal("kviz_start"); }
+      answers[key] = b.getAttribute("data-v");
+      if (key === "need") {               // сменили ветку — чистим лишние ответы
+        var keep = order();
+        Object.keys(answers).forEach(function (k) { if (keep.indexOf(k) < 0) delete answers[k]; });
+      }
+      step++;
+      step < order().length ? renderQuestion() : renderContact();
+    });
+  });
+  var back = document.getElementById("back");
+  if (back) back.addEventListener("click", function () { step--; renderQuestion(); });
+}
+
+function renderContact() {
+  app.innerHTML =
+    '<div class="progress" aria-hidden="true"><i style="width:92%"></i></div>' +
+    '<h2 class="q">Расчёт готов. Куда отправить?</h2>' +
+    '<p class="muted" style="margin:-6px 0 4px">Покажем подходящий вариант и цену сразу на этой странице. Мастер перезвонит только по замеру.</p>' +
+    '<form id="f" novalidate>' +
+      '<label class="f" for="name">Имя</label>' +
+      '<input type="text" id="name" autocomplete="given-name" maxlength="60" placeholder="Как к вам обращаться">' +
+      '<label class="f" for="phone">Телефон</label>' +
+      '<input type="tel" id="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>' +
+      '<div class="hp" aria-hidden="true"><input type="text" id="website" tabindex="-1" autocomplete="off"></div>' +
+      '<label class="consent"><input type="checkbox" id="consent" required>' +
+      '<span>Согласен на обработку персональных данных по <a href="https://stroyinvest-mo.ru/privacy.html" target="_blank" rel="noopener">политике конфиденциальности</a></span></label>' +
+      '<div class="err" id="err" role="alert"></div>' +
+      '<button class="btn" id="go" type="submit">Показать цену</button>' +
+    '</form>' +
+    '<button type="button" class="back" id="back">← Назад</button>';
+
+  var phone = document.getElementById("phone");
+  phone.addEventListener("input", function () { phone.value = maskPhone(phone.value); });
+  phone.addEventListener("focus", function () { if (!phone.value) phone.value = "+7 "; });
+  document.getElementById("back").addEventListener("click", function () { step = order().length - 1; renderQuestion(); });
+  document.getElementById("f").addEventListener("submit", submit);
+  phone.focus();
+}
+
+function maskPhone(v) {
+  var d = v.replace(/\D/g, "");
+  if (d[0] === "8") d = "7" + d.slice(1);
+  if (d[0] !== "7") d = "7" + d;
+  d = d.slice(0, 11);
+  var r = "+7";
+  if (d.length > 1) r += " (" + d.slice(1, 4);
+  if (d.length >= 4) r += ")";
+  if (d.length > 4) r += " " + d.slice(4, 7);
+  if (d.length > 7) r += "-" + d.slice(7, 9);
+  if (d.length > 9) r += "-" + d.slice(9, 11);
+  return r;
+}
+
+function submit(e) {
+  e.preventDefault();
+  var err = document.getElementById("err");
+  var btn = document.getElementById("go");
+  var phone = document.getElementById("phone").value.trim();
+  err.textContent = "";
+  if (phone.replace(/\D/g, "").length < 11) { err.textContent = "Проверьте номер: не хватает цифр."; return; }
+  if (!document.getElementById("consent").checked) { err.textContent = "Поставьте галочку согласия, без неё не можем принять заявку."; return; }
+
+  btn.disabled = true; btn.textContent = "Считаем…";
+  fetch(API + "/api/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      answers: answers,
+      phone: phone,
+      name: document.getElementById("name").value.trim(),
+      consent: true,
+      source: source(),
+      website: document.getElementById("website").value
+    })
+  })
+  .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+  .then(function (res) {
+    if (!res.ok || !res.j.ok) throw new Error(res.j && res.j.error || "server");
+    goal("kviz_lead");
+    renderResult(res.j);
+  })
+  .catch(function () { renderFallback(phone); });
+}
+
+function renderResult(r) {
+  var html = '<div class="result"><div class="progress" aria-hidden="true"><i style="width:100%"></i></div>';
+  if (r.photo) html += '<img src="' + API + esc(r.photo) + '" alt="Наш объект: ' + esc(r.system) + '" loading="lazy"><div class="cap">Одна из наших работ</div>';
+  html += '<div class="muted">Вам подходит</div><h2 class="q" style="margin:2px 0 8px">' + esc(r.system) + '</h2>' +
+    '<p style="margin:0 0 12px">' + esc(r.why) + '</p>' +
+    '<div class="muted">Цена под ключ</div>' +
+    '<div class="price">' + money(r.low) + ' – ' + money(r.high) + '</div>' +
+    '<div class="muted">Точную сумму мастер назовёт после замера.</div>';
+  if (r.notes && r.notes.length) html += '<ul class="notes">' + r.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join("") + '</ul>';
+  html += '<div class="done">✓ Заявка принята, мастер перезвонит и договорится о замере.</div>' +
+    '<a class="btn" href="tel:' + PHONE + '">Позвонить сейчас</a>' +
+    '<a class="btn ghost" href="https://stroyinvest-mo.ru/raboty.html">Посмотреть наши работы</a></div>';
+  app.innerHTML = html;
+  app.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderFallback(phone) {
+  app.innerHTML =
+    '<h2 class="q">Не получилось отправить автоматически</h2>' +
+    '<p>Ваши ответы не потерялись: позвоните нам или пройдите тот же подбор в Telegram, там расчёт придёт сразу.</p>' +
+    '<a class="btn" href="tel:' + PHONE + '">Позвонить +7 915 346-97-28</a>' +
+    '<a class="btn ghost" href="' + BOT_LINK + '" target="_blank" rel="noopener">Рассчитать в Telegram</a>';
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

@@ -211,6 +211,13 @@ section{padding-block:clamp(52px,7vw,96px)}
    КАЛЬКУЛЯТОР
    ============================================================ */
 .calc{background:var(--surface-2)}
+/* Быстрый путь на квиз для тех, кто не хочет крутить ползунки:
+   семь вопросов и цена, без звонка. Стоит сразу под заголовком
+   блока, потому что кнопка внизу калькулятора видна только тому,
+   кто уже начал в нём разбираться. На телефоне во всю ширину —
+   пальцем попасть проще. */
+.kviz-cta{margin:0}
+@media (max-width:700px){.kviz-cta .btn{display:flex}}
 .calc__box{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 @media (max-width:880px){.calc__box{grid-template-columns:1fr}}
@@ -712,6 +719,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
       <p class="eyebrow">Подбор системы</p>
       <h2>Посмотрите, что нужно именно вашему участку</h2>
       <p class="lead">Выберите систему и параметры — покажем, какая конфигурация подойдёт. Это ориентир, а не смета: точный подбор и финальную стоимость называем после бесплатного выезда.</p>
+      <p class="kviz-cta"><a class="btn btn--accent" href="kviz.html">Рассчитать цену за 1 минуту</a></p>
     </div>
 
     <div class="calc__box">
