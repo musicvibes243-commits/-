@@ -174,6 +174,12 @@
 /* ===== Настройки ===== */
 // Адрес бота на Amvera (раздел «Домены» в проекте). Без слэша в конце.
 var API = "https://septik-bot-musicvibes243.amvera.io";
+/* Запасной канал — тот самый воркер, который принимает заявки с главной
+   страницы. Нужен для одного случая: сервер расчёта не ответил. Цену тогда
+   назвать нечем, но телефон терять нельзя — за этого человека уже заплачено
+   рекламой. Пока сервер отвечает, сюда ничего не уходит: он присылает заявку
+   в Telegram сам, и две одинаковые заявки нам не нужны. */
+var ZAYAVKI = "https://zayavki.damka9093.workers.dev";
 // Номер счётчика Яндекс Метрики. Тот же, что на всём сайте.
 var METRIKA_ID = 112522751;
 var PHONE = "+79153469728";
@@ -283,6 +289,38 @@ function maskPhone(v) {
   return r;
 }
 
+/* Ответы человеческим текстом: в Telegram должно прийти «Сколько человек
+   живёт в доме? 3–4», а не «people: 3-4». Мастер читает заявку с телефона
+   по дороге на объект, расшифровывать коды ему некогда. */
+function otvetyTekstom() {
+  return order().map(function (k) {
+    var podpis = answers[k];
+    Q[k][1].forEach(function (o) { if (o[0] === answers[k]) podpis = o[1]; });
+    return Q[k][0] + " " + podpis;
+  }).join("\n");
+}
+
+function zapasnoyKanal(phone, imya) {
+  var zadacha = "Расчёт на сайте";
+  Q.need[1].forEach(function (o) { if (o[0] === answers.need) zadacha = o[1]; });
+  return fetch(ZAYAVKI, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      /* Имя в квизе необязательное, а воркер без имени заявку не примет.
+         Подставляем пометку: пусть лучше придёт «Квиз», чем не придёт ничего. */
+      name: imya || "Квиз, имя не указано",
+      phone: phone,
+      service: zadacha + " (квиз)",
+      text: otvetyTekstom(),
+      _gotcha: document.getElementById("website").value,
+      page: location.href,
+      source: source(),
+      sentAt: new Date().toLocaleString("ru-RU")
+    })
+  }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return true; });
+}
+
 function submit(e) {
   e.preventDefault();
   var err = document.getElementById("err");
@@ -311,7 +349,16 @@ function submit(e) {
     goal("kviz_lead");
     renderResult(res.j);
   })
-  .catch(function () { renderFallback(phone); });
+  .catch(function () {
+    zapasnoyKanal(phone, document.getElementById("name").value.trim())
+      .then(function () {
+        /* Заявка всё-таки доставлена в Telegram — это та же конверсия,
+           что и с формы на главной, и считать её надо так же. */
+        goal("kviz_lead"); goal("form_submit");
+        renderFallback(true);
+      })
+      .catch(function () { goal("form_error"); renderFallback(false); });
+  });
 }
 
 function renderResult(r) {
@@ -330,12 +377,22 @@ function renderResult(r) {
   app.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function renderFallback(phone) {
-  app.innerHTML =
-    '<h2 class="q">Не получилось отправить автоматически</h2>' +
-    '<p>Ваши ответы не потерялись: позвоните нам или пройдите тот же подбор в Telegram, там расчёт придёт сразу.</p>' +
-    '<a class="btn" href="tel:' + PHONE + '">Позвонить +7 915 346-97-28</a>' +
-    '<a class="btn ghost" href="' + BOT_LINK + '" target="_blank" rel="noopener">Рассчитать в Telegram</a>';
+/* Два разных экрана, и разница принципиальная. Если заявка ушла запасным
+   каналом — человеку нечего делать, ему перезвонят, и просить его звонить
+   самому неправильно. Если не ушла никуда — тогда да, остаются только
+   прямые способы связи. */
+function renderFallback(prinyato) {
+  app.innerHTML = prinyato
+    ? '<div class="result"><div class="progress" aria-hidden="true"><i style="width:100%"></i></div>' +
+      '<h2 class="q">Заявка принята</h2>' +
+      '<p>Ответы и номер у нас. Автоматический расчёт сейчас не отвечает, поэтому цену мастер назовёт сам — перезвонит и уточнит пару деталей по участку.</p>' +
+      '<div class="done">✓ Можно закрывать страницу, звонить нам не нужно.</div>' +
+      '<a class="btn" href="tel:' + PHONE + '">Позвонить самому +7 915 346-97-28</a>' +
+      '<a class="btn ghost" href="https://stroyinvest-mo.ru/raboty.html">Посмотреть наши работы</a></div>'
+    : '<h2 class="q">Не получилось отправить автоматически</h2>' +
+      '<p>Ваши ответы не потерялись: позвоните нам или пройдите тот же подбор в Telegram, там расчёт придёт сразу.</p>' +
+      '<a class="btn" href="tel:' + PHONE + '">Позвонить +7 915 346-97-28</a>' +
+      '<a class="btn ghost" href="' + BOT_LINK + '" target="_blank" rel="noopener">Рассчитать в Telegram</a>';
 }
 
 renderQuestion();
