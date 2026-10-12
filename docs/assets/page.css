@@ -330,3 +330,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .kviz-sec{padding-block:clamp(40px,8vw,64px)}
   .kviz .btn{display:flex;width:100%}
 }
+
+/* Разбор чужих ошибок на странице дренажа. Нумерация тут не нужна:
+   это не порядок действий, а четыре независимые беды. */
+.pochemu{list-style:none;padding:0;margin:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.pochemu li{padding-left:16px;border-left:3px solid var(--accent)}
+.pochemu h3{margin:0 0 6px;font-size:18px}
+.pochemu p{margin:0;font-size:15px;color:var(--ink-2)}
+.pochemu__itog{max-width:820px;margin:28px 0 0;padding:18px 20px;
+  background:var(--tint);border-radius:14px;font-size:16px;line-height:1.55}
