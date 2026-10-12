@@ -180,6 +180,12 @@ var API = "https://septik-bot-musicvibes243.amvera.io";
    рекламой. Пока сервер отвечает, сюда ничего не уходит: он присылает заявку
    в Telegram сам, и две одинаковые заявки нам не нужны. */
 var ZAYAVKI = "https://zayavki.damka9093.workers.dev";
+/* Сколько ждём расчёт, прежде чем отдать заявку запасным каналом.
+   Браузер сам по себе ждёт мёртвый сервер десятки секунд, а человек
+   с телефона столько на «Считаем…» не смотрит: он закрывает страницу,
+   и заявка уходит вместе с ним. Восемь секунд — это долго для живого
+   сервера и быстро для остановленного. */
+var ZHDEM_MS = 8000;
 // Номер счётчика Яндекс Метрики. Тот же, что на всём сайте.
 var METRIKA_ID = 112522751;
 var PHONE = "+79153469728";
@@ -331,8 +337,11 @@ function submit(e) {
   if (!document.getElementById("consent").checked) { err.textContent = "Поставьте галочку согласия, без неё не можем принять заявку."; return; }
 
   btn.disabled = true; btn.textContent = "Считаем…";
+  var stop = window.AbortController ? new AbortController() : null;
+  var budilnik = setTimeout(function () { if (stop) stop.abort(); }, ZHDEM_MS);
   fetch(API + "/api/lead", {
     method: "POST",
+    signal: stop ? stop.signal : undefined,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       answers: answers,
@@ -343,13 +352,14 @@ function submit(e) {
       website: document.getElementById("website").value
     })
   })
-  .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+  .then(function (r) { clearTimeout(budilnik); return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
   .then(function (res) {
     if (!res.ok || !res.j.ok) throw new Error(res.j && res.j.error || "server");
     goal("kviz_lead");
     renderResult(res.j);
   })
   .catch(function () {
+    clearTimeout(budilnik);
     zapasnoyKanal(phone, document.getElementById("name").value.trim())
       .then(function () {
         /* Заявка всё-таки доставлена в Telegram — это та же конверсия,
