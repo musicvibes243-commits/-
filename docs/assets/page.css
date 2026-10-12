@@ -315,3 +315,18 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--dang
   .promo__new{font-size:34px}
   .promo__note{flex-basis:100%}
 }
+
+/* Полоса с квизом на страницах септиков и дренажа. Тёмная, как блок
+   заявки, чтобы отделиться от белого текста страницы: это не раздел
+   для чтения, а развилка — либо читать дальше, либо посчитать. */
+.kviz-sec{background:var(--band);color:var(--on-band)}
+.kviz{display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:22px 36px}
+.kviz__t{max-width:62ch}
+.kviz .eyebrow{color:var(--brand-text)}
+.kviz h2{margin:8px 0 12px}
+.kviz .lead{color:var(--on-band-muted);margin:0}
+@media (max-width:700px){
+  .kviz-sec{padding-block:clamp(40px,8vw,64px)}
+  .kviz .btn{display:flex;width:100%}
+}
