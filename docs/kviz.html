@@ -105,6 +105,9 @@
   .notes { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
   .raschet { margin: 10px 0 0; padding: 10px 12px; border: 1px solid var(--line);
              border-radius: 10px; font-size: 14px; color: var(--muted); }
+  .krome { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px;
+           background: rgba(240,166,46,.10); font-size: 14px; }
+  .krome b { display: block; margin-bottom: 4px; }
   .raschet div + div { margin-top: 5px; }
   .done { color: var(--ok); font-weight: 600; margin-top: 12px; }
 
@@ -258,6 +261,10 @@ function poschitatDrenazh(o) {
     why: "Считаем по погонным метрам: в цену метра входят выезд, доставка и работа. От вас — песок и щебень.",
     low: low, high: high,
     notes: zamechaniya,
+    /* Названное вслух «что не входит» дороже любой скидки: на замере
+       человек услышит ту же сумму, которую видел, и не решит,
+       что его заманили. */
+    krome: ["Ливнёвка — отвод воды с крыши и площадок. Если нужна, мастер посчитает её на замере отдельно."],
     raschet: [
       "Траншея: " + m.min + "–" + m.max + " м × " + money(DRENAZH.metr),
       "Смотровые колодцы: " + m.uglov + " × " + money(DRENAZH.smotrovoy) + " (" + m.forma + ")",
@@ -472,6 +479,10 @@ function renderResult(r, otpravleno) {
     '<div class="muted">Точную сумму мастер назовёт на замере — выезд и замер бесплатные.</div>';
   if (r.raschet && r.raschet.length) {
     html += '<div class="raschet">' + r.raschet.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join("") + '</div>';
+  }
+  if (r.krome && r.krome.length) {
+    html += '<div class="krome"><b>Считается отдельно</b>' +
+      r.krome.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join("") + '</div>';
   }
   if (r.notes && r.notes.length) html += '<ul class="notes">' + r.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join("") + '</ul>';
   html += otpravleno
