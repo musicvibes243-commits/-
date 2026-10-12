@@ -1,0 +1,16 @@
+{
+  "name": "Объекты — СтройИнвест",
+  "short_name": "Объекты",
+  "description": "Записная книжка мастера: объекты, замеры, этапы, деньги",
+  "start_url": "/obyekty.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F3ED",
+  "theme_color": "#F6F3ED",
+  "lang": "ru",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

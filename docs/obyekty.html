@@ -6,6 +6,14 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#F6F3ED">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="obyekty.webmanifest">
+<!-- Эти четыре строки и делают из страницы приложение: с иконки она
+     открывается на весь экран, без адресной строки и кнопок браузера,
+     и в переключателе приложений стоит отдельной карточкой. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Объекты">
 <title>Объекты — СтройИнвест</title>
 <!--
   ОБЪЕКТЫ — записная книжка мастера.
@@ -46,9 +54,22 @@
   который может лечь.
 
   НА ЭКРАН «ДОМОЙ». Safari → кнопка «Поделиться» → «На экран «Домой».
-  Нарочно не включён режим отдельного приложения: в нём у страницы
-  бывает своя, отдельная память, и записи, сделанные «из Safari»
-  и «с иконки», могут разъехаться. Пусть будет одна память на всех.
+  Дальше открывается с иконки на весь экран: ни адресной строки,
+  ни кнопок браузера. От обычного приложения не отличить.
+
+  И ЭТО НЕ ТОЛЬКО КРАСОТА. У приложения с иконки записи хранятся
+  надёжнее: Safari умеет сам подчищать данные сайтов, в которые давно
+  не заходили, а установленное приложение он так не трогает.
+
+  ЗА ЭТО ЕСТЬ ПЛАТА, И ПРО НЕЁ НАДО ЗНАТЬ. Память у приложения с иконки
+  своя, отдельная от Safari. Записи, сделанные в Safari до установки,
+  в приложении не появятся — не пропадут, но останутся там, в Safari.
+  Поэтому правило: сначала поставить иконку, потом заводить объекты,
+  и дальше открывать только с иконки. Если что-то уже записано
+  в Safari — перенести копией через «Отчёт», это пара минут.
+
+  Подсказка об этом висит внизу экрана, пока страницу открывают
+  не с иконки. Она гасится крестиком и больше не возвращается.
 -->
 <style>
   :root{
@@ -113,6 +134,13 @@
   .pusto{background:var(--paper);border:1px dashed var(--line);border-radius:12px;
     padding:26px 18px;text-align:center;color:var(--ink-2);margin-top:12px}
   .pusto b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
+
+  .sovet{position:relative;background:var(--accent-soft);border:1px solid #F0DCB8;
+    border-radius:12px;padding:13px 40px 13px 14px;margin-top:12px;font-size:14px;line-height:1.5}
+  .sovet b{display:block;margin-bottom:4px}
+  .sovet p{margin:6px 0 0}
+  .sovet .zakryt{position:absolute;top:6px;right:6px;border:0;background:none;
+    font-size:22px;line-height:1;color:var(--muted);padding:4px 9px}
 
   /* ===== Нижняя кнопка ===== */
   .pod{position:fixed;left:0;right:0;bottom:0;z-index:30;
@@ -196,6 +224,7 @@
 </header>
 
 <main class="obolochka">
+  <div id="sovet"></div>
   <div class="spisok" id="spisok"></div>
 </main>
 
@@ -363,7 +392,53 @@ function risovatFiltry() {
   }).join("");
 }
 
-function obnovit() { risovatFiltry(); risovatSpisok(); }
+function obnovit() { risovatFiltry(); risovatSpisok(); risovatSovet(); }
+
+/* ===== Подсказка про иконку =====
+   Показывается только на телефоне и только пока страницу открывают
+   из браузера. С иконки она не нужна — и не мозолит глаза тому,
+   кто всё уже сделал. */
+var KLYUCH_SOVET = "stroyinvest-obyekty-sovet-skryt";
+
+/* Собираем кусок фразы целиком, а не одно слово: по-русски вместе
+   с числом меняются и «эта/эти», и «перейдёт/перейдут». Склеивать это
+   из отдельных кусочков — верный способ получить «эти 1 записи». */
+function proZapisi(n) {
+  var sto = n % 100, des = n % 10;
+  if (des === 1 && sto !== 11) return "эта запись сама в него не перейдёт";
+  var slovo = (sto > 10 && sto < 20) ? "записей"
+            : (des >= 2 && des <= 4) ? "записи" : "записей";
+  return "эти " + n + " " + slovo + " сами в него не перейдут";
+}
+
+function sIkonki() {
+  try {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)
+      || navigator.standalone === true;
+  } catch (e) { return false; }
+}
+
+function risovatSovet() {
+  var mesto = document.getElementById("sovet");
+  var skryt = false;
+  try { skryt = localStorage.getItem(KLYUCH_SOVET) === "1"; } catch (e) {}
+  if (skryt || sIkonki() || !navigator.maxTouchPoints) { mesto.innerHTML = ""; return; }
+
+  /* Если записи уже есть, главное не «поставьте иконку», а «не потеряйте
+     то, что записано»: память у приложения с иконки своя. */
+  var est = baza.obj.length > 0;
+  mesto.innerHTML =
+    '<div class="sovet"><button class="zakryt" type="button" id="sovetNet" aria-label="Скрыть подсказку">×</button>' +
+      '<b>Поставьте на экран «Домой»</b>' +
+      'Кнопка «Поделиться» внизу Safari → «На экран «Домой». Дальше открывайте только с иконки: на весь экран и записи хранятся надёжнее.' +
+      (est ? '<p><b style="display:inline">Сначала сделайте копию.</b> У приложения с иконки своя память, и ' +
+             proZapisi(baza.obj.length) + '. «Отчёт» → «Скачать файл копии», потом в приложении — «Восстановить из копии».</p>' : '') +
+    '</div>';
+  document.getElementById("sovetNet").addEventListener("click", function () {
+    try { localStorage.setItem(KLYUCH_SOVET, "1"); } catch (e) {}
+    mesto.innerHTML = "";
+  });
+}
 
 /* ===== Экран объекта ===== */
 function otkryt_obyekt(id) {

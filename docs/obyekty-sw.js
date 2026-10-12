@@ -18,8 +18,9 @@
  * однажды показать посетителю вчерашнюю версию из запаса.
  */
 
-var ZAPAS = "obyekty-v1";
-var NASHE = ["obyekty.html", "apple-touch-icon.png"];
+var ZAPAS = "obyekty-v2";
+var NASHE = ["obyekty.html", "obyekty.webmanifest",
+             "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(ZAPAS).then(function (c) { return c.addAll(NASHE); }).then(function () {
@@ -34,7 +35,7 @@ self.addEventListener("activate", function (e) {
 });
 
 function nashe(url) {
-  return url.pathname === "/obyekty.html" || url.pathname === "/apple-touch-icon.png";
+  return NASHE.indexOf(url.pathname.replace(/^\//, "")) > -1;
 }
 
 self.addEventListener("fetch", function (e) {
