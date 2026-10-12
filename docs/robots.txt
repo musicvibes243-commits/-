@@ -4,6 +4,7 @@ Allow: /
 # Бланк сметы — рабочий инструмент мастера, а не страница для посетителей.
 Disallow: /smeta.html
 Disallow: /kp.html
+Disallow: /obyekty.html
 Disallow: /smeta.xlsx
 Disallow: /kp.xlsx
 
