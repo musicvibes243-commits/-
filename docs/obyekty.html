@@ -312,6 +312,15 @@ function naydi(id) {
   for (var i = 0; i < baza.obj.length; i++) if (baza.obj[i].id === id) return baza.obj[i];
   return null;
 }
+/* Удалённый объект не исчезает из базы, а получает отметку об удалении.
+   Иначе при общем списке он воскресал бы со второго телефона, где
+   про удаление ещё не знают. Наружу такие записи не показываем. */
+function zhivye() { return baza.obj.filter(function (o) { return !o.udalen; }); }
+
+/* Любая правка объекта помечается временем: по нему сервер решает,
+   чья версия новее, когда один и тот же объект правили с двух телефонов. */
+function tronut(o) { o.izmenen = Date.now(); sohranit(); otlozhennayaSync(); }
+
 function vRabote(o) { return o.etap !== "Сдан" && o.etap !== "Отказ"; }
 /* «Срок подошёл» — это и просроченное, и сегодняшнее. Мастер смотрит
    в список утром, и завтрашнее ему мешает: оно ещё не горит. */
@@ -321,7 +330,7 @@ function ostatok(o) { return (Number(o.summa) || 0) - (Number(o.avans) || 0); }
 /* ===== Список ===== */
 function otobrat() {
   var q = zapros.trim().toLowerCase();
-  return baza.obj.filter(function (o) {
+  return zhivye().filter(function (o) {
     if (filtr === "В работе" && !vRabote(o)) return false;
     if (filtr === "Сданные" && o.etap !== "Сдан") return false;
     if (filtr === "Срок подошёл" && !gorit(o)) return false;
@@ -348,16 +357,16 @@ function risovatSpisok() {
   var vse = otobrat();
   var sp = document.getElementById("spisok");
 
-  var vsegoVRabote = baza.obj.filter(vRabote).length;
-  var gorit_n = baza.obj.filter(gorit).length;
+  var vsegoVRabote = zhivye().filter(vRabote).length;
+  var gorit_n = zhivye().filter(gorit).length;
   /* «1 ждёт», но «2 ждут»: кривое согласование в шапке сразу читается
      как недоделка, а эту строчку мастер видит каждый раз. */
   var zhdet = (gorit_n % 10 === 1 && gorit_n % 100 !== 11) ? " ждёт" : " ждут";
   document.getElementById("schet").textContent =
-    baza.obj.length ? (vsegoVRabote + " в работе" + (gorit_n ? ", " + gorit_n + zhdet + " сегодня" : "")) : "записей пока нет";
+    zhivye().length ? (vsegoVRabote + " в работе" + (gorit_n ? ", " + gorit_n + zhdet + " сегодня" : "")) : "записей пока нет";
 
   if (!vse.length) {
-    sp.innerHTML = '<div class="pusto">' + (baza.obj.length
+    sp.innerHTML = '<div class="pusto">' + (zhivye().length
       ? '<b>Здесь пусто</b>По этому фильтру ничего не нашлось. Нажмите «Все».'
       : '<b>Первый объект</b>Нажмите «+ Новый объект» внизу. Заполнять всё сразу не нужно: хватит имени и телефона, остальное допишется по ходу.')
       + '</div>';
@@ -386,7 +395,7 @@ function risovatSpisok() {
 
 function risovatFiltry() {
   document.getElementById("filtry").innerHTML = FILTRY.map(function (f) {
-    var n = f === "Срок подошёл" ? baza.obj.filter(gorit).length : 0;
+    var n = f === "Срок подошёл" ? zhivye().filter(gorit).length : 0;
     return '<button class="chip" type="button" data-f="' + f + '" aria-pressed="' + (filtr === f) + '">' +
       f + (n ? " · " + n : "") + '</button>';
   }).join("");
@@ -426,13 +435,13 @@ function risovatSovet() {
 
   /* Если записи уже есть, главное не «поставьте иконку», а «не потеряйте
      то, что записано»: память у приложения с иконки своя. */
-  var est = baza.obj.length > 0;
+  var est = zhivye().length > 0;
   mesto.innerHTML =
     '<div class="sovet"><button class="zakryt" type="button" id="sovetNet" aria-label="Скрыть подсказку">×</button>' +
       '<b>Поставьте на экран «Домой»</b>' +
       'Кнопка «Поделиться» внизу Safari → «На экран «Домой». Дальше открывайте только с иконки: на весь экран и записи хранятся надёжнее.' +
       (est ? '<p><b style="display:inline">Сначала сделайте копию.</b> У приложения с иконки своя память, и ' +
-             proZapisi(baza.obj.length) + '. «Отчёт» → «Скачать файл копии», потом в приложении — «Восстановить из копии».</p>' : '') +
+             proZapisi(zhivye().length) + '. «Отчёт» → «Скачать файл копии», потом в приложении — «Восстановить из копии».</p>' : '') +
     '</div>';
   document.getElementById("sovetNet").addEventListener("click", function () {
     try { localStorage.setItem(KLYUCH_SOVET, "1"); } catch (e) {}
@@ -531,7 +540,7 @@ function privyazat(o) {
   [["f-imya", "imya"], ["f-tel", "tel"], ["f-adres", "adres"], ["f-zamer", "zamer"],
    ["f-kogda", "kogda"], ["f-chto", "chto"]].forEach(function (p) {
     var el = document.getElementById(p[0]);
-    el.addEventListener("input", function () { o[p[1]] = el.value; sohranit(); });
+    el.addEventListener("input", function () { o[p[1]] = el.value; tronut(o); });
   });
 
   ["f-summa", "f-avans"].forEach(function (id) {
@@ -545,14 +554,14 @@ function privyazat(o) {
       var ost = ostatok(o);
       document.getElementById("ostatok").textContent = dengi(ost);
       document.getElementById("ostatok").parentNode.classList.toggle("minus", ost > 0);
-      sohranit();
+      tronut(o);
     });
   });
 
   document.getElementById("vidy").addEventListener("click", function (e) {
     var b = e.target.closest("[data-v]"); if (!b) return;
     o.vid = (o.vid === b.getAttribute("data-v")) ? "" : b.getAttribute("data-v");
-    sohranit();
+    tronut(o);
     this.querySelectorAll(".chip").forEach(function (c) {
       c.setAttribute("aria-pressed", c.getAttribute("data-v") === o.vid);
     });
@@ -568,7 +577,7 @@ function privyazat(o) {
     /* Смена этапа — главное событие объекта. Записываем её в историю сами:
        иначе через месяц не вспомнить, когда именно сдали. */
     if (byl !== o.etap) zapisat(o, "Этап: " + byl + " → " + o.etap);
-    sohranit();
+    tronut(o);
   });
 
   document.getElementById("vKalendar").addEventListener("click", function () { vKalendar(o); });
@@ -579,14 +588,14 @@ function privyazat(o) {
     if (!t) { ta.focus(); return; }
     zapisat(o, t);
     ta.value = "";
-    sohranit();
+    tronut(o);
   });
 
   document.getElementById("istoriya").addEventListener("click", function (e) {
     var b = e.target.closest("[data-udalit]"); if (!b) return;
     if (!confirm("Удалить эту запись?")) return;
     o.istoriya = (o.istoriya || []).filter(function (z) { return z.id !== b.getAttribute("data-udalit"); });
-    sohranit(); risovatIstoriyu();
+    tronut(o); risovatIstoriyu();
   });
 }
 
@@ -705,19 +714,19 @@ function zakryt() {
 
 /* ===== Отчёт и копия ===== */
 function otkryt_otchet() {
-  var rab = baza.obj.filter(vRabote);
+  var rab = zhivye().filter(vRabote);
   var summa = rab.reduce(function (s, o) { return s + (Number(o.summa) || 0); }, 0);
   var poluchen = rab.reduce(function (s, o) { return s + (Number(o.avans) || 0); }, 0);
-  var goryat = baza.obj.filter(gorit);
+  var goryat = zhivye().filter(gorit);
 
   var nedelya = new Date(); nedelya.setDate(nedelya.getDate() + 7);
   var predel = nedelya.toISOString().slice(0, 10);
-  var skoro = baza.obj.filter(function (o) {
+  var skoro = zhivye().filter(function (o) {
     return vRabote(o) && o.kogda && o.kogda > segodnya() && o.kogda <= predel;
   }).sort(function (a, b) { return a.kogda < b.kogda ? -1 : 1; });
 
   var poEtapam = ETAPY.map(function (e) {
-    return { e: e, n: baza.obj.filter(function (o) { return o.etap === e; }).length };
+    return { e: e, n: zhivye().filter(function (o) { return o.etap === e; }).length };
   }).filter(function (x) { return x.n; });
 
   function spisochek(massiv, pusto) {
@@ -751,6 +760,8 @@ function otkryt_otchet() {
       '<h2>Ближайшая неделя</h2>' + spisochek(skoro, "На неделю ничего не назначено.") +
     '</div>' +
 
+    syncHtml() +
+
     '<div class="list">' +
       '<h2>Копия записей</h2>' +
       '<p style="margin:0 0 12px;font-size:14.5px;color:#4A5A64">Записи лежат в этом телефоне. Если почистить данные Safari или сменить телефон — они пропадут. Копию стоит делать раз в неделю.</p>' +
@@ -770,6 +781,7 @@ function otkryt_otchet() {
       '<button class="knopka knopka--opasnaya knopka--shir" id="vosstanovit" type="button">Заменить записи из копии</button>' +
     '</div>';
 
+  privyazatSync();
   document.getElementById("skachat").addEventListener("click", skachatKopiyu);
   document.getElementById("vTelegram").addEventListener("click", skopirovatTekstom);
   document.getElementById("vTablicu").addEventListener("click", skachatTablicu);
@@ -799,7 +811,7 @@ function skachatKopiyu() {
 
 function tekstomVse() {
   var ch = ["ОБЪЕКТЫ СтройИнвест — копия от " + poRusski(segodnya()), ""];
-  baza.obj.forEach(function (o) {
+  zhivye().forEach(function (o) {
     ch.push("— " + (o.imya || "Без имени") + " · " + o.etap + (o.vid ? " · " + o.vid : ""));
     if (o.tel) ch.push("  тел " + o.tel);
     if (o.adres) ch.push("  " + o.adres.replace(/\n/g, " "));
@@ -839,7 +851,7 @@ function zapasnoeKopirovanie(t, poluchilos) {
 function skachatTablicu() {
   var shapka = ["Имя", "Телефон", "Адрес", "Вид работ", "Этап", "Сумма", "Получено", "Осталось", "Срок", "Что сделать", "Замер"];
   function kl(v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""').replace(/\n/g, " ") + '"'; }
-  var stroki = baza.obj.map(function (o) {
+  var stroki = zhivye().map(function (o) {
     return [o.imya, o.tel, o.adres, o.vid, o.etap, Number(o.summa) || 0, Number(o.avans) || 0,
             ostatok(o), poRusski(o.kogda), o.chto, o.zamer].map(kl).join(";");
   });
@@ -857,13 +869,157 @@ function vosstanovitIzKopii() {
     alert("Это не похоже на файл копии.\n\nНужен файл, который скачивается кнопкой «Скачать файл копии» — он начинается с {\"v\":1.");
     return;
   }
-  if (!confirm("Заменить все записи на телефоне (" + baza.obj.length + " шт.) записями из копии (" + d.obj.length + " шт.)?\n\nТекущие записи пропадут.")) return;
+  if (!confirm("Заменить все записи на телефоне (" + zhivye().length + " шт.) записями из копии (" + (d.obj.filter(function (o) { return !o.udalen; }).length) + " шт.)?\n\nТекущие записи пропадут.")) return;
   baza = d;
   sohranit();
   document.getElementById("ekranOtchet").hidden = true;
   document.body.style.overflow = "";
   obnovit();
-  alert("Записи восстановлены: " + baza.obj.length + " шт.");
+  otlozhennayaSync();
+  alert("Записи восстановлены: " + zhivye().length + " шт.");
+}
+
+/* ===== Общий список и утренняя сводка =====
+
+   Включается отдельно и не обязателен: без него приложение работает
+   как работало, записи просто живут в телефоне.
+
+   Что даёт включение:
+     — записи лежат ещё и вне телефона, то есть переживают утопленный
+       телефон, а не только почищенный Safari;
+     — два телефона видят один список;
+     — каждое утро в 8:00 мастеру приходит в Telegram, кому звонить
+       сегодня и что просрочено.
+
+   Адрес и ключ бригады не зашиты в код: страница открыта всем, и ключ
+   в ней был бы ключом от списка заказчиков для любого прохожего.
+   Вводятся один раз на каждом телефоне. Код сервера — tools/obyekty-worker.js. */
+
+var KLYUCH_SYNC = "stroyinvest-obyekty-sync";
+var sync = null;          // {url, klyuch}
+var syncKogda = 0;        // когда последний раз получилось
+var syncOshibka = "";
+var syncTaymer = null;
+var syncIdet = false;
+
+function zagruzitSync() {
+  try { sync = JSON.parse(localStorage.getItem(KLYUCH_SYNC) || "null"); } catch (e) { sync = null; }
+  if (sync && !sync.url) sync = null;
+}
+
+/* Побеждает та версия объекта, которую правили позже. Открытый сейчас
+   объект не трогаем: на него смотрит человек, и подменять ему карточку
+   под пальцами нельзя. Он доедет следующей синхронизацией. */
+function slitSServerom(prishlo) {
+  var poId = {}, izmenilos = false;
+  baza.obj.forEach(function (o) { if (o && o.id) poId[o.id] = o; });
+  prishlo.forEach(function (o) {
+    if (!o || !o.id || o.id === otkryt) return;
+    var est = poId[o.id];
+    if (!est || (Number(o.izmenen) || 0) > (Number(est.izmenen) || 0)) { poId[o.id] = o; izmenilos = true; }
+  });
+  if (!izmenilos) return false;
+  var novyy = [];
+  Object.keys(poId).forEach(function (k) { novyy.push(poId[k]); });
+  baza.obj = novyy;
+  return true;
+}
+
+function sinhronizirovat(ruchnoy) {
+  if (!sync || syncIdet) return Promise.resolve(false);
+  syncIdet = true;
+  return fetch(sync.url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ klyuch: sync.klyuch, obj: baza.obj })
+  }).then(function (r) {
+    return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+  }).then(function (res) {
+    if (!res.ok || !res.j.ok) throw new Error(res.j && res.j.error || "сервер не принял");
+    syncOshibka = "";
+    syncKogda = Date.now();
+    if (slitSServerom(res.j.obj || [])) { sohranit(); obnovit(); }
+    return true;
+  }).catch(function (e) {
+    /* Связи нет — это обычное дело в поле и не повод пугать. Пишем
+       причину и пробуем снова при следующей правке. */
+    syncOshibka = e && e.message ? e.message : "нет связи";
+    if (ruchnoy) alert("Синхронизация не прошла: " + syncOshibka + "\n\nЗаписи в телефоне целы. Попробуйте при связи.");
+    return false;
+  }).then(function (v) { syncIdet = false; pokazatSync(); return v; });
+}
+
+/* Правки сыплются по букве за раз, а отправлять надо редко: ждём, пока
+   человек перестанет печатать. */
+function otlozhennayaSync() {
+  if (!sync) return;
+  clearTimeout(syncTaymer);
+  syncTaymer = setTimeout(function () { sinhronizirovat(false); }, 4000);
+}
+
+function kogdaStroka() {
+  if (!syncKogda) return syncOshibka ? "пока не получилось: " + syncOshibka : "ещё ни разу";
+  var d = new Date(syncKogda);
+  var segodnya_li = d.toISOString().slice(0, 10) === segodnya();
+  return (segodnya_li ? "сегодня в " : poRusski(d.toISOString().slice(0, 10)) + " в ") +
+    d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) +
+    (syncOshibka ? " (сейчас не выходит: " + syncOshibka + ")" : "");
+}
+
+function pokazatSync() {
+  var el = document.getElementById("syncSostoyanie");
+  if (el) el.textContent = kogdaStroka();
+}
+
+function syncHtml() {
+  if (!sync) {
+    return '<div class="list"><h2>Общий список и утренняя сводка</h2>' +
+      '<p style="margin:0 0 12px;font-size:14.5px;color:#4A5A64">Пока выключено: записи живут только в этом телефоне. Если включить — они будут храниться ещё и вне телефона, второй телефон увидит тот же список, а каждое утро в Telegram будет приходить, кому звонить сегодня.</p>' +
+      '<label class="p"><span>Адрес сервера</span><input id="syncUrl" type="url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://obyekty....workers.dev"></label>' +
+      '<label class="p"><span>Ключ бригады</span><input id="syncKlyuch" type="text" autocapitalize="off" autocomplete="off" placeholder="слово-пароль"></label>' +
+      '<button class="knopka knopka--glavnaya knopka--shir" id="syncVkl" type="button">Включить</button>' +
+      '<div class="sned">Адрес и ключ даёт тот, кто настраивал сервер. На втором телефоне вводятся те же — именно это и делает список общим.</div></div>';
+  }
+  return '<div class="list"><h2>Общий список и утренняя сводка</h2>' +
+    '<div class="stroka"><span>Последняя синхронизация</span><em id="syncSostoyanie">' + esc(kogdaStroka()) + '</em></div>' +
+    '<div class="stroka"><span>Сервер</span><em style="max-width:55%;overflow:hidden;text-overflow:ellipsis">' + esc(sync.url.replace(/^https?:\/\//, "")) + '</em></div>' +
+    '<div style="height:12px"></div>' +
+    '<button class="knopka knopka--glavnaya knopka--shir" id="syncSeychas" type="button">Синхронизировать сейчас</button>' +
+    '<div style="height:8px"></div>' +
+    '<button class="knopka knopka--shir" id="syncVykl" type="button">Отключить на этом телефоне</button>' +
+    '<div class="sned">Отключение не стирает записи: они останутся и в телефоне, и на сервере.</div></div>';
+}
+
+function privyazatSync() {
+  var vkl = document.getElementById("syncVkl");
+  if (vkl) vkl.addEventListener("click", function () {
+    var u = document.getElementById("syncUrl").value.trim().replace(/\/$/, "");
+    var k = document.getElementById("syncKlyuch").value.trim();
+    if (!/^https:\/\/.+/.test(u)) { alert("Адрес должен начинаться с https:// — его даёт тот, кто настраивал сервер."); return; }
+    if (!k) { alert("Без ключа бригады сервер не примет список."); return; }
+    sync = { url: u, klyuch: k };
+    try { localStorage.setItem(KLYUCH_SYNC, JSON.stringify(sync)); } catch (e) {}
+    sinhronizirovat(true).then(function (ok) {
+      if (!ok) { sync = null; try { localStorage.removeItem(KLYUCH_SYNC); } catch (e) {} }
+      otkryt_otchet();
+    });
+  });
+
+  var seychas = document.getElementById("syncSeychas");
+  if (seychas) seychas.addEventListener("click", function () {
+    seychas.disabled = true; seychas.textContent = "Отправляем…";
+    sinhronizirovat(true).then(function () {
+      seychas.disabled = false; seychas.textContent = "Синхронизировать сейчас";
+    });
+  });
+
+  var vykl = document.getElementById("syncVykl");
+  if (vykl) vykl.addEventListener("click", function () {
+    if (!confirm("Отключить общий список на этом телефоне?\n\nЗаписи останутся и здесь, и на сервере — просто перестанут сходиться.")) return;
+    sync = null; syncKogda = 0; syncOshibka = "";
+    try { localStorage.removeItem(KLYUCH_SYNC); } catch (e) {}
+    otkryt_otchet();
+  });
 }
 
 /* ===== Общие кнопки ===== */
@@ -886,7 +1042,7 @@ document.getElementById("novyyBtn").addEventListener("click", function () {
   var o = { id: String(Date.now()), sozdan: Date.now(), imya: "", tel: "", adres: "",
             vid: "", etap: "Замер", summa: "", avans: "", kogda: "", chto: "", zamer: "", istoriya: [] };
   baza.obj.push(o);
-  sohranit();
+  tronut(o);
   otkryt_obyekt(o.id);
   document.getElementById("f-imya").focus();
 });
@@ -896,6 +1052,8 @@ document.getElementById("nazadBtn").addEventListener("click", function () {
      за неделю зарастёт карточками «Без имени», которые никто не удалит. */
   var o = naydi(otkryt);
   if (o && !o.imya && !o.tel && !o.adres && !o.zamer && !o.summa && !(o.istoriya || []).length) {
+    /* Пустую карточку, заведённую случайно, убираем совсем: надгробие
+       от неё никому не нужно, а на сервер она уйти не успевает. */
     baza.obj = baza.obj.filter(function (x) { return x.id !== o.id; });
     sohranit();
   }
@@ -905,8 +1063,8 @@ document.getElementById("nazadBtn").addEventListener("click", function () {
 document.getElementById("udalitBtn").addEventListener("click", function () {
   var o = naydi(otkryt); if (!o) return;
   if (!confirm("Удалить объект «" + (o.imya || "Без имени") + "» со всеми записями?\n\nВернуть будет нельзя.")) return;
-  baza.obj = baza.obj.filter(function (x) { return x.id !== o.id; });
-  sohranit();
+  o.udalen = Date.now();
+  tronut(o);
   zakryt();
 });
 
@@ -924,10 +1082,25 @@ document.getElementById("nazadOtchet").addEventListener("click", function () {
 
 /* Телефон может выгрузить страницу из памяти без предупреждения.
    Сохраняем ещё раз на уход со страницы — дешевле, чем потерянный замер. */
-window.addEventListener("pagehide", function () { try { localStorage.setItem(KLYUCH, JSON.stringify(baza)); } catch (e) {} });
+window.addEventListener("pagehide", function () {
+  try { localStorage.setItem(KLYUCH, JSON.stringify(baza)); } catch (e) {}
+  /* Страницу закрывают — обычный запрос браузер оборвёт на полпути.
+     Маячок он доносит до конца уже после закрытия. Тип ставим простой,
+     иначе браузер потребует предварительный запрос, которого маячок
+     сделать не умеет; сервер всё равно читает тело как JSON. */
+  if (sync && navigator.sendBeacon) {
+    try {
+      navigator.sendBeacon(sync.url, new Blob(
+        [JSON.stringify({ klyuch: sync.klyuch, obj: baza.obj })],
+        { type: "text/plain;charset=UTF-8" }));
+    } catch (e) {}
+  }
+});
 
 zagruzit();
+zagruzitSync();
 obnovit();
+if (sync) sinhronizirovat(false);
 
 /* Запас на случай «нет связи» — см. obyekty-sw.js. Если браузер старый
    или страницу открыли по http, молча работаем без запаса: это улучшение,
