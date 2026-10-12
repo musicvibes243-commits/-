@@ -749,6 +749,15 @@ window.addEventListener("pagehide", function () { try { localStorage.setItem(KLY
 
 zagruzit();
 obnovit();
+
+/* Запас на случай «нет связи» — см. obyekty-sw.js. Если браузер старый
+   или страницу открыли по http, молча работаем без запаса: это улучшение,
+   а не условие работы. */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("obyekty-sw.js").catch(function () {});
+  });
+}
 </script>
 </body>
 </html>
