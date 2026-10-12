@@ -490,6 +490,8 @@ function otkryt_obyekt(id) {
         '<label class="p"><span>Когда</span><input id="f-kogda" type="date" value="' + esc(o.kogda) + '"></label>' +
         '<label class="p"><span>Что сделать</span><input id="f-chto" type="text" value="' + esc(o.chto) + '" placeholder="Позвонить, привезти кольца"></label>' +
       '</div>' +
+      '<button class="knopka knopka--shir" id="vKalendar" type="button">Напомнить в календаре</button>' +
+      '<div class="podskazka" style="margin:8px 0 0">Телефон сам напомнит утром в этот день. Файл сохранится в «Загрузки» — нажмите на него, откроется календарь.</div>' +
     '</div>' +
 
     '<div class="list">' +
@@ -569,6 +571,8 @@ function privyazat(o) {
     sohranit();
   });
 
+  document.getElementById("vKalendar").addEventListener("click", function () { vKalendar(o); });
+
   document.getElementById("dobavitZapis").addEventListener("click", function () {
     var ta = document.getElementById("f-novaya");
     var t = ta.value.trim();
@@ -584,6 +588,102 @@ function privyazat(o) {
     o.istoriya = (o.istoriya || []).filter(function (z) { return z.id !== b.getAttribute("data-udalit"); });
     sohranit(); risovatIstoriyu();
   });
+}
+
+/* ===== Напоминание в календарь =====
+
+   Сама страница разбудить телефон в нужный день не может: пока её
+   не открыли, она не работает. Напоминание на будущее умеет прислать
+   только то, что живёт снаружи, — сервер.
+
+   Но в телефоне уже есть вещь, которая это умеет и ничего не стоит, —
+   календарь. Отдаём ему событие файлом, дальше он напоминает сам:
+   без интернета, без нашего сервера и без разрешений на уведомления. */
+
+/* Запятая, точка с запятой и перенос строки в календарном файле —
+   служебные символы. Не экранировать их — получить событие, обрезанное
+   на первой же запятой в адресе. */
+function icsEkranirovat(t) {
+  return String(t == null ? "" : t)
+    .replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+/* Длинные строки в этом формате положено разбивать по 75 байт,
+   продолжение — с пробела. Русская буква весит два байта, поэтому
+   считаем байты, а не символы: иначе календарь получит обрывок. */
+function icsSvernut(stroka) {
+  var bytov = function (s) {
+    try { return new TextEncoder().encode(s).length; } catch (e) { return s.length * 2; }
+  };
+  /* Переносим по «кусочкам», а не по буквам: служебная пара вроде \n или \,
+     должна остаться на одной строке целиком. Формально разрезать её можно,
+     но находятся календари, которые после этого показывают голую букву n
+     посреди адреса. */
+  var bukvy = Array.from(stroka), atomy = [];
+  for (var i = 0; i < bukvy.length; i++) {
+    if (bukvy[i] === "\\" && i + 1 < bukvy.length) { atomy.push(bukvy[i] + bukvy[i + 1]); i++; }
+    else atomy.push(bukvy[i]);
+  }
+
+  var kuski = [], tek = "", est = 0;
+  atomy.forEach(function (a) {
+    var n = bytov(a);
+    if (est + n > 73) { kuski.push(tek); tek = " "; est = 1; }
+    tek += a; est += n;
+  });
+  kuski.push(tek);
+  return kuski.join("\r\n");
+}
+
+/* Москва живёт на UTC+3 круглый год, перевода часов нет с 2014 года.
+   Поэтому пишем время сразу в UTC: 9 утра по Москве — это 6:00Z.
+   Так не нужен блок описания часового пояса, и ни один календарь
+   не поймёт событие неправильно. */
+function icsVremya(iso, chasMsk) {
+  return iso.replace(/-/g, "") + "T" +
+    ("0" + (chasMsk - 3)).slice(-2) + "0000Z";
+}
+
+function vKalendar(o) {
+  if (!o.kogda) {
+    alert("Сначала поставьте дату в поле «Когда» — иначе напоминать не о чем.");
+    return;
+  }
+  var chto = (o.chto || "Заехать на объект").trim();
+  var imya = (o.imya || "Без имени").trim();
+  var opisanie = [
+    o.tel ? "Телефон: " + o.tel : "",
+    o.vid ? "Работы: " + o.vid : "",
+    (Number(o.summa) && ostatok(o) > 0) ? "Осталось получить: " + dengi(ostatok(o)) : "",
+    o.zamer ? "Замер: " + o.zamer : ""
+  ].filter(Boolean).join("\n");
+
+  var seychas = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  var stroki = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//StroyInvest//Obyekty//RU",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    "UID:" + o.id + "@stroyinvest-mo.ru",
+    "DTSTAMP:" + seychas,
+    "DTSTART:" + icsVremya(o.kogda, 9),
+    "DTEND:" + icsVremya(o.kogda, 10),
+    "SUMMARY:" + icsEkranirovat(chto + " — " + imya),
+    opisanie ? "DESCRIPTION:" + icsEkranirovat(opisanie) : "",
+    o.adres ? "LOCATION:" + icsEkranirovat(o.adres) : "",
+    "BEGIN:VALARM",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:" + icsEkranirovat(chto + " — " + imya),
+    "TRIGGER:PT0S",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].filter(Boolean).map(icsSvernut);
+
+  skachatFayl("napominanie-" + o.kogda + ".ics", stroki.join("\r\n") + "\r\n", "text/calendar");
 }
 
 function zapisat(o, tekst) {
@@ -681,7 +781,11 @@ function otkryt_otchet() {
 }
 
 function skachatFayl(imya, tekst, tip) {
-  var b = new Blob(["﻿" + tekst], { type: tip + ";charset=utf-8" });
+  /* Невидимая метка в начале файла нужна только Excel — без неё русские
+     буквы в таблице превращаются в кракозябры. В остальные файлы её класть
+     не надо: в календарном она сбивает разбор. */
+  var metka = tip.indexOf("csv") > -1 ? "﻿" : "";
+  var b = new Blob([metka + tekst], { type: tip + ";charset=utf-8" });
   var a = document.createElement("a");
   a.href = URL.createObjectURL(b);
   a.download = imya;
