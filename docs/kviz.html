@@ -103,6 +103,9 @@
   .price { font-size: 26px; font-weight: 800; margin: 6px 0 2px; }
   .muted { color: var(--muted); font-size: 14px; }
   .notes { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+  .raschet { margin: 10px 0 0; padding: 10px 12px; border: 1px solid var(--line);
+             border-radius: 10px; font-size: 14px; color: var(--muted); }
+  .raschet div + div { margin-top: 5px; }
   .done { color: var(--ok); font-weight: 600; margin-top: 12px; }
 
   footer { color: var(--muted); font-size: 13px; margin-top: 26px; line-height: 1.6; }
@@ -196,13 +199,72 @@ var Q = {
   need:   ["Что нужно сделать?", [["new","Септик под ключ"],["replace","Заменить старый"],["drain","Дренаж участка"],["calc","Пока просто считаю"]]],
   people: ["Сколько человек живёт в доме?", [["1-2","1–2"],["3-4","3–4"],["5-7","5–7"],["8+","Больше 7"]]],
   living: ["Как живёте в доме?", [["permanent","Постоянно"],["summer","Только летом"],["weekend","По выходным"]]],
+  metry:  ["Сколько примерно метров дренажа?", [["20","До 20 м — одна стена дома"],["40","20–40 м — дом по периметру"],["60","40–60 м — большой дом"],["80","Больше 60 м — участок по границе"],["nz","Не знаю"]]],
   water:  ["Какая вода на участке?", [["dry","Сухо"],["spring","Весной подтапливает"],["high","Высокие грунтовые воды"],["unknown","Не знаю"]]],
   power:  ["Есть электричество рядом с местом установки?", [["yes","Да"],["no","Нет"],["unknown","Не знаю"]]],
   access: ["Как далеко от места установки до места, куда подъедет машина?", [["10","До 10 м"],["30","10–30 м"],["far","Дальше 30 м"]]],
   when:   ["Когда планируете установку?", [["urgent","Срочно"],["season","В этом сезоне"],["spring","Весной"],["look","Просто смотрю"]]]
 };
 var SEPTIC = ["need","people","living","water","power","access","when"];
-var DRAIN  = ["need","water","access","when"];
+var DRAIN  = ["need","metry","water","access","when"];
+
+/* ===== Расчёт дренажа прямо здесь, без сервера =====
+
+   Числа — от мастера, 12 октября 2026. Ничего придуманного: по этим
+   цифрам он поедет на объект, и расхождение человек воспримет как обман.
+   Все они собраны в tools/ceny.md.
+
+   Почему считаем в странице, а не на сервере. 11 октября в дата-центр,
+   где жил счётчик, прилетели беспилотники, и обещание «цена за минуту»
+   умерло вместе с ним на двое суток. Дренаж — это умножение, его незачем
+   доверять чужому зданию. */
+var DRENAZH = {
+  metr: 2500,                 // погонный метр траншеи под ключ, со скидкой до 30 ноября
+  smotrovoy: 4000,            // смотровой колодец, пластиковая труба
+  slivnoy: [30000, 45000]     // сливной, один на участок: 2 кольца — 3 кольца, с материалом
+};
+
+/* Смотровые ставятся на каждом углу контура, поэтому их число зависит
+   не от длины, а от формы обвода. Здесь оно взято из самой частой формы
+   для каждой длины — и обязательно пишется человеку в расчёт, чтобы он
+   видел, из чего сложилась сумма, и мог поправить мастера на замере. */
+var METRY = {
+  "20": { min: 10, max: 20, uglov: 2, forma: "вдоль одной стены" },
+  "40": { min: 20, max: 40, uglov: 4, forma: "дом по периметру" },
+  "60": { min: 40, max: 60, uglov: 5, forma: "большой дом по периметру" },
+  "80": { min: 60, max: 90, uglov: 6, forma: "участок по границе" },
+  "nz": { min: 20, max: 40, uglov: 4, forma: "дом по периметру" }
+};
+
+function poschitatDrenazh(o) {
+  var m = METRY[o.metry] || METRY.nz;
+  var kolodcy = m.uglov * DRENAZH.smotrovoy;
+  var low  = m.min * DRENAZH.metr + kolodcy + DRENAZH.slivnoy[0];
+  var high = m.max * DRENAZH.metr + kolodcy + DRENAZH.slivnoy[1];
+
+  var zamechaniya = [];
+  if (o.water === "high" || o.water === "spring") {
+    zamechaniya.push("Весной подтапливает — траншея нужна глубже, и важно, куда отводить воду. Это ближе к верхней границе.");
+  }
+  if (o.access === "far") {
+    zamechaniya.push("Машина не подойдёт ближе 30 метров — часть грунта придётся носить вручную.");
+  }
+  if (o.metry === "nz") {
+    zamechaniya.push("Метраж вы не знали — посчитали по самому частому случаю: дом по периметру, 20–40 метров.");
+  }
+
+  return {
+    system: "Дренаж участка под ключ",
+    why: "Считаем по погонным метрам: в цену метра входят выезд, доставка и работа. От вас — песок и щебень.",
+    low: low, high: high,
+    notes: zamechaniya,
+    raschet: [
+      "Траншея: " + m.min + "–" + m.max + " м × " + money(DRENAZH.metr),
+      "Смотровые колодцы: " + m.uglov + " × " + money(DRENAZH.smotrovoy) + " (" + m.forma + ")",
+      "Сливной колодец: " + money(DRENAZH.slivnoy[0]) + " – " + money(DRENAZH.slivnoy[1])
+    ]
+  };
+}
 
 /* ===== Состояние ===== */
 var app = document.getElementById("app");
@@ -306,9 +368,15 @@ function otvetyTekstom() {
   }).join("\n");
 }
 
-function zapasnoyKanal(phone, imya) {
+function zapasnoyKanal(phone, imya, itog) {
   var zadacha = "Расчёт на сайте";
   Q.need[1].forEach(function (o) { if (o[0] === answers.need) zadacha = o[1]; });
+  /* Что человеку показали — в заявку. Иначе мастер звонит вслепую:
+     заказчик уже видел сумму, а мастер про неё не знает. */
+  var pokazali = itog
+    ? "\n\nПодобрали: " + itog.system +
+      "\nПоказали цену: " + money(itog.low) + " – " + money(itog.high)
+    : "";
   return fetch(ZAYAVKI, {
     method: "POST",
     headers: { "Content-Type": "application/json", "Accept": "application/json" },
@@ -318,7 +386,7 @@ function zapasnoyKanal(phone, imya) {
       name: imya || "Квиз, имя не указано",
       phone: phone,
       service: zadacha + " (квиз)",
-      text: otvetyTekstom(),
+      text: otvetyTekstom() + pokazali,
       _gotcha: document.getElementById("website").value,
       page: location.href,
       source: source(),
@@ -337,6 +405,25 @@ function submit(e) {
   if (!document.getElementById("consent").checked) { err.textContent = "Поставьте галочку согласия, без неё не можем принять заявку."; return; }
 
   btn.disabled = true; btn.textContent = "Считаем…";
+  var imya = document.getElementById("name").value.trim();
+
+  /* Дренаж считаем здесь же. Цифры у нас есть, а ждать чужой сервер
+     незачем: 11 октября в его дата-центр прилетели беспилотники,
+     и обещание «цена за минуту» умерло вместе с ним на двое суток.
+     Заявка уходит в Telegram отдельно — и даже если не уйдёт, цену
+     человек увидит: за ней он сюда и пришёл. */
+  if (answers.need === "drain") {
+    var itog = poschitatDrenazh(answers);
+    zapasnoyKanal(phone, imya, itog).then(function () {
+      goal("kviz_lead"); goal("form_submit");
+      renderResult(itog, true);
+    }, function () {
+      goal("form_error");
+      renderResult(itog, false);
+    });
+    return;
+  }
+
   var stop = window.AbortController ? new AbortController() : null;
   var budilnik = setTimeout(function () { if (stop) stop.abort(); }, ZHDEM_MS);
   fetch(API + "/api/lead", {
@@ -356,11 +443,11 @@ function submit(e) {
   .then(function (res) {
     if (!res.ok || !res.j.ok) throw new Error(res.j && res.j.error || "server");
     goal("kviz_lead");
-    renderResult(res.j);
+    renderResult(res.j, true);
   })
   .catch(function () {
     clearTimeout(budilnik);
-    zapasnoyKanal(phone, document.getElementById("name").value.trim())
+    zapasnoyKanal(phone, imya)
       .then(function () {
         /* Заявка всё-таки доставлена в Telegram — это та же конверсия,
            что и с формы на главной, и считать её надо так же. */
@@ -371,18 +458,29 @@ function submit(e) {
   });
 }
 
-function renderResult(r) {
+/* otpravleno — дошла ли заявка. Цену показываем в любом случае:
+   человек ответил на вопросы и имеет на неё право, даже если связь
+   оборвалась. Но врать, что заявка принята, когда она не ушла, нельзя —
+   он будет ждать звонка, которого не будет. */
+function renderResult(r, otpravleno) {
   var html = '<div class="result"><div class="progress" aria-hidden="true"><i style="width:100%"></i></div>';
   if (r.photo) html += '<img src="' + API + esc(r.photo) + '" alt="Наш объект: ' + esc(r.system) + '" loading="lazy"><div class="cap">Одна из наших работ</div>';
   html += '<div class="muted">Вам подходит</div><h2 class="q" style="margin:2px 0 8px">' + esc(r.system) + '</h2>' +
     '<p style="margin:0 0 12px">' + esc(r.why) + '</p>' +
-    '<div class="muted">Цена под ключ</div>' +
+    '<div class="muted">Порядок цены</div>' +
     '<div class="price">' + money(r.low) + ' – ' + money(r.high) + '</div>' +
-    '<div class="muted">Точную сумму мастер назовёт после замера.</div>';
+    '<div class="muted">Точную сумму мастер назовёт на замере — выезд и замер бесплатные.</div>';
+  if (r.raschet && r.raschet.length) {
+    html += '<div class="raschet">' + r.raschet.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join("") + '</div>';
+  }
   if (r.notes && r.notes.length) html += '<ul class="notes">' + r.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join("") + '</ul>';
-  html += '<div class="done">✓ Заявка принята, мастер перезвонит и договорится о замере.</div>' +
-    '<a class="btn" href="tel:' + PHONE + '">Позвонить сейчас</a>' +
-    '<a class="btn ghost" href="https://stroyinvest-mo.ru/raboty.html">Посмотреть наши работы</a></div>';
+  html += otpravleno
+    ? '<div class="done">✓ Заявка принята, мастер перезвонит и договорится о замере.</div>' +
+      '<a class="btn" href="tel:' + PHONE + '">Позвонить сейчас</a>' +
+      '<a class="btn ghost" href="https://stroyinvest-mo.ru/raboty.html">Посмотреть наши работы</a>'
+    : '<p style="margin:14px 0 10px">Расчёт перед вами, но заявка не ушла — связь оборвалась. Позвоните, мы примем её сразу.</p>' +
+      '<a class="btn" href="tel:' + PHONE + '">Позвонить +7 915 346-97-28</a>';
+  html += '</div>';
   app.innerHTML = html;
   app.scrollIntoView({ behavior: "smooth", block: "start" });
 }
