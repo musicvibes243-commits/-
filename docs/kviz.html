@@ -137,12 +137,45 @@
   </footer>
 </div>
 
+<!-- ================= СТАТИСТИКА =================
+     Тот же счётчик, что на всём сайте, номер 112522751. Страница
+     отдельная и site.js не подключает, поэтому код счётчика здесь свой.
+
+     Цели, которые ставит квиз, надо один раз завести в самой Метрике:
+     Цели → Добавить цель → «JavaScript-событие» → идентификатор
+       kviz_start — нажал первый ответ, то есть начал проходить
+       kviz_lead  — оставил телефон и получил расчёт
+     Плюс phone_click — та же цель, что на остальных страницах.
+
+     Вебвизор выключен, как и везде: он пишет то, что человек печатает,
+     а здесь это номер телефона. -->
+<script>
+(function(){
+  "use strict";
+  var N = 112522751;
+  (function(m,e,t,r,i,k,a){
+    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+    for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r){return;}}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+  })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+  ym(N,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false});
+
+  /* Нажатие на номер считаем так же, как на остальных страницах,
+     иначе статистика по квизу была бы наполовину слепой. */
+  document.addEventListener("click", function(e){
+    if (!e.target.closest) return;
+    var a = e.target.closest('a[href^="tel:"]');
+    if (a) { try { ym(N, "reachGoal", "phone_click"); } catch(err){} }
+  });
+})();
+</script>
+
 <script>
 /* ===== Настройки ===== */
 // Адрес бота на Amvera (раздел «Домены» в проекте). Без слэша в конце.
 var API = "https://septik-bot-musicvibes243.amvera.io";
-// Номер счётчика Яндекс Метрики, если он стоит на этой странице. Иначе оставить null.
-var METRIKA_ID = null;
+// Номер счётчика Яндекс Метрики. Тот же, что на всём сайте.
+var METRIKA_ID = 112522751;
 var PHONE = "+79153469728";
 var BOT_LINK = "https://t.me/septik_drenazh_bot";
 
