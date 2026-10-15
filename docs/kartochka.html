@@ -163,6 +163,8 @@
     <tr class="nuzhno"><th>БИК</th><td><input id="b4" inputmode="numeric" placeholder="9 цифр"></td></tr>
     <tr><th>ИНН банка</th><td><input id="b5" inputmode="numeric" placeholder="необязательно"></td></tr>
     <tr><th>КПП банка</th><td><input id="b6" inputmode="numeric" placeholder="необязательно"></td></tr>
+    <tr><th>Юридический адрес банка</th>
+        <td><textarea id="b7" rows="2" placeholder="необязательно — спрашивают редко"></textarea><span class="bumaga"></span></td></tr>
   </table>
 
   <div class="niz">
@@ -192,7 +194,7 @@
 <script>
 var KLYUCH = "stroyinvest-kartochka-v1";
 var POLYA = ["f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","f13",
-             "b1","b2","b3","b4","b5","b6"];
+             "b1","b2","b3","b4","b5","b6","b7"];
 function $(id){ return document.getElementById(id); }
 
 /* Текстовые поля растут под содержимое: в печать уходит всё, а не первая
@@ -289,7 +291,7 @@ $("pechat").addEventListener("click", function(){ pometitPustye(); window.print(
 
 $("ochistit").addEventListener("click", function(){
   if (!confirm("Очистить банковские реквизиты?\n\nОстальные поля останутся.")) return;
-  ["b1","b2","b3","b4","b5","b6"].forEach(function(id){ $(id).value = ""; });
+  ["b1","b2","b3","b4","b5","b6","b7"].forEach(function(id){ $(id).value = ""; });
   pometit(); sohranit();
 });
 
