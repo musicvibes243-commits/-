@@ -179,6 +179,8 @@
   они и так открыты. Реквизиты счёта в коде страницы не хранятся: они останутся
   в памяти вашего браузера и никуда не уйдут. На новом телефоне или компьютере
   их придётся вписать заново.
+  <br><br><b>Если вы уже вписывали счёт в бланк КП</b> — он подставится сюда сам,
+  набирать двадцать цифр второй раз не нужно.
 </div>
 
 <div class="panel">
@@ -237,10 +239,30 @@ function sohranit(){
   try { localStorage.setItem(KLYUCH, JSON.stringify(d)); } catch(e){}
 }
 
+/* Реквизиты счёта человек уже вписывал в бланк КП. Страницы одного сайта
+   делят память браузера, поэтому карточка берёт их оттуда и не просит
+   набирать двадцать цифр второй раз. Переносим только в пустые поля:
+   что вписано здесь руками, считается более свежим. */
+var KP_KLYUCH = "kp-stroyinvest";
+var IZ_KP = { b1: "bank", b2: "rs", b3: "ks", b4: "bik" };
+
+function podtyanutIzKP(){
+  var kp = null;
+  try { kp = JSON.parse(localStorage.getItem(KP_KLYUCH) || "null"); } catch(e){}
+  if (!kp || !kp.polya) return false;
+  var vzyali = false;
+  Object.keys(IZ_KP).forEach(function(id){
+    var v = kp.polya[IZ_KP[id]];
+    if (typeof v === "string" && v.trim() && !$(id).value.trim()) { $(id).value = v.trim(); vzyali = true; }
+  });
+  return vzyali;
+}
+
 function vosstanovit(){
   var d = null;
   try { d = JSON.parse(localStorage.getItem(KLYUCH) || "null"); } catch(e){}
   if (d) POLYA.forEach(function(id){ if (typeof d[id] === "string") $(id).value = d[id]; });
+  if (podtyanutIzKP()) sohranit();
   POLYA.forEach(function(id){ podognat($(id)); });
   zerkalo();
   pometit();
