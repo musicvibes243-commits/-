@@ -104,7 +104,16 @@
     body{background:#fff;padding:0}
     .sheet{border:0;border-radius:0;max-width:none}
     .panel,.sovet{display:none!important}
-    input,textarea{border:0;padding:3px 0;background:none;font-size:14px}
+    input,textarea{border:0;padding:3px 0;background:none;font-size:13.5px}
+    /* Карточка должна умещаться на один лист: двухстраничная выглядит
+       так, будто вторую страницу забыли приложить. Поэтому в печати
+       строки плотнее, чем на экране. */
+    th,td{padding:4px 10px}
+    .bumaga{font-size:13.5px;padding:2px 0}
+    .top{padding:10px 14px}
+    .zagolovok{padding:6px 12px;font-size:15px}
+    .niz{padding:12px 14px;gap:14px}
+    .qr{width:78px;height:78px}
     /* Подсказка полезна на экране и неуместна на бумаге: пустая строка
        честнее, чем серое «9 цифр» в графе расчётного счёта. */
     input::placeholder,textarea::placeholder{color:transparent}
@@ -147,8 +156,10 @@
     <tr class="nuzhno"><th>КПП</th><td><input id="f6" inputmode="numeric" placeholder="9 цифр — посмотрите в выписке или в банке"></td></tr>
     <tr><th>ОГРН</th><td><input id="f7" value="1262100002878"></td></tr>
     <tr><th>Дата регистрации</th><td><input id="f8" value="22.06.2026"></td></tr>
+    <!-- Название вида деятельности из ЕГРЮЛ бывает в полторы строки,
+         а однострочное поле молча обрезало его при печати. -->
     <tr class="nuzhno"><th>Основной вид деятельности (ОКВЭД)</th>
-        <td><input id="f9" placeholder="например 43.22 — монтаж водопроводных и канализационных систем"></td></tr>
+        <td><textarea id="f9" rows="2" placeholder="код и название из выписки"></textarea><span class="bumaga"></span></td></tr>
     <tr class="nuzhno"><th>Генеральный директор</th>
         <td><input id="f10" placeholder="Фамилия Имя Отчество полностью"></td></tr>
     <tr><th>Телефон</th><td><input id="f11" value="+7 915 346-97-28"></td></tr>
