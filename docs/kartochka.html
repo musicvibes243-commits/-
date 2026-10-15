@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Карточка предприятия — СтройИнвест</title>
+<!--
+  КАРТОЧКА ПРЕДПРИЯТИЯ.
+
+  Третья бумага рядом со сметой и коммерческим предложением:
+  smeta.html — расчёт для разговора на объекте, kp.html — счёт-оферта
+  заказчику, kartochka.html — реквизиты для бухгалтерии контрагента.
+  Её просят перед первым договором, и просят всегда одну и ту же.
+
+  Открывается по адресу stroyinvest-mo.ru/kartochka.html. От поисковиков
+  закрыта: noindex в шапке, запрет в robots.txt, в меню и карте сайта
+  её нет.
+
+  Что уже вписано: наименование, ИНН, ОГРН, юридический адрес и дата
+  регистрации — всё это и так открыто в ЕГРЮЛ и стоит в политике
+  конфиденциальности на сайте. Их скрывать не от кого.
+
+  Чего в коде НЕТ и быть не должно: банковских реквизитов, КПП, ОКВЭД
+  и фамилии директора. Страница открыта любому посетителю, а расчётный
+  счёт в открытом файле — приглашение к чужим платёжкам «от вашего
+  имени». Они вписываются руками один раз и дальше хранятся в памяти
+  этого браузера, как и в бланке КП.
+
+  Печать: кнопка вверху или Ctrl+P. В печать уходит только сама
+  карточка — кнопки, подсказки и рамки полей исчезают. На телефоне
+  «Поделиться» → «Печать» → «Сохранить в PDF».
+-->
+<style>
+  :root{
+    --ink:#23303A; --ink-2:#4A5A64; --muted:#7A8792;
+    --line:#D8D2C7; --line-2:#ECE7DE;
+    --paper:#FFFFFF; --tint:#F6F3ED;
+    --accent:#C97A09; --accent-soft:#FDF3E2;
+    --dark:#2E2622;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;padding:18px 14px 90px;background:var(--tint);color:var(--ink);
+    font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .sheet{max-width:860px;margin:0 auto;background:var(--paper);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+
+  /* Шапка: тёмная полоса с контактами — так же, как на карточках,
+     которые присылают подрядчики. Бухгалтер контрагента узнаёт формат. */
+  .top{background:var(--dark);color:#FCF7F1;padding:14px 18px;
+    display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+  .top .brand{font-size:20px;font-weight:800;letter-spacing:.01em;margin-right:auto}
+  .top .brand i{font-style:normal;color:#F0A62E}
+  .top .brand small{display:block;font-size:11px;font-weight:400;letter-spacing:.14em;
+    text-transform:uppercase;color:#C9BBA9;margin-top:2px}
+  .top a{color:#FCF7F1;text-decoration:none;font-size:14px;white-space:nowrap}
+  .top a b{color:#F0A62E}
+
+  .zagolovok{background:var(--accent);color:#2A1B02;text-align:center;
+    padding:9px 14px;font-weight:800;font-size:17px;letter-spacing:.09em;text-transform:uppercase}
+
+  table{width:100%;border-collapse:collapse}
+  tr{border-bottom:1px solid var(--line-2)}
+  th{width:38%;text-align:left;vertical-align:top;padding:9px 12px;
+    background:var(--tint);font-weight:600;font-size:13.5px;color:var(--ink-2)}
+  td{padding:5px 12px;vertical-align:middle}
+  @media (max-width:560px){ th{width:44%;font-size:12.5px} }
+
+  .razdel th,.razdel td{background:var(--dark);color:#FCF7F1;font-weight:700;
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px}
+
+  .bumaga{display:none;font-size:15px;white-space:pre-wrap}
+  input,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);
+    background:transparent;border:1px dashed var(--line);border-radius:6px;
+    padding:6px 8px;resize:none;overflow:hidden}
+  input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;
+    background:var(--accent-soft)}
+  input::placeholder,textarea::placeholder{color:#B9C1C7}
+  .nuzhno input,.nuzhno textarea{border-color:#E3B36A;background:#FFFBF3}
+
+  .niz{display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+    padding:16px 18px;border-top:1px solid var(--line)}
+  .qr{width:96px;height:96px;flex:0 0 auto}
+  .qr-podpis{font-size:11px;color:var(--muted);text-align:center;margin-top:3px}
+  .niz .zametka{flex:1 1 220px;font-size:13px;color:var(--ink-2);line-height:1.5}
+
+  /* Панель управления. В печать не уходит. */
+  .panel{position:fixed;left:0;right:0;bottom:0;z-index:9;
+    background:rgba(246,243,237,.96);border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+  .knopka{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--paper);
+    color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
+  .knopka--glavnaya{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .knopka:active{filter:brightness(.95)}
+
+  .sovet{max-width:860px;margin:14px auto 0;font-size:13.5px;color:var(--ink-2);
+    background:var(--accent-soft);border:1px solid #F0DCB8;border-radius:12px;padding:13px 15px;line-height:1.55}
+  .sovet b{color:var(--ink)}
+
+  @media print{
+    @page{size:A4;margin:12mm}
+    body{background:#fff;padding:0}
+    .sheet{border:0;border-radius:0;max-width:none}
+    .panel,.sovet{display:none!important}
+    input,textarea{border:0;padding:3px 0;background:none;font-size:14px}
+    /* Подсказка полезна на экране и неуместна на бумаге: пустая строка
+       честнее, чем серое «9 цифр» в графе расчётного счёта. */
+    input::placeholder,textarea::placeholder{color:transparent}
+    /* Поле, в котором стоял курсор, не должно печататься в рамке. */
+    input:focus,textarea:focus{outline:0;background:none}
+    /* Текстовое поле на бумаге заменяется обычным текстом: иначе высота
+       остаётся экранной и под адресом зияет пустота. */
+    textarea{display:none}
+    .bumaga{display:block;font-size:14px;padding:3px 0}
+    /* Незаполненные строки в печать не идут. Карточка с пустой графой
+       «Расчётный счёт» выглядит как недоделанная. */
+    tr.pusto{display:none}
+    .top{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .zagolovok,.razdel th,.razdel td,th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    tr{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <div class="top">
+    <div class="brand">Строй<i>Инвест</i><small>Инженерные системы</small></div>
+    <a href="tel:+79153469728"><b>Телефон:</b> +7 915 346-97-28</a>
+    <a href="https://stroyinvest-mo.ru/"><b>Сайт:</b> stroyinvest-mo.ru</a>
+  </div>
+
+  <div class="zagolovok">Карточка предприятия</div>
+
+  <table>
+    <tr><th>Наименование организации</th>
+        <td><input id="f1" value="ООО «ИнженерИнвест»"></td></tr>
+    <tr><th>Полное наименование</th>
+        <td><textarea id="f2" rows="2">ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ «ИНЖЕНЕРИНВЕСТ»</textarea><span class="bumaga"></span></td></tr>
+    <tr><th>Юридический адрес</th>
+        <td><textarea id="f3" rows="2">429951, Чувашская Республика, г. Новочебоксарск, ул. Комсомольская, д. 14, кв. 14</textarea><span class="bumaga"></span></td></tr>
+    <tr><th>Фактический адрес</th>
+        <td><textarea id="f4" rows="2" placeholder="Тот же">Тот же</textarea><span class="bumaga"></span></td></tr>
+    <tr><th>ИНН</th><td><input id="f5" value="2100032923"></td></tr>
+    <tr class="nuzhno"><th>КПП</th><td><input id="f6" inputmode="numeric" placeholder="9 цифр — посмотрите в выписке или в банке"></td></tr>
+    <tr><th>ОГРН</th><td><input id="f7" value="1262100002878"></td></tr>
+    <tr><th>Дата регистрации</th><td><input id="f8" value="22.06.2026"></td></tr>
+    <tr class="nuzhno"><th>Основной вид деятельности (ОКВЭД)</th>
+        <td><input id="f9" placeholder="например 43.22 — монтаж водопроводных и канализационных систем"></td></tr>
+    <tr class="nuzhno"><th>Генеральный директор</th>
+        <td><input id="f10" placeholder="Фамилия Имя Отчество полностью"></td></tr>
+    <tr><th>Телефон</th><td><input id="f11" value="+7 915 346-97-28"></td></tr>
+    <tr><th>Сайт</th><td><input id="f12" value="https://stroyinvest-mo.ru"></td></tr>
+    <tr><th>E-mail</th><td><input id="f13" placeholder="для документов от контрагентов — необязательно"></td></tr>
+
+    <tr class="razdel"><th colspan="2">Банковские реквизиты</th></tr>
+
+    <tr class="nuzhno"><th>Банк</th><td><input id="b1" placeholder="наименование банка полностью"></td></tr>
+    <tr class="nuzhno"><th>Расчётный счёт</th><td><input id="b2" inputmode="numeric" placeholder="20 цифр"></td></tr>
+    <tr class="nuzhno"><th>Корреспондентский счёт</th><td><input id="b3" inputmode="numeric" placeholder="20 цифр"></td></tr>
+    <tr class="nuzhno"><th>БИК</th><td><input id="b4" inputmode="numeric" placeholder="9 цифр"></td></tr>
+    <tr><th>ИНН банка</th><td><input id="b5" inputmode="numeric" placeholder="необязательно"></td></tr>
+    <tr><th>КПП банка</th><td><input id="b6" inputmode="numeric" placeholder="необязательно"></td></tr>
+  </table>
+
+  <div class="niz">
+    <div><svg class="qr" viewBox="0 0 116 116" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-код: сайт stroyinvest-mo.ru"><rect width="116" height="116" fill="#fff"/><path d="M8 8h28v4h-28zM40 8h8v4h-8zM52 8h12v4h-12zM80 8h28v4h-28zM8 12h4v4h-4zM32 12h4v4h-4zM40 12h8v4h-8zM56 12h4v4h-4zM64 12h4v4h-4zM72 12h4v4h-4zM80 12h4v4h-4zM104 12h4v4h-4zM8 16h4v4h-4zM16 16h12v4h-12zM32 16h4v4h-4zM40 16h8v4h-8zM60 16h12v4h-12zM80 16h4v4h-4zM88 16h12v4h-12zM104 16h4v4h-4zM8 20h4v4h-4zM16 20h12v4h-12zM32 20h4v4h-4zM48 20h4v4h-4zM60 20h4v4h-4zM72 20h4v4h-4zM80 20h4v4h-4zM88 20h12v4h-12zM104 20h4v4h-4zM8 24h4v4h-4zM16 24h12v4h-12zM32 24h4v4h-4zM40 24h20v4h-20zM72 24h4v4h-4zM80 24h4v4h-4zM88 24h12v4h-12zM104 24h4v4h-4zM8 28h4v4h-4zM32 28h4v4h-4zM44 28h4v4h-4zM52 28h8v4h-8zM64 28h4v4h-4zM72 28h4v4h-4zM80 28h4v4h-4zM104 28h4v4h-4zM8 32h28v4h-28zM40 32h4v4h-4zM48 32h4v4h-4zM56 32h4v4h-4zM64 32h4v4h-4zM72 32h4v4h-4zM80 32h28v4h-28zM44 36h32v4h-32zM8 40h4v4h-4zM20 40h28v4h-28zM52 40h4v4h-4zM68 40h4v4h-4zM76 40h4v4h-4zM88 40h4v4h-4zM96 40h12v4h-12zM8 44h4v4h-4zM20 44h8v4h-8zM60 44h12v4h-12zM76 44h4v4h-4zM84 44h20v4h-20zM8 48h52v4h-52zM68 48h4v4h-4zM80 48h8v4h-8zM92 48h4v4h-4zM104 48h4v4h-4zM8 52h12v4h-12zM36 52h8v4h-8zM48 52h12v4h-12zM64 52h8v4h-8zM76 52h8v4h-8zM92 52h16v4h-16zM8 56h4v4h-4zM20 56h4v4h-4zM32 56h8v4h-8zM48 56h12v4h-12zM72 56h4v4h-4zM80 56h4v4h-4zM104 56h4v4h-4zM8 60h8v4h-8zM20 60h12v4h-12zM48 60h4v4h-4zM56 60h4v4h-4zM64 60h16v4h-16zM88 60h4v4h-4zM100 60h4v4h-4zM8 64h8v4h-8zM24 64h4v4h-4zM32 64h8v4h-8zM48 64h4v4h-4zM60 64h12v4h-12zM80 64h4v4h-4zM88 64h20v4h-20zM8 68h4v4h-4zM16 68h4v4h-4zM24 68h8v4h-8zM52 68h4v4h-4zM72 68h4v4h-4zM84 68h4v4h-4zM92 68h8v4h-8zM104 68h4v4h-4zM8 72h4v4h-4zM16 72h28v4h-28zM48 72h4v4h-4zM56 72h8v4h-8zM72 72h20v4h-20zM96 72h8v4h-8zM40 76h4v4h-4zM56 76h8v4h-8zM72 76h4v4h-4zM88 76h4v4h-4zM96 76h8v4h-8zM8 80h28v4h-28zM40 80h4v4h-4zM52 80h4v4h-4zM72 80h4v4h-4zM80 80h4v4h-4zM88 80h4v4h-4zM104 80h4v4h-4zM8 84h4v4h-4zM32 84h4v4h-4zM40 84h4v4h-4zM60 84h4v4h-4zM68 84h8v4h-8zM88 84h4v4h-4zM8 88h4v4h-4zM16 88h12v4h-12zM32 88h4v4h-4zM40 88h12v4h-12zM68 88h24v4h-24zM8 92h4v4h-4zM16 92h12v4h-12zM32 92h4v4h-4zM40 92h4v4h-4zM48 92h8v4h-8zM60 92h24v4h-24zM100 92h8v4h-8zM8 96h4v4h-4zM16 96h12v4h-12zM32 96h4v4h-4zM52 96h12v4h-12zM68 96h12v4h-12zM88 96h20v4h-20zM8 100h4v4h-4zM32 100h4v4h-4zM44 100h4v4h-4zM56 100h4v4h-4zM68 100h4v4h-4zM84 100h8v4h-8zM96 100h12v4h-12zM8 104h28v4h-28zM40 104h4v4h-4zM52 104h4v4h-4zM72 104h4v4h-4zM92 104h4v4h-4zM104 104h4v4h-4z" fill="#1E1815"/></svg><div class="qr-podpis">Сайт</div></div>
+    <div><svg class="qr" viewBox="0 0 116 116" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QR-код: сайт stroyinvest-mo.ru"><rect width="116" height="116" fill="#fff"/><path d="M8 8h28v4h-28zM40 8h8v4h-8zM52 8h8v4h-8zM68 8h8v4h-8zM80 8h28v4h-28zM8 12h4v4h-4zM32 12h4v4h-4zM40 12h4v4h-4zM48 12h12v4h-12zM64 12h8v4h-8zM80 12h4v4h-4zM104 12h4v4h-4zM8 16h4v4h-4zM16 16h12v4h-12zM32 16h4v4h-4zM44 16h12v4h-12zM60 16h12v4h-12zM80 16h4v4h-4zM88 16h12v4h-12zM104 16h4v4h-4zM8 20h4v4h-4zM16 20h12v4h-12zM32 20h4v4h-4zM40 20h8v4h-8zM52 20h8v4h-8zM80 20h4v4h-4zM88 20h12v4h-12zM104 20h4v4h-4zM8 24h4v4h-4zM16 24h12v4h-12zM32 24h4v4h-4zM44 24h8v4h-8zM56 24h8v4h-8zM80 24h4v4h-4zM88 24h12v4h-12zM104 24h4v4h-4zM8 28h4v4h-4zM32 28h4v4h-4zM52 28h8v4h-8zM64 28h4v4h-4zM72 28h4v4h-4zM80 28h4v4h-4zM104 28h4v4h-4zM8 32h28v4h-28zM40 32h4v4h-4zM48 32h4v4h-4zM56 32h4v4h-4zM64 32h4v4h-4zM72 32h4v4h-4zM80 32h28v4h-28zM40 36h12v4h-12zM60 36h8v4h-8zM8 40h4v4h-4zM16 40h8v4h-8zM28 40h12v4h-12zM48 40h4v4h-4zM56 40h16v4h-16zM80 40h4v4h-4zM92 40h4v4h-4zM100 40h8v4h-8zM8 44h4v4h-4zM16 44h8v4h-8zM56 44h4v4h-4zM76 44h4v4h-4zM96 44h4v4h-4zM12 48h12v4h-12zM28 48h8v4h-8zM40 48h8v4h-8zM52 48h8v4h-8zM64 48h4v4h-4zM76 48h4v4h-4zM84 48h8v4h-8zM12 52h4v4h-4zM20 52h8v4h-8zM40 52h8v4h-8zM52 52h32v4h-32zM96 52h8v4h-8zM8 56h12v4h-12zM32 56h8v4h-8zM68 56h8v4h-8zM80 56h12v4h-12zM96 56h12v4h-12zM12 60h8v4h-8zM36 60h4v4h-4zM48 60h8v4h-8zM60 60h4v4h-4zM68 60h4v4h-4zM80 60h4v4h-4zM88 60h4v4h-4zM96 60h12v4h-12zM12 64h4v4h-4zM24 64h4v4h-4zM32 64h4v4h-4zM44 64h4v4h-4zM56 64h4v4h-4zM64 64h4v4h-4zM76 64h4v4h-4zM100 64h4v4h-4zM8 68h4v4h-4zM16 68h4v4h-4zM40 68h4v4h-4zM48 68h4v4h-4zM56 68h8v4h-8zM72 68h4v4h-4zM80 68h4v4h-4zM92 68h4v4h-4zM104 68h4v4h-4zM20 72h16v4h-16zM40 72h16v4h-16zM72 72h20v4h-20zM96 72h4v4h-4zM40 76h4v4h-4zM56 76h8v4h-8zM68 76h8v4h-8zM88 76h4v4h-4zM100 76h8v4h-8zM8 80h28v4h-28zM40 80h20v4h-20zM72 80h4v4h-4zM80 80h4v4h-4zM88 80h4v4h-4zM96 80h12v4h-12zM8 84h4v4h-4zM32 84h4v4h-4zM40 84h4v4h-4zM48 84h4v4h-4zM56 84h4v4h-4zM72 84h4v4h-4zM88 84h4v4h-4zM100 84h4v4h-4zM8 88h4v4h-4zM16 88h12v4h-12zM32 88h4v4h-4zM48 88h16v4h-16zM72 88h24v4h-24zM8 92h4v4h-4zM16 92h12v4h-12zM32 92h4v4h-4zM40 92h4v4h-4zM48 92h4v4h-4zM56 92h12v4h-12zM80 92h12v4h-12zM100 92h8v4h-8zM8 96h4v4h-4zM16 96h12v4h-12zM32 96h4v4h-4zM40 96h8v4h-8zM52 96h12v4h-12zM72 96h4v4h-4zM80 96h4v4h-4zM88 96h16v4h-16zM8 100h4v4h-4zM32 100h4v4h-4zM44 100h8v4h-8zM68 100h4v4h-4zM76 100h4v4h-4zM96 100h4v4h-4zM8 104h28v4h-28zM40 104h4v4h-4zM56 104h4v4h-4zM64 104h8v4h-8zM88 104h4v4h-4zM96 104h12v4h-12z" fill="#1E1815"/></svg><div class="qr-podpis">Позвонить</div></div>
+    <p class="zametka"><b>Монтаж септиков, кессонов, дренажа, водоснабжения, отопления,
+      электрики и автополива.</b> Работаем по Москве и Московской области круглый год.
+      Выезд и замер бесплатно.</p>
+  </div>
+</div>
+
+<div class="sovet" id="sovet">
+  <b>Заполните жёлтые поля один раз.</b> Остальное уже вписано — это данные из ЕГРЮЛ,
+  они и так открыты. Реквизиты счёта в коде страницы не хранятся: они останутся
+  в памяти вашего браузера и никуда не уйдут. На новом телефоне или компьютере
+  их придётся вписать заново.
+</div>
+
+<div class="panel">
+  <button class="knopka knopka--glavnaya" id="pechat" type="button">Печать и PDF</button>
+  <button class="knopka" id="kopirovat" type="button">Скопировать текстом</button>
+  <button class="knopka" id="ochistit" type="button">Очистить банк</button>
+</div>
+
+<script>
+var KLYUCH = "stroyinvest-kartochka-v1";
+var POLYA = ["f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","f13",
+             "b1","b2","b3","b4","b5","b6"];
+function $(id){ return document.getElementById(id); }
+
+/* Текстовые поля растут под содержимое: в печать уходит всё, а не первая
+   строка адреса. Полоса прокрутки внутри поля на бумаге выглядела бы
+   обрезанным адресом. */
+function podognat(el){
+  if (el.tagName !== "TEXTAREA") return;
+  el.style.height = "auto";
+  el.style.height = (el.scrollHeight + 2) + "px";
+}
+
+/* Зеркало содержимого для печати — см. .bumaga в стилях. */
+function zerkalo(){
+  document.querySelectorAll("textarea").forEach(function(ta){
+    var s = ta.parentNode.querySelector(".bumaga");
+    if (s) s.textContent = ta.value;
+  });
+}
+
+/* Перед печатью прячем пустые строки, после — возвращаем. Отдельно
+   следим за шапкой «Банковские реквизиты»: без неё одинокий тёмный
+   заголовок над пустотой выглядит ошибкой. */
+function pometitPustye(){
+  zerkalo();
+  var bankPust = true;
+  document.querySelectorAll("tr").forEach(function(tr){
+    var el = tr.querySelector("input, textarea");
+    if (!el) return;
+    var pusto = !el.value.trim();
+    tr.classList.toggle("pusto", pusto);
+    if (["b1","b2","b3","b4"].indexOf(el.id) > -1 && !pusto) bankPust = false;
+  });
+  var shapka = document.querySelector("tr.razdel");
+  if (shapka) shapka.classList.toggle("pusto", bankPust);
+}
+window.addEventListener("beforeprint", pometitPustye);
+window.addEventListener("afterprint", function(){
+  document.querySelectorAll("tr.pusto").forEach(function(tr){ tr.classList.remove("pusto"); });
+});
+
+function sohranit(){
+  var d = {};
+  POLYA.forEach(function(id){ d[id] = $(id).value; });
+  try { localStorage.setItem(KLYUCH, JSON.stringify(d)); } catch(e){}
+}
+
+function vosstanovit(){
+  var d = null;
+  try { d = JSON.parse(localStorage.getItem(KLYUCH) || "null"); } catch(e){}
+  if (d) POLYA.forEach(function(id){ if (typeof d[id] === "string") $(id).value = d[id]; });
+  POLYA.forEach(function(id){ podognat($(id)); });
+  zerkalo();
+  pometit();
+}
+
+/* Жёлтым подсвечены только незаполненные обязательные поля. Заполнил —
+   подсветка гаснет, и сразу видно, сколько осталось. */
+function pometit(){
+  document.querySelectorAll("tr.nuzhno, tr.zapolneno").forEach(function(tr){
+    var el = tr.querySelector("input, textarea");
+    tr.classList.toggle("nuzhno", !el.value.trim());
+  });
+}
+
+document.addEventListener("input", function(e){
+  if (POLYA.indexOf(e.target.id) < 0) return;
+  podognat(e.target);
+  zerkalo();
+  pometit();
+  sohranit();
+});
+
+$("pechat").addEventListener("click", function(){ pometitPustye(); window.print(); });
+
+$("ochistit").addEventListener("click", function(){
+  if (!confirm("Очистить банковские реквизиты?\n\nОстальные поля останутся.")) return;
+  ["b1","b2","b3","b4","b5","b6"].forEach(function(id){ $(id).value = ""; });
+  pometit(); sohranit();
+});
+
+/* Карточку чаще просят «текстом в вотсап», чем файлом. Отдаём в том же
+   порядке, что и на бумаге, чтобы бухгалтер не искал строки глазами. */
+function tekstom(){
+  var podpisi = {};
+  document.querySelectorAll("tr").forEach(function(tr){
+    var el = tr.querySelector("input, textarea"), th = tr.querySelector("th");
+    if (el && th) podpisi[el.id] = th.textContent.trim();
+  });
+  var ch = ["КАРТОЧКА ПРЕДПРИЯТИЯ", ""];
+  POLYA.forEach(function(id){
+    if (id === "b1") ch.push("", "БАНКОВСКИЕ РЕКВИЗИТЫ");
+    var v = $(id).value.trim();
+    if (v) ch.push(podpisi[id] + ": " + v.replace(/\s*\n\s*/g, " "));
+  });
+  return ch.join("\n");
+}
+
+$("kopirovat").addEventListener("click", function(){
+  var t = tekstom(), knopka = this;
+  function gotovo(){ knopka.textContent = "Скопировано"; setTimeout(function(){ knopka.textContent = "Скопировать текстом"; }, 2500); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(gotovo, function(){ zapasnoe(t, gotovo); });
+  } else { zapasnoe(t, gotovo); }
+});
+
+/* Safari отдаёт буфер обмена не всегда. Без запасного пути кнопка
+   просто молчала бы, и человек решил бы, что страница сломана. */
+function zapasnoe(t, gotovo){
+  var ta = document.createElement("textarea");
+  ta.value = t; ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+  document.body.appendChild(ta); ta.focus(); ta.setSelectionRange(0, t.length);
+  var ok = false;
+  try { ok = document.execCommand("copy"); } catch(e){}
+  ta.remove();
+  if (ok) gotovo(); else alert("Скопировать не вышло. Выделите текст на странице вручную.");
+}
+
+vosstanovit();
+</script>
+</body>
+</html>

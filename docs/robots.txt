@@ -5,6 +5,7 @@ Allow: /
 Disallow: /smeta.html
 Disallow: /kp.html
 Disallow: /obyekty.html
+Disallow: /kartochka.html
 Disallow: /smeta.xlsx
 Disallow: /kp.xlsx
 
