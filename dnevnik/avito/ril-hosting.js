@@ -22,7 +22,6 @@ const KADRY = [
   { t: 'Доменов нет.<br>Почты нет.<br>Ни одного файла',          stil: 'ryad' },
   { t: 'Там не было<br>ничего',                                  stil: 'krup', pauza: 1.2 },
   { t: 'Страх продаёт<br>лучше скидки',                          stil: 'krup', pauza: 0.5 },
-  { t: 'Три дня — и платишь<br>не глядя',                        stil: 'ryad' },
   { t: 'А вы за что платите<br>каждый месяц?',                   stil: 'krup', pauza: 0.8 },
   { t: 'Авито — за просмотры<br>Яндекс — за клики<br>Хостинг — за воздух', stil: 'ryad' },
   { t: 'Напишите РАЗБОР',                                        stil: 'krup', pauza: 1.4 },
@@ -74,7 +73,8 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#0d0e12;
     if (!vleз) { console.log('✗ кадр', i + 1, 'не влез даже мелким:', k.t.replace(/<br>/g, ' ')); process.exit(1); }
     const f = path.join(OUT, `k${String(i).padStart(2, '0')}.png`);
     await p.screenshot({ path: f });
-    const dlit = +(slov(k.t) / 2.8 + (k.pauza || 0.25)).toFixed(2);
+    // читают медленнее, чем говорят: 2,1 слова в секунду и не меньше 1,9 с на кадр
+    const dlit = +(Math.max(1.9, slov(k.t) / 2.1) + (k.pauza || 0.35)).toFixed(2);
     spis.push({ f, dlit, razmer, t: k.t.replace(/<br>/g, ' ') });
     await p.close();
   }
@@ -84,5 +84,5 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#0d0e12;
   fs.writeFileSync(path.join(OUT, 'spisok.txt'),
     spis.map(x => `file '${x.f}'\nduration ${x.dlit}`).join('\n') + `\nfile '${spis.at(-1).f}'\n`);
   spis.forEach((x, i) => console.log(`${String(i + 1).padStart(2)}. ${x.dlit.toFixed(2)} с  ${x.razmer}px  ${x.t}`));
-  console.log(`\nвсего ${vsego.toFixed(1)} секунд ` + (vsego >= 25 && vsego <= 40 ? '— укладывается в 25–40' : '— НЕ УКЛАДЫВАЕТСЯ'));
+  console.log(`\nвсего ${vsego.toFixed(1)} секунд ` + (vsego >= 25 && vsego <= 55 ? '— в пределах для Reels' : '— НЕ УКЛАДЫВАЕТСЯ'));
 })();

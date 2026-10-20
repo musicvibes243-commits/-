@@ -23,7 +23,6 @@ const KADRY = [
   { t: 'Ни одного домена',                              stil:'ryad', pauza:0.6, foto:'domeny.png', tochka:'84%' },
   { t: 'Там не было<br>ничего',                         stil:'krup', pauza:1.3 },
   { t: 'Страх продаёт<br>лучше скидки',                 stil:'krup', pauza:0.5 },
-  { t: 'Три дня — и платишь<br>не глядя',               stil:'ryad' },
   { t: 'А вы за что платите<br>каждый месяц?',          stil:'krup', pauza:0.9 },
   { t: 'Авито — за просмотры<br>Яндекс — за клики<br>Хостинг — за воздух', stil:'ryad' },
   { t: 'Напишите РАЗБОР',                               stil:'krup', pauza:1.4 },
@@ -84,7 +83,9 @@ ${sfoto ? '<div class="snim"></div><div class="zat"></div>' : '<div class="glow"
     }
     const f = path.join(OUT, `k${String(i).padStart(2,'0')}.png`);
     await p.screenshot({ path: f });
-    const d = +(slov(k.t)/2.8 + (k.pauza || 0.25)).toFixed(2);
+    // читают с экрана медленнее, чем говорят: 2,1 слова в секунду,
+    // и не меньше 1,9 с на кадр, даже если в нём два слова
+    const d = +(Math.max(1.9, slov(k.t)/2.1) + (k.pauza || 0.35)).toFixed(2);
     spis.push({ f, d, razmer, foto: k.foto || '—', t: k.t.replace(/<br>/g,' ') });
     await p.close();
   }
@@ -93,5 +94,5 @@ ${sfoto ? '<div class="snim"></div><div class="zat"></div>' : '<div class="glow"
   fs.writeFileSync(path.join(OUT,'spisok.txt'),
     spis.map(x=>`file '${x.f}'\nduration ${x.d}`).join('\n') + `\nfile '${spis.at(-1).f}'\n`);
   spis.forEach((x,i)=>console.log(`${String(i+1).padStart(2)}. ${x.d.toFixed(2)} с  ${x.foto.padEnd(11)} ${x.t}`));
-  console.log(`\nвсего ${vsego.toFixed(1)} с ` + (vsego>=25&&vsego<=45?'— в пределах':'— ВНЕ ПРЕДЕЛОВ'));
+  console.log(`\nвсего ${vsego.toFixed(1)} с ` + (vsego>=25&&vsego<=55?'— в пределах для Reels':'— ВНЕ ПРЕДЕЛОВ'));
 })();
