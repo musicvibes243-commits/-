@@ -16,3 +16,28 @@ node_modules/
 # OS / editor noise
 .DS_Store
 Thumbs.db
+
+# Архив для Netlify Drop — пересобирается из папки ayko, в истории не нужен
+ayko-dlya-netlify.zip
+ayko-gotovoe.zip
+
+# Скриншоты для проверки — не часть сайта
+kontakty-telefon.jpg
+hero-mobile.jpg
+call-header.jpg
+call-header-desktop.jpg
+call-sticky.jpg
+kontakty-max.jpg
+works-scroll-1.jpg
+works-scroll-2.jpg
+works-now-pc.jpg
+works-now-m.jpg
+why-new.jpg
+forwho-pc.jpg
+forwho-m.jpg
+min-hero-m.jpg
+min-hero-pc.jpg
+min-offer-pc.jpg
+min-nopay.jpg
+light-*.jpg
+anim-proverka.webm
