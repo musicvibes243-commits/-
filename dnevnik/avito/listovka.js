@@ -8,6 +8,8 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const path = require('path');
 
 const W = 1748, H = 2480, PAD = 110;
+const LENTA = 440;        // высота ленты с отрывными полосками
+const POLOS = 8;          // сколько полосок — по ширине это около 1,8 см на каждую
 
 const BLOKI = [
   { t: 'Сайт с ботом для заявок',
@@ -21,34 +23,43 @@ const BLOKI = [
 const html = `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a;
-  font-family:'DejaVu Sans','Liberation Sans',sans-serif;padding:${PAD}px;
+  font-family:'DejaVu Sans','Liberation Sans',sans-serif;padding:${PAD}px ${PAD}px 0;
   display:flex;flex-direction:column}
 .shapka{display:flex;align-items:baseline;gap:24px}
 .mark{font-size:60px;font-weight:700;letter-spacing:.14em}
 .mark i{font-style:normal;color:#e8663f}
 .tag{font-size:29px;color:#6b6670}
-.big{font-size:142px;font-weight:700;line-height:.98;letter-spacing:-.03em;text-transform:uppercase}
+.big{font-size:130px;font-weight:700;line-height:.98;letter-spacing:-.03em;text-transform:uppercase}
 .big em{font-style:normal;color:#e8663f;display:block}
-.cena{margin-top:30px;font-size:168px;font-weight:700;line-height:.95;letter-spacing:-.035em;
+.cena{margin-top:26px;font-size:152px;font-weight:700;line-height:.95;letter-spacing:-.035em;
   white-space:nowrap}
 .cena span{font-size:.42em;font-weight:600;color:#6b6670}
-.pod{margin-top:34px;font-size:48px;font-weight:600;color:#3b383f}
-.blocks{margin-top:70px;display:grid;gap:30px}
-.b{background:#17161a;color:#fff;border-radius:28px;padding:48px 52px}
-.b h3{font-size:52px;font-weight:700;line-height:1.1;margin-bottom:14px}
-.b p{font-size:37px;line-height:1.38;color:#cfcad4}
+.pod{margin-top:30px;font-size:44px;font-weight:600;color:#3b383f}
+.blocks{margin-top:56px;display:grid;gap:24px}
+.b{background:#17161a;color:#fff;border-radius:28px;padding:40px 48px}
+.b h3{font-size:48px;font-weight:700;line-height:1.1;margin-bottom:14px}
+.b p{font-size:34px;line-height:1.38;color:#cfcad4}
 .b:first-child{background:linear-gradient(150deg,#e2603f 0%,#c0452a 100%)}
 .b:first-child p{color:rgba(255,255,255,.92)}
-.dover{margin-top:56px;font-size:36px;line-height:1.4;color:#3b383f;
+.dover{margin-top:36px;font-size:34px;line-height:1.4;color:#3b383f;
   border-left:7px solid #e8663f;padding-left:30px}
 .dover b{font-weight:700}
+.rez{flex:none;margin:44px -${PAD}px 0;border-top:4px dashed #b6afa6;
+  display:flex;height:${LENTA}px}
+.pol{position:relative;flex:1;border-right:3px dashed #cfc7bc}
+.pol:last-child{border-right:none}
+.pol span{position:absolute;left:50%;top:50%;white-space:nowrap;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  font-size:36px;font-weight:700;letter-spacing:.01em}
+.pol span i{font-style:normal;display:block;font-size:.62em;font-weight:600;
+  color:#6b6670;letter-spacing:.04em;text-align:center;margin-top:7px}
 .low{margin-top:auto;display:flex;gap:44px;align-items:flex-end}
-.qr{width:320px;height:320px;flex:none;border:5px dashed #b6afa6;border-radius:22px;
+.qr{width:280px;height:280px;flex:none;border:5px dashed #b6afa6;border-radius:22px;
   display:flex;align-items:center;justify-content:center;text-align:center;
   font-size:25px;color:#9a938a;line-height:1.35;padding:18px}
 .ctc{flex:1;min-width:0}
 .zov{font-size:33px;font-weight:600;color:#3b383f;line-height:1.3}
-.tel{margin-top:20px;font-size:72px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.tel{margin-top:18px;font-size:54px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
 .dom{margin-top:10px;font-size:44px;font-weight:600;color:#e8663f}
 .geo{margin-top:16px;font-size:29px;color:#6b6670}
 </style></head><body>
@@ -69,6 +80,8 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
     <div class="geo">Работаю удалённо, по всей России</div>
   </div>
 </div>
+<div class="rez">${Array.from({length: POLOS}, () =>
+  '<div class="pol"><span>+7 977 556-76-01<i>AYKO · сайт 2 000 ₽/мес</i></span></div>').join('')}</div>
 </body></html>`;
 
 (async () => {
@@ -81,6 +94,8 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
     const err = [];
     const kus = e => (e.textContent || '').trim().slice(0, 26);
     document.querySelectorAll('body *').forEach(e => {
+      // лента с полосками идёт до краёв листа нарочно, поля ей не писаны
+      if (e.closest('.rez')) return;
       const r = e.getBoundingClientRect();
       if (!r.width || !r.height) return;
       if (r.right > W - PAD + 2 || r.left < PAD - 2) err.push(`«${kus(e)}» вылезает вбок`);
@@ -100,7 +115,17 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
     // при кегле 142 и межстрочном .95 это около 135 пикселей.
     const c = document.querySelector('.cena');
     if (c.getBoundingClientRect().height > 240) err.push('цена разъехалась на две строки');
-    if (document.querySelector('.qr').getBoundingClientRect().width < 300) err.push('место под QR сжалось');
+    if (document.querySelector('.qr').getBoundingClientRect().width < 260) err.push('место под QR сжалось');
+    const rez = document.querySelector('.rez').getBoundingClientRect();
+    if (Math.round(rez.bottom) > H + 1) err.push(`лента не влезла: низ на ${Math.round(rez.bottom)} при листе ${H}`);
+    if (Math.round(rez.left) > 1 || Math.round(rez.right) < W - 1) err.push('лента не доходит до краёв листа');
+    document.querySelectorAll('.pol').forEach((e, i) => {
+      const sp = e.querySelector('span').getBoundingClientRect();
+      const po = e.getBoundingClientRect();
+      // после поворота ширина текста ложится по высоте полоски
+      if (sp.height > po.height - 24) err.push(`текст полоски ${i + 1} длиннее полоски: ${Math.round(sp.height)} при ${Math.round(po.height)}`);
+      if (sp.width > po.width - 14) err.push(`текст полоски ${i + 1} шире полоски`);
+    });
     return [...new Set(err)];
   }, { W, H, PAD });
 
