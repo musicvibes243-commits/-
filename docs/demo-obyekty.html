@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Демонстрация приложения для записей мастера. Данные выдуманные.">
+<meta name="theme-color" content="#F6F3ED">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Эти четыре строки и делают из страницы приложение: с иконки она
+     открывается на весь экран, без адресной строки и кнопок браузера,
+     и в переключателе приложений стоит отдельной карточкой. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Объекты">
+<title>Демо: Объекты — СтройИнвест</title>
+<!--
+  ОБЪЕКТЫ — записная книжка мастера.
+
+  Зачем. Мастер держит всё в голове: кому обещал приехать, сколько взял
+  авансом, какая на участке глубина до воды. Пока объектов три — это
+  работает. На десяти начинает сыпаться, и сыпется всегда одинаково:
+  забытый звонок и забытый аванс.
+
+  Соседи по сайту: smeta.html — расчёт для разговора на объекте,
+  kp.html — официальная бумага с реквизитами. Обе держат ровно один
+  черновик: начал второй — первый затёрся. Здесь список, и затереть
+  ничего нельзя.
+
+  Открывается по адресу stroyinvest-mo.ru/obyekty.html. От поисковиков
+  закрыта: noindex в шапке, запрет в robots.txt, в меню и карте сайта
+  её нет.
+
+  ГДЕ ЛЕЖАТ ЗАПИСИ. В самом телефоне, в памяти браузера. Не на сервере.
+  Из этого два следствия, и оба важные:
+
+    1. Работает без интернета. В траншее под Клином связи нет, а записать
+       замер надо там же, пока он в руках.
+    2. Записи живут в одном телефоне и в одном браузере. Почистил историю
+       Safari «с удалением данных сайтов» — записи ушли. Поэтому в шапке
+       есть «Копия», и делать её надо раз в неделю.
+
+  ПОЧЕМУ НЕ СЕРВЕР. Сервер — это ежемесячные деньги и то, что умеет
+  останавливаться: бот на Amvera встал, и вместе с ним встал расчёт
+  на сайте. Записную книжку мастера терять так нельзя. Синхронизацию
+  между двумя телефонами добавим, когда станет видно, что книжкой
+  действительно пользуются каждый день.
+
+  ГОЛОСОМ. Отдельной кнопки записи здесь нет и не надо: микрофон уже
+  есть на клавиатуре телефона. Нажал на поле, нажал микрофон, наговорил.
+  Распознаёт сам телефон, бесплатно и без интернета на новых iPhone.
+  Своё распознавание означало бы платный сервис и ещё один сервер,
+  который может лечь.
+
+  НА ЭКРАН «ДОМОЙ». Safari → кнопка «Поделиться» → «На экран «Домой».
+  Дальше открывается с иконки на весь экран: ни адресной строки,
+  ни кнопок браузера. От обычного приложения не отличить.
+
+  И ЭТО НЕ ТОЛЬКО КРАСОТА. У приложения с иконки записи хранятся
+  надёжнее: Safari умеет сам подчищать данные сайтов, в которые давно
+  не заходили, а установленное приложение он так не трогает.
+
+  ЗА ЭТО ЕСТЬ ПЛАТА, И ПРО НЕЁ НАДО ЗНАТЬ. Память у приложения с иконки
+  своя, отдельная от Safari. Записи, сделанные в Safari до установки,
+  в приложении не появятся — не пропадут, но останутся там, в Safari.
+  Поэтому правило: сначала поставить иконку, потом заводить объекты,
+  и дальше открывать только с иконки. Если что-то уже записано
+  в Safari — перенести копией через «Отчёт», это пара минут.
+
+  Подсказка об этом висит внизу экрана, пока страницу открывают
+  не с иконки. Она гасится крестиком и больше не возвращается.
+-->
+<style>
+  :root{
+    --ink:#23303A; --ink-2:#4A5A64; --muted:#7A8792;
+    --line:#D8D2C7; --line-2:#ECE7DE;
+    --paper:#FFFFFF; --tint:#F6F3ED;
+    --accent:#C97A09; --accent-soft:#FDF3E2;
+    --ok:#1F7A4D; --ok-soft:#E8F5EE;
+    --alarm:#B3261E; --alarm-soft:#FDECEA;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;padding:0 0 110px;background:var(--tint);color:var(--ink);
+    font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .obolochka{max-width:760px;margin:0 auto;padding:0 12px}
+
+  /* ===== Шапка ===== */
+  header{position:sticky;top:0;z-index:20;background:var(--tint);
+    padding:calc(10px + env(safe-area-inset-top)) 0 10px;border-bottom:1px solid var(--line-2)}
+  .shapka{display:flex;align-items:center;gap:10px}
+  .shapka h1{flex:1;margin:0;font-size:20px;letter-spacing:.01em}
+  .shapka h1 small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:2px}
+
+  button{font:inherit;color:inherit;cursor:pointer}
+  .knopka{border:1px solid var(--line);background:var(--paper);border-radius:10px;
+    padding:9px 13px;font-size:14.5px;white-space:nowrap}
+  .knopka:active{background:var(--line-2)}
+  .knopka--glavnaya{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .knopka--tihaya{border-color:transparent;background:transparent;color:var(--ink-2)}
+  .knopka--opasnaya{color:var(--alarm);border-color:#E9C9C6}
+  .knopka--shir{width:100%;padding:13px;font-size:16px}
+
+  /* Поиск и фильтры прокручиваются вбок: на узком телефоне в строку
+     не влезают, а переносить их на две строки — съедать половину экрана. */
+  .iskat{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:10px;
+    padding:11px 12px;font:inherit;background:var(--paper);color:var(--ink)}
+  .filtry{display:flex;gap:7px;margin-top:9px;overflow-x:auto;padding-bottom:3px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .filtry::-webkit-scrollbar{display:none}
+  .chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;
+    padding:7px 13px;font-size:14px;white-space:nowrap}
+  .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  /* ===== Карточка объекта ===== */
+  .spisok{margin-top:12px;display:flex;flex-direction:column;gap:9px}
+  .kart{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:13px 14px;text-align:left;width:100%;display:block}
+  .kart:active{background:var(--accent-soft)}
+  .kart__verh{display:flex;align-items:baseline;gap:9px}
+  .kart__imya{flex:1;font-weight:700;font-size:17px;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .kart__niz{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;
+    font-size:13.5px;color:var(--ink-2)}
+  .kart__srok{font-weight:600}
+  .kart__srok--gorit{color:var(--alarm)}
+  .bejdzh{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    padding:3px 8px;border-radius:999px;background:var(--line-2);color:var(--ink-2);white-space:nowrap}
+  .bejdzh--rabota{background:var(--accent-soft);color:#8A5406}
+  .bejdzh--sdan{background:var(--ok-soft);color:var(--ok)}
+  .bejdzh--otkaz{background:var(--line-2);color:var(--muted)}
+
+  .pusto{background:var(--paper);border:1px dashed var(--line);border-radius:12px;
+    padding:26px 18px;text-align:center;color:var(--ink-2);margin-top:12px}
+  .pusto b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
+
+  .sovet{position:relative;background:var(--accent-soft);border:1px solid #F0DCB8;
+    border-radius:12px;padding:13px 40px 13px 14px;margin-top:12px;font-size:14px;line-height:1.5}
+  .sovet b{display:block;margin-bottom:4px}
+  .sovet p{margin:6px 0 0}
+  .sovet .zakryt{position:absolute;top:6px;right:6px;border:0;background:none;
+    font-size:22px;line-height:1;color:var(--muted);padding:4px 9px}
+
+  /* ===== Нижняя кнопка ===== */
+  .pod{position:fixed;left:0;right:0;bottom:0;z-index:30;
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(246,243,237,0) 0%,var(--tint) 38%)}
+  .pod .obolochka{padding:0 12px}
+
+  /* ===== Экран объекта ===== */
+  .ekran{position:fixed;inset:0;z-index:40;background:var(--tint);overflow-y:auto;
+    -webkit-overflow-scrolling:touch;padding-bottom:40px}
+  .ekran[hidden]{display:none}
+  .list{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:14px;margin-top:11px}
+  .list h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);
+    margin:0 0 11px;padding-bottom:6px;border-bottom:1px solid var(--line-2)}
+
+  label.p{display:block;margin-bottom:12px}
+  label.p span{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  label.p input,label.p textarea,label.p select{width:100%;font:inherit;color:var(--ink);
+    background:var(--tint);border:1px solid var(--line);border-radius:9px;padding:11px 12px}
+  label.p input:focus,label.p textarea:focus,label.p select:focus{
+    outline:2px solid var(--accent);outline-offset:1px;background:var(--accent-soft)}
+  label.p textarea{min-height:92px;resize:vertical;line-height:1.5}
+  .para{display:flex;gap:10px}
+  .para label.p{flex:1;min-width:0}
+  .podskazka{font-size:12.5px;color:var(--muted);margin:-6px 0 12px}
+
+  .svyaz{display:flex;gap:8px;margin-bottom:12px}
+  .svyaz a{flex:1;text-align:center;text-decoration:none;color:#fff;background:var(--ok);
+    border-radius:10px;padding:12px;font-weight:600;font-size:15px}
+  .svyaz a.vtor{background:var(--ink-2)}
+
+  .etapy{display:flex;flex-wrap:wrap;gap:7px}
+  .etapy .chip{flex:0 0 auto}
+
+  .zapis{display:flex;flex-direction:column;gap:8px}
+  .zapis textarea{min-height:76px}
+  .istoriya{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .istoriya li{border-left:3px solid var(--line);padding:1px 0 1px 11px}
+  .istoriya time{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+  .istoriya p{margin:0;white-space:pre-wrap;word-wrap:break-word}
+  .istoriya button{margin-top:4px;border:0;background:none;padding:0;
+    font-size:12.5px;color:var(--alarm);text-decoration:underline}
+
+  .dengi{display:flex;justify-content:space-between;align-items:baseline;
+    border-top:1px solid var(--line-2);margin-top:4px;padding-top:11px}
+  .dengi b{font-size:20px}
+  .dengi.minus b{color:var(--alarm)}
+
+  /* ===== Отчёт ===== */
+  .otchet-blok{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .plitka{flex:1 1 140px;background:var(--tint);border:1px solid var(--line-2);
+    border-radius:10px;padding:11px 12px}
+  .plitka span{display:block;font-size:12.5px;color:var(--muted)}
+  .plitka b{display:block;font-size:19px;margin-top:3px}
+  .stroka{display:flex;justify-content:space-between;gap:12px;padding:9px 0;
+    border-bottom:1px solid var(--line-2);font-size:14.5px}
+  .stroka:last-child{border-bottom:0}
+  .stroka em{font-style:normal;color:var(--muted);white-space:nowrap}
+  .stroka em.gorit{color:var(--alarm);font-weight:600}
+
+  .sned{font-size:13px;color:var(--ink-2);background:var(--accent-soft);
+    border:1px solid #F0DCB8;border-radius:10px;padding:11px 12px;margin-top:11px}
+  .sned b{color:var(--ink)}
+  textarea.vstavka{width:100%;min-height:120px;font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;
+    border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--tint);color:var(--ink)}
+</style>
+</head>
+<body>
+<div style="background:#F0A62E;color:#2A1B02;text-align:center;padding:8px 12px;font-size:14px;font-weight:600;line-height:1.35">ДЕМО. Данные выдуманные. Записи сбрасываются при каждом открытии страницы и никуда не уходят.</div>
+
+<header>
+  <div class="obolochka">
+    <div class="shapka">
+      <h1>Объекты<small id="schet">—</small></h1>
+      <button class="knopka" id="otchetBtn" type="button">Отчёт</button>
+      <button class="knopka" id="kopiyaBtn" type="button">Копия</button>
+    </div>
+    <input class="iskat" id="iskat" type="search" placeholder="Имя, телефон, посёлок" autocomplete="off">
+    <div class="filtry" id="filtry"></div>
+  </div>
+</header>
+
+<main class="obolochka">
+  <div id="sovet"></div>
+  <div class="spisok" id="spisok"></div>
+</main>
+
+<div class="pod">
+  <div class="obolochka">
+    <button class="knopka knopka--glavnaya knopka--shir" id="novyyBtn" type="button">+ Новый объект</button>
+  </div>
+</div>
+
+<!-- Экран одного объекта -->
+<section class="ekran" id="ekran" hidden aria-label="Объект">
+  <header>
+    <div class="obolochka">
+      <div class="shapka">
+        <button class="knopka knopka--tihaya" id="nazadBtn" type="button">← Все объекты</button>
+        <span style="flex:1"></span>
+        <button class="knopka knopka--opasnaya" id="udalitBtn" type="button">Удалить</button>
+      </div>
+    </div>
+  </header>
+  <div class="obolochka" id="telo"></div>
+</section>
+
+<!-- Экран отчёта и копии -->
+<section class="ekran" id="ekranOtchet" hidden aria-label="Отчёт">
+  <header>
+    <div class="obolochka">
+      <div class="shapka">
+        <button class="knopka knopka--tihaya" id="nazadOtchet" type="button">← Все объекты</button>
+      </div>
+    </div>
+  </header>
+  <div class="obolochka" id="teloOtchet"></div>
+</section>
+
+<script>
+/* ===== Хранение ===== */
+var KLYUCH = "demo-obyekty-v1";
+
+/* Даты считаются от сегодняшнего дня: демо не должно устаревать. */
+function plus(n) { return new Date(Date.now() + n * 864e5).toISOString().slice(0, 10); }
+var DEMO_SEED = [
+  { id: "d1", imya: "Заказчик А", tel: "", adres: "СНТ «Пример», участок 14",
+    vid: "Септик", etap: "Монтаж", summa: "185000", avans: "60000",
+    kogda: plus(0), chto: "Привезти кольца",
+    zamer: "Вода на 1,2 м. Суглинок. До дома 7 м.", sozdan: 1, izmenen: 1,
+    istoriya: [{ id: "h1", d: "Сегодня, 10:12", t: "Договорились на понедельник. Аванс получен." }] },
+  { id: "d2", imya: "Заказчик Б", tel: "", adres: "д. Пример, въезд со стороны леса",
+    vid: "Дренаж", etap: "Замер", summa: "96000", avans: "0",
+    kogda: plus(4), chto: "Замер траншеи",
+    zamer: "Участок по периметру дома. Песок под ногами.", sozdan: 2, izmenen: 2, istoriya: [] },
+  { id: "d3", imya: "Заказчик В", tel: "", adres: "пос. Пример, ул. Садовая",
+    vid: "Отопление", etap: "Сдан", summa: "140000", avans: "140000",
+    kogda: "", chto: "", zamer: "", sozdan: 3, izmenen: 3, istoriya: [] }
+];
+var VERSIYA = 1;
+var baza = { v: VERSIYA, obj: [] };
+
+function zagruzit() {
+  try {
+    var d = JSON.parse(localStorage.getItem(KLYUCH) || "null");
+    if (d && d.obj && d.obj.length !== undefined) baza = d;
+  } catch (e) {}
+}
+
+/* Записывать стараемся на каждое изменение: мастер закрывает страницу
+   кнопкой «домой», а не крестиком, и «сохранить» нажимать не будет. */
+var sohranenoKogda = 0;
+function sohranit() {
+  try {
+    localStorage.setItem(KLYUCH, JSON.stringify(baza));
+    sohranenoKogda = Date.now();
+  } catch (e) {
+    /* Память браузера переполнена или сайту запрещено хранить данные.
+       Молчать здесь нельзя: человек будет думать, что всё записалось. */
+    alert("Не удалось сохранить запись в память телефона.\n\nПроверьте, что в Safari не включён режим «Частный доступ», и сделайте копию через кнопку «Копия».");
+  }
+}
+
+/* ===== Справочники ===== */
+var ETAPY = ["Замер", "Договор", "Материалы", "Монтаж", "Сдан", "Отказ"];
+var VIDY = ["Септик", "Дренаж", "Водоснабжение", "Отопление", "Электрика", "Автополив", "Другое"];
+var FILTRY = ["В работе", "Срок подошёл", "Все", "Сданные"];
+var filtr = "В работе";
+var zapros = "";
+var otkryt = null;      // id объекта на экране
+
+/* ===== Мелочи ===== */
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function dengi(n) { return (Number(n) || 0).toLocaleString("ru-RU") + " ₽"; }
+function segodnya() { return new Date().toISOString().slice(0, 10); }
+function poRusski(iso) {
+  if (!iso) return "";
+  var ch = iso.split("-");
+  return ch.length === 3 ? ch[2] + "." + ch[1] + "." + ch[0] : iso;
+}
+function naydi(id) {
+  for (var i = 0; i < baza.obj.length; i++) if (baza.obj[i].id === id) return baza.obj[i];
+  return null;
+}
+/* Удалённый объект не исчезает из базы, а получает отметку об удалении.
+   Иначе при общем списке он воскресал бы со второго телефона, где
+   про удаление ещё не знают. Наружу такие записи не показываем. */
+function zhivye() { return baza.obj.filter(function (o) { return !o.udalen; }); }
+
+/* Любая правка объекта помечается временем: по нему сервер решает,
+   чья версия новее, когда один и тот же объект правили с двух телефонов. */
+function tronut(o) { o.izmenen = Date.now(); sohranit(); otlozhennayaSync(); }
+
+function vRabote(o) { return o.etap !== "Сдан" && o.etap !== "Отказ"; }
+/* «Срок подошёл» — это и просроченное, и сегодняшнее. Мастер смотрит
+   в список утром, и завтрашнее ему мешает: оно ещё не горит. */
+function gorit(o) { return vRabote(o) && o.kogda && o.kogda <= segodnya(); }
+function ostatok(o) { return (Number(o.summa) || 0) - (Number(o.avans) || 0); }
+
+/* ===== Список ===== */
+function otobrat() {
+  var q = zapros.trim().toLowerCase();
+  return zhivye().filter(function (o) {
+    if (filtr === "В работе" && !vRabote(o)) return false;
+    if (filtr === "Сданные" && o.etap !== "Сдан") return false;
+    if (filtr === "Срок подошёл" && !gorit(o)) return false;
+    if (!q) return true;
+    return [o.imya, o.tel, o.adres, o.vid, o.zamer].join(" ").toLowerCase().indexOf(q) > -1;
+  }).sort(function (a, b) {
+    /* Наверх — то, по чему пора действовать. Дальше — у кого назначен
+       ближайший срок. Объекты без срока уходят вниз: по ним ничего
+       не обещано, и дёргать из-за них незачем. */
+    if (gorit(a) !== gorit(b)) return gorit(a) ? -1 : 1;
+    if (!!a.kogda !== !!b.kogda) return a.kogda ? -1 : 1;
+    if (a.kogda && b.kogda && a.kogda !== b.kogda) return a.kogda < b.kogda ? -1 : 1;
+    return (b.sozdan || 0) - (a.sozdan || 0);
+  });
+}
+
+function klassBejdzha(etap) {
+  if (etap === "Сдан") return " bejdzh--sdan";
+  if (etap === "Отказ") return " bejdzh--otkaz";
+  return " bejdzh--rabota";
+}
+
+function risovatSpisok() {
+  var vse = otobrat();
+  var sp = document.getElementById("spisok");
+
+  var vsegoVRabote = zhivye().filter(vRabote).length;
+  var gorit_n = zhivye().filter(gorit).length;
+  /* «1 ждёт», но «2 ждут»: кривое согласование в шапке сразу читается
+     как недоделка, а эту строчку мастер видит каждый раз. */
+  var zhdet = (gorit_n % 10 === 1 && gorit_n % 100 !== 11) ? " ждёт" : " ждут";
+  document.getElementById("schet").textContent =
+    zhivye().length ? (vsegoVRabote + " в работе" + (gorit_n ? ", " + gorit_n + zhdet + " сегодня" : "")) : "записей пока нет";
+
+  if (!vse.length) {
+    sp.innerHTML = '<div class="pusto">' + (zhivye().length
+      ? '<b>Здесь пусто</b>По этому фильтру ничего не нашлось. Нажмите «Все».'
+      : '<b>Первый объект</b>Нажмите «+ Новый объект» внизу. Заполнять всё сразу не нужно: хватит имени и телефона, остальное допишется по ходу.')
+      + '</div>';
+    return;
+  }
+
+  sp.innerHTML = vse.map(function (o) {
+    var srok = o.kogda
+      ? '<span class="kart__srok' + (gorit(o) ? ' kart__srok--gorit' : '') + '">' +
+        (gorit(o) ? "⏰ " : "") + poRusski(o.kogda) + (o.chto ? " — " + esc(o.chto) : "") + '</span>'
+      : '';
+    var ost = vRabote(o) && ostatok(o) > 0 && Number(o.summa)
+      ? '<span>осталось ' + dengi(ostatok(o)) + '</span>' : '';
+    return '<button class="kart" type="button" data-id="' + o.id + '">' +
+      '<div class="kart__verh">' +
+        '<span class="kart__imya">' + (esc(o.imya) || "Без имени") + '</span>' +
+        '<span class="bejdzh' + klassBejdzha(o.etap) + '">' + esc(o.etap) + '</span>' +
+      '</div>' +
+      '<div class="kart__niz">' +
+        (o.vid ? '<span>' + esc(o.vid) + '</span>' : '') +
+        (o.adres ? '<span>' + esc(o.adres) + '</span>' : '') +
+        ost + srok +
+      '</div></button>';
+  }).join("");
+}
+
+function risovatFiltry() {
+  document.getElementById("filtry").innerHTML = FILTRY.map(function (f) {
+    var n = f === "Срок подошёл" ? zhivye().filter(gorit).length : 0;
+    return '<button class="chip" type="button" data-f="' + f + '" aria-pressed="' + (filtr === f) + '">' +
+      f + (n ? " · " + n : "") + '</button>';
+  }).join("");
+}
+
+function obnovit() { risovatFiltry(); risovatSpisok(); risovatSovet(); }
+
+/* ===== Подсказка про иконку =====
+   Показывается только на телефоне и только пока страницу открывают
+   из браузера. С иконки она не нужна — и не мозолит глаза тому,
+   кто всё уже сделал. */
+var KLYUCH_SOVET = "stroyinvest-obyekty-sovet-skryt";
+
+/* Собираем кусок фразы целиком, а не одно слово: по-русски вместе
+   с числом меняются и «эта/эти», и «перейдёт/перейдут». Склеивать это
+   из отдельных кусочков — верный способ получить «эти 1 записи». */
+function proZapisi(n) {
+  var sto = n % 100, des = n % 10;
+  if (des === 1 && sto !== 11) return "эта запись сама в него не перейдёт";
+  var slovo = (sto > 10 && sto < 20) ? "записей"
+            : (des >= 2 && des <= 4) ? "записи" : "записей";
+  return "эти " + n + " " + slovo + " сами в него не перейдут";
+}
+
+function sIkonki() {
+  try {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)
+      || navigator.standalone === true;
+  } catch (e) { return false; }
+}
+
+function risovatSovet() { return;
+  var mesto = document.getElementById("sovet");
+  var skryt = false;
+  try { skryt = localStorage.getItem(KLYUCH_SOVET) === "1"; } catch (e) {}
+  if (skryt || sIkonki() || !navigator.maxTouchPoints) { mesto.innerHTML = ""; return; }
+
+  /* Если записи уже есть, главное не «поставьте иконку», а «не потеряйте
+     то, что записано»: память у приложения с иконки своя. */
+  var est = zhivye().length > 0;
+  mesto.innerHTML =
+    '<div class="sovet"><button class="zakryt" type="button" id="sovetNet" aria-label="Скрыть подсказку">×</button>' +
+      '<b>Поставьте на экран «Домой»</b>' +
+      'Кнопка «Поделиться» внизу Safari → «На экран «Домой». Дальше открывайте только с иконки: на весь экран и записи хранятся надёжнее.' +
+      (est ? '<p><b style="display:inline">Сначала сделайте копию.</b> У приложения с иконки своя память, и ' +
+             proZapisi(zhivye().length) + '. «Отчёт» → «Скачать файл копии», потом в приложении — «Восстановить из копии».</p>' : '') +
+    '</div>';
+  document.getElementById("sovetNet").addEventListener("click", function () {
+    try { localStorage.setItem(KLYUCH_SOVET, "1"); } catch (e) {}
+    mesto.innerHTML = "";
+  });
+}
+
+/* ===== Экран объекта ===== */
+function otkryt_obyekt(id) {
+  var o = naydi(id);
+  if (!o) return;
+  otkryt = id;
+  var ost = ostatok(o);
+
+  document.getElementById("telo").innerHTML =
+    '<div class="list">' +
+      '<h2>Заказчик</h2>' +
+      '<label class="p"><span>Имя</span><input id="f-imya" type="text" value="' + esc(o.imya) + '" placeholder="Как зовут" autocomplete="off"></label>' +
+      '<label class="p"><span>Телефон</span><input id="f-tel" type="tel" inputmode="tel" value="' + esc(o.tel) + '" placeholder="+7 ..." autocomplete="off"></label>' +
+      (o.tel ? '<div class="svyaz">' +
+        '<a href="tel:' + esc(o.tel.replace(/[^+\d]/g, "")) + '">Позвонить</a>' +
+        '<a class="vtor" href="https://wa.me/' + esc(o.tel.replace(/\D/g, "")) + '" target="_blank" rel="noopener">WhatsApp</a>' +
+      '</div>' : '') +
+      '<label class="p"><span>Посёлок, адрес, как доехать</span><textarea id="f-adres" placeholder="СНТ Берёзка, уч. 14, поворот у синего забора">' + esc(o.adres) + '</textarea></label>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Работа</h2>' +
+      '<div class="etapy" id="vidy" style="margin-bottom:14px">' + VIDY.map(function (v) {
+        return '<button class="chip" type="button" data-v="' + v + '" aria-pressed="' + (o.vid === v) + '">' + v + '</button>';
+      }).join("") + '</div>' +
+      '<div class="etapy" id="etapy">' + ETAPY.map(function (e) {
+        return '<button class="chip" type="button" data-e="' + e + '" aria-pressed="' + (o.etap === e) + '">' + e + '</button>';
+      }).join("") + '</div>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Замер и условия</h2>' +
+      '<label class="p"><textarea id="f-zamer" placeholder="Глубина до воды, грунт, расстояние до дома, куда отводить, что мешает подъезду">' + esc(o.zamer) + '</textarea></label>' +
+      '<div class="podskazka">Диктовать удобнее, чем набирать: нажмите на поле, затем микрофон на клавиатуре телефона.</div>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Деньги</h2>' +
+      '<div class="para">' +
+        '<label class="p"><span>Сумма договора</span><input id="f-summa" type="text" inputmode="numeric" value="' + (o.summa || "") + '" placeholder="0"></label>' +
+        '<label class="p"><span>Получено</span><input id="f-avans" type="text" inputmode="numeric" value="' + (o.avans || "") + '" placeholder="0"></label>' +
+      '</div>' +
+      '<div class="dengi' + (ost > 0 ? " minus" : "") + '"><span>Осталось получить</span><b id="ostatok">' + dengi(ost) + '</b></div>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Следующий шаг</h2>' +
+      '<div class="para">' +
+        '<label class="p"><span>Когда</span><input id="f-kogda" type="date" value="' + esc(o.kogda) + '"></label>' +
+        '<label class="p"><span>Что сделать</span><input id="f-chto" type="text" value="' + esc(o.chto) + '" placeholder="Позвонить, привезти кольца"></label>' +
+      '</div>' +
+      '<button class="knopka knopka--shir" id="vKalendar" type="button">Напомнить в календаре</button>' +
+      '<div class="podskazka" style="margin:8px 0 0">Телефон сам напомнит утром в этот день. Файл сохранится в «Загрузки» — нажмите на него, откроется календарь.</div>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Что происходило</h2>' +
+      '<div class="zapis">' +
+        '<textarea id="f-novaya" placeholder="Наговорите или напишите, что сделали и о чём договорились"></textarea>' +
+        '<button class="knopka knopka--glavnaya" id="dobavitZapis" type="button">Добавить запись</button>' +
+      '</div>' +
+      '<ul class="istoriya" id="istoriya"></ul>' +
+    '</div>';
+
+  risovatIstoriyu();
+  document.getElementById("ekran").hidden = false;
+  document.getElementById("ekran").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  privyazat(o);
+}
+
+function risovatIstoriyu() {
+  var o = naydi(otkryt);
+  var ul = document.getElementById("istoriya");
+  if (!o || !ul) return;
+  if (!o.istoriya || !o.istoriya.length) {
+    ul.innerHTML = '<li style="border-color:transparent;padding-left:0;color:#7A8792">Записей пока нет.</li>';
+    return;
+  }
+  ul.innerHTML = o.istoriya.slice().reverse().map(function (z) {
+    return '<li><time>' + esc(z.d) + '</time><p>' + esc(z.t) + '</p>' +
+      '<button type="button" data-udalit="' + esc(z.id) + '">удалить</button></li>';
+  }).join("");
+}
+
+/* Привязка полей. Пишем в базу на каждое касание клавиатуры: если ждать
+   ухода с поля, половина наговорённого потеряется на звонке, который
+   придёт посреди набора. */
+function privyazat(o) {
+  [["f-imya", "imya"], ["f-tel", "tel"], ["f-adres", "adres"], ["f-zamer", "zamer"],
+   ["f-kogda", "kogda"], ["f-chto", "chto"]].forEach(function (p) {
+    var el = document.getElementById(p[0]);
+    el.addEventListener("input", function () { o[p[1]] = el.value; tronut(o); });
+  });
+
+  ["f-summa", "f-avans"].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener("input", function () {
+      /* Пальцем на стройке легко промахнуться по пробелу или букве.
+         Берём только цифры — на сумме это ровно то, что нужно. */
+      var chisto = el.value.replace(/[^\d]/g, "");
+      if (chisto !== el.value) el.value = chisto;
+      o[id === "f-summa" ? "summa" : "avans"] = chisto;
+      var ost = ostatok(o);
+      document.getElementById("ostatok").textContent = dengi(ost);
+      document.getElementById("ostatok").parentNode.classList.toggle("minus", ost > 0);
+      tronut(o);
+    });
+  });
+
+  document.getElementById("vidy").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-v]"); if (!b) return;
+    o.vid = (o.vid === b.getAttribute("data-v")) ? "" : b.getAttribute("data-v");
+    tronut(o);
+    this.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", c.getAttribute("data-v") === o.vid);
+    });
+  });
+
+  document.getElementById("etapy").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-e]"); if (!b) return;
+    var byl = o.etap;
+    o.etap = b.getAttribute("data-e");
+    this.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", c.getAttribute("data-e") === o.etap);
+    });
+    /* Смена этапа — главное событие объекта. Записываем её в историю сами:
+       иначе через месяц не вспомнить, когда именно сдали. */
+    if (byl !== o.etap) zapisat(o, "Этап: " + byl + " → " + o.etap);
+    tronut(o);
+  });
+
+  document.getElementById("vKalendar").addEventListener("click", function () { vKalendar(o); });
+
+  document.getElementById("dobavitZapis").addEventListener("click", function () {
+    var ta = document.getElementById("f-novaya");
+    var t = ta.value.trim();
+    if (!t) { ta.focus(); return; }
+    zapisat(o, t);
+    ta.value = "";
+    tronut(o);
+  });
+
+  document.getElementById("istoriya").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-udalit]"); if (!b) return;
+    if (!confirm("Удалить эту запись?")) return;
+    o.istoriya = (o.istoriya || []).filter(function (z) { return z.id !== b.getAttribute("data-udalit"); });
+    tronut(o); risovatIstoriyu();
+  });
+}
+
+/* ===== Напоминание в календарь =====
+
+   Сама страница разбудить телефон в нужный день не может: пока её
+   не открыли, она не работает. Напоминание на будущее умеет прислать
+   только то, что живёт снаружи, — сервер.
+
+   Но в телефоне уже есть вещь, которая это умеет и ничего не стоит, —
+   календарь. Отдаём ему событие файлом, дальше он напоминает сам:
+   без интернета, без нашего сервера и без разрешений на уведомления. */
+
+/* Запятая, точка с запятой и перенос строки в календарном файле —
+   служебные символы. Не экранировать их — получить событие, обрезанное
+   на первой же запятой в адресе. */
+function icsEkranirovat(t) {
+  return String(t == null ? "" : t)
+    .replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+/* Длинные строки в этом формате положено разбивать по 75 байт,
+   продолжение — с пробела. Русская буква весит два байта, поэтому
+   считаем байты, а не символы: иначе календарь получит обрывок. */
+function icsSvernut(stroka) {
+  var bytov = function (s) {
+    try { return new TextEncoder().encode(s).length; } catch (e) { return s.length * 2; }
+  };
+  /* Переносим по «кусочкам», а не по буквам: служебная пара вроде \n или \,
+     должна остаться на одной строке целиком. Формально разрезать её можно,
+     но находятся календари, которые после этого показывают голую букву n
+     посреди адреса. */
+  var bukvy = Array.from(stroka), atomy = [];
+  for (var i = 0; i < bukvy.length; i++) {
+    if (bukvy[i] === "\\" && i + 1 < bukvy.length) { atomy.push(bukvy[i] + bukvy[i + 1]); i++; }
+    else atomy.push(bukvy[i]);
+  }
+
+  var kuski = [], tek = "", est = 0;
+  atomy.forEach(function (a) {
+    var n = bytov(a);
+    if (est + n > 73) { kuski.push(tek); tek = " "; est = 1; }
+    tek += a; est += n;
+  });
+  kuski.push(tek);
+  return kuski.join("\r\n");
+}
+
+/* Москва живёт на UTC+3 круглый год, перевода часов нет с 2014 года.
+   Поэтому пишем время сразу в UTC: 9 утра по Москве — это 6:00Z.
+   Так не нужен блок описания часового пояса, и ни один календарь
+   не поймёт событие неправильно. */
+function icsVremya(iso, chasMsk) {
+  return iso.replace(/-/g, "") + "T" +
+    ("0" + (chasMsk - 3)).slice(-2) + "0000Z";
+}
+
+function vKalendar(o) {
+  if (!o.kogda) {
+    alert("Сначала поставьте дату в поле «Когда» — иначе напоминать не о чем.");
+    return;
+  }
+  var chto = (o.chto || "Заехать на объект").trim();
+  var imya = (o.imya || "Без имени").trim();
+  var opisanie = [
+    o.tel ? "Телефон: " + o.tel : "",
+    o.vid ? "Работы: " + o.vid : "",
+    (Number(o.summa) && ostatok(o) > 0) ? "Осталось получить: " + dengi(ostatok(o)) : "",
+    o.zamer ? "Замер: " + o.zamer : ""
+  ].filter(Boolean).join("\n");
+
+  var seychas = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  var stroki = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//StroyInvest//Obyekty//RU",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    "UID:" + o.id + "@stroyinvest-mo.ru",
+    "DTSTAMP:" + seychas,
+    "DTSTART:" + icsVremya(o.kogda, 9),
+    "DTEND:" + icsVremya(o.kogda, 10),
+    "SUMMARY:" + icsEkranirovat(chto + " — " + imya),
+    opisanie ? "DESCRIPTION:" + icsEkranirovat(opisanie) : "",
+    o.adres ? "LOCATION:" + icsEkranirovat(o.adres) : "",
+    "BEGIN:VALARM",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:" + icsEkranirovat(chto + " — " + imya),
+    "TRIGGER:PT0S",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].filter(Boolean).map(icsSvernut);
+
+  skachatFayl("napominanie-" + o.kogda + ".ics", stroki.join("\r\n") + "\r\n", "text/calendar");
+}
+
+function zapisat(o, tekst) {
+  o.istoriya = o.istoriya || [];
+  o.istoriya.push({
+    id: String(Date.now()) + String(Math.random()).slice(2, 7),
+    d: new Date().toLocaleString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+    t: tekst
+  });
+  risovatIstoriyu();
+}
+
+function zakryt() {
+  document.getElementById("ekran").hidden = true;
+  document.body.style.overflow = "";
+  otkryt = null;
+  obnovit();
+}
+
+/* ===== Отчёт и копия ===== */
+function otkryt_otchet() {
+  var rab = zhivye().filter(vRabote);
+  var summa = rab.reduce(function (s, o) { return s + (Number(o.summa) || 0); }, 0);
+  var poluchen = rab.reduce(function (s, o) { return s + (Number(o.avans) || 0); }, 0);
+  var goryat = zhivye().filter(gorit);
+
+  var nedelya = new Date(); nedelya.setDate(nedelya.getDate() + 7);
+  var predel = nedelya.toISOString().slice(0, 10);
+  var skoro = zhivye().filter(function (o) {
+    return vRabote(o) && o.kogda && o.kogda > segodnya() && o.kogda <= predel;
+  }).sort(function (a, b) { return a.kogda < b.kogda ? -1 : 1; });
+
+  var poEtapam = ETAPY.map(function (e) {
+    return { e: e, n: zhivye().filter(function (o) { return o.etap === e; }).length };
+  }).filter(function (x) { return x.n; });
+
+  function spisochek(massiv, pusto) {
+    if (!massiv.length) return '<div class="stroka"><span style="color:#7A8792">' + pusto + '</span></div>';
+    return massiv.map(function (o) {
+      return '<div class="stroka"><span>' + (esc(o.imya) || "Без имени") +
+        (o.chto ? " — " + esc(o.chto) : "") + '</span>' +
+        '<em' + (gorit(o) ? ' class="gorit"' : '') + '>' + poRusski(o.kogda) + '</em></div>';
+    }).join("");
+  }
+
+  document.getElementById("teloOtchet").innerHTML =
+    '<div class="list">' +
+      '<h2>Сейчас в работе</h2>' +
+      '<div class="otchet-blok">' +
+        '<div class="plitka"><span>Объектов</span><b>' + rab.length + '</b></div>' +
+        '<div class="plitka"><span>На сумму</span><b>' + dengi(summa) + '</b></div>' +
+        '<div class="plitka"><span>Получено</span><b>' + dengi(poluchen) + '</b></div>' +
+        '<div class="plitka"><span>Ждём получить</span><b>' + dengi(summa - poluchen) + '</b></div>' +
+      '</div>' +
+      poEtapam.map(function (x) {
+        return '<div class="stroka"><span>' + x.e + '</span><em>' + x.n + '</em></div>';
+      }).join("") +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Пора действовать</h2>' + spisochek(goryat, "Ничего не просрочено.") +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Ближайшая неделя</h2>' + spisochek(skoro, "На неделю ничего не назначено.") +
+    '</div>' +
+
+    syncHtml() +
+
+    '<div class="list">' +
+      '<h2>Копия записей</h2>' +
+      '<p style="margin:0 0 12px;font-size:14.5px;color:#4A5A64">Записи лежат в этом телефоне. Если почистить данные Safari или сменить телефон — они пропадут. Копию стоит делать раз в неделю.</p>' +
+      '<button class="knopka knopka--glavnaya knopka--shir" id="skachat" type="button">Скачать файл копии</button>' +
+      '<div style="height:8px"></div>' +
+      '<button class="knopka knopka--shir" id="vTelegram" type="button">Скопировать текстом (в Telegram)</button>' +
+      '<div style="height:8px"></div>' +
+      '<button class="knopka knopka--shir" id="vTablicu" type="button">Скачать таблицу для Excel</button>' +
+      '<div class="sned"><b>Куда класть копию.</b> Самое простое — отправить файл самому себе в Telegram, в «Избранное». Он там и останется, и с него можно восстановить всё на новом телефоне.</div>' +
+    '</div>' +
+
+    '<div class="list">' +
+      '<h2>Восстановить из копии</h2>' +
+      '<p style="margin:0 0 10px;font-size:14.5px;color:#4A5A64">Вставьте сюда содержимое файла копии и нажмите кнопку. Текущие записи заменятся.</p>' +
+      '<textarea class="vstavka" id="vstavka" placeholder="Сюда вставить текст из файла копии"></textarea>' +
+      '<div style="height:8px"></div>' +
+      '<button class="knopka knopka--opasnaya knopka--shir" id="vosstanovit" type="button">Заменить записи из копии</button>' +
+    '</div>';
+
+  privyazatSync();
+  document.getElementById("skachat").addEventListener("click", skachatKopiyu);
+  document.getElementById("vTelegram").addEventListener("click", skopirovatTekstom);
+  document.getElementById("vTablicu").addEventListener("click", skachatTablicu);
+  document.getElementById("vosstanovit").addEventListener("click", vosstanovitIzKopii);
+
+  document.getElementById("ekranOtchet").hidden = false;
+  document.getElementById("ekranOtchet").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+
+function skachatFayl(imya, tekst, tip) {
+  /* Невидимая метка в начале файла нужна только Excel — без неё русские
+     буквы в таблице превращаются в кракозябры. В остальные файлы её класть
+     не надо: в календарном она сбивает разбор. */
+  var metka = tip.indexOf("csv") > -1 ? "﻿" : "";
+  var b = new Blob([metka + tekst], { type: tip + ";charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = imya;
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+function skachatKopiyu() {
+  skachatFayl("obyekty-" + segodnya() + ".txt", JSON.stringify(baza), "text/plain");
+}
+
+function tekstomVse() {
+  var ch = ["ОБЪЕКТЫ СтройИнвест — копия от " + poRusski(segodnya()), ""];
+  zhivye().forEach(function (o) {
+    ch.push("— " + (o.imya || "Без имени") + " · " + o.etap + (o.vid ? " · " + o.vid : ""));
+    if (o.tel) ch.push("  тел " + o.tel);
+    if (o.adres) ch.push("  " + o.adres.replace(/\n/g, " "));
+    if (o.summa) ch.push("  сумма " + dengi(o.summa) + ", получено " + dengi(o.avans) + ", осталось " + dengi(ostatok(o)));
+    if (o.kogda) ch.push("  " + poRusski(o.kogda) + (o.chto ? " — " + o.chto : ""));
+    if (o.zamer) ch.push("  замер: " + o.zamer.replace(/\n/g, "; "));
+    (o.istoriya || []).forEach(function (z) { ch.push("  " + z.d + " " + z.t.replace(/\n/g, " ")); });
+    ch.push("");
+  });
+  return ch.join("\n");
+}
+
+function skopirovatTekstom() {
+  var t = tekstomVse();
+  var knopka = document.getElementById("vTelegram");
+  function poluchilos() { knopka.textContent = "Скопировано — вставьте в Telegram"; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(poluchilos, function () { zapasnoeKopirovanie(t, poluchilos); });
+  } else { zapasnoeKopirovanie(t, poluchilos); }
+}
+
+/* Старый способ копирования. Нужен там, где новый запрещён: Safari
+   отдаёт буфер обмена не всегда, и без запасного пути кнопка просто
+   молчала бы. */
+function zapasnoeKopirovanie(t, poluchilos) {
+  var ta = document.createElement("textarea");
+  ta.value = t;
+  ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+  document.body.appendChild(ta);
+  ta.focus(); ta.setSelectionRange(0, t.length);
+  var ok = false;
+  try { ok = document.execCommand("copy"); } catch (e) {}
+  ta.remove();
+  if (ok) poluchilos(); else skachatFayl("obyekty-" + segodnya() + ".txt", t, "text/plain");
+}
+
+function skachatTablicu() {
+  var shapka = ["Имя", "Телефон", "Адрес", "Вид работ", "Этап", "Сумма", "Получено", "Осталось", "Срок", "Что сделать", "Замер"];
+  function kl(v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""').replace(/\n/g, " ") + '"'; }
+  var stroki = zhivye().map(function (o) {
+    return [o.imya, o.tel, o.adres, o.vid, o.etap, Number(o.summa) || 0, Number(o.avans) || 0,
+            ostatok(o), poRusski(o.kogda), o.chto, o.zamer].map(kl).join(";");
+  });
+  /* Точка с запятой, а не запятая: русский Excel делит столбцы именно так,
+     иначе вся строка попадёт в первую клетку. */
+  skachatFayl("obyekty-" + segodnya() + ".csv", [shapka.map(kl).join(";")].concat(stroki).join("\r\n"), "text/csv");
+}
+
+function vosstanovitIzKopii() {
+  var t = document.getElementById("vstavka").value.trim();
+  if (!t) { alert("Сначала вставьте текст из файла копии."); return; }
+  var d;
+  try { d = JSON.parse(t); } catch (e) { d = null; }
+  if (!d || !d.obj || d.obj.length === undefined) {
+    alert("Это не похоже на файл копии.\n\nНужен файл, который скачивается кнопкой «Скачать файл копии» — он начинается с {\"v\":1.");
+    return;
+  }
+  if (!confirm("Заменить все записи на телефоне (" + zhivye().length + " шт.) записями из копии (" + (d.obj.filter(function (o) { return !o.udalen; }).length) + " шт.)?\n\nТекущие записи пропадут.")) return;
+  baza = d;
+  sohranit();
+  document.getElementById("ekranOtchet").hidden = true;
+  document.body.style.overflow = "";
+  obnovit();
+  otlozhennayaSync();
+  alert("Записи восстановлены: " + zhivye().length + " шт.");
+}
+
+/* ===== Общий список и утренняя сводка =====
+
+   Включается отдельно и не обязателен: без него приложение работает
+   как работало, записи просто живут в телефоне.
+
+   Что даёт включение:
+     — записи лежат ещё и вне телефона, то есть переживают утопленный
+       телефон, а не только почищенный Safari;
+     — два телефона видят один список;
+     — каждое утро в 8:00 мастеру приходит в Telegram, кому звонить
+       сегодня и что просрочено.
+
+   Адрес и ключ бригады не зашиты в код: страница открыта всем, и ключ
+   в ней был бы ключом от списка заказчиков для любого прохожего.
+   Вводятся один раз на каждом телефоне. Код сервера — tools/obyekty-worker.js. */
+
+var KLYUCH_SYNC = "stroyinvest-obyekty-sync";
+var sync = null;          // {url, klyuch}
+var syncKogda = 0;        // когда последний раз получилось
+var syncOshibka = "";
+var syncTaymer = null;
+var syncIdet = false;
+
+function zagruzitSync() {
+  try { sync = JSON.parse(localStorage.getItem(KLYUCH_SYNC) || "null"); } catch (e) { sync = null; }
+  if (sync && !sync.url) sync = null;
+}
+
+/* Побеждает та версия объекта, которую правили позже. Открытый сейчас
+   объект не трогаем: на него смотрит человек, и подменять ему карточку
+   под пальцами нельзя. Он доедет следующей синхронизацией. */
+function slitSServerom(prishlo) {
+  var poId = {}, izmenilos = false;
+  baza.obj.forEach(function (o) { if (o && o.id) poId[o.id] = o; });
+  prishlo.forEach(function (o) {
+    if (!o || !o.id || o.id === otkryt) return;
+    var est = poId[o.id];
+    if (!est || (Number(o.izmenen) || 0) > (Number(est.izmenen) || 0)) { poId[o.id] = o; izmenilos = true; }
+  });
+  if (!izmenilos) return false;
+  var novyy = [];
+  Object.keys(poId).forEach(function (k) { novyy.push(poId[k]); });
+  baza.obj = novyy;
+  return true;
+}
+
+function sinhronizirovat(ruchnoy) {
+  if (!sync || syncIdet) return Promise.resolve(false);
+  syncIdet = true;
+  return fetch(sync.url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ klyuch: sync.klyuch, obj: baza.obj })
+  }).then(function (r) {
+    return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+  }).then(function (res) {
+    if (!res.ok || !res.j.ok) throw new Error(res.j && res.j.error || "сервер не принял");
+    syncOshibka = "";
+    syncKogda = Date.now();
+    if (slitSServerom(res.j.obj || [])) { sohranit(); obnovit(); }
+    return true;
+  }).catch(function (e) {
+    /* Связи нет — это обычное дело в поле и не повод пугать. Пишем
+       причину и пробуем снова при следующей правке. */
+    syncOshibka = e && e.message ? e.message : "нет связи";
+    if (ruchnoy) alert("Синхронизация не прошла: " + syncOshibka + "\n\nЗаписи в телефоне целы. Попробуйте при связи.");
+    return false;
+  }).then(function (v) { syncIdet = false; pokazatSync(); return v; });
+}
+
+/* Правки сыплются по букве за раз, а отправлять надо редко: ждём, пока
+   человек перестанет печатать. */
+function otlozhennayaSync() {
+  if (!sync) return;
+  clearTimeout(syncTaymer);
+  syncTaymer = setTimeout(function () { sinhronizirovat(false); }, 4000);
+}
+
+function kogdaStroka() {
+  if (!syncKogda) return syncOshibka ? "пока не получилось: " + syncOshibka : "ещё ни разу";
+  var d = new Date(syncKogda);
+  var segodnya_li = d.toISOString().slice(0, 10) === segodnya();
+  return (segodnya_li ? "сегодня в " : poRusski(d.toISOString().slice(0, 10)) + " в ") +
+    d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) +
+    (syncOshibka ? " (сейчас не выходит: " + syncOshibka + ")" : "");
+}
+
+function pokazatSync() {
+  var el = document.getElementById("syncSostoyanie");
+  if (el) el.textContent = kogdaStroka();
+}
+
+function syncHtml() { return "";
+  if (!sync) {
+    return '<div class="list"><h2>Общий список и утренняя сводка</h2>' +
+      '<p style="margin:0 0 12px;font-size:14.5px;color:#4A5A64">Пока выключено: записи живут только в этом телефоне. Если включить — они будут храниться ещё и вне телефона, второй телефон увидит тот же список, а каждое утро в Telegram будет приходить, кому звонить сегодня.</p>' +
+      '<label class="p"><span>Адрес сервера</span><input id="syncUrl" type="url" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://obyekty....workers.dev"></label>' +
+      '<label class="p"><span>Ключ бригады</span><input id="syncKlyuch" type="text" autocapitalize="off" autocomplete="off" placeholder="слово-пароль"></label>' +
+      '<button class="knopka knopka--glavnaya knopka--shir" id="syncVkl" type="button">Включить</button>' +
+      '<div class="sned">Адрес и ключ даёт тот, кто настраивал сервер. На втором телефоне вводятся те же — именно это и делает список общим.</div></div>';
+  }
+  return '<div class="list"><h2>Общий список и утренняя сводка</h2>' +
+    '<div class="stroka"><span>Последняя синхронизация</span><em id="syncSostoyanie">' + esc(kogdaStroka()) + '</em></div>' +
+    '<div class="stroka"><span>Сервер</span><em style="max-width:55%;overflow:hidden;text-overflow:ellipsis">' + esc(sync.url.replace(/^https?:\/\//, "")) + '</em></div>' +
+    '<div style="height:12px"></div>' +
+    '<button class="knopka knopka--glavnaya knopka--shir" id="syncSeychas" type="button">Синхронизировать сейчас</button>' +
+    '<div style="height:8px"></div>' +
+    '<button class="knopka knopka--shir" id="syncVykl" type="button">Отключить на этом телефоне</button>' +
+    '<div class="sned">Отключение не стирает записи: они останутся и в телефоне, и на сервере.</div></div>';
+}
+
+function privyazatSync() {
+  var vkl = document.getElementById("syncVkl");
+  if (vkl) vkl.addEventListener("click", function () {
+    var u = document.getElementById("syncUrl").value.trim().replace(/\/$/, "");
+    var k = document.getElementById("syncKlyuch").value.trim();
+    if (!/^https:\/\/.+/.test(u)) { alert("Адрес должен начинаться с https:// — его даёт тот, кто настраивал сервер."); return; }
+    if (!k) { alert("Без ключа бригады сервер не примет список."); return; }
+    sync = { url: u, klyuch: k };
+    try { localStorage.setItem(KLYUCH_SYNC, JSON.stringify(sync)); } catch (e) {}
+    sinhronizirovat(true).then(function (ok) {
+      if (!ok) { sync = null; try { localStorage.removeItem(KLYUCH_SYNC); } catch (e) {} }
+      otkryt_otchet();
+    });
+  });
+
+  var seychas = document.getElementById("syncSeychas");
+  if (seychas) seychas.addEventListener("click", function () {
+    seychas.disabled = true; seychas.textContent = "Отправляем…";
+    sinhronizirovat(true).then(function () {
+      seychas.disabled = false; seychas.textContent = "Синхронизировать сейчас";
+    });
+  });
+
+  var vykl = document.getElementById("syncVykl");
+  if (vykl) vykl.addEventListener("click", function () {
+    if (!confirm("Отключить общий список на этом телефоне?\n\nЗаписи останутся и здесь, и на сервере — просто перестанут сходиться.")) return;
+    sync = null; syncKogda = 0; syncOshibka = "";
+    try { localStorage.removeItem(KLYUCH_SYNC); } catch (e) {}
+    otkryt_otchet();
+  });
+}
+
+/* ===== Общие кнопки ===== */
+document.getElementById("spisok").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-id]"); if (!b) return;
+  otkryt_obyekt(b.getAttribute("data-id"));
+});
+
+document.getElementById("filtry").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-f]"); if (!b) return;
+  filtr = b.getAttribute("data-f");
+  obnovit();
+});
+
+document.getElementById("iskat").addEventListener("input", function () {
+  zapros = this.value; risovatSpisok();
+});
+
+document.getElementById("novyyBtn").addEventListener("click", function () {
+  var o = { id: String(Date.now()), sozdan: Date.now(), imya: "", tel: "", adres: "",
+            vid: "", etap: "Замер", summa: "", avans: "", kogda: "", chto: "", zamer: "", istoriya: [] };
+  baza.obj.push(o);
+  tronut(o);
+  otkryt_obyekt(o.id);
+  document.getElementById("f-imya").focus();
+});
+
+document.getElementById("nazadBtn").addEventListener("click", function () {
+  /* Пустой объект, заведённый случайно, убираем сами: иначе список
+     за неделю зарастёт карточками «Без имени», которые никто не удалит. */
+  var o = naydi(otkryt);
+  if (o && !o.imya && !o.tel && !o.adres && !o.zamer && !o.summa && !(o.istoriya || []).length) {
+    /* Пустую карточку, заведённую случайно, убираем совсем: надгробие
+       от неё никому не нужно, а на сервер она уйти не успевает. */
+    baza.obj = baza.obj.filter(function (x) { return x.id !== o.id; });
+    sohranit();
+  }
+  zakryt();
+});
+
+document.getElementById("udalitBtn").addEventListener("click", function () {
+  var o = naydi(otkryt); if (!o) return;
+  if (!confirm("Удалить объект «" + (o.imya || "Без имени") + "» со всеми записями?\n\nВернуть будет нельзя.")) return;
+  o.udalen = Date.now();
+  tronut(o);
+  zakryt();
+});
+
+document.getElementById("otchetBtn").addEventListener("click", otkryt_otchet);
+document.getElementById("kopiyaBtn").addEventListener("click", function () {
+  otkryt_otchet();
+  var el = document.getElementById("skachat");
+  if (el) el.scrollIntoView({ block: "center" });
+});
+document.getElementById("nazadOtchet").addEventListener("click", function () {
+  document.getElementById("ekranOtchet").hidden = true;
+  document.body.style.overflow = "";
+  obnovit();
+});
+
+/* Телефон может выгрузить страницу из памяти без предупреждения.
+   Сохраняем ещё раз на уход со страницы — дешевле, чем потерянный замер. */
+window.addEventListener("pagehide", function () {
+  /* Память здесь не пишем: каждое изменение уже сохранено в sohranit().
+     Запись при уходе со страницы затирала бы свежее, если в другой вкладке
+     записи изменились, — а эта вкладка держит старую копию. */
+  /* Страницу закрывают — обычный запрос браузер оборвёт на полпути.
+     Маячок он доносит до конца уже после закрытия. Тип ставим простой,
+     иначе браузер потребует предварительный запрос, которого маячок
+     сделать не умеет; сервер всё равно читает тело как JSON. */
+  if (sync && navigator.sendBeacon) {
+    try {
+      navigator.sendBeacon(sync.url, new Blob(
+        [JSON.stringify({ klyuch: sync.klyuch, obj: baza.obj })],
+        { type: "text/plain;charset=UTF-8" }));
+    } catch (e) {}
+  }
+});
+
+localStorage.removeItem(KLYUCH);
+baza = { v: 1, obj: DEMO_SEED };
+sohranit();
+zagruzitSync();
+obnovit();
+if (sync) sinhronizirovat(false);
+
+/* Запас на случай «нет связи» — см. obyekty-sw.js. Если браузер старый
+   или страницу открыли по http, молча работаем без запаса: это улучшение,
+   а не условие работы. */
+if (false) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("obyekty-sw.js").catch(function () {});
+  });
+}
+</script>
+</body>
+</html>
