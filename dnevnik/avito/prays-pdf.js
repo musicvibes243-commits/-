@@ -7,6 +7,14 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const fs = require('fs'), path = require('path');
 
 const W = 1600, H = 900, PAD = 86;
+const foto2 = f => {
+  const p = path.join(__dirname, '..', 'foto', 'portfolio', f);
+  return fs.existsSync(p) ? 'data:image/jpeg;base64,' + fs.readFileSync(p).toString('base64') : '';
+};
+const qr = () => {
+  const p = path.join(__dirname, '..', 'foto', 'qr', 'qr-sayt.png');
+  return fs.existsSync(p) ? 'data:image/png;base64,' + fs.readFileSync(p).toString('base64') : '';
+};
 const foto = f => {
   const p = path.join(__dirname, '..', 'foto', 'avito-kartinki', f);
   return fs.existsSync(p) ? 'data:image/jpeg;base64,' + fs.readFileSync(p).toString('base64') : '';
@@ -32,43 +40,39 @@ const SLIDES = [
      </div>
      <p class="note">Работаю удалённо, по всей России. Гарантия на работу — месяц бесплатных правок.</p>
    </div>`,
-  // 3 — прайс: объявления
-  `<div class="sl"><h2>Объявления и реклама</h2>
+  // 3 — Авито
+  `<div class="sl"><h2>Авито</h2>
      ${T([
        ['Разбор объявления', '1 день', 'бесплатно', 'посмотрю карточку и скажу, что мешает её открывать'],
        ['Фотографии: отбор и обработка', '2 дня', '1 500 ₽', ''],
-       ['Переписать объявление', '3 дня', '2 500 ₽', ''],
+       ['Переписать объявление', '3 дня', '2 500 ₽', 'заголовок, описание, порядок фотографий'],
        ['Объявление под ключ', '5 дней', '4 000 ₽', ''],
        ['Ведение Авито', 'месяц', '8 000 ₽', ''],
-       ['Настройка рекламы в Яндексе', '7 дней', '6 000 ₽', ''],
-       ['Карточка в Яндекс Картах', '3 дня', '3 000 ₽', ''],
-       ['Консультация', '1 час', '2 000 ₽', ''],
        ['Оформление профиля и портфолио', '2 дня', '2 000 ₽', ''],
      ])}
    </div>`,
-  // 4 — прайс: сайты
-  `<div class="sl"><h2>Сайты и боты</h2>
+  // 4 — реклама
+  `<div class="sl"><h2>Реклама</h2>
+     ${T([
+       ['Настройка рекламы в Яндексе', '7 дней', '6 000 ₽', ''],
+       ['Ведение рекламы в Яндексе', 'месяц', '7 000 ₽', 'бюджет вы платите Яндексу сами, процента с него не беру'],
+       ['Авито Реклама: ведение', 'месяц', '10 000 ₽', 'кабинет открывают только юрлицам и ИП'],
+       ['Карточка в Яндекс Картах', '3 дня', '3 000 ₽', 'доступ остаётся у вас'],
+       ['Консультация', '1 час', '2 000 ₽', ''],
+     ])}
+   </div>`,
+  // 5 — сайты, боты и CRM
+  `<div class="sl"><h2>Сайты, боты и CRM</h2>
      ${T([
        ['Сайт под ключ', '10 дней', '15 000 ₽', 'сайт ваш, со всеми исходными файлами'],
        ['Сайт по подписке', '—', '2 000 ₽/мес', 'домен, хостинг и правки входят'],
        ['Телеграм-бот для заявок', '3–7 дней', '6 000 ₽', 'бот на вашем аккаунте, абонентской платы нет'],
-       ['Мини-приложение в Телеграме', '7–14 дней', 'от 5 000 ₽', 'каталог, расчёт стоимости, запись'],
+       ['Бот в WhatsApp', 'неделя', '9 000 ₽', 'доступ через провайдера оплачивается отдельно'],
+       ['Мини-приложение в Телеграме', '7–14 дней', 'от 5 000 ₽', ''],
+       ['CRM мини-приложением', '2–3 недели', 'от 20 000 ₽', 'без лицензий и оплаты за каждого сотрудника'],
      ])}
      <div class="vrez"><b>Подписка — это не рассрочка.</b> Сайт работает, пока идёт подписка. Перестали платить — сайт выключается, и он не становится вашим. Это честнее сказать сразу.</div>
    </div>`,
-  // 5 — прайс: маркетплейсы + доказательство
-  `<div class="sl two"><div>
-     <h2>Маркетплейсы</h2>
-     ${T([
-       ['Комплект на карточку', '2 дня', '2 500 ₽', 'главное фото, 4 инфографики, описание'],
-       ['Отдельный кадр на модели', '1 день', '400 ₽', ''],
-       ['Описание с ключами', '1 день', '700 ₽', ''],
-     ])}
-     <p class="note">Каждый кадр сверяю с вашим исходником и показываю до загрузки: товар на картинке обязан совпадать с товаром в коробке.</p>
-   </div><div class="pic">
-     ${foto('17-abaya-do-posle.jpg') ? `<img src="${foto('17-abaya-do-posle.jpg')}" alt="">` : '<div class="nopic">пример работы</div>'}
-     <span>Вещь на вешалке в подсобке → комплект из четырёх кадров</span>
-   </div></div>`,
   // 6 — цифры
   `<div class="sl"><h2>Цифры из кабинета</h2>
      <p class="lead">Реклама в Яндексе для инженера по септикам и отоплению. Два месяца, скриншоты из кабинета — в портфолио.</p>
@@ -97,11 +101,21 @@ const SLIDES = [
      </div>
      <p class="note">Этот список длиннее, чем у большинства. Так и задумано: обещать меньше проще, чем потом объясняться.</p>
    </div>`,
-  // 9 — контакты
+  // портфолио
+  `<div class="sl pf"><h2>Работы</h2>
+     <img src="${foto2('karta-savva.jpg')}" alt="">
+     <p class="note">SAVVA — спешелти-кофейня в Медине. Три языка, включая арабский, живые часы работы.</p>
+   </div>`,
+  `<div class="sl pf"><h2>Работы</h2>
+     <img src="${foto2('karta-atelier.jpg')}" alt="">
+     <p class="note">Atelier — школа портного и швейный коворкинг в Королёве.</p>
+   </div>`,
+  // контакты
   `<div class="sl cover">
      <h1 class="sm">Первым трём клиентам — 30 %</h1>
      <p class="lead">В обмен на отзыв после работы. Мне нужны отзывы, вам — цена ниже.</p>
      <div class="cont"><b>+7 977 556-76-01</b><span>aykoweb.ru</span><span>Пишите в сообщения — отвечу в тот же день</span></div>
+     <img class="qr" src="${qr()}" alt="">
    </div>`,
 ];
 
@@ -158,6 +172,11 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .nope>div{background:#17181e;border-radius:20px;padding:30px 34px;font-size:25px;
   line-height:1.5;color:#a9a4b2}
 .nope b{color:#fff}
+.pf img{display:block;margin:0 auto;max-width:100%;max-height:520px;width:auto;
+  border-radius:18px;box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.pf .note{margin-top:22px}
+.qr{position:absolute;right:${PAD}px;bottom:${PAD}px;width:210px;height:210px;
+  border-radius:14px;z-index:3}
 `;
 
 (async () => {
@@ -191,7 +210,7 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 
   const out = path.join(__dirname, '..', 'prays');
   await p.pdf({ path: path.join(out, 'AYKO-prays.pdf'), width: `${W}px`, height: `${H}px`,
-                printBackground: true, pageRanges: '1-9' });
+                printBackground: true, pageRanges: '1-' + SLIDES.length });
   for (let i = 0; i < SLIDES.length; i++) {
     const el = (await p.$$('.sl'))[i];
     await el.screenshot({ path: path.join(out, `slide-${String(i + 1).padStart(2, '0')}.png`) });

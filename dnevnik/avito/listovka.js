@@ -6,6 +6,8 @@
    Запуск:  node listovka.js                                             */
 const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const path = require('path');
+const fs = require('fs');
+const QR = 'data:image/png;base64,' + fs.readFileSync(path.join(__dirname,'..','foto','qr','qr-sayt.png')).toString('base64');
 
 const W = 1748, H = 2480, PAD = 110;
 const LENTA = 440;        // высота ленты с отрывными полосками
@@ -54,9 +56,8 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
 .pol span i{font-style:normal;display:block;font-size:.62em;font-weight:600;
   color:#6b6670;letter-spacing:.04em;text-align:center;margin-top:7px}
 .low{margin-top:auto;display:flex;gap:44px;align-items:flex-end}
-.qr{width:280px;height:280px;flex:none;border:5px dashed #b6afa6;border-radius:22px;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  font-size:25px;color:#9a938a;line-height:1.35;padding:18px}
+.qr{width:280px;height:280px;flex:none;border-radius:16px;overflow:hidden;background:#fff}
+.qr img{width:100%;height:100%;display:block;object-fit:contain}
 .ctc{flex:1;min-width:0}
 .zov{font-size:33px;font-weight:600;color:#3b383f;line-height:1.3}
 .tel{margin-top:18px;font-size:54px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
@@ -72,7 +73,7 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
 <div class="blocks">${BLOKI.map(b => `<div class="b"><h3>${b.t}</h3><p>${b.p}</p></div>`).join('')}</div>
 <div class="dover">Два года веду объявления инженера по септикам, отоплению и водоснабжению. <b>Примеры работ — по коду слева.</b></div>
 <div class="low">
-  <div class="qr">Здесь будет<br>QR-код</div>
+  <div class="qr"><img src="${QR}" alt=""></div>
   <div class="ctc">
     <div class="zov">Наведите камеру —<br>посмотрите мои работы</div>
     <div class="tel">+7 977 556-76-01</div>
@@ -98,12 +99,16 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#f6f1ea;color:#17161a
       if (e.closest('.rez')) return;
       const r = e.getBoundingClientRect();
       if (!r.width || !r.height) return;
-      if (r.right > W - PAD + 2 || r.left < PAD - 2) err.push(`«${kus(e)}» вылезает вбок`);
+      if (r.right > W - PAD + 2 || r.left < PAD - 2)
+        err.push(`«${e.tagName}.${e.className||'-'}» вылезает вбок: ${Math.round(r.left)}…${Math.round(r.right)} при поле ${PAD}…${W-PAD}`);
       if (r.bottom > H - PAD + 2 || r.top < PAD - 2) err.push(`«${kus(e)}» вылезает вверх или вниз`);
-      if (e.scrollWidth > e.clientWidth + 2) err.push(`«${kus(e)}» обрезан по ширине`);
-      // при line-height меньше единицы scrollHeight всегда чуть больше clientHeight —
-      // это не обрезка, поэтому допуск в одну строку
-      if (e.scrollHeight > e.clientHeight + 24) err.push(`«${kus(e)}» обрезан по высоте`);
+      // у картинок scrollWidth отдаёт исходный размер файла, а не размер на листе,
+      // поэтому их проверяем только по границам поля
+      if (e.tagName !== 'IMG') {
+        if (e.scrollWidth > e.clientWidth + 2) err.push(`«${kus(e)}» обрезан по ширине`);
+        // при line-height меньше единицы scrollHeight всегда чуть больше clientHeight
+        if (e.scrollHeight > e.clientHeight + 24) err.push(`«${kus(e)}» обрезан по высоте: ${e.scrollHeight} при ${e.clientHeight}`);
+      }
     });
     // кегли внутри строки разные, базовые линии не совпадают — поэтому
     // верх прямоугольника округляем грубо, иначе одна строка считается двумя
