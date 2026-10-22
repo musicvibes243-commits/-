@@ -160,6 +160,10 @@ const SLIDES = [
      </figure>`).join('')}</div>
      <p class="note">Слева — вторая версия главной для ателье. Справа — другое оформление моего собственного сайта: оно не макет, его можно открыть прямо сейчас на aykoweb.ru/cosmos.html и потыкать.</p>
    </div>`,
+  `<div class="sl pf"><h2>КРОМКА</h2>
+     <img src="${foto2('karta-kromka.jpg')}" alt="">
+     <p class="note">Кофейня авторских десертов. Такой кофейни нет — это макет. Десерты нарисованы: когда своих фотографий ещё нет, сайт всё равно можно запустить.</p>
+   </div>`,
   // контакты
   `<div class="sl cover">
      <h1 class="sm">Первым трём клиентам — 30 %</h1>
@@ -234,7 +238,7 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .demos.dva{gap:46px;padding:0 40px}
 .demos img{width:100%;border-radius:14px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.5)}
 .demos figcaption{margin-top:16px;font-size:22px;color:#8f8a97;text-align:center}
-.pf img{display:block;margin:0 auto;max-width:100%;max-height:520px;width:auto;
+.pf img{display:block;margin:0 auto;max-width:100%;max-height:510px;width:auto;
   border-radius:18px;box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .pf .note{margin-top:22px}
 .qr{position:absolute;right:${PAD}px;bottom:${PAD}px;width:210px;height:210px;
@@ -251,7 +255,10 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
     const err = [];
     document.querySelectorAll('.sl').forEach((sl, n) => {
       const s = sl.getBoundingClientRect();
-      if (sl.scrollHeight > sl.clientHeight + 2) err.push(`слайд ${n + 1}: содержимое не помещается по высоте`);
+      if (sl.scrollHeight > sl.clientHeight + 2) err.push(
+        `слайд ${n + 1}: содержимое не помещается по высоте — ${sl.scrollHeight} при ${sl.clientHeight}, ` +
+        `лишние ${sl.scrollHeight - sl.clientHeight} px; внутри: ` +
+        [...sl.children].map(c => `${c.tagName.toLowerCase()} ${Math.round(c.getBoundingClientRect().height)}`).join(', '));
       // ширину слайда не меряем: декоративное свечение нарочно уходит за край
       // и обрезается. Реальные вылеты ловит проверка по каждому элементу ниже.
       sl.querySelectorAll('*').forEach(e => {

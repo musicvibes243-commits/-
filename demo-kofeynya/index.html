@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КРОМКА — кофейня авторских десертов</title>
+<meta name="description" content="Демо-макет: кофейня, где десерты собирают как картины. Меню, витрина, адрес и часы работы.">
+<style>
+:root{
+  --ink:#17131c; --ink2:#1f1a25; --krem:#f4ece0; --krem2:#e6d9c6;
+  --terra:#cf6a42; --fistash:#8fae77; --seryy:#a79c92;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--krem);
+  font-family:'DejaVu Sans','Liberation Sans',sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.obor{max-width:1180px;margin:0 auto;padding:0 32px}
+a{color:inherit;text-decoration:none}
+
+/* шапка */
+.lenta{background:var(--terra);color:#fff;font-size:13px;letter-spacing:.14em;
+  text-transform:uppercase;text-align:center;padding:11px 16px}
+header{position:sticky;top:0;z-index:50;background:rgba(23,19,28,.86);
+  backdrop-filter:blur(14px);border-bottom:1px solid rgba(244,236,224,.09)}
+.shapka{display:flex;align-items:center;justify-content:space-between;
+  gap:24px;padding:20px 0}
+.logo{font-size:25px;font-weight:700;letter-spacing:.3em}
+.logo i{font-style:normal;color:var(--terra)}
+nav{display:flex;gap:34px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--krem2)}
+nav a:hover{color:var(--terra)}
+.knopka{display:inline-block;padding:14px 30px;border-radius:999px;
+  background:var(--terra);color:#fff;font-size:15px;font-weight:600;white-space:nowrap}
+.knopka.pusto{background:transparent;border:1px solid rgba(244,236,224,.3);color:var(--krem)}
+
+/* первый экран */
+.pervyy{position:relative;padding:118px 0 104px;overflow:hidden}
+.pervyy::before{content:"";position:absolute;right:-170px;top:-130px;width:620px;height:620px;
+  border-radius:50%;background:radial-gradient(circle,rgba(207,106,66,.30),transparent 68%)}
+.pervyy::after{content:"";position:absolute;left:-200px;bottom:-220px;width:540px;height:540px;
+  border-radius:50%;background:radial-gradient(circle,rgba(143,174,119,.20),transparent 70%)}
+.pervyy .obor{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;
+  gap:56px;align-items:center}
+.nadpis{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--terra);
+  margin-bottom:26px}
+h1{font-size:76px;line-height:1.02;letter-spacing:-.03em;font-weight:700}
+h1 em{font-style:italic;font-weight:400;color:var(--krem2)}
+.lid{margin-top:26px;font-size:19px;line-height:1.65;color:var(--krem2);max-width:470px}
+.knopki{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+.fakty{margin-top:50px;display:flex;gap:40px;flex-wrap:wrap;font-size:14px;color:var(--seryy)}
+.fakty b{display:block;font-size:30px;color:var(--krem);font-weight:700;margin-bottom:4px}
+
+/* витрина-экспонат на первом экране */
+.vitrina{position:relative;aspect-ratio:1/1;border-radius:26px;
+  background:linear-gradient(160deg,#241d2b,#191420);
+  border:1px solid rgba(244,236,224,.12);display:grid;place-items:center;
+  box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.vitrina svg{width:76%;height:76%}
+.podpis-v{position:absolute;left:26px;bottom:24px;font-size:12px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--seryy)}
+
+/* экспонаты */
+section{padding:100px 0}
+.zagolovok{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:28px;margin-bottom:52px;flex-wrap:wrap}
+h2{font-size:46px;letter-spacing:-.02em;line-height:1.08;font-weight:700}
+.zagolovok p{font-size:16px;color:var(--seryy);max-width:400px;line-height:1.6}
+.ryad{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.eksp{background:var(--ink2);border:1px solid rgba(244,236,224,.09);border-radius:22px;
+  overflow:hidden;display:flex;flex-direction:column}
+.ramka{aspect-ratio:4/3;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 42%,rgba(244,236,224,.10),transparent 66%)}
+.ramka svg{width:70%;height:70%}
+.tekst{padding:26px 28px 30px;display:flex;flex-direction:column;flex:1}
+.tekst b{font-size:24px;font-weight:700}
+.tekst span{margin-top:9px;font-size:15px;line-height:1.55;color:var(--seryy);flex:1}
+.tekst .cena{margin-top:20px;font-size:21px;font-weight:700;color:var(--terra)}
+
+/* меню */
+.menyu{background:var(--ink2)}
+.spisok{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+.poz{display:flex;align-items:baseline;gap:14px;padding:19px 0;
+  border-bottom:1px solid rgba(244,236,224,.09)}
+.poz b{font-size:18px;font-weight:600;white-space:nowrap}
+.poz i{flex:1;font-style:normal;border-bottom:1px dotted rgba(244,236,224,.25);transform:translateY(-4px)}
+.poz span{font-size:18px;font-weight:700;color:var(--krem2);white-space:nowrap}
+.poz em{display:block;font-style:normal;font-size:13px;color:var(--seryy);margin-top:5px}
+
+/* место */
+.mesto .obor{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.karta{aspect-ratio:4/3;border-radius:22px;border:1px solid rgba(244,236,224,.12);
+  background:
+    repeating-linear-gradient(0deg,rgba(244,236,224,.05) 0 1px,transparent 1px 46px),
+    repeating-linear-gradient(90deg,rgba(244,236,224,.05) 0 1px,transparent 1px 46px),
+    linear-gradient(150deg,#201a27,#191420);
+  position:relative;overflow:hidden}
+.karta::before{content:"";position:absolute;left:18%;top:-6%;width:34%;height:118%;
+  background:rgba(143,174,119,.14);transform:rotate(14deg)}
+.tochka{position:absolute;left:52%;top:46%;width:20px;height:20px;border-radius:50%;
+  background:var(--terra);box-shadow:0 0 0 10px rgba(207,106,66,.22)}
+.chasy{display:grid;gap:14px;margin-top:26px}
+.chasy div{display:flex;justify-content:space-between;gap:20px;font-size:17px;
+  padding-bottom:13px;border-bottom:1px solid rgba(244,236,224,.09)}
+.chasy span{color:var(--seryy)}
+.adres{margin-top:30px;font-size:19px;line-height:1.6}
+.adres b{display:block;font-size:15px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:10px;font-weight:600}
+
+/* низ */
+footer{border-top:1px solid rgba(244,236,224,.09);padding:46px 0 54px}
+.niz{display:flex;justify-content:space-between;gap:26px;flex-wrap:wrap;align-items:center}
+.niz p{font-size:14px;color:var(--seryy);line-height:1.6}
+
+@media(max-width:900px){
+  .pervyy .obor,.mesto .obor{grid-template-columns:1fr}
+  .ryad,.spisok{grid-template-columns:1fr}
+  h1{font-size:46px} h2{font-size:34px}
+  nav{display:none}
+  .pervyy{padding:68px 0 70px} section{padding:68px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="lenta">Новая коллекция «Сезон айвы» · с 24 октября</div>
+
+<header><div class="obor shapka">
+  <div class="logo">КРО<i>М</i>КА</div>
+  <nav>
+    <a href="#vitrina">Витрина</a>
+    <a href="#menyu">Меню</a>
+    <a href="#mesto">Место</a>
+  </nav>
+  <a class="knopka" href="#mesto">Забронировать стол</a>
+</div></header>
+
+<div class="pervyy"><div class="obor">
+  <div>
+    <div class="nadpis">Кофейня авторских десертов · Москва</div>
+    <h1>Десерт,<br>который жалко<br><em>разрезать</em></h1>
+    <p class="lid">Шесть десертов в сезон. Каждый собирают вручную утром того же дня, и каждый
+      заканчивается, когда заканчивается. Витрину обновляем в четверг.</p>
+    <div class="knopki">
+      <a class="knopka" href="#vitrina">Что сегодня на витрине</a>
+      <a class="knopka pusto" href="#mesto">Как добраться</a>
+    </div>
+    <div class="fakty">
+      <div><b>6</b>десертов в сезон</div>
+      <div><b>с 8:00</b>открываемся</div>
+      <div><b>4 мин</b>от метро</div>
+    </div>
+  </div>
+  <div class="vitrina">
+    <svg viewBox="0 0 400 400" aria-hidden="true">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f4ece0"/><stop offset="1" stop-color="#d9c9b2"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#cf6a42"/><stop offset="1" stop-color="#a9492a"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="200" cy="330" rx="150" ry="20" fill="rgba(0,0,0,.35)"/>
+      <path d="M70 320h260l-14 26H84z" fill="#2b2433"/>
+      <rect x="92" y="150" width="216" height="172" rx="14" fill="url(#g1)"/>
+      <rect x="92" y="206" width="216" height="16" fill="#8fae77"/>
+      <rect x="92" y="258" width="216" height="16" fill="url(#g2)"/>
+      <path d="M92 164c22 14 42 14 64 0s42-14 64 0 42 14 64 0v-14H92z" fill="#e0d0ba"/>
+      <circle cx="200" cy="118" r="30" fill="url(#g2)"/>
+      <path d="M200 88c0-18 14-28 28-30-4 20-12 28-28 30z" fill="#8fae77"/>
+      <circle cx="146" cy="136" r="11" fill="#8fae77"/>
+      <circle cx="254" cy="136" r="11" fill="#cf6a42"/>
+    </svg>
+    <div class="podpis-v">Экспонат № 1 · «Айва и фисташка»</div>
+  </div>
+</div></div>
+
+<section id="vitrina"><div class="obor">
+  <div class="zagolovok">
+    <h2>Витрина недели</h2>
+    <p>Собираем по утрам. Когда десерт заканчивается, он заканчивается — допечь к вечеру не получится.</p>
+  </div>
+  <div class="ryad">
+
+    <article class="eksp">
+      <div class="ramka"><svg viewBox="0 0 300 240" aria-hidden="true">
+        <ellipse cx="150" cy="202" rx="104" ry="15" fill="rgba(0,0,0,.3)"/>
+        <path d="M58 196h184l-10 18H68z" fill="#2b2433"/>
+        <path d="M70 96h160v100H70z" fill="#f4ece0"/>
+        <path d="M70 128h160v14H70z" fill="#cf6a42"/>
+        <path d="M70 162h160v14H70z" fill="#8fae77"/>
+        <path d="M70 96c20 12 40 12 60 0s40-12 60 0 40 12 40 0V84H70z" fill="#e0d0ba"/>
+        <circle cx="150" cy="66" r="22" fill="#cf6a42"/>
+        <path d="M150 44c0-14 11-22 22-24-3 16-9 22-22 24z" fill="#8fae77"/>
+      </svg></div>
+      <div class="tekst">
+        <b>Айва и фисташка</b>
+        <span>Шесть слоёв, печёная айва и фисташковый пралине. Делаем только в сезон айвы.</span>
+        <div class="cena">620 ₽</div>
+      </div>
+    </article>
+
+    <article class="eksp">
+      <div class="ramka"><svg viewBox="0 0 300 240" aria-hidden="true">
+        <ellipse cx="150" cy="204" rx="100" ry="14" fill="rgba(0,0,0,.3)"/>
+        <path d="M62 198h176l-10 16H72z" fill="#2b2433"/>
+        <path d="M78 112h144a0 0 0 010 0l-14 86H92z" fill="#f4ece0"/>
+        <path d="M84 150h132l-4 24H88z" fill="#8fae77"/>
+        <ellipse cx="150" cy="112" rx="72" ry="18" fill="#e0d0ba"/>
+        <circle cx="122" cy="106" r="13" fill="#cf6a42"/>
+        <circle cx="150" cy="100" r="16" fill="#f4ece0"/>
+        <circle cx="180" cy="107" r="12" fill="#8fae77"/>
+        <path d="M150 84c0-12 10-19 19-21-3 14-8 19-19 21z" fill="#8fae77"/>
+      </svg></div>
+      <div class="tekst">
+        <b>Тарт с чёрной смородиной</b>
+        <span>Песочная основа, крем на белом шоколаде и кислая смородина сверху. Не сладкий.</span>
+        <div class="cena">540 ₽</div>
+      </div>
+    </article>
+
+    <article class="eksp">
+      <div class="ramka"><svg viewBox="0 0 300 240" aria-hidden="true">
+        <ellipse cx="150" cy="206" rx="96" ry="13" fill="rgba(0,0,0,.3)"/>
+        <path d="M66 200h168l-9 14H75z" fill="#2b2433"/>
+        <rect x="96" y="74" width="108" height="126" rx="54" fill="#241e2b"/>
+        <rect x="96" y="120" width="108" height="16" fill="#cf6a42"/>
+        <rect x="96" y="158" width="108" height="14" fill="#f4ece0" opacity=".82"/>
+        <ellipse cx="150" cy="74" rx="54" ry="16" fill="#f4ece0"/>
+        <path d="M128 60c8-16 36-16 44 0-14 8-30 8-44 0z" fill="#8fae77"/>
+        <circle cx="150" cy="50" r="10" fill="#cf6a42"/>
+      </svg></div>
+      <div class="tekst">
+        <b>Эклер на угле</b>
+        <span>Чёрное тесто на активированном угле, внутри солёная карамель. Выглядит страшнее, чем есть.</span>
+        <div class="cena">480 ₽</div>
+      </div>
+    </article>
+
+  </div>
+</div></section>
+
+<section class="menyu" id="menyu"><div class="obor">
+  <div class="zagolovok">
+    <h2>Кофе и к кофе</h2>
+    <p>Зерно меняем раз в месяц, сорт всегда написан на доске у стойки.</p>
+  </div>
+  <div class="spisok">
+    <div class="poz"><b>Фильтр<em>Зерно месяца, 250 мл</em></b><i></i><span>280 ₽</span></div>
+    <div class="poz"><b>Капучино<em>На альтернативном молоке — без доплаты</em></b><i></i><span>320 ₽</span></div>
+    <div class="poz"><b>Раф на айве<em>Сезонный, до конца ноября</em></b><i></i><span>390 ₽</span></div>
+    <div class="poz"><b>Какао на молоке<em>Бельгийский шоколад, без сахара</em></b><i></i><span>330 ₽</span></div>
+    <div class="poz"><b>Десерт дня<em>Что осталось с утренней витрины</em></b><i></i><span>450 ₽</span></div>
+    <div class="poz"><b>Набор из трёх<em>Любые три десерта с витрины</em></b><i></i><span>1 500 ₽</span></div>
+  </div>
+</div></section>
+
+<section class="mesto" id="mesto"><div class="obor">
+  <div>
+    <h2>Где нас найти</h2>
+    <div class="adres">
+      <b>Адрес</b>
+      Москва, Нижняя Сыромятническая, 11с2<br>вход со двора, вторая дверь
+    </div>
+    <div class="chasy">
+      <div>Понедельник — пятница <span>8:00 — 21:00</span></div>
+      <div>Суббота и воскресенье <span>9:00 — 22:00</span></div>
+      <div>Витрину обновляем <span>по четвергам</span></div>
+    </div>
+    <div class="knopki" style="margin-top:32px">
+      <a class="knopka" href="#mesto">Забронировать стол</a>
+      <a class="knopka pusto" href="#vitrina">Посмотреть витрину</a>
+    </div>
+  </div>
+  <div class="karta"><div class="tochka"></div></div>
+</div></section>
+
+<footer><div class="obor niz">
+  <div>
+    <div class="logo" style="font-size:21px">КРО<i>М</i>КА</div>
+    <p style="margin-top:12px">Кофейня авторских десертов<br>Нижняя Сыромятническая, 11с2</p>
+  </div>
+  <p>Демо-макет. Кофейни «Кромка» не существует:<br>страница сделана, чтобы показать вёрстку и оформление.</p>
+</div></footer>
+
+</body>
+</html>
