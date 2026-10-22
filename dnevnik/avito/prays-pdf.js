@@ -19,6 +19,29 @@ const foto = f => {
   const p = path.join(__dirname, '..', 'foto', 'avito-kartinki', f);
   return fs.existsSync(p) ? 'data:image/jpeg;base64,' + fs.readFileSync(p).toString('base64') : '';
 };
+const sayt = f => {
+  const p = path.join(__dirname, '..', '..', 'ayko', 'img', f);
+  return fs.existsSync(p) ? 'data:image/jpeg;base64,' + fs.readFileSync(p).toString('base64') : '';
+};
+
+// Верх каждого снимка срезан: в шапках сайтов стоят телефоны заказчиков,
+// а прайс уходит чужим людям. Проценты те же, что в карточках для Авито.
+const RABOTY = [
+  { src: sayt('septic.jpg'),               crop: 11, t: 'Стройинвест', s: 'Септики и дренаж' },
+  { src: sayt('simba.jpg'),                crop: 10, t: 'Симба',       s: 'Ветклиника' },
+  { src: sayt('savva.jpg'),                crop: 10, t: 'Savva',       s: 'Кофейня в Медине' },
+  { src: sayt('anikor.jpg'),               crop:  8, t: 'Аникор',      s: 'Студия йоги' },
+  { src: sayt('atelier.jpg'),              crop: 16, t: 'Atelier',     s: 'Швейное ателье' },
+  { src: foto2('snimki/ayko-monitor.jpg'), crop:  0, t: 'AYKO',        s: 'Этот сайт и этот прайс' },
+];
+
+// Макеты, а не работающие сайты. Подписаны отдельно и отдельной страницей,
+// иначе это выдача придуманного за сделанное.
+const MAKETY = [
+  { src: foto2('karta-savva-arka.jpg'),    t: 'Вариант «Арка»' },
+  { src: foto2('karta-savva-vitrina.jpg'), t: 'Вариант «Витрина»' },
+  { src: foto2('karta-savva-gazeta.jpg'),  t: 'Вариант «Газета»' },
+];
 
 const T = (rows) => `<table class="pr">${rows.map(r =>
   `<tr><td class="u">${r[0]}${r[3] ? `<i>${r[3]}</i>` : ''}</td><td class="s">${r[1]}</td><td class="c">${r[2]}</td></tr>`).join('')}</table>`;
@@ -101,14 +124,31 @@ const SLIDES = [
      </div>
      <p class="note">Этот список длиннее, чем у большинства. Так и задумано: обещать меньше проще, чем потом объясняться.</p>
    </div>`,
-  // портфолио
-  `<div class="sl pf"><h2>Работы</h2>
-     <img src="${foto2('karta-savva.jpg')}" alt="">
-     <p class="note">SAVVA — спешелти-кофейня в Медине. Три языка, включая арабский, живые часы работы.</p>
+  // портфолио: сначала все работы разом, потом по одной крупно
+  `<div class="sl"><h2>Работы</h2>
+     <div class="setka">${RABOTY.map(r => `<div class="tl">
+       <div class="sh"><img src="${r.src}" style="transform:translateY(-${r.crop}%)" alt=""></div>
+       <div class="cap"><b>${r.t}</b><span>${r.s}</span></div>
+     </div>`).join('')}</div>
+     <p class="note">Верх снимков срезан: в шапках сайтов стоят телефоны заказчиков.</p>
    </div>`,
-  `<div class="sl pf"><h2>Работы</h2>
+  `<div class="sl pf"><h2>Savva</h2>
+     <img src="${foto2('karta-savva.jpg')}" alt="">
+     <p class="note">Спешелти-кофейня в Медине. Три языка, включая арабский, живые часы работы.</p>
+   </div>`,
+  `<div class="sl pf"><h2>Atelier</h2>
      <img src="${foto2('karta-atelier.jpg')}" alt="">
-     <p class="note">Atelier — школа портного и швейный коворкинг в Королёве.</p>
+     <p class="note">Школа портного и швейный коворкинг в Королёве. Услуги, цены, запись.</p>
+   </div>`,
+  `<div class="sl pf"><h2>AYKO</h2>
+     <img src="${foto2('karta-ayko.jpg')}" alt="">
+     <p class="note">Собственный сайт. На нём же бот для заявок и этот прайс — то, что я предлагаю вам, сначала сделано себе.</p>
+   </div>`,
+  `<div class="sl"><h2>Варианты оформления</h2>
+     <div class="demos">${MAKETY.map(m => `<figure>
+       <img src="${m.src}" alt=""><figcaption>${m.t}</figcaption>
+     </figure>`).join('')}</div>
+     <p class="note">Три варианта главной для одной и той же кофейни. Это макеты, а не работающие сайты — показываю, из чего обычно выбирают.</p>
    </div>`,
   // контакты
   `<div class="sl cover">
@@ -172,6 +212,17 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .nope>div{background:#17181e;border-radius:20px;padding:30px 34px;font-size:25px;
   line-height:1.5;color:#a9a4b2}
 .nope b{color:#fff}
+.setka{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.tl{background:#17181e;border-radius:18px;overflow:hidden}
+.tl .sh{position:relative;height:158px;overflow:hidden;background:#fff}
+.tl .sh img{position:absolute;left:0;top:0;width:100%;display:block}
+.tl .cap{padding:16px 20px 18px}
+.tl .cap b{display:block;font-size:26px;font-weight:700}
+.tl .cap span{display:block;margin-top:6px;font-size:20px;color:#8f8a97;line-height:1.35}
+.demos{display:flex;gap:28px;align-items:center;flex:1;min-height:0}
+.demos figure{flex:1}
+.demos img{width:100%;border-radius:14px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.demos figcaption{margin-top:16px;font-size:22px;color:#8f8a97;text-align:center}
 .pf img{display:block;margin:0 auto;max-width:100%;max-height:520px;width:auto;
   border-radius:18px;box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .pf .note{margin-top:22px}
