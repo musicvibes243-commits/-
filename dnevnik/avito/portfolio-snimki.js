@@ -19,6 +19,7 @@ const STR = [
   { id: 'savva-vitrina',  url: '/savva/mockups/2-cinema.html',  name: 'SAVVA · макет «Витрина»' },
   { id: 'savva-gazeta',   url: '/savva/mockups/3-editorial.html', name: 'SAVVA · макет «Газета»' },
   { id: 'kromka',         url: '/demo-kofeynya/index.html',     name: 'КРОМКА · макет кофейни с арт-десертами' },
+  { id: 'minutka',        url: '/ayko/raboty/na-minutochku/index.html', name: 'На минуточку · макет кофейни в Измайлово' },
 ];
 
 const ozhivit = async p => {

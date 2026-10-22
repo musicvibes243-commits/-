@@ -134,7 +134,7 @@ const SLIDES = [
        <div class="sh"><img src="${r.src}" style="transform:translateY(-${r.crop}%)" alt=""></div>
        <div class="cap"><b>${r.t}</b><span>${r.s}</span></div>
      </div>`).join('')}</div>
-     <p class="note">Верх снимков срезан: в шапках сайтов стоят телефоны заказчиков.</p>
+     <p class="note">Верх снимков срезан: в шапках сайтов стоят телефоны заказчиков. Макеты можно открыть и пролистать целиком — адреса под каждым.</p>
    </div>`,
   `<div class="sl pf"><h2>Savva</h2>
      <img src="${foto2('karta-savva.jpg')}" alt="">
@@ -147,22 +147,31 @@ const SLIDES = [
   `<div class="sl pf"><h2>AYKO</h2>
      <img src="${foto2('karta-ayko.jpg')}" alt="">
      <p class="note">Собственный сайт. На нём же бот для заявок и этот прайс — то, что я предлагаю вам, сначала сделано себе.</p>
+     <p class="ssyl"><a href="https://aykoweb.ru">aykoweb.ru</a></p>
    </div>`,
   `<div class="sl"><h2>Варианты оформления</h2>
      <div class="demos">${MAKETY.map(m => `<figure>
        <img src="${m.src}" alt=""><figcaption>${m.t}</figcaption>
      </figure>`).join('')}</div>
      <p class="note">Три варианта главной для одной и той же кофейни. Это макеты, а не работающие сайты — показываю, из чего обычно выбирают.</p>
+     <p class="ssyl"><a href="https://aykoweb.ru/raboty/savva-arka/">aykoweb.ru/raboty/savva-arka/</a> · <a href="https://aykoweb.ru/raboty/savva-vitrina/">savva-vitrina/</a> · <a href="https://aykoweb.ru/raboty/savva-gazeta/">savva-gazeta/</a></p>
    </div>`,
   `<div class="sl"><h2>Один сайт — разное лицо</h2>
      <div class="demos dva">${MAKETY2.map(m => `<figure>
        <img src="${m.src}" alt=""><figcaption>${m.t}</figcaption>
      </figure>`).join('')}</div>
-     <p class="note">Слева — вторая версия главной для ателье. Справа — другое оформление моего собственного сайта: оно не макет, его можно открыть прямо сейчас на aykoweb.ru/cosmos.html и потыкать.</p>
+     <p class="note">Слева — вторая версия главной для ателье. Справа — другое оформление моего собственного сайта.</p>
+     <p class="ssyl"><a href="https://aykoweb.ru/cosmos.html">aykoweb.ru/cosmos.html</a></p>
+   </div>`,
+  `<div class="sl pf"><h2>На минуточку</h2>
+     <img src="${foto2('karta-minutka.jpg')}" alt="">
+     <p class="note">Кофейня у Измайловского парка: меню с ценами, отзывы, корзина и переключение на английский. Это макет — показываю, каким может быть сайт заведения целиком, а не одной страницей.</p>
+     <p class="ssyl">Открыть и пролистать: <a href="https://aykoweb.ru/raboty/na-minutochku/">aykoweb.ru/raboty/na-minutochku/</a></p>
    </div>`,
   `<div class="sl pf"><h2>КРОМКА</h2>
      <img src="${foto2('karta-kromka.jpg')}" alt="">
      <p class="note">Кофейня авторских десертов. Такой кофейни нет — это макет. Десерты нарисованы: когда своих фотографий ещё нет, сайт всё равно можно запустить.</p>
+     <p class="ssyl">Открыть и пролистать: <a href="https://aykoweb.ru/raboty/kromka/">aykoweb.ru/raboty/kromka/</a></p>
    </div>`,
   // контакты
   `<div class="sl cover">
@@ -238,9 +247,11 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .demos.dva{gap:46px;padding:0 40px}
 .demos img{width:100%;border-radius:14px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.5)}
 .demos figcaption{margin-top:16px;font-size:22px;color:#8f8a97;text-align:center}
-.pf img{display:block;margin:0 auto;max-width:100%;max-height:510px;width:auto;
+.pf img{display:block;margin:0 auto;max-width:100%;max-height:460px;width:auto;
   border-radius:18px;box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .pf .note{margin-top:22px}
+.ssyl{margin-top:16px;font-size:23px;font-weight:600;line-height:1.4}
+.ssyl a{color:#e8663f;text-decoration:none;border-bottom:1px solid rgba(232,102,63,.45)}
 .qr{position:absolute;right:${PAD}px;bottom:${PAD}px;width:210px;height:210px;
   border-radius:14px;z-index:3}
 `;

@@ -20,6 +20,7 @@ const KART = [
   { id: 'savva-vitrina', nazv: 'SAVVA · Витрина', pod: 'Демо-макет: как сайт мог бы выглядеть' },
   { id: 'savva-gazeta',  nazv: 'SAVVA · Газета', pod: 'Демо-макет: как сайт мог бы выглядеть' },
   { id: 'kromka',        nazv: 'КРОМКА',        pod: 'Демо-макет: кофейня авторских десертов' },
+  { id: 'minutka',       nazv: 'На минуточку',  pod: 'Демо-макет: кофейня в Измайлово, два языка' },
 ];
 
 const html = k => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
