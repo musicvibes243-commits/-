@@ -42,6 +42,10 @@ const MAKETY = [
   { src: foto2('karta-savva-vitrina.jpg'), t: 'Вариант «Витрина»' },
   { src: foto2('karta-savva-gazeta.jpg'),  t: 'Вариант «Газета»' },
 ];
+const MAKETY2 = [
+  { src: foto2('karta-atelier-2.jpg'),   t: 'Atelier — вторая версия главной' },
+  { src: foto2('karta-ayko-cosmos.jpg'), t: 'AYKO «Космос» — aykoweb.ru/cosmos.html' },
+];
 
 const T = (rows) => `<table class="pr">${rows.map(r =>
   `<tr><td class="u">${r[0]}${r[3] ? `<i>${r[3]}</i>` : ''}</td><td class="s">${r[1]}</td><td class="c">${r[2]}</td></tr>`).join('')}</table>`;
@@ -150,6 +154,12 @@ const SLIDES = [
      </figure>`).join('')}</div>
      <p class="note">Три варианта главной для одной и той же кофейни. Это макеты, а не работающие сайты — показываю, из чего обычно выбирают.</p>
    </div>`,
+  `<div class="sl"><h2>Один сайт — разное лицо</h2>
+     <div class="demos dva">${MAKETY2.map(m => `<figure>
+       <img src="${m.src}" alt=""><figcaption>${m.t}</figcaption>
+     </figure>`).join('')}</div>
+     <p class="note">Слева — вторая версия главной для ателье. Справа — другое оформление моего собственного сайта: оно не макет, его можно открыть прямо сейчас на aykoweb.ru/cosmos.html и потыкать.</p>
+   </div>`,
   // контакты
   `<div class="sl cover">
      <h1 class="sm">Первым трём клиентам — 30 %</h1>
@@ -220,7 +230,8 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .tl .cap b{display:block;font-size:26px;font-weight:700}
 .tl .cap span{display:block;margin-top:6px;font-size:20px;color:#8f8a97;line-height:1.35}
 .demos{display:flex;gap:28px;align-items:center;flex:1;min-height:0}
-.demos figure{flex:1}
+.demos figure{flex:1;min-width:0}
+.demos.dva{gap:46px;padding:0 40px}
 .demos img{width:100%;border-radius:14px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.5)}
 .demos figcaption{margin-top:16px;font-size:22px;color:#8f8a97;text-align:center}
 .pf img{display:block;margin:0 auto;max-width:100%;max-height:520px;width:auto;
