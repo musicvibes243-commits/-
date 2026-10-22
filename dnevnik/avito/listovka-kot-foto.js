@@ -15,9 +15,17 @@ const b64 = (p, t) => `data:image/${t};base64,` + fs.readFileSync(path.join(__di
 const FOTO = b64('kot/kot-za-noutom.jpg', 'jpeg');
 const QR   = b64('qr/qr-prays.png', 'png');
 
-// пять пунктов в один столбик уехали бы коту на морду, поэтому в две колонки
-const USLUGI = ['Сайт с ботом для заявок', 'Объявления на Авито', 'Карточки для WB и Ozon',
-                'CRM-система', 'Приложения в Телеграме'];
+// Не названия разделов, а ситуации: человек должен узнать свою,
+// а не разбираться, что такое «интеграция сервисов».
+// Шесть строк в две колонки — больше не влезает над котом.
+const USLUGI = [
+  'Заявки не теряются',          // внедрение CRM
+  'Бот отвечает клиентам сам',   // ИИ-ассистенты
+  'Запись и заказы в Телеграме', // боты и Mini Apps
+  'Сайт, куда ведёт реклама',    // сайты и лендинги
+  'Сайт, CRM и оплата вместе',   // интеграции и API
+  'Отчёты собираются сами',      // аналитика и отчётность
+];
 const RYADOV = 3;
 
 const html = bigPx => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
@@ -67,7 +75,7 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#fff;color:#17161a;
   <div class="cena">2 000 ₽</div>
   <div class="pod">в месяц. Не 50 тысяч.</div>
   <div class="spis">${USLUGI.map(u => `<div>${u}</div>`).join('')}</div>
-  <div class="dov">Делаю сама, без студии и менеджеров.</div>
+  <div class="dov">Делаю сама, без студии и менеджеров.<br>Сайт — 2 000 ₽/мес, остальное считаю под задачу.</div>
 </div>
 <div class="plita">
   <div class="qr"><img src="${QR}" alt=""></div>
