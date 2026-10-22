@@ -15,7 +15,10 @@ const b64 = (p, t) => `data:image/${t};base64,` + fs.readFileSync(path.join(__di
 const FOTO = b64('kot/kot-za-noutom.jpg', 'jpeg');
 const QR   = b64('qr/qr-prays.png', 'png');
 
-const USLUGI = ['Сайт с ботом для заявок', 'Объявления на Авито', 'Карточки для WB и Ozon'];
+// пять пунктов в один столбик уехали бы коту на морду, поэтому в две колонки
+const USLUGI = ['Сайт с ботом для заявок', 'Объявления на Авито', 'Карточки для WB и Ozon',
+                'CRM-система', 'Приложения в Телеграме'];
+const RYADOV = 3;
 
 const html = bigPx => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -33,7 +36,8 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#fff;color:#17161a;
 .cena{width:fit-content;margin-top:20px;font-size:${bigPx}px;font-weight:700;line-height:.92;
   letter-spacing:-.04em;white-space:nowrap}
 .pod{width:fit-content;margin-top:24px;font-size:46px;font-weight:600}
-.spis{margin-top:46px;display:grid;gap:18px}
+.spis{width:fit-content;margin-top:46px;display:grid;grid-auto-flow:column;
+  grid-template-rows:repeat(${RYADOV},auto);row-gap:18px;column-gap:70px}
 .spis div{width:fit-content;font-size:36px;font-weight:600;padding-left:44px;position:relative;line-height:1.3}
 .spis div::before{content:"";position:absolute;left:0;top:.46em;width:16px;height:10px;
   border-left:5px solid #e8663f;border-bottom:5px solid #e8663f;transform:rotate(-45deg)}
