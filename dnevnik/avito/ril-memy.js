@@ -16,21 +16,31 @@ const OUT = path.join(__dirname, '..', 'foto', NABOR + '-holsty');
 fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
 const b64 = f => 'data:image/jpeg;base64,' + fs.readFileSync(path.join(MEM, f)).toString('base64');
 
-// текст, и какой мем под ним
-const KADRY = [
-  { t: 'Отдам половину денег',                          f: '01.jpg' },
-  { t: 'тому, кто умеет продавать',                     f: '02.jpg' },
-  { t: 'Я делаю сайты',                                 f: '03.jpg' },
-  { t: 'Ботов и мини-приложения',                       f: '04.jpg' },
-  { t: 'Проще три дня писать код,<br>чем набрать номер', f: '05.jpg' },
-  { t: 'Поэтому ищу напарника',                         f: '06.jpg' },
-  { t: 'Вы находите клиента<br>и договариваетесь',      f: '07.jpg' },
-  { t: 'Всё остальное делаю я',                         f: '08.jpg' },
-  { t: '50% с первой оплаты',                           f: '09.jpg' },
-  { t: '20% с каждого месяца',                          f: '10.jpg' },
-  { t: 'Оклада нет. Вложений тоже',                     f: '11.jpg' },
-  { t: 'Напишите НАПАРНИК',                             f: '12.jpg' },
+/* Сценарий. По умолчанию — двенадцать строк, но набор может положить
+   рядом свой kadry.json и задать сколько угодно кадров: короткие ролики
+   в ТикТоке досматривают чаще, а досмотры и решают охват. */
+const SVOY = path.join(MEM, 'kadry.json');
+const KADRY_PO_UMOLCHANIYU = [
+  { t: 'Отдам половину денег',                          f: '01.jpg', pauza: 0.7 },
+  { t: 'тому, кто умеет продавать',                     f: '02.jpg', pauza: 0.4 },
+  { t: 'Я делаю сайты',                                 f: '03.jpg', pauza: 0.3 },
+  { t: 'Ботов и мини-приложения',                       f: '04.jpg', pauza: 0.3 },
+  { t: 'Проще три дня писать код,<br>чем набрать номер', f: '05.jpg', pauza: 0.6 },
+  { t: 'Поэтому ищу напарника',                         f: '06.jpg', pauza: 0.5 },
+  { t: 'Вы находите клиента<br>и договариваетесь',      f: '07.jpg', pauza: 0.3 },
+  { t: 'Всё остальное делаю я',                         f: '08.jpg', pauza: 0.4 },
+  { t: '50% с первой оплаты',                           f: '09.jpg', pauza: 0.5 },
+  { t: '20% с каждого месяца',                          f: '10.jpg', pauza: 0.4 },
+  { t: 'Оклада нет. Вложений тоже',                     f: '11.jpg', pauza: 0.5 },
+  { t: 'Напишите НАПАРНИК',                             f: '12.jpg', pauza: 1.5 },
 ];
+
+const KADRY = fs.existsSync(SVOY)
+  ? JSON.parse(fs.readFileSync(SVOY, 'utf8')).map((k, i) => ({
+      ...k, f: k.f || `${String(i + 1).padStart(2, '0')}.jpg` }))
+  : KADRY_PO_UMOLCHANIYU;
+
+const slov = s => s.replace(/<br>/g, ' ').split(/\s+/).filter(Boolean).length;
 
 const html = (k, razmer) => `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -56,6 +66,7 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#000;position:relativ
 
 (async () => {
   const br = await chromium.launch();
+  const dlit = [];
   for (let i = 0; i < KADRY.length; i++) {
     const k = KADRY[i];
     const p = await br.newPage({ viewport: { width: W, height: H } });
@@ -89,9 +100,16 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#000;position:relativ
     });
     const f = path.join(OUT, `k${String(i).padStart(2, '0')}.png`);
     await p.screenshot({ path: f });
-    console.log(`  ${String(i + 1).padStart(2)}. ${k.f}  ${razmer}px  мем ${dolya}% кадра  ${k.t.replace(/<br>/g, ' ')}`);
+    // читают с экрана медленнее, чем говорят: 2,1 слова в секунду,
+    // и не меньше 1,9 с на кадр, даже если в нём два слова
+    const d = +(Math.max(1.9, slov(k.t) / 2.1) + (k.pauza ?? 0.35)).toFixed(2);
+    dlit.push(d);
+    console.log(`  ${String(i + 1).padStart(2)}. ${k.f}  ${razmer}px  мем ${dolya}% кадра  ${d} с  ${k.t.replace(/<br>/g, ' ')}`);
     await p.close();
   }
   await br.close();
-  console.log(`\n✓ 12 холстов из набора «${NABOR}»`);
+  fs.writeFileSync(path.join(OUT, 'dlitelnosti.txt'), dlit.join('\n') + '\n');
+  const vsego = dlit.reduce((a, b) => a + b, 0);
+  console.log(`\nвсего ${vsego.toFixed(1)} с ` + (vsego <= 40 ? '' : '← длинновато для ТикТока'));
+  console.log(`✓ ${KADRY.length} холстов из набора «${NABOR}»`);
 })();

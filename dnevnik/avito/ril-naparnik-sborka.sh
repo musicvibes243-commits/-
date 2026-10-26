@@ -10,6 +10,7 @@
 # ролика берутся из аргументов:
 #   bash ril-naparnik-sborka.sh naparnik-holsty ril-naparnik-foto
 #   bash ril-naparnik-sborka.sh memy-holsty     ril-memy
+# Число кадров не задано: берётся из dlitelnosti.txt рядом с холстами.
 set -e
 cd "$(dirname "$0")/../.."
 H=dnevnik/foto/${1:-naparnik-holsty}
@@ -17,14 +18,18 @@ IMYA=${2:-ril-naparnik-foto}
 K=dnevnik/foto/${1:-naparnik-holsty}-klipy
 rm -rf $K && mkdir -p $K
 [ -d "$H" ] || { echo "нет папки $H"; exit 1; }
-[ "$(ls $H/*.png 2>/dev/null | wc -l)" = 12 ] || { echo "в $H должно быть 12 кадров"; exit 1; }
+[ -f "$H/dlitelnosti.txt" ] || { echo "нет $H/dlitelnosti.txt — сначала отрисовка"; exit 1; }
 
-# длительности взяты из текстовой версии ролика: они уже выверены
-DLIT=(2.6 2.3 2.2 2.2 4.4 2.4 2.7 2.3 2.4 2.3 2.4 3.4)
+# Длительности считает отрисовка — по числу слов в кадре — и кладёт
+# рядом с холстами. Здесь их только читаем: кадров может быть и семь,
+# и двенадцать.
+DLIT=($(cat $H/dlitelnosti.txt))
+SPIS=($(ls $H/*.png | sort))
+N=${#DLIT[@]}
+[ "${#SPIS[@]}" = "$N" ] || { echo "кадров ${#SPIS[@]}, а длительностей $N"; exit 1; }
 
 : > $K/spisok.txt
-SPIS=($(ls $H/*.png | sort))
-for i in $(seq 1 12); do
+for i in $(seq 1 $N); do
   n=$(printf %02d $i)
   ISH=${SPIS[$((i-1))]}
   d=${DLIT[$((i-1))]}
