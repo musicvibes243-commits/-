@@ -9,8 +9,10 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const fs = require('fs'), path = require('path');
 
 const W = 2160, H = 3840, BOK = 110;
-const MEM = path.join(__dirname, '..', 'foto', 'memy');
-const OUT = path.join(__dirname, '..', 'foto', 'memy-holsty');
+// набор мемов задаётся аргументом: node ril-memy.js memy2
+const NABOR = process.argv[2] || 'memy';
+const MEM = path.join(__dirname, '..', 'foto', NABOR);
+const OUT = path.join(__dirname, '..', 'foto', NABOR + '-holsty');
 fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
 const b64 = f => 'data:image/jpeg;base64,' + fs.readFileSync(path.join(MEM, f)).toString('base64');
 
@@ -91,5 +93,5 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#000;position:relativ
     await p.close();
   }
   await br.close();
-  console.log('\n✓ 12 холстов');
+  console.log(`\n✓ 12 холстов из набора «${NABOR}»`);
 })();
