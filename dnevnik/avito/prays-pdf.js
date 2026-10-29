@@ -29,7 +29,9 @@ const sayt = f => {
 const RABOTY = [
   { src: sayt('septic.jpg'),               crop: 11, t: 'Стройинвест', s: 'Септики и дренаж' },
   { src: sayt('simba.jpg'),                crop: 10, t: 'Симба',       s: 'Ветклиника' },
-  { src: sayt('anikor.jpg'),               crop:  8, t: 'Аникор',      s: 'Студия йоги' },
+  { src: sayt('savva.jpg'),                crop: 10, t: 'Savva',       s: 'Учебный проект' },
+  { src: sayt('anikor.jpg'),               crop:  8, t: 'Аникор',      s: 'Не запущен, скриншот' },
+  { src: sayt('atelier.jpg'),              crop: 16, t: 'Atelier',     s: 'Не запущен, скриншот' },
   { src: foto2('snimki/ayko-monitor.jpg'), crop:  0, t: 'AYKO',        s: 'Этот сайт и этот прайс' },
 ];
 
@@ -41,6 +43,7 @@ const MAKETY = [
   { src: foto2('karta-savva-gazeta.jpg'),  t: 'Вариант «Газета»' },
 ];
 const MAKETY2 = [
+  { src: foto2('karta-atelier-2.jpg'),   t: 'Atelier — вторая версия главной (скриншот)' },
   { src: foto2('karta-ayko-cosmos.jpg'), t: 'AYKO «Космос» — aykoweb.ru/cosmos.html' },
 ];
 
@@ -131,7 +134,15 @@ const SLIDES = [
        <div class="sh"><img src="${r.src}" style="transform:translateY(-${r.crop}%)" alt=""></div>
        <div class="cap"><b>${r.t}</b><span>${r.s}</span></div>
      </div>`).join('')}</div>
-     <p class="note">Верх снимков срезан: в шапках сайтов стоят телефоны заказчиков. Макеты можно открыть и пролистать целиком — адреса под каждым.</p>
+     <p class="note">Верх снимков срезан: в шапках сайтов стоят телефоны заказчиков. Сайты, которые не запущены, показаны скриншотами.</p>
+   </div>`,
+  `<div class="sl pf"><h2>Savva</h2>
+     <img src="${foto2('karta-savva.jpg')}" alt="">
+     <p class="note">Учебный проект: спешелти-кофейня в Медине, три языка. Сайт не запущен, поэтому показываю скриншотами.</p>
+   </div>`,
+  `<div class="sl pf"><h2>Atelier</h2>
+     <img src="${foto2('karta-atelier.jpg')}" alt="">
+     <p class="note">Школа портного и швейный коворкинг в Королёве. Сайт сделан, но не запущен, поэтому показываю скриншотами.</p>
    </div>`,
   `<div class="sl pf"><h2>AYKO</h2>
      <img src="${foto2('karta-ayko.jpg')}" alt="">
@@ -146,10 +157,10 @@ const SLIDES = [
      <p class="ssyl"><a href="https://aykoweb.ru/raboty/savva-arka/">aykoweb.ru/raboty/savva-arka/</a> · <a href="https://aykoweb.ru/raboty/savva-vitrina/">savva-vitrina/</a> · <a href="https://aykoweb.ru/raboty/savva-gazeta/">savva-gazeta/</a></p>
    </div>`,
   `<div class="sl"><h2>Один сайт — разное лицо</h2>
-     <div class="demos" style="justify-content:center">${MAKETY2.map(m => `<figure style="flex:0 0 640px">
+     <div class="demos dva">${MAKETY2.map(m => `<figure>
        <img src="${m.src}" alt=""><figcaption>${m.t}</figcaption>
      </figure>`).join('')}</div>
-     <p class="note">Другое оформление моего собственного сайта. Это не макет: открывается по ссылке ниже.</p>
+     <p class="note">Слева — вторая версия главной для ателье, скриншот: сайт не запущен. Справа — другое оформление моего сайта, он работает: aykoweb.ru/cosmos.html.</p>
      <p class="ssyl"><a href="https://aykoweb.ru/cosmos.html">aykoweb.ru/cosmos.html</a></p>
    </div>`,
   `<div class="sl pf"><h2>На минуточку</h2>
@@ -224,7 +235,7 @@ td.c{font-size:30px;font-weight:700;color:#e8663f;white-space:nowrap;text-align:
 .nope>div{background:#17181e;border-radius:20px;padding:30px 34px;font-size:25px;
   line-height:1.5;color:#a9a4b2}
 .nope b{color:#fff}
-.setka{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.setka{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .tl{background:#17181e;border-radius:18px;overflow:hidden}
 .tl .sh{position:relative;height:158px;overflow:hidden;background:#fff}
 .tl .sh img{position:absolute;left:0;top:0;width:100%;display:block}
