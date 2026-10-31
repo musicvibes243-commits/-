@@ -664,7 +664,7 @@ body.has-sticky .chat-fab{bottom:82px}
   transition:opacity .3s}
 .scrollhint[hidden]{display:none}
 .scrollhint.gone{opacity:0}
-</style>
+.wgal{display:grid;gap:44px;margin-top:28px}.wgcard{margin:0}.wgcard img{width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.18)}.wgcard figcaption{margin-top:16px}.wgcard b{font-size:20px}.wgst{display:inline-block;margin-left:10px;padding:4px 12px;border-radius:999px;font-size:14px;font-weight:600;vertical-align:middle;color:#fff}.wgst.ok{background:#2e7d32}.wgst.no{background:#8a8a8a}.wgcard p{margin-top:6px;opacity:.8;line-height:1.5}</style>
 </head>
 <body>
 <div class="waves" aria-hidden="true"></div>
@@ -855,26 +855,14 @@ body.has-sticky .chat-fab{bottom:82px}
   <div class="wrap">
     <div class="eyebrow">Примеры работ</div>
     <h2>Что я уже сделала</h2>
-    <p class="intro">Сайты, которые я сделала. Выберите проект, чтобы посмотреть.</p>
-    <div class="works">
-      <div class="plist" role="tablist" aria-label="Проекты" id="plist"></div>
-      <div class="view" aria-live="polite">
-        <div class="shot" id="shot">
-          <img id="sImg" alt="" loading="lazy" decoding="async" hidden>
-          <div class="phonewrap" id="phoneWrap" hidden>
-            <div class="screen">
-              <div class="scroll" id="phoneScroll" tabindex="0"><img id="phoneImg" loading="lazy" decoding="async" alt=""></div>
-              <span class="scrollhint" id="scrollHint" hidden>Листайте ↕</span>
-            </div>
-          </div>
-          <div class="fake" id="fake">
-            <div class="nav"><span id="sNav1"></span><span id="sNav2"></span></div>
-            <div class="big" id="sBig"></div>
-            <span class="pill" id="sPill"></span>
-          </div>
-        </div>
-        <div class="vinfo"><h3 id="vTitle"></h3><p id="vText"></p><a class="vlink" id="vLink" href="#" target="_blank" rel="noopener" hidden>Открыть сайт ↗</a></div>
-      </div>
+    <p class="intro">Сайты, которые я сделала. Листайте вниз: каждую работу видно целиком, ничего открывать не нужно.</p>
+    <div class="wgal">
+      <figure class="wgcard"><img src="img/works/ayko.jpg" alt="Сайт aykoweb.ru на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>Мой сайт — aykoweb.ru</b><span class="wgst ok">Работает</span><p>Заявку можно оставить прямо на сайте.</p></figcaption></figure>
+      <figure class="wgcard"><img src="img/works/cosmos.jpg" alt="Вариант «Космос» на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>Вариант «Космос» — другое оформление моего сайта</b><span class="wgst ok">Работает</span><p>Тот же сайт в другом стиле.</p></figcaption></figure>
+      <figure class="wgcard"><img src="img/works/savva.jpg" alt="SAVVA на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>SAVVA — кофейня в Медине</b><span class="wgst no">Учебный проект</span><p>Сделан для учёбы, сейчас не опубликован.</p></figcaption></figure>
+      <figure class="wgcard"><img src="img/works/atelier.jpg" alt="Atelier на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>Atelier — швейное ателье в Королёве</b><span class="wgst no">Сделан, не запущен</span><p>Сайт готов, но не выложен, поэтому показываю картинкой.</p></figcaption></figure>
+      <figure class="wgcard"><img src="img/works/kromka.jpg" alt="Макет КРОМКА на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>КРОМКА — кофейня авторских десертов</b><span class="wgst no">Макет</span><p>Демо: такой кофейни нет, сделан для показа вёрстки.</p></figcaption></figure>
+      <figure class="wgcard"><img src="img/works/minutka.jpg" alt="Макет «На минуточку» на компьютере и телефоне" width="1600" height="1000" loading="lazy" decoding="async"><figcaption><b>На минуточку — кофейня в Измайлово</b><span class="wgst no">Макет</span><p>Демо: двуязычный сайт с меню и корзиной.</p></figcaption></figure>
     </div>
   </div>
 </section>
@@ -1182,51 +1170,7 @@ function trafficNote(){
 
 document.querySelectorAll('img[data-shot]').forEach(function(im){im.src=IMG[im.dataset.shot]});
 
-var list=document.getElementById('plist');
 
-/* Подсказка «Листайте» — показываем, только если картинка выше рамки. */
-var scrollBox=document.getElementById('phoneScroll'), hint=document.getElementById('scrollHint');
-function setHint(){
-  scrollBox.scrollTop=0; hint.classList.remove('gone');
-  var img=document.getElementById('phoneImg');
-  var check=function(){ hint.hidden = scrollBox.scrollHeight - scrollBox.clientHeight < 40; };
-  if(img.complete) check(); else img.addEventListener('load',check,{once:true});
-}
-scrollBox.addEventListener('scroll',function(){ if(scrollBox.scrollTop>20) hint.classList.add('gone'); },{passive:true});
-
-function show(i){
-  var p=PROJECTS[i], s=document.getElementById('shot'), im=document.getElementById('sImg'), fk=document.getElementById('fake');
-  var pw=document.getElementById('phoneWrap'), pi=document.getElementById('phoneImg');
-  pw.hidden=!p.phone;
-  if(p.phone){
-    s.style.background=p.bg; pi.src=IMG[p.phone]; pi.alt='Сайт «'+p.title+'» на телефоне';
-    im.hidden=true; fk.hidden=true;
-    setHint();
-  }else if(p.shot){
-    im.src=IMG[p.shot]; im.alt='Главный экран сайта: '+p.title; im.hidden=false; fk.hidden=true;
-  }else{
-    im.hidden=true; fk.hidden=false;
-    s.style.background=p.bg; fk.style.color=p.fg;
-    document.getElementById('sNav1').textContent=p.nav[0];
-    document.getElementById('sNav2').textContent=p.nav[1];
-    document.getElementById('sBig').innerHTML=p.big;
-    var pill=document.getElementById('sPill'); pill.textContent=p.pill; pill.style.background=p.pbg; pill.style.color=p.pfg;
-  }
-  document.getElementById('vTitle').textContent=p.title;
-  document.getElementById('vText').textContent=p.text;
-  var lk=document.getElementById('vLink');
-  if(p.url){lk.href=p.url;lk.hidden=false}else{lk.hidden=true}
-  [].forEach.call(list.children,function(b,j){b.setAttribute('aria-selected',j===i)});
-}
-PROJECTS.forEach(function(p,i){
-  var b=document.createElement('button');
-  b.setAttribute('role','tab');
-  b.innerHTML='<div><b>'+p.name+'</b><span>'+p.kind+'</span></div><span class="ar">↗</span>';
-  b.addEventListener('click',function(){show(i)});
-  b.addEventListener('mouseenter',function(){show(i)});
-  list.appendChild(b);
-});
-show(0);
 
 /* отзывы */
 if(REVIEWS.length){
