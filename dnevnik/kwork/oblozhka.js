@@ -20,7 +20,6 @@ body{width:${W}px;height:${H}px;overflow:hidden;background:#0d0e12;color:#fff;po
 .mark i{font-style:normal;color:#e8663f}
 h1{margin-top:52px;font-size:58px;font-weight:700;line-height:1.08;letter-spacing:-.02em}
 .pod{margin-top:26px;font-size:26px;line-height:1.4;color:#c6c1cd}
-.dom{position:absolute;left:60px;bottom:56px;font-size:26px;font-weight:600;color:#e8663f}
 .foto{position:absolute;right:50px;top:110px;width:560px;border-radius:18px;overflow:hidden;
   box-shadow:0 26px 60px rgba(0,0,0,.55);z-index:2;border:1px solid rgba(255,255,255,.08)}
 .foto img{width:100%;display:block}
@@ -32,7 +31,6 @@ h1{margin-top:52px;font-size:58px;font-weight:700;line-height:1.08;letter-spacin
   <p class="pod">Тексты, дизайн, запуск и правки. Работаю удалённо, по всей России.</p>
 </div>
 <div class="foto"><img src="${SAYT}" alt=""></div>
-<div class="dom">aykoweb.ru</div>
 </body></html>`;
 
 (async () => {
