@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f1f1c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Тиляват">
+<title>Тиляват — домашка по сурам</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#0f1f1c;--card:#1a3a34;--gold:#d9b26f;--cream:#f4efe6;--muted:#8fb0a6;--err:#e88}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--cream);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;padding:max(12px,env(safe-area-inset-top)) 16px 28px}
+h1{font-size:22px;color:var(--gold);margin:8px 0 4px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:14px}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px}
+select,input{width:100%;padding:12px;border-radius:12px;border:1px solid #2c5a50;background:var(--bg);color:var(--cream);font-size:16px}
+.row{display:flex;gap:8px}
+.row>div{flex:1}
+button{background:var(--gold);color:#1a1a1a;border:0;border-radius:14px;padding:14px;font-size:17px;font-weight:600;width:100%;margin-top:10px}
+button.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.stage{font-size:18px;color:var(--gold);margin:4px 0}
+.counter{font-size:28px;font-weight:700;margin-top:4px}
+.bar{height:8px;background:var(--bg);border-radius:6px;overflow:hidden;margin-top:8px}
+.bar>div{height:100%;background:var(--gold);width:0;transition:width .3s}
+.info{font-size:15px;margin-top:8px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div id="gate" class="card">
+  <h1>Тиляват</h1>
+  <div class="sub">Введите код доступа</div>
+  <input id="code" type="password" placeholder="Код" autocomplete="off">
+  <button id="enter">Войти</button>
+  <div id="codeErr" class="sub" style="color:var(--err);margin:8px 0 0"></div>
+</div>
+
+<div id="app" class="hidden">
+  <h1>Домашка по сурам</h1>
+  <div class="sub">Слушаем, повторяем за чтецом, читаем сами</div>
+
+  <div class="card">
+    <label for="surah">Сура</label>
+    <select id="surah"></select>
+    <label for="reciter">Чтец</label>
+    <select id="reciter"></select>
+    <div class="row">
+      <div><label for="tListen">Слушать, раз</label><input id="tListen" type="number" min="1" value="10"></div>
+      <div><label for="tRepeat">Повторять, раз</label><input id="tRepeat" type="number" min="1" value="30"></div>
+      <div><label for="tOwn">Читать сама, раз</label><input id="tOwn" type="number" min="1" value="30"></div>
+    </div>
+    <label for="speed">Скорость</label>
+    <select id="speed">
+      <option value="0.5">Очень медленно (0,5x)</option>
+      <option value="0.75">Медленно (0,75x)</option>
+      <option value="1" selected>Обычно (1x)</option>
+      <option value="1.25">Быстрее (1,25x)</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <div class="stage" id="stageName">Не запущено</div>
+    <div class="counter" id="counter">&nbsp;</div>
+    <div class="bar"><div id="bar"></div></div>
+    <div class="info" id="ayahInfo"></div>
+    <div class="info" id="summary"></div>
+    <button id="startBtn">Начать</button>
+    <button id="stopBtn" class="ghost">Стоп</button>
+    <button id="resetBtn" class="ghost">Сбросить прогресс</button>
+  </div>
+
+  <div class="card sub" id="status"></div>
+</div>
+
+<audio id="player" preload="auto"></audio>
+
+<script>
+// Код доступа. Поменяйте на свой. Он виден в исходнике страницы, поэтому это лёгкая защита, а не настоящий пароль.
+const ACCESS_CODE = "tilyavat2026";
+
+const API = "https://api.quran.com/api/v4";
+const AUDIO_BASE = "https://verses.quran.com/";
+const DEFAULT_RECITER = {id: 7, name: "Мишари Рашид аль-Афаси"};
+const SURAHS = [
+  {n:102,name:"Ат-Такасур",ayat:8},{n:103,name:"Аль-Аср",ayat:3},{n:104,name:"Аль-Хумаза",ayat:9},
+  {n:105,name:"Аль-Филь",ayat:5},{n:106,name:"Курайш",ayat:4},{n:107,name:"Аль-Маун",ayat:7},
+  {n:108,name:"Аль-Каусар",ayat:3},{n:109,name:"Аль-Кафирун",ayat:6},{n:110,name:"Ан-Наср",ayat:3},
+  {n:111,name:"Аль-Масад",ayat:5},{n:112,name:"Аль-Ихляс",ayat:4},{n:113,name:"Аль-Фаляк",ayat:5},
+  {n:114,name:"Ан-Нас",ayat:6}
+];
+const STAGE_NAMES = {listen:"1. Слушаем суру", repeat:"2. Повторяем за чтецом", own:"3. Читаем сами"};
+const ORDER = ["listen","repeat","own"];
+const KEY = "tilyavat-progress";
+
+const $ = id => document.getElementById(id);
+const player = $("player");
+let S = {key:"", stage:"listen", done:{listen:0, repeat:0, own:0}};
+let verses = [];
+let loadedKey = "";
+let running = false;
+let idx = 0;
+let timer = null;
+let wake = null;
+
+function speed(){ return parseFloat($("speed").value) || 1; }
+function target(s){ return {listen:+$("tListen").value, repeat:+$("tRepeat").value, own:+$("tOwn").value}[s]; }
+function setStatus(t){ $("status").textContent = t; }
+function currentKey(){ return $("surah").value + "-" + $("reciter").value; }
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+function load(){
+  try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.done) S = x; } catch(e) {}
+}
+function ensureKey(){
+  const k = currentKey();
+  if (S.key !== k) { S = {key:k, stage:"listen", done:{listen:0, repeat:0, own:0}}; save(); }
+}
+function nextStage(){
+  for (const s of ORDER) if (S.done[s] < target(s)) return s;
+  return null;
+}
+
+function render(){
+  const st = S.stage;
+  const left = nextStage();
+  $("stageName").textContent = running ? STAGE_NAMES[st] : (left ? "Готово к запуску" : "Домашка выполнена");
+  const t = target(st);
+  $("counter").textContent = running ? `${S.done[st]} из ${t}` : " ";
+  $("bar").style.width = Math.min(100, 100 * S.done[st] / t) + "%";
+  $("summary").textContent =
+    `Слушали: ${S.done.listen}/${target("listen")} · Повторяли: ${S.done.repeat}/${target("repeat")} · Читали сама: ${S.done.own}/${target("own")}`;
+}
+
+function wait(ms, fn){ clearTimeout(timer); timer = setTimeout(fn, ms); }
+
+async function loadVerses(){
+  const n = +$("surah").value;
+  const r = $("reciter").value;
+  setStatus("Загружаю аяты...");
+  const res = await fetch(`${API}/recitations/${r}/by_chapter/${n}`);
+  if (!res.ok) throw new Error("сервер ответил " + res.status);
+  const data = await res.json();
+  verses = (data.audio_files || []).map(f => ({
+    key: f.verse_key,
+    url: f.url.startsWith("http") ? f.url : AUDIO_BASE + f.url,
+    duration: f.duration || 5
+  }));
+  if (!verses.length) throw new Error("нет аятов для этой суры");
+  loadedKey = currentKey();
+  setStatus(`Загружено аятов: ${verses.length}. Нажмите «Начать».`);
+}
+
+function step(){
+  if (!running) return;
+  const st = nextStage();
+  if (!st) { finish(); return; }
+  S.stage = st; save();
+  idx = 0;
+  passStep();
+}
+
+function passStep(){
+  if (!running) return;
+  if (idx >= verses.length) {
+    S.done[S.stage]++; save(); render();
+    wait(600, step);
+    return;
+  }
+  const v = verses[idx];
+  $("ayahInfo").textContent = `Аят ${v.key}`;
+  render();
+
+  if (S.stage === "own") {
+    // Читаете сама: тишина, время на чтение аята (при медленной скорости — больше)
+    wait(v.duration * 1000 * 1.5 / speed(), () => { idx++; passStep(); });
+    return;
+  }
+
+  player.src = v.url;
+  player.playbackRate = speed();
+  player.preservesPitch = true;
+  player.onended = () => {
+    if (!running) return;
+    if (S.stage === "repeat") {
+      // пауза, чтобы повторить за чтецом
+      wait(v.duration * 1000 * 1.3 / speed(), () => { idx++; passStep(); });
+    } else {
+      idx++; passStep();
+    }
+  };
+  player.play().catch(() => setStatus("Телефон не дал включить звук. Нажмите «Начать» ещё раз."));
+}
+
+function finish(){
+  running = false;
+  player.pause();
+  clearTimeout(timer);
+  releaseWake();
+  setStatus("Домашка выполнена. Ма ша Аллах!");
+  render();
+}
+
+async function start(){
+  if (running) return;
+  ensureKey();
+  running = true;
+  keepAwake();
+  try {
+    if (loadedKey !== currentKey() || !verses.length) await loadVerses();
+  } catch (e) {
+    running = false;
+    releaseWake();
+    setStatus("Не удалось загрузить аяты: " + e.message);
+    return;
+  }
+  setStatus("Идёт занятие. Не закрывайте страницу.");
+  step();
+}
+
+function stop(){
+  running = false;
+  player.pause();
+  clearTimeout(timer);
+  releaseWake();
+  setStatus("Остановлено. Прогресс сохранён.");
+  render();
+}
+
+async function keepAwake(){
+  try { if ("wakeLock" in navigator) wake = await navigator.wakeLock.request("screen"); } catch(e) {}
+}
+function releaseWake(){ try { if (wake) wake.release(); } catch(e) {} wake = null; }
+
+async function init(){
+  $("surah").innerHTML = SURAHS.map(s => `<option value="${s.n}">${s.n}. ${s.name} (${s.ayat} аятов)</option>`).join("");
+  let list = [DEFAULT_RECITER];
+  try {
+    const r = await fetch(`${API}/resources/recitations`);
+    const d = await r.json();
+    if (d.recitations && d.recitations.length) {
+      list = d.recitations.map(x => ({id: x.id, name: x.reciter_name || x.name || ("Чтец " + x.id)}));
+    }
+  } catch(e) {}
+  $("reciter").innerHTML = list.map(x => `<option value="${x.id}">${x.name}</option>`).join("");
+  load();
+  if (S.key) {
+    const [sn, rid] = S.key.split("-");
+    $("surah").value = sn;
+    $("reciter").value = rid;
+  }
+  ensureKey();
+  render();
+  setStatus("Выберите суру и чтеца, потом нажмите «Начать».");
+}
+
+function changeSelection(){
+  stop();
+  verses = []; loadedKey = "";
+  ensureKey();
+  render();
+}
+
+function showApp(){
+  $("gate").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  init();
+}
+
+$("enter").onclick = () => {
+  if ($("code").value.trim() === ACCESS_CODE) {
+    localStorage.setItem("tilyavat-ok", "1");
+    showApp();
+  } else {
+    $("codeErr").textContent = "Неверный код";
+  }
+};
+$("startBtn").onclick = start;
+$("stopBtn").onclick = stop;
+$("resetBtn").onclick = () => {
+  stop();
+  S = {key: currentKey(), stage:"listen", done:{listen:0, repeat:0, own:0}};
+  save(); render();
+  setStatus("Прогресс сброшен.");
+};
+$("surah").onchange = changeSelection;
+$("reciter").onchange = changeSelection;
+["tListen","tRepeat","tOwn"].forEach(id => $(id).onchange = () => { save(); render(); });
+$("speed").onchange = () => { if (running) player.playbackRate = speed(); render(); };
+
+if (localStorage.getItem("tilyavat-ok") === "1") showApp();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
